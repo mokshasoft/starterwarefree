@@ -562,7 +562,7 @@
 #define PMIC_VAUX1_REG_ST_ON_LOW_POW                (0x3u)
 
 #define PMIC_VAUX1_REG_SEL							(0x0Cu)
-#define PMIC_VAUX1_REG_SEL_SHIFT					(0x00u)
+#define PMIC_VAUX1_REG_SEL_SHIFT					(0x02u)
 #define PMIC_VAUX1_REG_SEL_1_8_V					(0x0u)
 #define PMIC_VAUX1_REG_SEL_2_5_V                    (0x1u)
 #define PMIC_VAUX1_REG_SEL_2_8_V                    (0x2u)
@@ -577,7 +577,7 @@
 #define PMIC_VAUX2_REG_ST_ON_LOW_POW                (0x3u)
 
 #define PMIC_VAUX2_REG_SEL							(0x0Cu)
-#define PMIC_VAUX2_REG_SEL_SHIFT					(0x00u)
+#define PMIC_VAUX2_REG_SEL_SHIFT					(0x02u)
 #define PMIC_VAUX2_REG_SEL_1_8_V					(0x0u)
 #define PMIC_VAUX2_REG_SEL_2_8_V                    (0x1u)
 #define PMIC_VAUX2_REG_SEL_2_9_V                    (0x2u)
@@ -592,7 +592,7 @@
 #define PMIC_VAUX33_REG_ST_ON_LOW_POW               (0x3u)
 
 #define PMIC_VAUX33_REG_SEL							(0x0Cu)
-#define PMIC_VAUX33_REG_SEL_SHIFT					(0x00u)
+#define PMIC_VAUX33_REG_SEL_SHIFT					(0x02u)
 #define PMIC_VAUX33_REG_SEL_1_8_V					(0x0u)
 #define PMIC_VAUX33_REG_SEL_2_0_V                   (0x1u)
 #define PMIC_VAUX33_REG_SEL_2_8_V                   (0x2u)
@@ -607,7 +607,7 @@
 #define PMIC_VMMC_REG_ST_ON_LOW_POW               	(0x3u)
 
 #define PMIC_VMMC_REG_SEL							(0x0Cu)
-#define PMIC_VMMC_REG_SEL_SHIFT						(0x00u)
+#define PMIC_VMMC_REG_SEL_SHIFT						(0x02u)
 #define PMIC_VMMC_REG_SEL_1_8_V						(0x0u)
 #define PMIC_VMMC_REG_SEL_2_8_V                   	(0x1u)
 #define PMIC_VMMC_REG_SEL_3_0_V                   	(0x2u)
@@ -622,7 +622,7 @@
 #define PMIC_VPLL_REG_ST_ON_LOW_POW               	(0x3u)
 
 #define PMIC_VPLL_REG_SEL							(0x0Cu)
-#define PMIC_VPLL_REG_SEL_SHIFT						(0x00u)
+#define PMIC_VPLL_REG_SEL_SHIFT						(0x02u)
 #define PMIC_VPLL_REG_SEL_1_0_V						(0x0u)
 #define PMIC_VPLL_REG_SEL_1_1_V                   	(0x1u)
 #define PMIC_VPLL_REG_SEL_1_8_V                   	(0x2u)
@@ -637,7 +637,7 @@
 #define PMIC_VDAC_REG_ST_ON_LOW_POW               	(0x3u)
 
 #define PMIC_VDAC_REG_SEL							(0x0Cu)
-#define PMIC_VDAC_REG_SEL_SHIFT						(0x00u)
+#define PMIC_VDAC_REG_SEL_SHIFT						(0x02u)
 #define PMIC_VDAC_REG_SEL_1_8_V						(0x0u)
 #define PMIC_VDAC_REG_SEL_2_6_V                   	(0x1u)
 #define PMIC_VDAC_REG_SEL_2_8_V                   	(0x2u)

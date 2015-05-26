@@ -191,6 +191,26 @@ extern "C" {
 #define PRUSS_V1                    1
 #define PRUSS_V2                    2
 
+//*******************************************************************************
+// PRU register definitions, taken from
+// https://groups.google.com/forum/#!category-topic/beagleboard/pru/rCO-2nKynVE:
+//*******************************************************************************/
+#define CM_PER_PRU_ICSS_CLKCTRL   (0x000000E8u) // set to 0x00000002 to enable/wake up
+
+#define CM_PER_PRU_ICSS_CLKSTCTRL            (0x00000140u)  // unset to 0x00000002 to enable/wake up
+#define CM_PER_PRU_ICSS_CLKSTCTRL_UART_GCLK  (0x00000040u)  // activate UART clock
+#define CM_PER_PRU_ICSS_CLKSTCTRL_IEP_GCLK   (0x00000020u)  // activate IEP clock
+#define CM_PER_PRU_ICSS_CLKSTCTRL_OCP_GCLK   (0x00000010u)  // activate OCP clock
+
+#define PRU_PHYS_BASE_CTRL 0x0000
+
+#define PRUSS_CFG_BASE_SYSCFG 0x0004
+#define PRUSS_CFG_BASE_GPCFG0 0x0008
+#define PRUSS_CFG_BASE_GPCFG1 0x000C
+#define PRUSS_CFG_BASE_CGR    0x0010
+#define PRUSS_CFG_BASE_PIN_MX 0x0040
+#define PRUSS_CFG_BASE_PMAO   0x0028
+
 
  typedef struct __sysevt_to_channel_map
  {
@@ -227,9 +247,14 @@ extern "C" {
 
 
 //**********************************************************************
-//  API FUNCTION PROTOTYPES
+//  API FUNCTION PROTOTYPES - for commented-out ones no code exists
+//  originally :-(
 //**********************************************************************/
-int PRUSSDRVPruReset(unsigned int pruNum);
+
+extern void PRUSSInit(unsigned int clkFlags);
+extern int  PRUSSExecBuffer(unsigned int pruNum,void *textBuffer,unsigned int textNumBytes,void *dataBuffer,unsigned int dataNumBytes);
+
+/*int PRUSSDRVPruReset(unsigned int pruNum);
 int PRUSSDRVPruDisable(unsigned char pruNum);
 int PRUSSDRVPruEnable(unsigned char pruNum);
 int PRUSSDRVPruWriteMemory(unsigned int pruMem,
@@ -258,7 +283,7 @@ void PRUSSDRVIntcSetCmr(unsigned short sysevt,
 void PRUSSDRVIntcSetHmr(unsigned short channel,
                         unsigned short host);
 
-void ICSS_Init(void);
+void ICSS_Init(void);*/
 
 // #ifdef  AM33XX
 // //int PRUSSDRVMapPeripheralIO(unsigned int per_id, void **address);

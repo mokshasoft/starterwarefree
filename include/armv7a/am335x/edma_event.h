@@ -53,6 +53,12 @@ extern "C" {
 ****************************************************************************/
 
 /********************* Direct Mapped Events ********************************/
+
+/* MMCSD1 transmit event. */
+#define EDMA3_CHA_MMCSD1_TX               (2u)
+/* MMCSD1 receive event. */
+#define EDMA3_CHA_MMCSD1_RX               (3u)
+
 /* Events for McASP 1*/
 #define EDMA3_CHA_MCASP1_TX               (10u)
 #define EDMA3_CHA_MCASP1_RX               (11u)

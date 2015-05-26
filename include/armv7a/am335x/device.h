@@ -87,7 +87,7 @@ extern "C" {
 #define EFUSE_OPP100_600                     (0x6u)
 
 /* EFUSE bit for OPP120 720Mhz - 1.2v */
-#define EFUSE_OPP120_720_MASK                (0x00000050u)
+#define EFUSE_OPP120_720_MASK                (0x00000080u)
 #define EFUSE_OPP120_720                     (0x7u)
 
 /* EFUSE bit for OPP TURBO 800Mhz - 1.26v */
