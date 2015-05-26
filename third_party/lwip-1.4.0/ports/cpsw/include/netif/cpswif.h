@@ -105,7 +105,7 @@ struct cpswportif {
 
 extern u32_t cpswif_netif_status(struct netif *netif);
 extern u32_t cpswif_link_status(u32_t inst_num, u32_t slv_port_num);
-extern err_t cpswif_init(struct netif *netif);
+extern err_t cpswif_init(struct netif *netif,char* hwOK);
 extern void cpswif_rx_inthandler(u32_t inst_num, struct netif * netif_arr); 
 extern void cpswif_tx_inthandler(u32_t inst_num);
 

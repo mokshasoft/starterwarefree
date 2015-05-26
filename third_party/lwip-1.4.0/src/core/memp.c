@@ -155,7 +155,7 @@ static const char *memp_desc[MEMP_MAX] = {
  *   extern u8_t __attribute__((section(".onchip_mem"))) memp_memory_UDP_PCB_base[];
  */
 #define LWIP_MEMPOOL(name,num,size,desc) u8_t memp_memory_ ## name ## _base \
-[((num) * (MEMP_SIZE + MEMP_ALIGN_SIZE(size)))];  
+  [((num) * (MEMP_SIZE + MEMP_ALIGN_SIZE(size)))];   
 #include "lwip/memp_std.h"
 
 /** This array holds the base of each memory pool. */

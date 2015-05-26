@@ -66,6 +66,11 @@ typedef u32_t           mem_ptr_t;
     #define PACK_STRUCT_STRUCT
     #define PACK_STRUCT_END
     #define PACK_STRUCT_FIELD(x) x
+#elif defined (ENV_FWTEST)
+    #define PACK_STRUCT_BEGIN
+    #define PACK_STRUCT_STRUCT
+    #define PACK_STRUCT_END
+    #define PACK_STRUCT_FIELD(x) x
 #else
     //
     // Setup PACKing macros for GCC Tools

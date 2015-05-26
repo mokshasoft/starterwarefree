@@ -117,7 +117,9 @@
 /******************************************************************************
 **                       INTERNAL FUNCTION PROTOTYPES
 ******************************************************************************/
+#if LWIP_DHCP
 static void lwIPDHCPComplete(unsigned int ifNum);
+#endif
 
 /******************************************************************************
 **                       INTERNAL VARIABLE DEFINITIONS
@@ -146,6 +148,7 @@ static struct cpswportif cpswPortIf[MAX_CPSW_INST * MAX_SLAVEPORT_PER_INST];
  *
  * \return  None
 */
+#if LWIP_DHCP
 static void lwIPDHCPComplete(unsigned int ifNum)
 {
     unsigned int dhcpTries = NUM_DHCP_TRIES;
@@ -173,6 +176,7 @@ static void lwIPDHCPComplete(unsigned int ifNum)
 
     LWIP_PRINTF("\n\rUnable to complete DHCP! \n\r");
 }
+#endif //#if LWIP_DHCP
 
 /**
  *
@@ -182,7 +186,7 @@ static void lwIPDHCPComplete(unsigned int ifNum)
  *
  * \return IP Address.
 */
-unsigned int lwIPInit(LWIP_IF *lwipIf)
+unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK)
 {
     struct ip_addr ip_addr;
     struct ip_addr net_mask;
@@ -235,7 +239,7 @@ unsigned int lwIPInit(LWIP_IF *lwipIf)
     */
     if(NULL ==
        netif_add(&cpswNetIF[ifNum], &ip_addr, &net_mask, &gw_addr, 
-                 &cpswPortIf[ifNum], cpswif_init, ip_input))
+                 &cpswPortIf[ifNum], cpswif_init, ip_input,hwOK))
     {
         LWIP_PRINTF("\n\rUnable to add interface for interface %d", ifNum);
         return 0;
@@ -341,6 +345,7 @@ void lwIPTxIntHandler(unsigned int instNum)
  *
  * \return  IP address assigned. If IP acquisition failed, zero will be returned.
 */
+#if LWIP_DHCP
 unsigned int lwIPDHCPStart(unsigned int instNum, unsigned int slvPortNum)
 {
     unsigned int *ipAddrPtr;
@@ -354,6 +359,7 @@ unsigned int lwIPDHCPStart(unsigned int instNum, unsigned int slvPortNum)
 
     return (*ipAddrPtr);
 }
+#endif //#if LWIP_DHCP
 
 /***************************** End Of File ***********************************/
 

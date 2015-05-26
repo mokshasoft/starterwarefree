@@ -189,9 +189,7 @@ static struct mem *ram_end;
 static struct mem *lfree;
 
 /** concurrent access protection */
-#if !NO_SYS
 static sys_mutex_t mem_mutex;
-#endif
 
 #if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
 

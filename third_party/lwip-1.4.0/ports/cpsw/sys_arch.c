@@ -59,7 +59,7 @@ sys_prot_t
 sys_arch_protect(void)
 {
   sys_prot_t status;
-  status = (IntMasterStatusGet() & 0xFF);
+  status=IntMasterStatusGet();
 
   IntMasterIRQDisable();
   return status;

@@ -135,7 +135,7 @@ netif_init(void)
  */
 struct netif *
 netif_add(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
-  ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input)
+  ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input,char *hwOK)
 {
   static u8_t netifnum = 0;
 
@@ -182,7 +182,7 @@ netif_add(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
   netif_set_addr(netif, ipaddr, netmask, gw);
 
   /* call user specified initialization function for netif */
-  if (init(netif) != ERR_OK) {
+  if (init(netif,hwOK) != ERR_OK) {
     return NULL;
   }
 

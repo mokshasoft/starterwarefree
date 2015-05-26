@@ -280,7 +280,7 @@ extern unsigned int lwIPLinkStatusGet(unsigned int instNum,
                                       unsigned int slvPortNum);
 extern unsigned int lwIPNetIfStatusGet(unsigned int instNum, 
                                        unsigned int slvPortNum);
-extern unsigned int lwIPInit(LWIP_IF *lwipIf);
+extern unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK);
 extern void lwIPRxIntHandler(unsigned int instNum);
 extern void lwIPTxIntHandler(unsigned int instNum);
 extern unsigned int lwIPDHCPStart(unsigned int instNum,

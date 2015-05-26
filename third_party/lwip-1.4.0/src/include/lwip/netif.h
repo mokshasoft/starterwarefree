@@ -99,7 +99,7 @@ extern "C" {
  *
  * @param netif The netif to initialize
  */
-typedef err_t (*netif_init_fn)(struct netif *netif);
+typedef err_t (*netif_init_fn)(struct netif *netif,char *hwOK);
 /** Function prototype for netif->input functions. This function is saved as 'input'
  * callback function in the netif struct. Call it when a packet has been received.
  *
@@ -253,7 +253,7 @@ extern struct netif *netif_default;
 void netif_init(void);
 
 struct netif *netif_add(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
-      ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input);
+      ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input,char *hwOK);
 
 void
 netif_set_addr(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
