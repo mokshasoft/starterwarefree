@@ -1686,7 +1686,7 @@ typedef unsigned int (* tUSBPacketAvailable)(void *pvHandle);
 //! the \e pvWorkspace field of the \e tUSBBuffer structure.
 //
 //*****************************************************************************
-#define USB_BUFFER_WORKSPACE_SIZE 16
+#define USB_BUFFER_WORKSPACE_SIZE 64 //16
 
 //*****************************************************************************
 //

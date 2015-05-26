@@ -186,9 +186,9 @@
 // for each endpoint.
 //
 //*****************************************************************************
-#define DATA_IN_EP_FIFO_SIZE    USB_FIFO_SZ_64
-#define DATA_OUT_EP_FIFO_SIZE   USB_FIFO_SZ_64
-#define CTL_IN_EP_FIFO_SIZE     USB_FIFO_SZ_16
+#define DATA_IN_EP_FIFO_SIZE    USB_FIFO_SZ_512 //USB_FIFO_SZ_64
+#define DATA_OUT_EP_FIFO_SIZE   USB_FIFO_SZ_512 //USB_FIFO_SZ_64
+#define CTL_IN_EP_FIFO_SIZE     USB_FIFO_SZ_64 //USB_FIFO_SZ_16
 
 #define DATA_IN_EP_MAX_SIZE     USB_FIFO_SZ_TO_BYTES(DATA_IN_EP_FIFO_SIZE)
 #define DATA_OUT_EP_MAX_SIZE    USB_FIFO_SZ_TO_BYTES(DATA_IN_EP_FIFO_SIZE)

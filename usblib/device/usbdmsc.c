@@ -1158,8 +1158,7 @@ ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
 //! \return Returns 0 on failure or a non-zero void pointer on success.
 //
 //*****************************************************************************
-void *
-USBDMSCInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
+void *USBDMSCInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
 {
     //
     // Check parameter validity.

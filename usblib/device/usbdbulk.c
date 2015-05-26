@@ -40,6 +40,8 @@
 //
 //*****************************************************************************
 
+#define DISABLE_BIT_BAND
+
 //*****************************************************************************
 //
 // The subset of endpoint status flags that we consider to be reception
@@ -352,10 +354,21 @@ static void
 SetDeferredOpFlag(volatile unsigned short *pusDeferredOp, unsigned short usBit,
                   tBoolean bSet)
 {
+#ifdef DISABLE_BIT_BAND
+    if(bSet)
+    {
+        HWREG(pusDeferredOp) |= (1<<usBit);
+    }
+    else
+    {
+        HWREG(pusDeferredOp) &= ~(1<<usBit);
+    }
+#else
     //
     // Set the flag bit to 1 or 0 using a bitband access.
     //
     HWREGBITH(pusDeferredOp, usBit) = bSet ? 1 : 0;
+#endif
 }
 
 //*****************************************************************************

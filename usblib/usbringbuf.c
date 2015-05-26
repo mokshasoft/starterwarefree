@@ -65,12 +65,12 @@ static void
 UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
                   unsigned int ulSize)
 {
-    unsigned int IntStatus;
+//    unsigned int IntStatus;
     //
     // Turn interrupts off temporarily.
     //
 
-    IntStatus =  IntGlobalDisable();
+//    IntStatus =  IntGlobalDisable();
 
     //
     // Update the variable value.
@@ -82,7 +82,7 @@ UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
     // modulus operation with interrupts off but we don't want to fail in
     // case ulDelta is greater than ulSize (which is extremely unlikely but...)
     //
-    while(*pulVal >= ulSize)
+    if (*pulVal >= ulSize)
     {
         *pulVal -= ulSize;
     }
@@ -91,19 +91,19 @@ UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
     // Restore the interrupt state
     //
 
-    IntGlobalRestore(IntStatus);
+//    IntGlobalRestore(IntStatus);
 }
 #else
 static void
 UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
                   unsigned int ulSize)
 {
-    unsigned char IntStatus;
+//    unsigned char IntStatus;
     //
     // Turn interrupts off temporarily.
     //
 
-    IntStatus =  IntDisable();
+//    IntStatus =  IntDisable();
 
     //
     // Update the variable value.
@@ -115,7 +115,7 @@ UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
     // modulus operation with interrupts off but we don't want to fail in
     // case ulDelta is greater than ulSize (which is extremely unlikely but...)
     //
-    while(*pulVal >= ulSize)
+    if (*pulVal >= ulSize)
     {
         *pulVal -= ulSize;
     }
@@ -124,7 +124,7 @@ UpdateIndexAtomic(volatile unsigned int *pulVal, unsigned int ulDelta,
     // Restore the interrupt state
     //
 
-    IntEnable(IntStatus);
+//    IntEnable(IntStatus);
 }
 #endif
 
@@ -217,7 +217,7 @@ USBRingBufEmpty(tUSBRingBufObject *ptUSBRingBuf)
 void
 USBRingBufFlush(tUSBRingBufObject *ptUSBRingBuf)
 {
-       unsigned int bIntsOff;
+//       unsigned int bIntsOff;
      
 
     //
@@ -231,15 +231,15 @@ USBRingBufFlush(tUSBRingBufObject *ptUSBRingBuf)
     //
 
 
-    bIntsOff = IntGlobalDisable();
+//    bIntsOff = IntGlobalDisable();
     ptUSBRingBuf->ulReadIndex = ptUSBRingBuf->ulWriteIndex;
-    IntGlobalRestore(bIntsOff);
+//    IntGlobalRestore(bIntsOff);
 }
 #else
 void
 USBRingBufFlush(tUSBRingBufObject *ptUSBRingBuf)
 {
-       unsigned char bIntsOff;
+//       unsigned char bIntsOff;
      
 
     //
@@ -253,9 +253,9 @@ USBRingBufFlush(tUSBRingBufObject *ptUSBRingBuf)
     //
 
 
-    bIntsOff =IntDisable();
+//    bIntsOff =IntDisable();
     ptUSBRingBuf->ulReadIndex = ptUSBRingBuf->ulWriteIndex;
-    IntEnable(bIntsOff);
+//    IntEnable(bIntsOff);
 }
 #endif
 
