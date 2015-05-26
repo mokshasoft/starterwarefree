@@ -149,7 +149,7 @@ DRESULT disk_read (
 /* This function writes sector(s) to the disk drive                     */
 /*-----------------------------------------------------------------------*/
 
-#if _READONLY == 0
+#if _USE_WRITE == 1
 DRESULT disk_write (
     BYTE ucDrive,           /* Physical drive number (0) */
     const BYTE* buff,       /* Pointer to the data to be written */
@@ -168,7 +168,7 @@ DRESULT disk_write (
 
     return RES_ERROR;
 }
-#endif /* _READONLY */
+#endif /* _USE_WRITE */
 
 /*-----------------------------------------------------------------------*/
 /* Miscellaneous Functions                                               */

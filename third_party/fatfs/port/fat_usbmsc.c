@@ -68,7 +68,7 @@ DRESULT disk_read (
     BYTE drv,               /* Physical drive number (0) */
     BYTE* buff,             /* Pointer to the data buffer to store read data */
     DWORD sector,           /* Physical drive nmuber (0) */
-    BYTE count)             /* Sector count (1..255) */
+    INT count)             /* Sector count (1..255) */
 {
 	unsigned int ulMSCInstance;
 
@@ -92,12 +92,12 @@ DRESULT disk_read (
 /* This function writes sector(s) to the disk drive                     */
 /*-----------------------------------------------------------------------*/
 
-#if _READONLY == 0
+#if _USE_WRITE == 1
 DRESULT disk_write (
     BYTE ucDrive,           /* Physical drive number (0) */
     const BYTE* buff,       /* Pointer to the data to be written */
     DWORD sector,           /* Start sector number (LBA) */
-    BYTE count)             /* Sector count (1..255) */
+    UINT count)             /* Sector count (1..255) */
 {
 	unsigned int ulMSCInstance;
 
@@ -114,7 +114,7 @@ DRESULT disk_write (
 
     return RES_ERROR;
 }
-#endif /* _READONLY */
+#endif /* _USE_WRITE */
 
 /*-----------------------------------------------------------------------*/
 /* Miscellaneous Functions                                               */
