@@ -1425,7 +1425,7 @@ void EDMA3ClearErrorBits(unsigned int baseAdd,
     }
     else if(3 == evtQNum)
     {
-         HWREG(baseAdd + EDMA3CC_CCERRCLR) &= (EDMA3CC_CCERRCLR_QTHRXCD2 | 
+         HWREG(baseAdd + EDMA3CC_CCERRCLR) &= (EDMA3CC_CCERRCLR_QTHRXCD3 | 
                                 EDMA3CC_CCERRCLR_TCCERR);
     }
 }
