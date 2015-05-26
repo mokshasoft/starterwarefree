@@ -45,6 +45,8 @@
 #include "uartStdio.h"
 #include "mmcsd_proto.h"
 #include "string.h"
+#include "soc_AM335x.h"
+
 
 
 /**
@@ -105,16 +107,20 @@ unsigned int HSMMCSDControllerInit(mmcsdCtrlInfo *ctrl)
     HSMMCSDLinesReset(ctrl->memBase, HS_MMCSD_ALL_RESET);
 
     /* Set supported voltage list */
-    HSMMCSDSupportedVoltSet(ctrl->memBase, HS_MMCSD_SUPPORT_VOLT_1P8 |
-                                                HS_MMCSD_SUPPORT_VOLT_3P0);
-
-    HSMMCSDSystemConfig(ctrl->memBase, HS_MMCSD_AUTOIDLE_ENABLE);
-
-    /* Set the bus width */
-    HSMMCSDBusWidthSet(ctrl->memBase, HS_MMCSD_BUS_WIDTH_1BIT );
-
-    /* Set the bus voltage */
-    HSMMCSDBusVoltSet(ctrl->memBase, HS_MMCSD_BUS_VOLT_3P0);
+    if (ctrl->memBase==SOC_MMCHS_1_REGS) // MMC1 is always eMMC on BBB
+    {
+       HSMMCSDSupportedVoltSet(ctrl->memBase, HS_MMCSD_SUPPORT_VOLT_1P8 |HS_MMCSD_SUPPORT_VOLT_3P3);
+       HSMMCSDSystemConfig(ctrl->memBase,HS_MMCSD_AUTOIDLE_ENABLE);
+       HSMMCSDBusWidthSet(ctrl->memBase, HS_MMCSD_BUS_WIDTH_4BIT ); /////////////////////////////////////////////////////////////////
+       HSMMCSDBusVoltSet(ctrl->memBase, HS_MMCSD_BUS_VOLT_3P3);
+    }
+    else
+    {
+       HSMMCSDSupportedVoltSet(ctrl->memBase,HS_MMCSD_SUPPORT_VOLT_1P8|HS_MMCSD_SUPPORT_VOLT_3P0);
+       HSMMCSDSystemConfig(ctrl->memBase,HS_MMCSD_AUTOIDLE_ENABLE);
+       HSMMCSDBusWidthSet(ctrl->memBase,HS_MMCSD_BUS_WIDTH_1BIT);
+       HSMMCSDBusVoltSet(ctrl->memBase,HS_MMCSD_BUS_VOLT_3P0);
+    }
 
     /* Bus power on */
     status = HSMMCSDBusPower(ctrl->memBase, HS_MMCSD_BUS_POWER_ON);
@@ -239,10 +245,16 @@ void HSMMCSDBusWidthConfig(mmcsdCtrlInfo *ctrl, unsigned int busWidth)
     {
            HSMMCSDBusWidthSet(ctrl->memBase, HS_MMCSD_BUS_WIDTH_1BIT);
     }
-    else
+
+    else if (busWidth == SD_BUS_WIDTH_4BIT)
     {
            HSMMCSDBusWidthSet(ctrl->memBase, HS_MMCSD_BUS_WIDTH_4BIT);
     }
+    else
+    {
+    	HSMMCSDBusWidthSet(ctrl->memBase, HS_MMCSD_BUS_WIDTH_8BIT);
+    }
+
 }
 /**
  * \brief   Set output bus frequency

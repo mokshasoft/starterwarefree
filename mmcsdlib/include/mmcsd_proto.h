@@ -124,6 +124,11 @@ typedef struct _mmcsdCtrlInfo {
 #define SD_CMDRSP_WRITE			BIT(8)
 
 
+#define SD_CMDRSP_R1			(0)
+#define SD_CMDRSP_R1b			(0 | SD_CMDRSP_BUSY)
+#define SD_CMDRSP_R2			(SD_CMDRSP_136BITS)
+#define SD_CMDRSP_R3			(SD_CMDRSP_R1)
+
 
 /* SD voltage enumeration as per VHS field of the interface command */
 #define SD_VOLT_2P7_3P6                 (0x000100u)
@@ -185,6 +190,7 @@ typedef struct _mmcsdCtrlInfo {
 #define SD_VERSION_2P0		2
 #define SD_BUS_WIDTH_1BIT	1
 #define SD_BUS_WIDTH_4BIT	4
+#define SD_BUS_WIDTH_8BIT	8
 
 /* Helper macros */
 /* Note card registers are big endian */
