@@ -185,7 +185,7 @@ tFresultString g_sFresultStrings[] =
     FRESULT_ENTRY(FR_INVALID_DRIVE),
     FRESULT_ENTRY(FR_DENIED),
     FRESULT_ENTRY(FR_EXIST),
-    FRESULT_ENTRY(FR_RW_ERROR),
+//    FRESULT_ENTRY(FR_RW_ERROR),
     FRESULT_ENTRY(FR_WRITE_PROTECTED),
     FRESULT_ENTRY(FR_NOT_ENABLED),
     FRESULT_ENTRY(FR_NO_FILESYSTEM),
@@ -435,7 +435,7 @@ static void HSMMCSDControllerSetup(void)
 */
 void HSMMCSDFsMount(unsigned int driveNum, void *ptr)
 {
-    f_mount(driveNum, &g_sFatFs);
+    f_mount(&g_sFatFs,(TCHAR*)"0:",1);
     fat_devices[0].dev = ptr;
     fat_devices[0].fs = &g_sFatFs;
 }
