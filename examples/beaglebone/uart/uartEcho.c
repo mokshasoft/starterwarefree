@@ -306,8 +306,13 @@ static void UARTIsr(void)
         break;
 
         case UART_INTID_RX_THRES_REACH:
-            rxByte = UARTCharGetNonBlocking(SOC_UART_0_REGS);
-            UARTCharPutNonBlocking(SOC_UART_0_REGS, rxByte);
+            for (;;)
+            {
+               signed char retVal;
+               retVal=UARTCharGetNonBlocking(SOC_UART_0_REGS,&rxByte);
+               if (retVal<=0) break;
+               UARTCharPutNonBlocking(SOC_UART_0_REGS, rxByte);
+            }
         break;
 
         case UART_INTID_RX_LINE_STAT_ERROR:
