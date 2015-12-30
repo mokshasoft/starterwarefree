@@ -52,6 +52,7 @@ extern "C" {
 /* Successful completion of the functionality   */
 #define S_PASS                  (0)
 /* Generic failure code                         */
+#undef E_FAIL
 #define E_FAIL                  (-1)
 /* Invalid parameter                            */
 #define E_INVALID_PARAM         (-2)
