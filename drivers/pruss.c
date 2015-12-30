@@ -2,8 +2,7 @@
 
 #include "pruss.h"
 #include "hw/hw_types.h"
-#include "hw/soc_AM335x.h"
-
+#include "soc_AM335x.h"
 
 /*
    PRU driver implementation, based on code code and documentation from
