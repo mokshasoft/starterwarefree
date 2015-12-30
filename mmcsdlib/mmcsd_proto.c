@@ -491,15 +491,16 @@ void decodeExtCsd(mmcsdCtrlInfo *ctrl, unsigned char *buffer)
 
 	ctrl->card->cardType = extCsd.card_type;
 	ctrl->card->busWidth = extCsd.bus_width;
+
+    ctrl->card->size = extCsd.sec_count * 512;
+    ctrl->card->blkLen = 512;
+    ctrl->card->nBlks = extCsd.sec_count;
 }
 
 
 
 void GetCSDParameters(mmcsdCtrlInfo *ctrl)
 {
-	unsigned int blockNr = 0;
-	unsigned int mult = 0;
-
 	/* Describes the version of the CSD structure. */
 	CSDInfo.csd_structure = ((ctrl->card->raw_csd[3] & 0xC0000000) >> 30); // [127:126]
 	CSDInfo.spec_vers = ((ctrl->card->raw_csd[3] & 0x3C000000) >> 26); // [125:122] everything above 4 is reserved
@@ -540,15 +541,8 @@ void GetCSDParameters(mmcsdCtrlInfo *ctrl)
 	CSDInfo.crc = (ctrl->card->raw_csd[0] & 0x000000FE); // [7:1] CRC
 	// [0:0] Not used, always�1�
 
-
-	mult = 2^(CSDInfo.c_size + 2);
-	blockNr = (CSDInfo.c_size + 1) * mult;
-	ctrl->card->size = blockNr * mult;
-
-
-	//ctrl->card->blkLen = 1 << (CSDInfo.read_bl_len);
-	ctrl->card->blkLen = 1 << (CSDInfo.read_bl_len - 1); // Set it to 512 /////////////////////////////////////////////////////////
-
+    ctrl->card->size = (CSDInfo.c_size + 1) << (CSDInfo.c_size_mult + 2);
+	ctrl->card->blkLen = 1 << (CSDInfo.read_bl_len);
 	ctrl->card->nBlks = ctrl->card->size/ctrl->card->blkLen;
 
 	ctrl->card->tranSpeed = CSDInfo.tran_speed ;
