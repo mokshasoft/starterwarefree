@@ -79,7 +79,7 @@ typedef struct _mmcsdCmd {
 	unsigned int idx;
 	unsigned int flags;
 	unsigned int arg;
-	signed char *data;
+	unsigned char *data;
 	unsigned int nblks;
 	unsigned int rsp[4];
 }mmcsdCmd;
