@@ -161,8 +161,10 @@ extern "C" {
 #define  EQEP   0x03
 
 
-
+#ifndef __cplusplus
 typedef char bool;
+#endif
+
 
 //**********************************************************************
 //  API FUNCTION PROTOTYPES
