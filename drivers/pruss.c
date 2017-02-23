@@ -82,7 +82,7 @@ int  PRUSSExecBuffer(unsigned int pruNum,void *textBuffer,unsigned int textNumBy
    {
       // copy text and data into PRU0 instruction and data RAM
       memcpy((void*)PRU0IRAM_PHYS_BASE,(void*)textBuffer,textNumBytes);
-      memcpy((void*)DATARAM0_PHYS_BASE,(void*)dataBuffer,dataNumBytes);
+      if (dataBuffer) memcpy((void*)DATARAM0_PHYS_BASE,(void*)dataBuffer,dataNumBytes);
 
       // set start address and execute
       HWREG(PRU0CONTROL_PHYS_BASE+PRU_PHYS_BASE_CTRL)|=0x04200000; // set start address
@@ -92,7 +92,7 @@ int  PRUSSExecBuffer(unsigned int pruNum,void *textBuffer,unsigned int textNumBy
    {
       // copy text and data into PRU0 instruction and data RAM
       memcpy((void*)PRU1IRAM_PHYS_BASE,(void*)textBuffer,textNumBytes);
-      memcpy((void*)DATARAM1_PHYS_BASE,(void*)dataBuffer,dataNumBytes);
+      if (dataBuffer) memcpy((void*)DATARAM1_PHYS_BASE,(void*)dataBuffer,dataNumBytes);
 
       // set start address and execute
       HWREG(PRU1CONTROL_PHYS_BASE+PRU_PHYS_BASE_CTRL)|=0x04200000; // set start address
