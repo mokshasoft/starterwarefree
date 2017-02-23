@@ -212,6 +212,8 @@
 #define TSCADC_WPNSW_PIN_OFF                    (0)   
 
 
+extern unsigned int TSCADCPinMuxSetUp(void);
+
 void TSCADCSetADCPowerDown(unsigned int baseAdd);
 unsigned int TSCADCGetRevision(unsigned int baseAdd);
 unsigned int TSCADCEventIrqStatus(unsigned int baseAdd);
@@ -308,6 +310,7 @@ unsigned int TSCADCIntStatus(unsigned int baseAdd);
 
 void TSCADCSetADCPowerUp(unsigned int baseAdd);
 
+#ifndef ENV_WINDOWS
 typedef struct {
                    signed int x;
                    signed int y;
@@ -323,5 +326,6 @@ typedef struct {
                    signed int En;
                    signed int Fn;
                }MATRIX;
+#endif
 
 #endif
