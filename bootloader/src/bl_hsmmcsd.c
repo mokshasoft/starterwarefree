@@ -93,6 +93,8 @@ typedef struct _fatDevice
 
     /* File system pointer */
     FATFS *fs;
+    /* state */
+    unsigned int initDone;
 }fatDevice;
 #endif
 extern fatDevice fat_devices[2];
