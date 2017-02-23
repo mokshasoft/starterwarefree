@@ -69,7 +69,6 @@ unsigned int RtcVersionGet(void)
 void RTCModuleClkConfig(void)
 {
     /* Configuring L3 Interface Clocks. */
-
     /* Writing to MODULEMODE field of CM_PER_L3_CLKCTRL register. */
     HWREG(SOC_CM_PER_REGS + CM_PER_L3_CLKCTRL) |=
           CM_PER_L3_CLKCTRL_MODULEMODE_ENABLE;
