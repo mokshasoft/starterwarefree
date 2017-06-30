@@ -22,6 +22,9 @@
 // of the  Stellaris USB Library.
 //
 //*****************************************************************************
+
+#include <stdint.h>
+
 #include "hw_usb.h"
 #include "hw_types.h"
 #include "debug.h"
@@ -229,7 +232,7 @@ unsigned char g_pCDCSerDeviceDescriptor[] =
     64,                     // Maximum packet size for default pipe.
     USBShort(0),            // Vendor ID (filled in during USBDCDCInit).
     USBShort(0),            // Product ID (filled in during USBDCDCInit).
-    USBShort(0x100),        // Device Version BCD.
+    USBShort(0x200),        // Device Version BCD.
     1,                      // Manufacturer string identifier.
     2,                      // Product string identifier.
     3,                      // Product serial number.
@@ -367,7 +370,7 @@ const unsigned char g_pCDCSerCommInterface[] =
     USB_EP_DESC_IN | USB_EP_TO_INDEX(CONTROL_ENDPOINT),
     USB_EP_ATTR_INT,                // Endpoint is an interrupt endpoint.
     USBShort(CTL_IN_EP_MAX_SIZE),   // The maximum packet size.
-    10                             // The polling interval for this endpoint.
+    1                               // The polling interval for this endpoint.
 };
 
 const tConfigSection g_sCDCSerCommInterfaceSection =
@@ -508,6 +511,12 @@ const tConfigHeader * const g_pCDCCompSerConfigDescriptors[] =
     &g_sCDCCompSerConfigHeader
 };
 
+//*****************************************************************************
+//
+// Variable to get the maximum packet size for the interface
+//
+//*****************************************************************************
+static unsigned short g_ui16MaxPacketSize = USB_FIFO_SZ_TO_BYTES(USB_FIFO_SZ_512);
 //*****************************************************************************
 //
 // Forward references for device handler callbacks
@@ -1244,6 +1253,7 @@ ProcessDataToHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus,
 {
     tCDCSerInstance *psInst;
     unsigned int ulEPStatus, ulSize;
+    char             bSentFullPacket;
 
     //
     // Get a pointer to our instance data.
@@ -1267,6 +1277,18 @@ ProcessDataToHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus,
     // see if we need to send any more data.
     //
     psInst->eCDCTxState = CDC_STATE_IDLE;
+    //
+    // If this notification is not as a result of sending a zero-length packet,
+    // call back to the client to let it know we sent the last thing it passed
+    // us.
+    //
+    if(psInst->usLastTxSize)
+    {
+        //
+        // Have we just sent a full packet (64 byte for FS and 512 byte for HS)
+        //
+        bSentFullPacket = (psInst->usLastTxSize == g_ui16MaxPacketSize) ?
+                           true : false;
 
     //
     // Notify the client that the last transmission completed.
@@ -1275,6 +1297,27 @@ ProcessDataToHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus,
     psInst->usLastTxSize = 0;
     psDevice->pfnTxCallback(psDevice->pvTxCBData, USB_EVENT_TX_COMPLETE,
                             ulSize, (void *)0);
+        //
+        // If we had previously sent a full packet and the callback didn't
+        // schedule a new transmission, send a zero length packet to indicate
+        // the end of the transfer.
+        //
+        if(bSentFullPacket && !psInst->usLastTxSize)
+        {
+            //
+            // We can expect another transmit complete notification after doing
+            // this.
+            //
+            psInst->eCDCTxState = CDC_STATE_WAIT_DATA;
+
+            //
+            // Send the zero-length packet.
+            //
+            USBEndpointDataSend(psInst->ulUSBBase,
+                                psInst->ucBulkINEndpoint,
+                                USB_TRANS_IN);
+        }
+    }
 
     return (true);
 }

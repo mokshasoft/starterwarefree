@@ -288,7 +288,7 @@ typedef struct
     //! must be repeated for each of the other languages defined in the
     //! language descriptor.
     //
-    const unsigned char * const *ppStringDescriptors;
+    unsigned char * const *ppStringDescriptors;
 
     //
     //! The number of descriptors provided in the ppStringDescriptors
