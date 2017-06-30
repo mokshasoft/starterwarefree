@@ -300,7 +300,7 @@ typedef struct
     //! language descriptor.
     //!
     //
-    const unsigned char * const *ppStringDescriptors;
+    unsigned char * const *ppStringDescriptors;
 
     //
     //! The number of descriptors provided in the ppStringDescriptors
@@ -365,8 +365,7 @@ extern tDeviceInfo g_sMSCDeviceInfo;
 // API Function Prototypes
 //
 //*****************************************************************************
-extern void *USBDMSCInit(unsigned int ulIndex,
-                         const tUSBDMSCDevice *psMSCDevice);
+extern void *USBDMSCInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice);
 extern void *USBDMSCCompositeInit(unsigned int ulIndex,
                                   const tUSBDMSCDevice *psMSCDevice);
 extern void USBDMSCTerm(void *pvInstance);

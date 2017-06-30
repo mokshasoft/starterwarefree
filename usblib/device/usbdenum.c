@@ -381,6 +381,20 @@ static const tStdRequest g_psUSBDStdRequests[] =
 
 //*****************************************************************************
 //
+// TODO: The OS Descriptor request response.
+//
+//*****************************************************************************
+const unsigned char g_pOSDescriptorPresentString[] =
+{
+    0x14,
+    USB_DTYPE_STRING,
+    'M', 0, 'S', 0, 'F', 0, 'T', 0, '1', 0, '0', 0, '0', 0,
+    0xBE, // TODO: Vendor code Preprocessor definition?
+    0
+};
+
+//*****************************************************************************
+//
 // Functions accessible by USBLIB clients.
 //
 //*****************************************************************************
@@ -1954,6 +1968,24 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest,
         case USB_DTYPE_STRING:
         {
             int lIndex;
+		//
+		// TODO: Special case - Microsoft OS Descriptors
+		//
+		if ( pUSBRequest->wValue == 0x03EE )
+		{
+//			UARTwrite("[os]",4);
+			//
+			// Return the externally specified configuration descriptor.
+			//
+			psUSBControl->pEP0Data = (unsigned char *) g_pOSDescriptorPresentString;
+
+			//
+			// The total size of a string descriptor is in byte 0.
+			//
+			psUSBControl->ulEP0DataRemain = g_pOSDescriptorPresentString[0];
+
+			break;
+		}
 
             //
             // Determine the correct descriptor index based on the requested
