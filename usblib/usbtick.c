@@ -2,7 +2,7 @@
 //
 // usbtick.c - Functions related to USB stack tick timer handling.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,11 +18,11 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 Sitaraware USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
+#include <stdint.h>
 #include "hw_types.h"
 #include "debug.h"
 #include "usblib.h"
@@ -38,11 +38,11 @@
 //*****************************************************************************
 //
 // These are the internal timer tick handlers used by the USB stack.  Handlers
-// in g_pfTickHandlers are called in the context of the USB SOF interrupt
+// in g_pfnTickHandlers are called in the context of the USB SOF interrupt
 // every USB_SOF_TICK_DIVIDE milliseconds.
 //
 //*****************************************************************************
-tUSBTickHandler g_pfTickHandlers[USB_TICK_HANDLER_NUM];
+tUSBTickHandler g_pfnTickHandlers[USB_TICK_HANDLER_NUM];
 void *g_pvTickInstance[USB_TICK_HANDLER_NUM];
 
 //*****************************************************************************
@@ -58,7 +58,7 @@ tBoolean g_bUSBTimerInitialized = false;
 // instances of USB controllers and for all timer tick handlers.
 //
 //*****************************************************************************
-unsigned int g_ulCurrentUSBTick = 0;
+uint32_t g_ui32CurrentUSBTick = 0;
 
 //*****************************************************************************
 //
@@ -67,7 +67,7 @@ unsigned int g_ulCurrentUSBTick = 0;
 // handler functions.
 //
 //*****************************************************************************
-unsigned int g_ulUSBSOFCount = 0;
+uint32_t g_ui32USBSOFCount = 0;
 
 //*****************************************************************************
 //
@@ -84,13 +84,13 @@ unsigned int g_ulUSBSOFCount = 0;
 void
 InternalUSBTickInit(void)
 {
-    unsigned int ulLoop;
+    uint32_t ulLoop;
 
     if(!g_bUSBTimerInitialized)
     {
         for(ulLoop = 0; ulLoop < USB_TICK_HANDLER_NUM; ulLoop++)
         {
-            g_pfTickHandlers[ulLoop] = (tUSBTickHandler)0;
+            g_pfnTickHandlers[ulLoop] = (tUSBTickHandler)0;
             g_pvTickInstance[ulLoop] = 0;
         }
 
@@ -117,7 +117,7 @@ InternalUSBTickInit(void)
 //
 //*****************************************************************************
 void
-InternalUSBRegisterTickHandler(unsigned int ulHandler,
+InternalUSBRegisterTickHandler(uint32_t ulHandler,
                                tUSBTickHandler pfHandler,
                                void *pvInstance)
 {
@@ -126,7 +126,7 @@ InternalUSBRegisterTickHandler(unsigned int ulHandler,
     //
     // Save the handler.
     //
-    g_pfTickHandlers[ulHandler] = pfHandler;
+    g_pfnTickHandlers[ulHandler] = pfHandler;
 
     //
     // Save the instance data.
@@ -153,24 +153,24 @@ InternalUSBRegisterTickHandler(unsigned int ulHandler,
 //! \return None.
 //
 //*****************************************************************************
-void InternalUSBStartOfFrameTick(unsigned int ulTicksmS, 
-                                    unsigned int ulIndex)
+void InternalUSBStartOfFrameTick(uint32_t ulTicksmS, 
+                                    uint32_t ulIndex)
 {
     int iIdx;
 
     //
     // Advance time.
     //
-    g_ulCurrentUSBTick += ulTicksmS;
+    g_ui32CurrentUSBTick += ulTicksmS;
 
     //
     // Call any registered SOF tick handlers.
     //
     for(iIdx = 0; iIdx < USB_TICK_HANDLER_NUM; iIdx++)
     {
-        if(g_pfTickHandlers[iIdx])
+        if(g_pfnTickHandlers[iIdx])
         {
-            g_pfTickHandlers[iIdx](g_pvTickInstance[iIdx], ulTicksmS, ulIndex);
+            g_pfnTickHandlers[iIdx](g_pvTickInstance[iIdx], ulTicksmS, ulIndex);
         }
     }
 }

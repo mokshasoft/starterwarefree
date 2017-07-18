@@ -2,7 +2,7 @@
 //
 // usbdcdc.h - USBLib support for generic CDC ACM (serial) device.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,8 +18,7 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
@@ -77,7 +76,7 @@ typedef enum
     //
     // Waiting on completion of a send or receive transaction.
     //
-    CDC_STATE_WAIT_DATA,
+    eCDCStateWaitData,
 
     //
     // Waiting for client to process data.
@@ -98,28 +97,28 @@ tCDCState;
 //*****************************************************************************
 typedef struct
 {
-    unsigned int ulUSBBase;
+    unsigned int ui32USBBase;
     tDeviceInfo *psDevInfo;
     tConfigDescriptor *psConfDescriptor;
     volatile tCDCState eCDCRxState;
-    volatile tCDCState eCDCTxState;
+    volatile tCDCState iCDCTxState;
     volatile tCDCState eCDCRequestState;
     volatile tCDCState eCDCInterruptState;
     volatile unsigned char ucPendingRequest;
     unsigned short usBreakDuration;
     unsigned short usControlLineState;
     unsigned short usSerialState;
-    volatile unsigned short usDeferredOpFlags;
-    unsigned short usLastTxSize;
+    volatile unsigned short ui16DeferredOpFlags;
+    unsigned short ui16LastTxSize;
     tLineCoding sLineCoding;
     volatile tBoolean bRxBlocked;
     volatile tBoolean bControlBlocked;
     volatile tBoolean bConnected;
-    unsigned char ucControlEndpoint;
-    unsigned char ucBulkINEndpoint;
-    unsigned char ucBulkOUTEndpoint;
-    unsigned char ucInterfaceControl;
-    unsigned char ucInterfaceData;
+    unsigned char ui8ControlEndpoint;
+    unsigned char ui8BulkINEndpoint;
+    unsigned char ui8BulkOUTEndpoint;
+    unsigned char ui8InterfaceControl;
+    unsigned char ui8InterfaceData;
 }
 tCDCSerInstance;
 
@@ -141,9 +140,10 @@ tCDCSerInstance;
 
 //*****************************************************************************
 //
-// The following defines are used when working with composite devices.
+// This is the size of the g_pui8CDCSerDataInterface array in bytes.
 //
 //*****************************************************************************
+#define SERDATAINTERFACE_SIZE    (23)
 
 //*****************************************************************************
 //
@@ -240,7 +240,7 @@ typedef struct
     //! the application of all asynchronous control events related to the
     //! operation of the device.
     //
-    tUSBCallback pfnControlCallback;
+    const tUSBCallback pfnControlCallback;
 
     //
     //! A client-supplied pointer which will be sent as the first
@@ -301,7 +301,7 @@ typedef struct
     //! must remain accessible for as long as the CDC device is in use and must
     //! not be modified by any code outside the CDC class driver.
     //
-    tCDCSerInstance *psPrivateCDCSerData;
+    tCDCSerInstance *sPrivateData;
 }
 tUSBDCDCDevice;
 

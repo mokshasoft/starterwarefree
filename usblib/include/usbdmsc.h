@@ -109,7 +109,7 @@ typedef struct
     // /return Returns the number of bytes that were read from the device.
     //
     //*****************************************************************************
-    unsigned int (* BlockRead)(void * pvDrive, unsigned char *pucData,
+    unsigned int (* BlockRead)(void * pvDrive, unsigned char *pui8Data,
                                 unsigned int ulSector,
                                 unsigned int ulNumBlocks);
 
@@ -131,7 +131,7 @@ typedef struct
     // /return Returns the number of bytes that were written to the device.
     //
     //*****************************************************************************
-    unsigned int (* BlockWrite)(void * pvDrive, unsigned char *pucData,
+    unsigned int (* BlockWrite)(void * pvDrive, unsigned char *pui8Data,
                                  unsigned int ulSector,
                                  unsigned int ulNumBlocks);
 
@@ -174,7 +174,7 @@ tMSCDMedia;
 //*****************************************************************************
 typedef struct
 {
-    unsigned int ulUSBBase;
+    unsigned int ui32USBBase;
     tDeviceInfo *psDevInfo;
     tConfigDescriptor *psConfDescriptor;
 

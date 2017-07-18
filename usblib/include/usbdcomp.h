@@ -127,7 +127,7 @@ typedef struct
     // The size and pointer to the data used by the instance.
     //
     unsigned int ulDataSize;
-    unsigned char *pucData;
+    unsigned char *pui8Data;
 }
 tCompositeInstance;
 

@@ -96,13 +96,13 @@ typedef enum
 //*****************************************************************************
 typedef struct
 {
-    unsigned int ulUSBBase;
+    unsigned int ui32USBBase;
     tDeviceInfo *psDevInfo;
     tConfigDescriptor *psConfDescriptor;
     volatile tBulkState eBulkRxState;
     volatile tBulkState eBulkTxState;
-    volatile unsigned short usDeferredOpFlags;
-    unsigned short usLastTxSize;
+    volatile unsigned short ui16DeferredOpFlags;
+    unsigned short ui16LastTxSize;
     volatile tBoolean bConnected;
     unsigned char ucINEndpoint;
     unsigned char ucOUTEndpoint;

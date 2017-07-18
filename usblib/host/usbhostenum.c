@@ -126,47 +126,47 @@ typedef enum
     // The USB device is waiting on a request from the host controller on
     // endpoint 0.
     //
-    EP0_STATE_IDLE,
+    USB_STATE_IDLE,
 
     //
     // Setup packet is expecting data IN.
     //
-    EP0_STATE_SETUP_IN,
+    USB_STATE_SETUP_IN,
 
     //
     // Setup packet is sending data OUT.
     //
-    EP0_STATE_SETUP_OUT,
+    USB_STATE_SETUP_OUT,
 
     //
     // The USB device is receiving data from the device due to an SETUP IN
     // request.
     //
-    EP0_STATE_RX,
+    USB_STATE_RX,
 
     //
     // The USB device has completed the IN or OUT request and is now waiting
     // for the host to acknowledge the end of the IN/OUT transaction.  This
     // is the status phase for a USB control transaction.
     //
-    EP0_STATE_STATUS,
+    USB_STATE_STATUS,
 
     //
     // This state is for when a response only has a status phase and no
     // data phase.
     //
-    EP0_STATE_STATUS_IN,
+    USB_STATE_STATUS_IN,
 
     //
     // This endpoint has signaled a stall condition and is waiting for the
     // stall to be acknowledged by the host controller.
     //
-    EP0_STATE_STALL,
+    USB_STATE_STALL,
 
     //
     // An error has occurred on endpoint 0.
     //
-    EP0_STATE_ERROR
+    USB_STATE_ERROR
 }
 tEP0State;
 
@@ -224,7 +224,7 @@ static volatile tHostState g_sUSBHEP0State[USB_NUM_INSTANCE] =
         0,                          // ulDataSize
         0,                          // ulDevAddress
         0,                          // ulMaxPacketSize
-        EP0_STATE_IDLE              // eState
+        USB_STATE_IDLE              // eState
     }
 #if (USB_NUM_INSTANCE == 2)
     ,{
@@ -233,7 +233,7 @@ static volatile tHostState g_sUSBHEP0State[USB_NUM_INSTANCE] =
         0,                          // ulDataSize
         0,                          // ulDevAddress
         0,                          // ulMaxPacketSize
-        EP0_STATE_IDLE              // eState
+        USB_STATE_IDLE              // eState
     }
 #endif
 };
@@ -606,7 +606,7 @@ USBHCDPipeAllocSize(unsigned int ulIndex, unsigned int ulEndpointType,
                     // Configure the FIFO.
                     //
                     USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr , 
-                                        INDEX_TO_USB_EP(iIdx + 1),
+                                        IndexToUSBEP(iIdx + 1),
                                              g_sUSBHCD[ulIndex].USBOUTPipes[iIdx]
                                              .usFIFOAddr, g_sUSBHCD[ulIndex]
                                                  .USBOUTPipes[iIdx].ucFIFOSize,
@@ -617,7 +617,7 @@ USBHCDPipeAllocSize(unsigned int ulIndex, unsigned int ulEndpointType,
                 // Set the function address for this endpoint.
                 //
                 USBHostAddrSet(g_USBInstance[ulIndex].uiBaseAddr, 
-                                INDEX_TO_USB_EP(iIdx + 1), ulDevAddr,
+                                IndexToUSBEP(iIdx + 1), ulDevAddr,
                                        USB_EP_HOST_OUT);
 
                 break;
@@ -652,7 +652,7 @@ USBHCDPipeAllocSize(unsigned int ulIndex, unsigned int ulEndpointType,
                     // Configure the FIFO.
                     //
                     USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr , 
-                                        INDEX_TO_USB_EP(iIdx + 1),
+                                        IndexToUSBEP(iIdx + 1),
                                              g_sUSBHCD[ulIndex].USBINPipes[iIdx]
                                                  .usFIFOAddr, g_sUSBHCD[ulIndex]
                                                      .USBINPipes[iIdx].ucFIFOSize,
@@ -663,7 +663,7 @@ USBHCDPipeAllocSize(unsigned int ulIndex, unsigned int ulEndpointType,
                 // Set the function address for this endpoint.
                 //
                 USBHostAddrSet(g_USBInstance[ulIndex].uiBaseAddr , 
-                                INDEX_TO_USB_EP(iIdx + 1), ulDevAddr,
+                                IndexToUSBEP(iIdx + 1), ulDevAddr,
                                        USB_EP_HOST_IN);
 
                 //
@@ -892,7 +892,7 @@ USBHCDPipeConfig(unsigned int devIndex, unsigned int ulPipe,
     // Configure the endpoint according to the flags determined above.
     //
     USBHostEndpointConfig(g_USBInstance[devIndex].uiBaseAddr ,
-                          INDEX_TO_USB_EP((ulPipe & EP_PIPE_IDX_M) + 1),
+                          IndexToUSBEP((ulPipe & EP_PIPE_IDX_M) + 1),
                           ulMaxPayload, ulInterval, ulTargetEndpoint,
                           ulFlags);
 
@@ -957,7 +957,7 @@ USBHCDPipeWrite(unsigned int ulIndex, unsigned int ulPipe,
     //
     // Determine which endpoint interface that this pipe is using.
     //
-    ulEndpoint = INDEX_TO_USB_EP((EP_PIPE_IDX_M & ulPipe) + 1);
+    ulEndpoint = IndexToUSBEP((EP_PIPE_IDX_M & ulPipe) + 1);
 
     //
     // Get index used for looking up pipe data
@@ -1229,7 +1229,7 @@ USBHCDPipeSchedule(unsigned int ulIndex, unsigned int ulPipe,
     //
     // Determine which endpoint interface that this pipe is using.
     //
-    ulEndpoint = INDEX_TO_USB_EP((EP_PIPE_IDX_M & ulPipe) + 1);
+    ulEndpoint = IndexToUSBEP((EP_PIPE_IDX_M & ulPipe) + 1);
 
     if(ulPipe & EP_PIPE_TYPE_OUT)
     {
@@ -1297,7 +1297,7 @@ USBHCDPipeReadNonBlocking(unsigned int ulIndex, unsigned int ulPipe,
     //
     // Determine which endpoint interface that this pipe is using.
     //
-    ulEndpoint = INDEX_TO_USB_EP((EP_PIPE_IDX_M & ulPipe) + 1);
+    ulEndpoint = IndexToUSBEP((EP_PIPE_IDX_M & ulPipe) + 1);
 
     //
     // Read the data out of the USB endpoint interface.
@@ -1360,7 +1360,7 @@ USBHCDPipeRead(unsigned int ulIndex, unsigned int ulPipe,
     //
     // Determine which endpoint interface that this pipe is using.
     //
-    ulEndpoint = INDEX_TO_USB_EP(ulPipeIdx + 1);
+    ulEndpoint = IndexToUSBEP(ulPipeIdx + 1);
 
     //
     // Set the remaining bytes to received.
@@ -2721,12 +2721,12 @@ USBHCDClearFeature(unsigned int devIndex, unsigned int ulDevAddress,
     //
     if(ulPipe & EP_PIPE_TYPE_IN)
     {
-        USBEndpointDataToggleClear(g_USBInstance[devIndex].uiBaseAddr , INDEX_TO_USB_EP(ulIndex + 1),
+        USBEndpointDataToggleClear(g_USBInstance[devIndex].uiBaseAddr , IndexToUSBEP(ulIndex + 1),
                                    USB_EP_HOST_IN);
     }
     else
     {
-        USBEndpointDataToggleClear(g_USBInstance[devIndex].uiBaseAddr , INDEX_TO_USB_EP(ulIndex + 1),
+        USBEndpointDataToggleClear(g_USBInstance[devIndex].uiBaseAddr , IndexToUSBEP(ulIndex + 1),
                                    USB_EP_HOST_OUT);
     }
 
@@ -3058,7 +3058,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
         //
         // Increment the global Start of Frame counter.
         //
-        g_ulUSBSOFCount++;
+        g_ui32USBSOFCount++;
 
         //
         // Increment our SOF divider.
@@ -3134,12 +3134,12 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
             //Read the completion queue
             //
             g_sUSBHCD[ulIndex].rxBuffer = (unsigned char *)dmaRxCompletion(ulIndex,  
-                                        INDEX_TO_USB_EP(ulIdx + 1));
+                                        IndexToUSBEP(ulIdx + 1));
             //
             //Send an ACk
             //
              USBHostEndpointDataAck(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1));
+                                           IndexToUSBEP(ulIdx + 1));
             //
             //Set the pipe status
             //
@@ -3181,7 +3181,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
                 //Read the completion queue
                 //
                 dmaTxCompletion(ulIndex,  
-                                        INDEX_TO_USB_EP(ulIdx + 1));
+                                        IndexToUSBEP(ulIdx + 1));
                 //
                 // Data was transmitted successfully.
                 //
@@ -3213,7 +3213,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
             // Read the status of the endpoint connected to this pipe.
             //
             ulEPStatus = USBEndpointStatus(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1));
+                                           IndexToUSBEP(ulIdx + 1));
 
             if(ulEPStatus & USB_HOST_OUT_ERROR)
             {
@@ -3222,14 +3222,14 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
                 // Clear the error condition on the endpoint.
                 //
                 USBHostEndpointStatusClear(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_HOST_OUT_ERROR);
 
                 //
                 // Data OUT failed. Flush the FIFO.
                 //
                 USBFIFOFlush(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_EP_HOST_OUT);
 
                 //
@@ -3248,7 +3248,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
                 // Clear the stall condition on this endpoint pipe.
                 //
                 USBHostEndpointStatusClear(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_HOST_OUT_STALL);
 
                 //
@@ -3276,7 +3276,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
             // Clear the stall condition on this endpoint pipe.
             //
             USBHostEndpointStatusClear(g_USBInstance[ulIndex].uiBaseAddr,
-                                       INDEX_TO_USB_EP(ulIdx + 1),
+                                       IndexToUSBEP(ulIdx + 1),
                                        ulEPStatus);
 
 
@@ -3304,7 +3304,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
             // Read the status of the endpoint connected to this pipe.
             //
             ulEPStatus = USBEndpointStatus(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1));
+                                           IndexToUSBEP(ulIdx + 1));
 
             if(ulEPStatus & USB_HOST_IN_ERROR)
             {
@@ -3313,14 +3313,14 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
                 // Clear the error condition on the endpoint.
                 //
                 USBHostEndpointStatusClear(g_USBInstance[ulIndex].uiBaseAddr,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_HOST_IN_ERROR);
 
                 //
                 // Data IN failed. Flush the FIFO.
                 //
                 USBFIFOFlush(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_EP_HOST_IN);
                 //
                 // Save the Pipes error state.
@@ -3338,7 +3338,7 @@ USBHostIntHandlerInternal(unsigned int ulIndex, unsigned int ulStatus, unsigned 
                 // Clear the stall condition on this endpoint pipe.
                 //
                 USBHostEndpointStatusClear(g_USBInstance[ulIndex].uiBaseAddr ,
-                                           INDEX_TO_USB_EP(ulIdx + 1),
+                                           IndexToUSBEP(ulIdx + 1),
                                            USB_HOST_IN_STALL);
 
                 //
@@ -4143,7 +4143,7 @@ USBHCDControlTransfer(unsigned int ulIndex, tUSBRequest *pSetupPacket,
     unsigned int ulTimer = 0;
     unsigned int retStatus = 1;
 
-    ASSERT(g_sUSBHEP0State[ulIndex].eState == EP0_STATE_IDLE);
+    ASSERT(g_sUSBHEP0State[ulIndex].eState == USB_STATE_IDLE);
     ASSERT(ulIndex == 0);
 
     //
@@ -4180,7 +4180,7 @@ USBHCDControlTransfer(unsigned int ulIndex, tUSBRequest *pSetupPacket,
     //
     if(pSetupPacket->bmRequestType & USB_RTYPE_DIR_IN)
     {
-        g_sUSBHEP0State[ulIndex].eState = EP0_STATE_SETUP_IN;
+        g_sUSBHEP0State[ulIndex].eState = USB_STATE_SETUP_IN;
     }
     else
     {
@@ -4192,14 +4192,14 @@ USBHCDControlTransfer(unsigned int ulIndex, tUSBRequest *pSetupPacket,
             //
             // Since there is data, this is an OUT request.
             //
-            g_sUSBHEP0State[ulIndex].eState = EP0_STATE_SETUP_OUT;
+            g_sUSBHEP0State[ulIndex].eState = USB_STATE_SETUP_OUT;
         }
         else
         {
             //
             // Otherwise this request has no data and just a status phase.
             //
-            g_sUSBHEP0State[ulIndex].eState = EP0_STATE_STATUS_IN;
+            g_sUSBHEP0State[ulIndex].eState = USB_STATE_STATUS_IN;
         }
     }
 
@@ -4219,9 +4219,9 @@ USBHCDControlTransfer(unsigned int ulIndex, tUSBRequest *pSetupPacket,
     //
     // Block until endpoint 0 returns to the IDLE state.
     //
-    while((g_sUSBHEP0State[ulIndex].eState != EP0_STATE_IDLE)&&(!IsTimerElapsed()))
+    while((g_sUSBHEP0State[ulIndex].eState != USB_STATE_IDLE)&&(!IsTimerElapsed()))
     {
-        if(g_sUSBHEP0State[ulIndex].eState == EP0_STATE_ERROR)
+        if(g_sUSBHEP0State[ulIndex].eState == USB_STATE_ERROR)
         {
             USBHCDTxAbort(ulIndex, 0);
             USBHCDRxAbort(ulIndex, 0);
@@ -4250,7 +4250,7 @@ USBHCDControlTransfer(unsigned int ulIndex, tUSBRequest *pSetupPacket,
     // The extra copy into local variables is required to prevent some
     // compilers from warning about undefined order of volatile access.
     //
-    if(g_sUSBHEP0State[ulIndex].eState == EP0_STATE_IDLE)
+    if(g_sUSBHEP0State[ulIndex].eState == USB_STATE_IDLE)
     {
         ulDataSize = g_sUSBHEP0State[ulIndex].ulDataSize;
         ulRemaining = g_sUSBHEP0State[ulIndex].ulBytesRemaining;
@@ -4299,7 +4299,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         //
         // Just go back to the idle state.
         //
-        g_sUSBHEP0State[ulIndex].eState = EP0_STATE_ERROR;
+        g_sUSBHEP0State[ulIndex].eState = USB_STATE_ERROR;
 
         return;
     }
@@ -4310,7 +4310,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         // Handle the status state, this is a transitory state from
         // USB_STATE_TX or USB_STATE_RX back to USB_STATE_IDLE.
         //
-        case EP0_STATE_STATUS:
+        case USB_STATE_STATUS:
         {
             //
             // Handle the case of a received status packet.
@@ -4329,7 +4329,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
             //
             // Just go back to the idle state.
             //
-            g_sUSBHEP0State[ulIndex].eState = EP0_STATE_IDLE;
+            g_sUSBHEP0State[ulIndex].eState = USB_STATE_IDLE;
 
             break;
         }
@@ -4337,7 +4337,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         //
         // This state triggers a STATUS IN request from the device.
         //
-        case EP0_STATE_STATUS_IN:
+        case USB_STATE_STATUS_IN:
         {
             //
             // Generate an IN request from the device.
@@ -4347,7 +4347,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
             //
             // Change to the status phase and wait for the response.
             //
-            g_sUSBHEP0State[ulIndex].eState =  EP0_STATE_STATUS;
+            g_sUSBHEP0State[ulIndex].eState =  USB_STATE_STATUS;
 
             break;
         }
@@ -4355,7 +4355,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         //
         // In the IDLE state the code is waiting to receive data from the host.
         //
-        case EP0_STATE_IDLE:
+        case USB_STATE_IDLE:
         {
             break;
         }
@@ -4364,7 +4364,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         // Data is still being sent to the host so handle this in the
         // EP0StateTx() function.
         //
-        case EP0_STATE_SETUP_OUT:
+        case USB_STATE_SETUP_OUT:
         {
             //
             // Send remaining data if necessary.
@@ -4378,7 +4378,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         // Handle the receive state for commands that are receiving data on
         // endpoint 0.
         //
-        case EP0_STATE_SETUP_IN:
+        case USB_STATE_SETUP_IN:
         {
             //
             // Generate a new IN request to the device.
@@ -4388,7 +4388,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
             //
             // Proceed to the RX state to receive the requested data.
             //
-            g_sUSBHEP0State[ulIndex].eState =  EP0_STATE_RX;
+            g_sUSBHEP0State[ulIndex].eState =  USB_STATE_RX;
 
             break;
         }
@@ -4397,7 +4397,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
         // The endponit remains in this state until all requested data has
         // been received.
         //
-        case EP0_STATE_RX:
+        case USB_STATE_RX:
         {
             //
             // There was a stall on endpoint 0 so go back to the idle state
@@ -4405,7 +4405,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
             //
             if(ulEPStatus & USB_HOST_EP0_RX_STALL)
             {
-                g_sUSBHEP0State[ulIndex].eState = EP0_STATE_IDLE;
+                g_sUSBHEP0State[ulIndex].eState = USB_STATE_IDLE;
 
                 //
                 // Clear the stalled state on endpoint 0.
@@ -4472,7 +4472,7 @@ USBHCDEnumHandler(unsigned int ulIndex)
                 //
                 // Return to the idle state.
                 //
-                g_sUSBHEP0State[ulIndex].eState =  EP0_STATE_STATUS;
+                g_sUSBHEP0State[ulIndex].eState =  USB_STATE_STATUS;
 
                 //
                 // No more data.
@@ -4499,12 +4499,12 @@ USBHCDEnumHandler(unsigned int ulIndex)
         // The device stalled endpoint zero so check if the stall needs to be
         // cleared once it has been successfully sent.
         //
-        case EP0_STATE_STALL:
+        case USB_STATE_STALL:
         {
             //
             // Reset the global end point 0 state to IDLE.
             //
-            g_sUSBHEP0State[ulIndex].eState = EP0_STATE_IDLE;
+            g_sUSBHEP0State[ulIndex].eState = USB_STATE_IDLE;
 
             break;
         }
@@ -4536,7 +4536,7 @@ USBHCDEP0StateTx(unsigned int ulIndex)
     //
     // In the TX state on endpoint 0.
     //
-    g_sUSBHEP0State[ulIndex].eState = EP0_STATE_SETUP_OUT;
+    g_sUSBHEP0State[ulIndex].eState = USB_STATE_SETUP_OUT;
 
     //
     // Set the number of bytes to send this iteration.
@@ -4593,7 +4593,7 @@ USBHCDEP0StateTx(unsigned int ulIndex)
         //
         // Now go to the status state and wait for the transmit to complete.
         //
-        g_sUSBHEP0State[ulIndex].eState = EP0_STATE_STATUS_IN;
+        g_sUSBHEP0State[ulIndex].eState = USB_STATE_STATUS_IN;
     }
 }
 

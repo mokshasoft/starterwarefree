@@ -2,7 +2,7 @@
 //
 // usbdbulk.c - USB bulk device class driver.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,10 +18,11 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of revision 6288 of the Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
+#include <stdint.h>
 #include "hw_usb.h"
 #include "hw_types.h"
 #include "debug.h"
@@ -121,8 +122,8 @@
 #define DATA_IN_EP_FIFO_SIZE    USB_FIFO_SZ_64
 #define DATA_OUT_EP_FIFO_SIZE   USB_FIFO_SZ_64
 
-#define DATA_IN_EP_MAX_SIZE     USB_FIFO_SZ_TO_BYTES(DATA_IN_EP_FIFO_SIZE)
-#define DATA_OUT_EP_MAX_SIZE    USB_FIFO_SZ_TO_BYTES(DATA_IN_EP_FIFO_SIZE)
+#define DATA_IN_EP_MAX_SIZE     USBFIFOSizeToBytes(DATA_IN_EP_FIFO_SIZE)
+#define DATA_OUT_EP_MAX_SIZE    USBFIFOSizeToBytes(DATA_IN_EP_FIFO_SIZE)
 
 //*****************************************************************************
 //
@@ -215,7 +216,7 @@ const unsigned char g_pBulkInterface[] =
     //
     7,                               // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,              // Descriptor type is an endpoint.
-    USB_EP_DESC_IN | USB_EP_TO_INDEX(DATA_IN_ENDPOINT),
+    USB_EP_DESC_IN | USBEPToIndex(DATA_IN_ENDPOINT),
     USB_EP_ATTR_BULK,                // Endpoint is a bulk endpoint.
     USBShort(DATA_IN_EP_MAX_SIZE),   // The maximum packet size.
     0,                               // The polling interval for this endpoint.
@@ -225,7 +226,7 @@ const unsigned char g_pBulkInterface[] =
     //
     7,                               // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,              // Descriptor type is an endpoint.
-    USB_EP_DESC_OUT | USB_EP_TO_INDEX(DATA_OUT_ENDPOINT),
+    USB_EP_DESC_OUT | USBEPToIndex(DATA_OUT_ENDPOINT),
     USB_EP_ATTR_BULK,                // Endpoint is a bulk endpoint.
     USBShort(DATA_OUT_EP_MAX_SIZE),  // The maximum packet size.
     0,                               // The polling interval for this endpoint.
@@ -367,6 +368,7 @@ SetDeferredOpFlag(volatile unsigned short *pusDeferredOp, unsigned short usBit,
     //
     // Set the flag bit to 1 or 0 using a bitband access.
     //
+
     HWREGBITH(pusDeferredOp, usBit) = bSet ? 1 : 0;
 #endif
 }
@@ -422,12 +424,12 @@ ProcessDataFromHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
         // the packet in the context of the USB_EVENT_RX_AVAILABLE callback,
         // the event will be signaled later during tick processing.
         //
-        SetDeferredOpFlag(&psInst->usDeferredOpFlags, BULK_DO_PACKET_RX, true);
+        SetDeferredOpFlag(&psInst->ui16DeferredOpFlags, BULK_DO_PACKET_RX, true);
 
         //
         // How big is the packet we've just been sent?
         //
-        ulSize = USBEndpointDataAvail(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+        ulSize = USBEndpointDataAvail(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
         //
         // The receive channel is not blocked so let the caller know
@@ -492,12 +494,12 @@ ProcessDataToHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
     //
     // Get the endpoint status to see why we were called.
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucINEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucINEndpoint);
 
     //
     // Clear the status bits.
     //
-    USBDevEndpointStatusClear(psInst->ulUSBBase, psInst->ucINEndpoint,
+    USBDevEndpointStatusClear(psInst->ui32USBBase, psInst->ucINEndpoint,
                               ulEPStatus);
 
     //
@@ -509,8 +511,8 @@ ProcessDataToHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
     //
     // Notify the client that the last transmission completed.
     //
-    ulSize = psInst->usLastTxSize;
-    psInst->usLastTxSize = 0;
+    ulSize = psInst->ui16LastTxSize;
+    psInst->ui16LastTxSize = 0;
     psDevice->pfnTxCallback(psDevice->pvTxCBData, USB_EVENT_TX_COMPLETE,
                             ulSize, (void *)0);
 
@@ -543,7 +545,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the bulk OUT data endpoint.
     //
-    if(ulStatus & (0x10000 << USB_EP_TO_INDEX(psInst->ucOUTEndpoint)))
+    if(ulStatus & (0x10000 << USBEPToIndex(psInst->ucOUTEndpoint)))
     {
         //
         // Data is being sent to us from the host.
@@ -554,7 +556,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the bulk IN data endpoint.
     //
-    if(ulStatus & (1 << USB_EP_TO_INDEX(psInst->ucINEndpoint)))
+    if(ulStatus & (1 << USBEPToIndex(psInst->ucINEndpoint)))
     {
         ProcessDataToHost(pvInstance, ulStatus, ulIndex);
     }
@@ -652,14 +654,14 @@ HandleDevice(void *pvInstance, unsigned int ulRequest, void *pvRequestData)
             //
             if(pucData[0] & USB_EP_DESC_IN)
             {
-                psInst->ucINEndpoint = INDEX_TO_USB_EP((pucData[1] & 0x7f));
+                psInst->ucINEndpoint = IndexToUSBEP((pucData[1] & 0x7f));
             }
             else
             {
                 //
                 // Extract the new endpoint number.
                 //
-                psInst->ucOUTEndpoint = INDEX_TO_USB_EP(pucData[1] & 0x7f);
+                psInst->ucOUTEndpoint = IndexToUSBEP(pucData[1] & 0x7f);
             }
             break;
         }
@@ -901,10 +903,10 @@ USBDBulkCompositeInit(unsigned int ulIndex, const tUSBDBulkDevice *psDevice)
     psInst = psDevice->psPrivateBulkData;
     psInst->psConfDescriptor = (tConfigDescriptor *)g_pBulkDescriptor;
     psInst->psDevInfo = &g_sBulkDeviceInfo;
-    psInst->ulUSBBase = g_USBInstance[ulIndex].uiBaseAddr;
+    psInst->ui32USBBase = g_USBInstance[ulIndex].uiBaseAddr;
     psInst->eBulkRxState = BULK_STATE_UNCONFIGURED;
     psInst->eBulkTxState = BULK_STATE_UNCONFIGURED;
-    psInst->usDeferredOpFlags = 0;
+    psInst->ui16DeferredOpFlags = 0;
     psInst->bConnected = false;
 
     //
@@ -917,7 +919,7 @@ USBDBulkCompositeInit(unsigned int ulIndex, const tUSBDBulkDevice *psDevice)
     //
     // Fix up the device descriptor with the client-supplied values.
     //
-    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pDeviceDescriptor;
+    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pui8DeviceDescriptor;
     psDevDesc->idVendor = psDevice->usVID;
     psDevDesc->idProduct = psDevice->usPID;
 
@@ -982,10 +984,10 @@ USBDBulkTerm(void *pvInstance)
     //
     // Terminate the requested instance.
     //
-    USB_BASE_TO_INDEX(psInst->ulUSBBase, index);
+    USB_BASE_TO_INDEX(psInst->ui32USBBase, index);
     USBDCDTerm(index);
 
-    psInst->ulUSBBase = 0;
+    psInst->ui32USBBase = 0;
     psInst->psDevInfo = (tDeviceInfo *)0;
     psInst->psConfDescriptor = (tConfigDescriptor *)0;
 
@@ -1143,7 +1145,7 @@ USBDBulkPacketWrite(void *pvInstance, unsigned char *pcData,
     //
     // Copy the data into the USB endpoint FIFO.
     //
-    iRetcode = USBEndpointDataPut(psInst->ulUSBBase, psInst->ucINEndpoint,
+    iRetcode = USBEndpointDataPut(psInst->ui32USBBase, psInst->ucINEndpoint,
                                   pcData, ulLength);
 
     //
@@ -1154,7 +1156,7 @@ USBDBulkPacketWrite(void *pvInstance, unsigned char *pcData,
         //
         // Remember how many bytes we sent.
         //
-        psInst->usLastTxSize += (unsigned short)ulLength;
+        psInst->ui16LastTxSize += (unsigned short)ulLength;
 
         //
         // If this is the last call for this packet, schedule transmission.
@@ -1166,7 +1168,7 @@ USBDBulkPacketWrite(void *pvInstance, unsigned char *pcData,
             // can expect for this packet.
             //
             psInst->eBulkTxState = BULK_STATE_WAIT_DATA;
-            iRetcode = USBEndpointDataSend(psInst->ulUSBBase,
+            iRetcode = USBEndpointDataSend(psInst->ui32USBBase,
                                            psInst->ucINEndpoint, USB_TRANS_IN);
         }
     }
@@ -1233,20 +1235,20 @@ USBDBulkPacketRead(void *pvInstance, unsigned char *pcData,
     //
     // Does the relevant endpoint FIFO have a packet waiting for us?
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
     if(ulEPStatus & USB_DEV_RX_PKT_RDY)
     {
         //
         // How many bytes are available for us to receive?
         //
-        ulPkt = USBEndpointDataAvail(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+        ulPkt = USBEndpointDataAvail(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
         //
         // Get as much data as we can.
         //
         ulCount = ulLength;
-        iRetcode = USBEndpointDataGet(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+        iRetcode = USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                       pcData, &ulCount);
 
         //
@@ -1258,21 +1260,21 @@ USBDBulkPacketRead(void *pvInstance, unsigned char *pcData,
             // Clear the endpoint status so that we know no packet is
             // waiting.
             //
-            USBDevEndpointStatusClear(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+            USBDevEndpointStatusClear(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                       ulEPStatus);
 
             //
             // Acknowledge the data, thus freeing the host to send the
             // next packet.
             //
-            USBDevEndpointDataAck(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+            USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                   true);
 
             //
             // Clear the flag we set to indicate that a packet read is
             // pending.
             //
-            SetDeferredOpFlag(&psInst->usDeferredOpFlags, BULK_DO_PACKET_RX,
+            SetDeferredOpFlag(&psInst->ui16DeferredOpFlags, BULK_DO_PACKET_RX,
                               false);
         }
 
@@ -1372,14 +1374,14 @@ USBDBulkRxPacketAvailable(void *pvInstance)
     //
     // Does the relevant endpoint FIFO have a packet waiting for us?
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
     if(ulEPStatus & USB_DEV_RX_PKT_RDY)
     {
         //
         // Yes - a packet is waiting.  How big is it?
         //
-        ulSize = USBEndpointDataAvail(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+        ulSize = USBEndpointDataAvail(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
         return (ulSize);
     }

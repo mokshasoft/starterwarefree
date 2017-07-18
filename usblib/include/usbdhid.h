@@ -605,12 +605,12 @@ tHIDState;
 //*****************************************************************************
 typedef struct
 {
-    unsigned int ulUSBBase;
+    unsigned int ui32USBBase;
     tDeviceInfo *psDevInfo;
     tConfigDescriptor *psConfDescriptor;
     volatile tHIDState eHIDRxState;
     volatile tHIDState eHIDTxState;
-    volatile unsigned short usDeferredOpFlags;
+    volatile unsigned short ui16DeferredOpFlags;
     unsigned short usInReportSize;
     unsigned short usInReportIndex;
     unsigned short usOutReportSize;

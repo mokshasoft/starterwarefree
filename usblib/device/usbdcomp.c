@@ -2,7 +2,7 @@
 //
 // usbdcomp.c - USB composite device class driver.
 //
-// Copyright (c) 2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2010-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,11 +18,11 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //****************************************************************************
 
+#include <stdint.h>
 //#include "hw_memmap.h"
 #include "hw_types.h"
 #include "debug.h"
@@ -281,9 +281,9 @@ GetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest, unsigned int ulIndex)
         //
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnGetDescriptor)
+        if(pDeviceInfo->psCallbacks.pfnGetDescriptor)
         {
-            pDeviceInfo->sCallbacks.pfnGetDescriptor(
+            pDeviceInfo->psCallbacks.pfnGetDescriptor(
                     psDevice->psDevices[ulIdx].pvInstance, pUSBRequest, ulIndex);
         }
     }
@@ -323,9 +323,9 @@ SuspendHandler(void *pvInstance)
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
         pvDeviceInst = psDevice->psDevices[ulIdx].pvInstance;
 
-        if(pDeviceInfo->sCallbacks.pfnSuspendHandler)
+        if(pDeviceInfo->psCallbacks.pfnSuspendHandler)
         {
-            pDeviceInfo->sCallbacks.pfnSuspendHandler(pvDeviceInst);
+            pDeviceInfo->psCallbacks.pfnSuspendHandler(pvDeviceInst);
         }
     }
 }
@@ -364,9 +364,9 @@ ResumeHandler(void *pvInstance)
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
         pvDeviceInst = psDevice->psDevices[ulIdx].pvInstance;
 
-        if(pDeviceInfo->sCallbacks.pfnResumeHandler)
+        if(pDeviceInfo->psCallbacks.pfnResumeHandler)
         {
-            pDeviceInfo->sCallbacks.pfnResumeHandler(pvDeviceInst);
+            pDeviceInfo->psCallbacks.pfnResumeHandler(pvDeviceInst);
         }
     }
 }
@@ -405,9 +405,9 @@ ResetHandler(void *pvInstance)
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
         pvDeviceInst = psDevice->psDevices[ulIdx].pvInstance;
 
-        if(pDeviceInfo->sCallbacks.pfnResetHandler)
+        if(pDeviceInfo->psCallbacks.pfnResetHandler)
         {
-            pDeviceInfo->sCallbacks.pfnResetHandler(pvDeviceInst);
+            pDeviceInfo->psCallbacks.pfnResetHandler(pvDeviceInst);
         }
     }
 }
@@ -434,9 +434,9 @@ DataSent(void *pvInstance, unsigned int ulInfo, unsigned int ulIndex)
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnDataSent)
+        if(pDeviceInfo->psCallbacks.pfnDataSent)
         {
-            pDeviceInfo->sCallbacks.pfnDataSent(
+            pDeviceInfo->psCallbacks.pfnDataSent(
                 psDevice->psDevices[ulIdx].pvInstance, ulInfo, ulIndex);
         }
     }
@@ -464,9 +464,9 @@ DataReceived(void *pvInstance, unsigned int ulInfo, unsigned int ulIndex)
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnDataReceived)
+        if(pDeviceInfo->psCallbacks.pfnDataReceived)
         {
-            pDeviceInfo->sCallbacks.pfnDataReceived(
+            pDeviceInfo->psCallbacks.pfnDataReceived(
                 psDevice->psDevices[ulIdx].pvInstance, ulInfo, ulIndex);
         }
     }
@@ -495,9 +495,9 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus,
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnEndpointHandler)
+        if(pDeviceInfo->psCallbacks.pfnEndpointHandler)
         {
-            pDeviceInfo->sCallbacks.pfnEndpointHandler(
+            pDeviceInfo->psCallbacks.pfnEndpointHandler(
                 psDevice->psDevices[ulIdx].pvInstance, ulStatus, ulIndex);
         }
     }
@@ -535,9 +535,9 @@ HandleDisconnect(void *pvInstance)
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnEndpointHandler)
+        if(pDeviceInfo->psCallbacks.pfnEndpointHandler)
         {
-            pDeviceInfo->sCallbacks.pfnDisconnectHandler(
+            pDeviceInfo->psCallbacks.pfnDisconnectHandler(
                 psDevice->psDevices[ulIdx].pvInstance);
         }
     }
@@ -569,9 +569,9 @@ InterfaceChange(void *pvInstance, unsigned char ucInterfaceNum,
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnInterfaceChange)
+        if(pDeviceInfo->psCallbacks.pfnInterfaceChange)
         {
-            pDeviceInfo->sCallbacks.pfnInterfaceChange(
+            pDeviceInfo->psCallbacks.pfnInterfaceChange(
                 psDevice->psDevices[ulIdx].pvInstance, ucInterfaceNum,
                 ucAlternateSetting);
         }
@@ -604,9 +604,9 @@ ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnConfigChange)
+        if(pDeviceInfo->psCallbacks.pfnConfigChange)
         {
-            pDeviceInfo->sCallbacks.pfnConfigChange(
+            pDeviceInfo->psCallbacks.pfnConfigChange(
                     psDevice->psDevices[ulIdx].pvInstance, ulValue, ulIndex);
         }
     }
@@ -645,9 +645,9 @@ HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
     {
         pDeviceInfo = psDevice->psDevices[ulIdx].psDevice;
 
-        if(pDeviceInfo->sCallbacks.pfnRequestHandler)
+        if(pDeviceInfo->psCallbacks.pfnRequestHandler)
         {
-            pDeviceInfo->sCallbacks.pfnRequestHandler(
+            pDeviceInfo->psCallbacks.pfnRequestHandler(
                 psDevice->psDevices[ulIdx].pvInstance, pUSBRequest, ulIndex);
         }
     }
@@ -664,7 +664,7 @@ CompositeIfaceChange(tCompositeEntry *pCompDevice, unsigned char ucOld,
 {
     unsigned char pucInterfaces[2];
 
-    if(pCompDevice->psDevice->sCallbacks.pfnDeviceHandler)
+    if(pCompDevice->psDevice->psCallbacks.pfnDeviceHandler)
     {
         //
         // Create the data to pass to the device handler.
@@ -676,7 +676,7 @@ CompositeIfaceChange(tCompositeEntry *pCompDevice, unsigned char ucOld,
         // Call the device handler to inform the class of the interface number
         // change.
         //
-        pCompDevice->psDevice->sCallbacks.pfnDeviceHandler(
+        pCompDevice->psDevice->psCallbacks.pfnDeviceHandler(
             pCompDevice->pvInstance, USB_EVENT_COMP_IFACE_CHANGE,
             (void *)pucInterfaces);
     }
@@ -694,7 +694,7 @@ CompositeEPChange(tCompositeEntry *pCompDevice, unsigned char ucOld,
     unsigned char pucInterfaces[2];
     unsigned char ucIndex;
 
-    if(pCompDevice->psDevice->sCallbacks.pfnDeviceHandler)
+    if(pCompDevice->psDevice->psCallbacks.pfnDeviceHandler)
     {
         //
         // Create the data to pass to the device handler.
@@ -734,7 +734,7 @@ CompositeEPChange(tCompositeEntry *pCompDevice, unsigned char ucOld,
         // Call the device handler to inform the class of the interface number
         // change.
         //
-        pCompDevice->psDevice->sCallbacks.pfnDeviceHandler(
+        pCompDevice->psDevice->psCallbacks.pfnDeviceHandler(
             pCompDevice->pvInstance, USB_EVENT_COMP_EP_CHANGE,
             (void *)pucInterfaces);
     }
@@ -782,10 +782,10 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
     // Put the pointer to this instances configuration descriptor into the
     // front of the list.
     //
-    psCompDevice->psPrivateData->ppsCompSections[0]->pucData =
+    psCompDevice->psPrivateData->ppsCompSections[0]->pui8Data =
         (unsigned char *)&psCompDevice->psPrivateData->sConfigDescriptor;
 
-    psCompDevice->psPrivateData->ppsCompSections[0]->ucSize =
+    psCompDevice->psPrivateData->ppsCompSections[0]->ui16Size =
         psCompDevice->psPrivateData->sConfigDescriptor.bLength;
 
     //
@@ -805,15 +805,15 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
     //
     // Copy the point to the application supplied space into the section list.
     //
-    psCompDevice->psPrivateData->ppsCompSections[1]->ucSize = 0;
-    psCompDevice->psPrivateData->ppsCompSections[1]->pucData =
-        psCompDevice->psPrivateData->pucData;
+    psCompDevice->psPrivateData->ppsCompSections[1]->ui16Size = 0;
+    psCompDevice->psPrivateData->ppsCompSections[1]->pui8Data =
+        psCompDevice->psPrivateData->pui8Data;
 
     //
     // Create a local pointer to the data that is used to copy data from
     // the other devices into the composite descriptor.
     //
-    pucData = psCompDevice->psPrivateData->pucData;
+    pucData = psCompDevice->psPrivateData->pui8Data;
 
     while(ulDev < psCompDevice->ulNumDevices)
     {
@@ -827,13 +827,13 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
         //
         psDevice = psCompDevice->psDevices[ulDev].psDevice;
 
-        pConfigHeader = psDevice->ppConfigDescriptors[0];
+        pConfigHeader = psDevice->ppsConfigDescriptors[0];
 
         //
         // Loop through the sections, skipping the first which is always the
         // configuration descriptor for the device.
         //
-        for(ulIdx = 1; ulIdx < pConfigHeader->ucNumSections; ulIdx++)
+        for(ulIdx = 1; ulIdx < pConfigHeader->ui8NumSections; ulIdx++)
         {
             //
             // Initialize the local offset in this descriptor.
@@ -843,7 +843,7 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
             //
             // Get a pointer to the configuration descriptor.
             //
-            pucDescriptor = pConfigHeader->psSections[ulIdx]->pucData;
+            pucDescriptor = pConfigHeader->psSections[ulIdx]->pui8Data;
 
             //
             // Bounds check the allocated space and return if there is not
@@ -858,7 +858,7 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
             // Copy the descriptor from the device into the descriptor list.
             //
             for(ulCPIdx = 0;
-                ulCPIdx < pConfigHeader->psSections[ulIdx]->ucSize;
+                ulCPIdx < pConfigHeader->psSections[ulIdx]->ui16Size;
                 ulCPIdx++)
             {
                 pucData[ulCPIdx + ulOffset] = pucDescriptor[ulCPIdx];
@@ -867,7 +867,7 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
             //
             // Read out the descriptors in this section.
             //
-            while(usBytes < pConfigHeader->psSections[ulIdx]->ucSize)
+            while(usBytes < pConfigHeader->psSections[ulIdx]->ui16Size)
             {
                 //
                 // Create a descriptor header pointer.
@@ -993,7 +993,7 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
                 usBytes += psHeader->bLength;
             }
 
-            ulOffset += pConfigHeader->psSections[ulIdx]->ucSize;
+            ulOffset += pConfigHeader->psSections[ulIdx]->ui16Size;
 
             usTotalLength += usBytes;
         }
@@ -1002,7 +1002,7 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
         // Allow the device class to make adjustments to the configuration
         // descriptor.
         //
-        psCompDevice->psDevices[ulDev].psDevice->sCallbacks.pfnDeviceHandler(
+        psCompDevice->psDevices[ulDev].psDevice->psCallbacks.pfnDeviceHandler(
                 psCompDevice->psDevices[ulDev].pvInstance,
                 USB_EVENT_COMP_CONFIG, (void *)pucConfig);
 
@@ -1013,8 +1013,8 @@ BuildCompositeDescriptor(tUSBDCompositeDevice *psCompDevice)
     // Modify the configuration descriptor to match the number of interfaces
     // and the new total size.
     //
-    psCompDevice->psPrivateData->sCompConfigHeader.ucNumSections = 2;
-    psCompDevice->psPrivateData->ppsCompSections[1]->ucSize = ulOffset;
+    psCompDevice->psPrivateData->sCompConfigHeader.ui8NumSections = 2;
+    psCompDevice->psPrivateData->ppsCompSections[1]->ui16Size = ulOffset;
     psCompDevice->psPrivateData->sConfigDescriptor.bNumInterfaces =
        ucInterface;
     psCompDevice->psPrivateData->sConfigDescriptor.wTotalLength =
@@ -1078,7 +1078,7 @@ USBDCompositeInit(unsigned int ulIndex, tUSBDCompositeDevice *psDevice,
     //
     psInst = psDevice->psPrivateData;
     psInst->ulDataSize = ulSize;
-    psInst->pucData = pucData;
+    psInst->pui8Data = pucData;
 
     //
     // Set the device information for the composite device.
@@ -1086,7 +1086,7 @@ USBDCompositeInit(unsigned int ulIndex, tUSBDCompositeDevice *psDevice,
     psInst->psDevInfo = &g_sCompositeDeviceInfo;
 
     g_pCompConfigDescriptors[0] = &psInst->sCompConfigHeader;
-    g_pCompConfigDescriptors[0]->ucNumSections = 0;
+    g_pCompConfigDescriptors[0]->ui8NumSections = 0;
     g_pCompConfigDescriptors[0]->psSections =
       (const tConfigSection * const *)psDevice->psPrivateData->ppsCompSections;
 
@@ -1129,7 +1129,7 @@ USBDCompositeInit(unsigned int ulIndex, tUSBDCompositeDevice *psDevice,
     psInst->sConfigDescriptor.bMaxPower =
         (unsigned char)(psDevice->usMaxPowermA>>1);
 
-    g_sCompositeDeviceInfo.pDeviceDescriptor =
+    g_sCompositeDeviceInfo.pui8DeviceDescriptor =
         (const unsigned char *)&psInst->sDeviceDescriptor;
 
     //

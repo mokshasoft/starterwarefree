@@ -5,7 +5,7 @@
 //                   modules in the USB library.  This header MUST NOT be
 //                   used by application code.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -21,8 +21,7 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
@@ -39,6 +38,54 @@
 extern "C"
 {
 #endif
+
+//*****************************************************************************
+//
+// The states for endpoint zero during enumeration.
+//
+//*****************************************************************************
+typedef enum
+{
+    //
+    // The USB device is waiting on a request from the host controller on
+    // endpoint zero.
+    //
+    eUSBStateIdle,
+
+    //
+    // The USB device is sending data back to the host due to an IN request.
+    //
+    eUSBStateTx,
+
+    //
+    // The USB device is sending the configuration descriptor back to the host
+    // due to an IN request.
+    //
+    eUSBStateTxConfig,
+
+    //
+    // The USB device is receiving data from the host due to an OUT
+    // request from the host.
+    //
+    eUSBStateRx,
+
+    //
+    // The USB device has completed the IN or OUT request and is now waiting
+    // for the host to acknowledge the end of the IN/OUT transaction.  This
+    // is the status phase for a USB control transaction.
+    //
+    eUSBStateStatus,
+
+    //
+    // This endpoint has signaled a stall condition and is waiting for the
+    // stall to be acknowledged by the host controller.
+    //
+    eUSBStateStall
+}
+tEP0State;
+
+
+extern tDeviceInfo *g_ppsDevInfo[];
 
 //*****************************************************************************
 //

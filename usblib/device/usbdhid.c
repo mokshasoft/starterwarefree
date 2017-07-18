@@ -2,7 +2,7 @@
 //
 // usbdhid.c - USB HID device class driver.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,11 +18,11 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
+#include <stdint.h>
 #include "hw_usb.h"
 #include "hw_types.h"
 #include "debug.h"
@@ -135,8 +135,8 @@
 #define INT_IN_EP_FIFO_SIZE     USB_FIFO_SZ_64
 #define INT_OUT_EP_FIFO_SIZE    USB_FIFO_SZ_64
 
-#define INT_IN_EP_MAX_SIZE      USB_FIFO_SZ_TO_BYTES(INT_IN_EP_FIFO_SIZE)
-#define INT_OUT_EP_MAX_SIZE     USB_FIFO_SZ_TO_BYTES(INT_IN_EP_FIFO_SIZE)
+#define INT_IN_EP_MAX_SIZE      USBFIFOSizeToBytes(INT_IN_EP_FIFO_SIZE)
+#define INT_OUT_EP_MAX_SIZE     USBFIFOSizeToBytes(INT_IN_EP_FIFO_SIZE)
 //*****************************************************************************
 //
 // USB instance Object
@@ -232,7 +232,7 @@ const unsigned char g_pHIDInEndpoint[] =
     //
     7,                          // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,         // Descriptor type is an endpoint.
-    USB_EP_DESC_IN | USB_EP_TO_INDEX(INT_IN_ENDPOINT),
+    USB_EP_DESC_IN | USBEPToIndex(INT_IN_ENDPOINT),
     USB_EP_ATTR_INT,            // Endpoint is an interrupt endpoint.
     USBShort(INT_IN_EP_MAX_SIZE), // The maximum packet size.
     16,                         // The polling interval for this endpoint.
@@ -245,7 +245,7 @@ const unsigned char g_pHIDOutEndpoint[] =
     //
     7,                          // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,         // Descriptor type is an endpoint.
-    USB_EP_DESC_OUT | USB_EP_TO_INDEX(INT_OUT_ENDPOINT),
+    USB_EP_DESC_OUT | USBEPToIndex(INT_OUT_ENDPOINT),
     USB_EP_ATTR_INT,            // Endpoint is an interrupt endpoint.
     USBShort(INT_OUT_EP_MAX_SIZE), // The maximum packet size.
     16,                         // The polling interval for this endpoint.
@@ -618,7 +618,7 @@ ProcessIdleTimers(const tUSBDHIDDevice *psDevice, unsigned int ulElapsedmS)
     // If we had to defer transmission of any report, remember this so that we
     // will process it as soon as possible.
     //
-    SetDeferredOpFlag(&psInst->usDeferredOpFlags,
+    SetDeferredOpFlag(&psInst->ui16DeferredOpFlags,
                       HID_DO_SEND_IDLE_REPORT, bDeferred);
 }
 
@@ -900,7 +900,7 @@ ScheduleReportTransmission(tHIDInstance *psInst)
     //
     // Put the data in the correct FIFO.
     //
-    iRetcode = USBEndpointDataPut(psInst->ulUSBBase, psInst->ucINEndpoint,
+    iRetcode = USBEndpointDataPut(psInst->ui32USBBase, psInst->ucINEndpoint,
                                   pucData, ulNumBytes);
 
     if(iRetcode != -1)
@@ -913,7 +913,7 @@ ScheduleReportTransmission(tHIDInstance *psInst)
         //
         // Send out the current data.
         //
-        iRetcode = USBEndpointDataSend(psInst->ulUSBBase, psInst->ucINEndpoint,
+        iRetcode = USBEndpointDataSend(psInst->ui32USBBase, psInst->ucINEndpoint,
                                        USB_TRANS_IN);
     }
 
@@ -974,12 +974,12 @@ ProcessDataFromHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
         // the packet in the context of the USB_EVENT_RX_AVAILABLE callback,
         // the event will be signaled later during tick processing.
         //
-        SetDeferredOpFlag(&psInst->usDeferredOpFlags, HID_DO_PACKET_RX, true);
+        SetDeferredOpFlag(&psInst->ui16DeferredOpFlags, HID_DO_PACKET_RX, true);
 
         //
         // How big is the packet we've just been sent?
         //
-        ulSize = USBEndpointDataAvail(psInst->ulUSBBase,
+        ulSize = USBEndpointDataAvail(psInst->ui32USBBase,
                                       psInst->ucOUTEndpoint);
 
         //
@@ -1044,12 +1044,12 @@ ProcessDataToHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
     //
     // Get the endpoint status to see why we were called.
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucINEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucINEndpoint);
 
     //
     // Clear the status bits.
     //
-    USBDevEndpointStatusClear(psInst->ulUSBBase, psInst->ucINEndpoint,
+    USBDevEndpointStatusClear(psInst->ui32USBBase, psInst->ucINEndpoint,
                               ulEPStatus);
 
     //
@@ -1073,7 +1073,7 @@ ProcessDataToHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
         //
         // Do we have any reports to send as a result of idle timer timeouts?
         //
-        if(psInst->usDeferredOpFlags & (1 << HID_DO_SEND_IDLE_REPORT))
+        if(psInst->ui16DeferredOpFlags & (1 << HID_DO_SEND_IDLE_REPORT))
         {
             //
             // Yes - send reports for any timers that expired recently.
@@ -1119,7 +1119,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the interrupt OUT data endpoint.
     //
-    if(ulStatus & (0x10000 << USB_EP_TO_INDEX(psInst->ucOUTEndpoint)))
+    if(ulStatus & (0x10000 << USBEPToIndex(psInst->ucOUTEndpoint)))
     {
         //
         // Data is being sent to us from the host.
@@ -1130,7 +1130,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the interrupt IN data endpoint.
     //
-    if(ulStatus & (1 << USB_EP_TO_INDEX(psInst->ucINEndpoint)))
+    if(ulStatus & (1 << USBEPToIndex(psInst->ucINEndpoint)))
     {
         ProcessDataToHost(pvInstance, ulStatus, ulIndex);
     }
@@ -1234,7 +1234,7 @@ HandleDevice(void *pvInstance, unsigned int ulRequest, void *pvRequestData)
             if(pucData[0] & USB_EP_DESC_IN)
             {
                 psInst->ucINEndpoint =
-                    INDEX_TO_USB_EP((pucData[1] & 0x7f));
+                    IndexToUSBEP((pucData[1] & 0x7f));
             }
             else
             {
@@ -1242,7 +1242,7 @@ HandleDevice(void *pvInstance, unsigned int ulRequest, void *pvRequestData)
                 // Extract the new endpoint number.
                 //
                 psInst->ucOUTEndpoint =
-                    INDEX_TO_USB_EP(pucData[1] & 0x7f);
+                    IndexToUSBEP(pucData[1] & 0x7f);
             }
             break;
         }
@@ -1508,7 +1508,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                 // occur if you acknowledge before setting up to receive the
                 // request data.
                 //
-                USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+                USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
             }
 
             break;
@@ -1533,7 +1533,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
             //
             // Need to ACK the data on end point 0 in this case.
             //
-            USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+            USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
 
             //
             // ..then send back the requested report.
@@ -1560,7 +1560,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
             //
             // Need to ACK the data on end point 0 in this case.
             //
-            USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+            USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
 
             break;
         }
@@ -1583,7 +1583,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                 //
                 // Need to ACK the data on end point 0 in this case.
                 //
-                USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+                USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
 
                 //
                 // Send our response to the host.
@@ -1611,7 +1611,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                 //
                 // We need to ACK the data on end point 0 in this case.
                 //
-                USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+                USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
 
                 //
                 // We are a boot subclass device so pass this on to the
@@ -1644,7 +1644,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                 //
                 // We need to ACK the data on end point 0 in this case.
                 //
-                USBDevEndpointDataAck(psInst->ulUSBBase, USB_EP_0, true);
+                USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, true);
 
                 //
                 // We are a boot subclass device so pass this on to the
@@ -1892,7 +1892,7 @@ HIDTickHandler(void *pvInstance, unsigned int ulTimemS, unsigned int ulIndex)
     //
     // Do we have a deferred receive waiting
     //
-    if(psInst->usDeferredOpFlags & (1 << HID_DO_PACKET_RX))
+    if(psInst->ui16DeferredOpFlags & (1 << HID_DO_PACKET_RX))
     {
         //
         // Yes - how big is the waiting packet?
@@ -2064,10 +2064,10 @@ USBDHIDCompositeInit(unsigned int ulIndex, const tUSBDHIDDevice *psDevice)
     psInst = psDevice->psPrivateHIDData;
     psInst->psConfDescriptor = (tConfigDescriptor *)g_pHIDDescriptor;
     psInst->psDevInfo = &g_sHIDDeviceInfo;
-    psInst->ulUSBBase = g_USBInstance[ulIndex].uiBaseAddr;
+    psInst->ui32USBBase = g_USBInstance[ulIndex].uiBaseAddr;
     psInst->eHIDRxState = HID_STATE_UNCONFIGURED;
     psInst->eHIDTxState = HID_STATE_UNCONFIGURED;
-    psInst->usDeferredOpFlags = 0;
+    psInst->ui16DeferredOpFlags = 0;
     psInst->bConnected = false;
     psInst->bGetRequestPending = false;
     psInst->bSendInProgress = false;
@@ -2087,7 +2087,7 @@ USBDHIDCompositeInit(unsigned int ulIndex, const tUSBDHIDDevice *psDevice)
     //
     // Fix up the device descriptor with the client-supplied values.
     //
-    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pDeviceDescriptor;
+    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pui8DeviceDescriptor;
     psDevDesc->idVendor = psDevice->usVID;
     psDevDesc->idProduct = psDevice->usPID;
 
@@ -2102,8 +2102,8 @@ USBDHIDCompositeInit(unsigned int ulIndex, const tUSBDHIDDevice *psDevice)
     // Slot the client's HID descriptor into our standard configuration
     // descriptor.
     //
-    g_sHIDDescriptorSection.ucSize = psDevice->psHIDDescriptor->bLength;
-    g_sHIDDescriptorSection.pucData =
+    g_sHIDDescriptorSection.ui16Size = psDevice->psHIDDescriptor->bLength;
+    g_sHIDDescriptorSection.pui8Data =
                                 (unsigned char *)psDevice->psHIDDescriptor;
 
     //
@@ -2121,11 +2121,11 @@ USBDHIDCompositeInit(unsigned int ulIndex, const tUSBDHIDDevice *psDevice)
     //
     if(psDevice->bUseOutEndpoint == false)
     {
-        g_sHIDConfigHeader.ucNumSections = (NUM_HID_SECTIONS - 1);
+        g_sHIDConfigHeader.ui8NumSections = (NUM_HID_SECTIONS - 1);
     }
     else
     {
-        g_sHIDConfigHeader.ucNumSections = NUM_HID_SECTIONS;
+        g_sHIDConfigHeader.ui8NumSections = NUM_HID_SECTIONS;
     }
 
     //
@@ -2190,10 +2190,10 @@ USBDHIDTerm(void *pvInstance)
     //
     // Terminate the requested instance.
     //
-    USB_BASE_TO_INDEX(psInst->ulUSBBase, index);
+    USB_BASE_TO_INDEX(psInst->ui32USBBase, index);
     USBDCDTerm(index);
 
-    psInst->ulUSBBase = 0;
+    psInst->ui32USBBase = 0;
     psInst->psDevInfo = (tDeviceInfo *)0;
     psInst->psConfDescriptor = (tConfigDescriptor *)0;
 }
@@ -2436,19 +2436,19 @@ USBDHIDPacketRead(void *pvInstance, unsigned char *pcData,
     //
     // Does the relevant endpoint FIFO have a packet waiting for us?
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucOUTEndpoint);
     if(ulEPStatus & USB_DEV_RX_PKT_RDY)
     {
         //
         // How many bytes are available for us to receive?
         //
-        ulPkt = USBEndpointDataAvail(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+        ulPkt = USBEndpointDataAvail(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
         //
         // Get as much data as we can.
         //
         ulCount = ulLength;
-        iRetcode = USBEndpointDataGet(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+        iRetcode = USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                       pcData, &ulCount);
 
         //
@@ -2460,21 +2460,21 @@ USBDHIDPacketRead(void *pvInstance, unsigned char *pcData,
             // Clear the endpoint status so that we know no packet is
             // waiting.
             //
-            USBDevEndpointStatusClear(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+            USBDevEndpointStatusClear(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                       ulEPStatus);
 
             //
             // Acknowledge the data, thus freeing the host to send the
             // next packet.
             //
-            USBDevEndpointDataAck(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+            USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                   true);
 
             //
             // Clear the flag we set to indicate that a packet read is
             // pending.
             //
-            SetDeferredOpFlag(&psInst->usDeferredOpFlags,
+            SetDeferredOpFlag(&psInst->ui16DeferredOpFlags,
                               HID_DO_PACKET_RX, false);
         }
 
@@ -2580,13 +2580,13 @@ USBDHIDRxPacketAvailable(void *pvInstance)
     //
     // Does the relevant endpoint FIFO have a packet waiting for us?
     //
-    ulEPStatus = USBEndpointStatus(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+    ulEPStatus = USBEndpointStatus(psInst->ui32USBBase, psInst->ucOUTEndpoint);
     if(ulEPStatus & USB_DEV_RX_PKT_RDY)
     {
         //
         // Yes - a packet is waiting.  How big is it?
         //
-        ulSize = USBEndpointDataAvail(psInst->ulUSBBase, psInst->ucOUTEndpoint);
+        ulSize = USBEndpointDataAvail(psInst->ui32USBBase, psInst->ucOUTEndpoint);
 
         return (ulSize);
     }

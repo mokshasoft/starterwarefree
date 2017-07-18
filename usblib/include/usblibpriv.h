@@ -4,7 +4,7 @@
 //                function prototypes between the various modules in the USB
 //                library.  This header MUST NOT be used by application code.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -20,8 +20,7 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
@@ -102,7 +101,7 @@ extern void InternalUSBHCDSendEvent(unsigned int ulIndex, unsigned int ulEvent);
 // milliseconds.
 //
 //*****************************************************************************
-extern unsigned int g_ulCurrentUSBTick;
+extern unsigned int g_ui32CurrentUSBTick;
 
 //*****************************************************************************
 //
@@ -110,7 +109,7 @@ extern unsigned int g_ulCurrentUSBTick;
 // incremented by the low level device- or host-mode interrupt handlers.
 //
 //*****************************************************************************
-extern unsigned int g_ulUSBSOFCount;
+extern unsigned int g_ui32USBSOFCount;
 
 //*****************************************************************************
 //
@@ -123,6 +122,74 @@ extern unsigned int g_ulUSBSOFCount;
 //
 //*****************************************************************************
 #define InternalUSBGetTime() g_ulCurrentUSBTick
+//
+// Maximum number of channels for Type 0 USB controllers.
+//
+#define USB_MAX_DMA_CHANNELS_0  6
+
+//
+// Maximum number of channels for all other USB controllers.
+//
+#define USB_MAX_DMA_CHANNELS    8
+
+//*****************************************************************************
+//
+// Values returned by the USBLibDMAChannelStatus() function.
+//
+//*****************************************************************************
+#define USBLIBSTATUS_DMA_IDLE   0x00000000
+#define USBLIBSTATUS_DMA_COMPLETE                                             \
+                                0x00000001
+#define USBLIBSTATUS_DMA_ERROR  0x00000002
+#define USBLIBSTATUS_DMA_PENDING                                              \
+                                0x00000004
+
+//*****************************************************************************
+//
+// DMA endpoint types used with the USBLibDMAChannelAllocate() function.
+//
+//*****************************************************************************
+#define USB_DMA_EP_RX           0x00000080
+#define USB_DMA_EP_TX           0x00000000
+#define USB_DMA_EP_HOST         0x00000040
+#define USB_DMA_EP_DEVICE       0x00000000
+#define USB_DMA_EP_TYPE_CTRL    0x00000000
+#define USB_DMA_EP_TYPE_ISOC    0x00000001
+#define USB_DMA_EP_TYPE_BULK    0x00000002
+#define USB_DMA_EP_TYPE_INT     0x00000003
+#define USB_DMA_EP_TYPE_M       0x00000003
+
+//*****************************************************************************
+//
+// This is the internal instance data for the DMA functions and should not
+// be modified outside the usbdma.c file.
+//
+//*****************************************************************************
+struct tUSBDMAInstance
+{
+    uint32_t ui32Base;
+
+    uint32_t ui32IntNum;
+
+    uint32_t pui32Config[USB_MAX_DMA_CHANNELS];
+
+    uint32_t pui32MaxPacketSize[USB_MAX_DMA_CHANNELS];
+
+    uint32_t *ppui32Data[USB_MAX_DMA_CHANNELS];
+
+    uint32_t pui32Count[USB_MAX_DMA_CHANNELS];
+
+    uint8_t pui8Endpoint[USB_MAX_DMA_CHANNELS];
+
+    uint32_t pui32EPDMAMode0[USB_MAX_DMA_CHANNELS];
+
+    uint32_t pui32EPDMAMode1[USB_MAX_DMA_CHANNELS];
+
+    uint32_t ui32Pending;
+
+    uint32_t ui32Complete;
+
+};
 
 //*****************************************************************************
 //
@@ -132,5 +199,12 @@ extern unsigned int g_ulUSBSOFCount;
 #ifdef __cplusplus
 }
 #endif
+
+//*****************************************************************************
+//
+// Close the Doxygen group.
+//! @}
+//
+//*****************************************************************************
 
 #endif // __USBLIBPRIV_H__

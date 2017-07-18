@@ -1,7 +1,8 @@
+//*****************************************************************************
 //
 // usblib.h - Main header file for the USB Library.
 //
-// Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -17,13 +18,15 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
 #ifndef __USBLIB_H__
 #define __USBLIB_H__
+
+#include <stdint.h>
+
 
 //*****************************************************************************
 //
@@ -73,6 +76,7 @@ extern "C"
 // must be done explicitly.
 //
 //*****************************************************************************
+#ifndef ENV_FWTEST
 #if defined(ccs) ||             \
     defined(codered) ||         \
     defined(gcc) ||             \
@@ -95,6 +99,9 @@ extern "C"
 #else
 #error Unrecognized COMPILER!
 #endif
+#else
+ #define USBLIB_PACKED
+#endif //ENV_FWTEST
 
 //*****************************************************************************
 //
@@ -133,11 +140,11 @@ extern "C"
 //
 // Structure definitions which are derived directly from the USB specification
 // use field names from the specification.  Since a somewhat different version
-// of Hungarian prefix notation is used from the Stellaris standard, beware of
-// making assumptions about field sizes based on the field prefix when using
+// of Hungarian prefix notation is used from the standard, beware of making
+// assumptions about field sizes based on the field prefix when using
 // these structures.  Of particular note is the difference in the meaning of
 // the 'i' prefix.  In USB structures, this indicates a single byte index
-// whereas in Stellaris code, this is a 32 bit integer.
+// whereas in other code, this is an integer or enumeration variable.
 //
 //*****************************************************************************
 
@@ -1108,13 +1115,13 @@ typedef struct
     //
     //! The number of bytes of descriptor data pointed to by pucData.
     //
-    unsigned char ucSize;
+    unsigned char ui16Size;
 
     //
     //! A pointer to a block of data containing an integral number of
     //! USB descriptors which form part of a larger configuration descriptor.
     //
-    const unsigned char *pucData;
+    const unsigned char *pui8Data;
 }
 tConfigSection;
 
@@ -1137,7 +1144,7 @@ typedef struct
     //! The number of sections comprising the full descriptor for this
     //! configuration.
     //
-    unsigned char ucNumSections;
+    unsigned char ui8NumSections;
 
     //
     //! A pointer to an array of ucNumSections section pointers which must
@@ -1162,12 +1169,12 @@ typedef struct
     //! A pointer to a structure containing pointers to event handler functions
     //! provided by the client to support the operation of this device.
     //
-    tCustomHandlers sCallbacks;
+    tCustomHandlers psCallbacks;
 
     //
     //! A pointer to the device descriptor for this device.
     //
-    const unsigned char *pDeviceDescriptor;
+    const unsigned char *pui8DeviceDescriptor;
 
     //
     //! A pointer to an array of configuration descriptor pointers.  Each entry
@@ -1176,7 +1183,7 @@ typedef struct
     //! match the bNumConfigurations value in the device descriptor
     //! array, pDeviceDescriptor.
     //
-    const tConfigHeader * const *ppConfigDescriptors;
+    const tConfigHeader * const *ppsConfigDescriptors;
 
     //
     //! A pointer to the string descriptor array for this device.  This array
@@ -1555,6 +1562,26 @@ typedef unsigned int (* tUSBCallback)(void *pvCBData, unsigned int ulEvent,
 #define USB_EVENT_COMP_CONFIG        (USB_EVENT_BASE + 17)
 #define USB_EVENT_BABBLE_ERROR       (USB_EVENT_BASE + 18)
 
+//! This event occurs when a device enters LPM sleep mode.
+//
+#define USB_EVENT_LPM_SLEEP     (USB_EVENT_BASE + 20)
+
+//
+//! This event occurs when a device is resumed from LPM sleep mode.
+//
+#define USB_EVENT_LPM_RESUME    (USB_EVENT_BASE + 21)
+
+//
+//! This event occurs when a device has responded with a NYET to an LPM request
+//! because LPM responses were disabled.
+//
+#define USB_EVENT_LPM_ERROR     (USB_EVENT_BASE + 22)
+
+//
+//! This event occurs when a device has been issued a configuration change.
+//
+#define USB_EVENT_CONFIG_CHANGE (USB_EVENT_BASE + 23)
+
 //*****************************************************************************
 //
 // Error sources reported via USB_EVENT_ERROR.
@@ -1650,6 +1677,128 @@ typedef unsigned int (* tUSBCallback)(void *pvCBData, unsigned int ulEvent,
 //! @}
 //
 //*****************************************************************************
+
+//*****************************************************************************
+//
+//! This feature setting enables or disables LPM support in the USB library in
+//! either host or device mode depending on if the USBHCDFeatureSet() or
+//! USBDCDFeatureSet() is called.  If no action is taken the default behavior of
+//! USB library is to not support LPM transactions.  The \e pvFeature value
+//! is a pointer to a 32-bit value containing the a logical OR of the following
+//! values:
+//!
+//! - \b USBLIB_FEATURE_LPM_EN is used to enable LPM support in host or device
+//!      mode.
+//! - \b USBLIB_FEATURE_LPM_DIS(default) is used to disable LPM support in host
+//!      or device mode.
+//! - \b USBLIB_FEATURE_LPM_RMT_WAKE is used to enable remote wake from an
+//!      LPM suspended state.
+//!
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_LPM      0x00000001
+
+//*****************************************************************************
+//
+// The defines used with the USBDCDFeatureSet() or USBHCDFeatureSet() calls
+// for \b USBLIB_FEATURE_LPM feature requests.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_LPM_RMT_WAKE                                           \
+                                0x00000002
+#define USBLIB_FEATURE_LPM_EN   0x00000001
+#define USBLIB_FEATURE_LPM_DIS  0x00000000
+
+//*****************************************************************************
+//
+//! This feature setting allows an application to inform the USB library of the
+//! current processor speed that is can use for internal timing when the frame
+//! counter is not yet running.  The \e pvFeature is a pointer to a 32-bit
+//! value that holds the processor frequency in Hz.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_CPUCLK   0x00000002
+
+//*****************************************************************************
+//
+//! This feature setting allows an application to inform the USB library of the
+//! current USB PLL rate in cases where the USB library needs this information
+//! for internal configuration.  If this feature is not set, then default rate
+//! for the USB PLL is 480MHz.  The \e pvFeature is a pointer to an 32-bit
+//! value that holds the USB PLL speed in Hz.  If the application needs to use
+//! an external USB clock the PLL value should be set to zero.  This is used
+//! when connecting to an external USB phy which is providing the 60-MHz clock.
+//!
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_USBPLL   0x00000003
+
+//*****************************************************************************
+//!
+//! This feature setting allows an application to disable or configure and
+//! enable the ULPI features in the USB library.  If this feature is not set,
+//! the default behavior is to not support ULPI operation.  The \e pvFeature is
+//! a pointer to an 32-bit value that holds the USB ULPI configuration.  The
+//! following are the valid settings for this feature:
+//!
+//! - USBLIB_FEATURE_ULPI_NONE disables all ULPI support.
+//! - USBLIB_FEATURE_ULPI_HS enable ULPI with high speed support.
+//! - USBLIB_FEATURE_ULPI_FS enable ULPI with full speed support.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_USBULPI  0x00000004
+
+//*****************************************************************************
+//
+// The defines used with the USBDCDFeatureSet() or USBHCDFeatureSet() calls
+// for \b USBLIB_FEATURE_USBULPI feature requests.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_ULPI_NONE                                              \
+                                0x00000000
+#define USBLIB_FEATURE_ULPI_HS  0x00000010
+#define USBLIB_FEATURE_ULPI_FS  0x00000020
+
+//*****************************************************************************
+//
+//! This feature setting enables or disables various power settings in the USB
+//! library in either host or device mode depending on if the
+//! USBHCDFeatureSet() or USBDCDFeatureSet() is called.  The \e pvFeature value
+//! is a pointer to a 32-bit value containing the a logical OR of the following
+//! values:
+//!
+//! - \b USBLIB_FEATURE_POWER_BUS - USB device mode is bus powered(default).
+//! - \b USBLIB_FEATURE_POWER_SELF - USB device mode is self powered.
+//! - \b USBLIB_FEATURE_REMOTE_WAKE - Enable USB remote wake feature.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_POWER    0x00000005
+
+//*****************************************************************************
+//
+// The defines used with the USBDCDFeatureSet() or USBHCDFeatureSet() calls
+// for \b USBLIB_FEATURE_POWER feature requests.
+//
+//*****************************************************************************
+#define USBLIB_FEATURE_POWER_SELF                                             \
+                                0x00000001
+#define USBLIB_FEATURE_POWER_BUS                                              \
+                                0x00000000
+#define USBLIB_FEATURE_REMOTE_WAKE                                            \
+                                0x00000002
+
+//*****************************************************************************
+//
+// The structure used with the USBDCDFeatureSet() or USBHCDFeatureSet() calls
+// to set feature enables and resume timing parameter.
+//
+//*****************************************************************************
+typedef struct
+{
+    uint32_t ui32HIRD;
+    uint32_t ui32Features;
+}
+tLPMFeature;
 
 //*****************************************************************************
 //

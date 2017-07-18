@@ -2,7 +2,7 @@
 //
 // usbdmsc.c - USB mass storage device class driver.
 //
-// Copyright (c) 2009-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2009-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,11 +18,12 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of revision 6288 of the Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 //#include "inc/hw_memmap.h"
 
+#include <stdint.h>
 #include "hw_usb.h"
 #include "hw_types.h"
 #include "debug.h"
@@ -242,7 +243,7 @@ const unsigned char g_pMSCInterface[] =
     //
     7,                               // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,              // Descriptor type is an endpoint.
-    USB_EP_DESC_IN | USB_EP_TO_INDEX(DATA_IN_ENDPOINT),
+    USB_EP_DESC_IN | USBEPToIndex(DATA_IN_ENDPOINT),
     USB_EP_ATTR_BULK,                // Endpoint is a bulk endpoint.
     USBShort(DATA_IN_EP_MAX_SIZE),   // The maximum packet size.
     0,                               // The polling interval for this endpoint.
@@ -252,7 +253,7 @@ const unsigned char g_pMSCInterface[] =
     //
     7,                               // The size of the endpoint descriptor.
     USB_DTYPE_ENDPOINT,              // Descriptor type is an endpoint.
-    USB_EP_DESC_OUT | USB_EP_TO_INDEX(DATA_OUT_ENDPOINT),
+    USB_EP_DESC_OUT | USBEPToIndex(DATA_OUT_ENDPOINT),
     USB_EP_ATTR_BULK,                // Endpoint is a bulk endpoint.
     USBShort(DATA_OUT_EP_MAX_SIZE),  // The maximum packet size.
     0,                               // The polling interval for this endpoint.
@@ -562,7 +563,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the bulk IN data endpoint.
     //
-    if(ulStatus & (1 << USB_EP_TO_INDEX(psInst->ucINEndpoint)) 
+    if(ulStatus & (1 << USBEPToIndex(psInst->ucINEndpoint)) 
         || (pendReg & CPDMA_TX_PENDING))
     {
 
@@ -786,7 +787,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //
     // Handler for the bulk OUT data endpoint.
     //
-    if(ulStatus & (0x10000 << USB_EP_TO_INDEX(psInst->ucOUTEndpoint))
+    if(ulStatus & (0x10000 << USBEPToIndex(psInst->ucOUTEndpoint))
         || (pendReg & CPDMA_RX_PENDING))
     {
        
@@ -802,10 +803,10 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 //Get the data from the FIFO and send Ack
                 //
-                USBEndpointDataGet(psInst->ulUSBBase, psInst->ucOUTEndpoint, 
+                USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint, 
                     (unsigned char *)psInst->pulBuffer, &ulMaxsize);
 
-                USBDevEndpointDataAck(psInst->ulUSBBase, psInst->ucOUTEndpoint, false);
+                USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint, false);
 
                 //
                 //Write the data to the block media
@@ -929,7 +930,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 // Receive the command.
                 //
-                USBEndpointDataGet(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+                USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                    g_pucCommand, &ulSize);
 
                 pSCSICBW = (tMSCCBW *)g_pucCommand;
@@ -937,7 +938,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 // Acknowledge the OUT data packet.
                 //
-                USBDevEndpointDataAck(psInst->ulUSBBase, psInst->ucOUTEndpoint,
+                USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                         false);
 #endif
                 
@@ -1022,7 +1023,7 @@ HandleDevice(void *pvInstance, unsigned int ulRequest, void *pvRequestData)
             //
             if(pucData[0] & USB_EP_DESC_IN)
             {
-                psInst->ucINEndpoint = INDEX_TO_USB_EP((pucData[1] & 0x7f));
+                psInst->ucINEndpoint = IndexToUSBEP((pucData[1] & 0x7f));
 
             }
             else
@@ -1030,7 +1031,7 @@ HandleDevice(void *pvInstance, unsigned int ulRequest, void *pvRequestData)
                 //
                 // Extract the new endpoint number.
                 //
-                psInst->ucOUTEndpoint = INDEX_TO_USB_EP(pucData[1] & 0x7f);
+                psInst->ucOUTEndpoint = IndexToUSBEP(pucData[1] & 0x7f);
 
             }
             break;
@@ -1248,7 +1249,7 @@ USBDMSCCompositeInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
     psInst = psDevice->psPrivateData;
     psInst->psConfDescriptor = (tConfigDescriptor *)g_pMSCDescriptor;
     psInst->psDevInfo = &g_sMSCDeviceInfo;
-    psInst->ulUSBBase = g_USBInstance[ulIndex].uiBaseAddr;
+    psInst->ui32USBBase = g_USBInstance[ulIndex].uiBaseAddr;
     psInst->bConnected = false;
     psInst->eMediaStatus = USBDMSC_MEDIA_UNKNOWN;
 
@@ -1269,7 +1270,7 @@ USBDMSCCompositeInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
     //
     // Fix up the device descriptor with the client-supplied values.
     //
-    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pDeviceDescriptor;
+    psDevDesc = (tDeviceDescriptor *)psInst->psDevInfo->pui8DeviceDescriptor;
     psDevDesc->idVendor = psDevice->usVID;
     psDevDesc->idProduct = psDevice->usPID;
 

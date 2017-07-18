@@ -308,8 +308,8 @@ extern "C"
 // USB_EP_x values required when calling various USB APIs.
 //
 //*****************************************************************************
-#define INDEX_TO_USB_EP(x)      ((x) << 4)
-#define USB_EP_TO_INDEX(x)      ((x) >> 4)
+#define IndexToUSBEP(x)         ((x) << 4)
+#define USBEPToIndex(x)         ((x) >> 4)
 
 //*****************************************************************************
 //
@@ -356,7 +356,7 @@ extern "C"
 //
 //*****************************************************************************
 #define USB_FIFO_SIZE_DB_FLAG  0x00000010
-#define USB_FIFO_SZ_TO_BYTES(x) ((8 << ((x) & ~ USB_FIFO_SIZE_DB_FLAG)) * \
+#define USBFIFOSizeToBytes(x) ((8 << ((x) & ~ USB_FIFO_SIZE_DB_FLAG)) * \
                                  (((x) & USB_FIFO_SIZE_DB_FLAG) ? 2 : 1))
 
 //*****************************************************************************

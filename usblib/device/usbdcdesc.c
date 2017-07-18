@@ -2,7 +2,7 @@
 //
 // usbcdesc.c - Config descriptor parsing functions.
 //
-// Copyright (c) 2007-2010 Texas Instruments Incorporated.  All rights reserved.
+// Copyright (c) 2007-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
@@ -18,11 +18,11 @@
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
 // 
-// This is part of AM1808 StarterWare USB Library and reused from revision 6288 
-// of the  Stellaris USB Library.
+// This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
 
+#include <stdint.h>
 #include "hw_types.h"
 #include "debug.h"
 #include "usb.h"
@@ -32,8 +32,8 @@
 //*****************************************************************************
 //
 // The functions in this file mirror the descriptor parsing APIs available
-// in usblib.h but parse config descriptors defined in terms of a list of
-// sections rather than as a single block of descriptor data.
+// in usblib.h but parse configuration descriptors defined in terms of a list
+// of sections rather than as a single block of descriptor data.
 //
 //*****************************************************************************
 
@@ -52,21 +52,23 @@
 //! config descriptor.
 //!
 //! \param psConfig points to the header structure for the configuration
-//! descriptor which contains \e psDesc.
-//! \param pulSec points to a variable containing the section within \e
-//! psConfig which contains \e psDesc.
-//! \param psDesc points to the descriptor that we want to step past.
+//! descriptor which contains \e pi16Desc.
+//! \param pui32Sec points to a variable containing the section within
+//! \e psConfig which contains \e pi16Desc.
+//! \param pi16Desc points to the descriptor that we want to step past.
 //!
-//! This function walks forward one descriptor within a config descriptor.  The
-//! value returned is a pointer to the header of the next descriptor after the
-//! descriptor supplied in \e psDesc.  If the next descriptor is in the next
-//! section, \e *pulSec will be incremented accordlingly.
+//! This function walks forward one descriptor within a configuration
+//! descriptor.  The value returned is a pointer to the header of the next
+//! descriptor after the descriptor supplied in \e pi16Desc.  If the next
+//! descriptor is in the next section, \e *pui32Sec will be incremented
+//! accordingly.
 //!
-//! \return Returns a pointer to the next descriptor in the config descrptor.
+//! \return Returns a pointer to the next descriptor in the configuration
+//! descriptor.
 //
 //*****************************************************************************
 static tDescriptorHeader *
-NextConfigDescGet(const tConfigHeader *psConfig, unsigned int *pulSec,
+NextConfigDescGet(const tConfigHeader *psConfig, uint32_t *pui32Sec,
                   tDescriptorHeader *psDesc)
 {
     //
@@ -78,24 +80,24 @@ NextConfigDescGet(const tConfigHeader *psConfig, unsigned int *pulSec,
     //
     // Did we run off the end of the section?
     //
-    if((unsigned char *)psDesc >= (psConfig->psSections[*pulSec]->pucData +
-                  psConfig->psSections[*pulSec]->ucSize))
+    if((uint8_t *)psDesc >= (psConfig->psSections[*pui32Sec]->pui8Data +
+                  psConfig->psSections[*pui32Sec]->ui16Size))
     {
         //
         // Yes - move to the next section.
         //
-        (*pulSec)++;
+        (*pui32Sec)++;
 
         //
-        // Are we still within the config descriptor?
+        // Are we still within the configuration descriptor?
         //
-        if(*pulSec < psConfig->ucNumSections)
+        if(*pui32Sec < psConfig->ui8NumSections)
         {
             //
             // Yes - the new descriptor is at the start of the new section.
             //
             psDesc =
-                (tDescriptorHeader *)psConfig->psSections[*pulSec]->pucData;
+                (tDescriptorHeader *)psConfig->psSections[*pui32Sec]->pui8Data;
         }
         else
         {
@@ -116,15 +118,15 @@ NextConfigDescGet(const tConfigHeader *psConfig, unsigned int *pulSec,
 //
 //! \internal
 //!
-//! Returns a pointer to the n-th interface descriptor in a config descriptor
-//! with the supplied interface number.
+//! Returns a pointer to the n-th interface descriptor in a configuration
+//! descriptor with the supplied interface number.
 //!
-//! \param psConfig points to the header structure for the config descriptor
-//! that is to be searched.
-//! \param ucInterfaceNumber is the interface number of the descriptor that is
-//! being queried.
-//! \param ulIndex is the zero based index of the descriptor to return.
-//! \param pulSection points to storage which will be written with the index
+//! \param psConfig points to the header structure for the configuration
+//! descriptor to search.
+//! \param ui8InterfaceNumber is the interface number of the descriptor to
+//! query.
+//! \param ui32Index is the zero based index of the descriptor.
+//! \param pui32Section points to storage which is written with the index
 //! of the section containing the returned descriptor.
 //!
 //! This function returns a pointer to the n-th interface descriptor in the
@@ -138,20 +140,18 @@ NextConfigDescGet(const tConfigHeader *psConfig, unsigned int *pulSec,
 //*****************************************************************************
 static tInterfaceDescriptor *
 ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
-                            unsigned char ucInterfaceNumber,
-                            unsigned int ulIndex,
-                            unsigned int *pulSection)
+                            uint8_t ui8InterfaceNumber, uint32_t ui32Index,
+                            uint32_t *pui32Section)
 {
     tDescriptorHeader *psDescCheck;
-    unsigned int ulCount;
-    unsigned int ulSec;
+    uint32_t ui32Count, ui32Sec;
 
     //
     // Set up for our descriptor counting loop.
     //
-    psDescCheck = (tDescriptorHeader *)psConfig->psSections[0]->pucData;
-    ulCount = 0;
-    ulSec = 0;
+    psDescCheck = (tDescriptorHeader *)psConfig->psSections[0]->pui8Data;
+    ui32Count = 0;
+    ui32Sec = 0;
 
     //
     // Keep looking through the supplied data until we reach the end.
@@ -164,19 +164,19 @@ ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
         //
         if((psDescCheck->bDescriptorType == USB_DTYPE_INTERFACE) &&
             (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
-             ucInterfaceNumber))
+             ui8InterfaceNumber))
         {
             //
-            // This is an interface descriptor for interface ucInterfaceNumber.
-            // Determine if this is the n-th one we have found and, if so,
-            // return its pointer.
+            // This is an interface descriptor for interface
+            // ui8InterfaceNumber.  Determine if this is the n-th one we have
+            // found and, if so, return its pointer.
             //
-            if(ulCount == ulIndex)
+            if(ui32Count == ui32Index)
             {
                 //
                 // Found it - return the pointer and section number.
                 //
-                *pulSection = ulSec;
+                *pui32Section = ui32Sec;
                 return((tInterfaceDescriptor *)psDescCheck);
             }
 
@@ -185,13 +185,13 @@ ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
             // to look for another since we have not yet reached the n-th
             // match.
             //
-            ulCount++;
+            ui32Count++;
         }
 
         //
         // Move on to the next descriptor.
         //
-        psDescCheck = NextConfigDescGet(psConfig, &ulSec, psDescCheck);
+        psDescCheck = NextConfigDescGet(psConfig, &ui32Sec, psDescCheck);
     }
 
     //
@@ -205,34 +205,33 @@ ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
 //
 //! \internal
 //!
-//! Determines the total length of a config descriptor defined in terms of a
-//! collection of concatenated sections.
+//! Determines the total length of a configuration descriptor defined in terms
+//! of a collection of concatenated sections.
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor whose size is to be determined.
 //!
-//! \return Returns the number of bytes in the config descriptor will result
-//! from concatenating the required sections.
+//! \return Returns the number of bytes in the configuration descriptor will
+//! result from concatenating the required sections.
 //
 //*****************************************************************************
-unsigned int
+uint32_t
 USBDCDConfigDescGetSize(const tConfigHeader *psConfig)
 {
-    unsigned int ulLoop;
-    unsigned int ulLen;
+    uint32_t ui32Loop, ui32Len;
 
-    ulLen = 0;
+    ui32Len = 0;
 
     //
     // Determine the size of the whole descriptor by adding the sizes of
     // each section which will be concatenated to produce it.
     //
-    for(ulLoop = 0; ulLoop < psConfig->ucNumSections; ulLoop++)
+    for(ui32Loop = 0; ui32Loop < psConfig->ui8NumSections; ui32Loop++)
     {
-        ulLen += psConfig->psSections[ulLoop]->ucSize;
+        ui32Len += psConfig->psSections[ui32Loop]->ui16Size;
     }
 
-    return(ulLen);
+    return(ui32Len);
 }
 
 //*****************************************************************************
@@ -244,8 +243,8 @@ USBDCDConfigDescGetSize(const tConfigHeader *psConfig)
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor that is to be searched.
-//! \param ulType identifies the type of descriptor that is to be counted.  If
-//! the value is \b USB_DESC_ANY, the function returns the total number of
+//! \param ui32Type identifies the type of descriptor that is to be counted.
+//! If the value is \b USB_DESC_ANY, the function returns the total number of
 //! descriptors regardless of type.
 //!
 //! This function can be used to count the number of descriptors of a
@@ -263,32 +262,30 @@ USBDCDConfigDescGetSize(const tConfigHeader *psConfig)
 //! data.
 //
 //*****************************************************************************
-unsigned int
-USBDCDConfigDescGetNum(const tConfigHeader *psConfig, unsigned int ulType)
+uint32_t
+USBDCDConfigDescGetNum(const tConfigHeader *psConfig, uint32_t ui32Type)
 {
-    unsigned int ulSection;
-    unsigned int ulNumDescs;
+    uint32_t ui32Section, ui32NumDescs;
 
     //
     // Initialize our counts.
     //
-    ulNumDescs = 0;
+    ui32NumDescs = 0;
 
     //
     // Determine the number of descriptors of the given type in each of the
-    // sections comprising the config descriptor.  Note that this assumes each
-    // section contains only whole descriptors!
+    // sections comprising the configuration descriptor.  Note that this
+    // assumes each section contains only whole descriptors!
     //
-    for(ulSection = 0; ulSection < (unsigned int)psConfig->ucNumSections;
-        ulSection++)
+    for(ui32Section = 0; ui32Section < (uint32_t)psConfig->ui8NumSections;
+        ui32Section++)
     {
-        ulNumDescs += USBDescGetNum(
-                (tDescriptorHeader *)psConfig->psSections[ulSection]->pucData,
-                (unsigned int)psConfig->psSections[ulSection]->ucSize,
-                ulType);
+        ui32NumDescs += USBDescGetNum(
+            (tDescriptorHeader *)psConfig->psSections[ui32Section]->pui8Data,
+            psConfig->psSections[ui32Section]->ui16Size, ui32Type);
     }
 
-    return(ulNumDescs);
+    return(ui32NumDescs);
 }
 
 //*****************************************************************************
@@ -300,13 +297,13 @@ USBDCDConfigDescGetNum(const tConfigHeader *psConfig, unsigned int ulType)
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor that is to be searched.
-//! \param ulType identifies the type of descriptor that is to be found.  If
+//! \param ui32Type identifies the type of descriptor that is to be found.  If
 //! the value is \b USB_DESC_ANY, the function returns a pointer to the n-th
 //! descriptor regardless of type.
-//! \param ulIndex is the zero based index of the descriptor whose pointer is
-//! to be returned.  For example, passing value 1 in \e ulIndex returns the
+//! \param ui32Index is the zero based index of the descriptor whose pointer is
+//! to be returned.  For example, passing value 1 in \e ui32Index returns the
 //! second matching descriptor.
-//! \param pulSection points to storage which will receive the section index
+//! \param pui32Section points to storage which will receive the section index
 //! containing the requested descriptor.
 //!
 //! Return a pointer to the n-th descriptor of a particular type found in the
@@ -322,54 +319,50 @@ USBDCDConfigDescGetNum(const tConfigHeader *psConfig, unsigned int ulType)
 //
 //*****************************************************************************
 tDescriptorHeader *
-USBDCDConfigDescGet(const tConfigHeader *psConfig, unsigned int ulType,
-                    unsigned int ulIndex, unsigned int *pulSection)
+USBDCDConfigDescGet(const tConfigHeader *psConfig, uint32_t ui32Type,
+                    uint32_t ui32Index, uint32_t *pui32Section)
 {
-    unsigned int ulSection;
-    unsigned int ulTotalDescs;
-    unsigned int ulNumDescs;
+    uint32_t ui32Section, ui32TotalDescs, ui32NumDescs;
 
     //
     // Initialize our counts.
     //
-    ulTotalDescs = 0;
+    ui32TotalDescs = 0;
 
     //
     // Determine the number of descriptors of the given type in each of the
-    // sections comprising the config descriptor.  This allows us to determine
-    // which section contains the descriptor we are being asked for.
+    // sections comprising the configuration descriptor.  This allows us to
+    // determine which section contains the descriptor we are being asked for.
     //
-    for(ulSection = 0; ulSection < (unsigned int)psConfig->ucNumSections;
-        ulSection++)
+    for(ui32Section = 0; ui32Section < (uint32_t)psConfig->ui8NumSections;
+        ui32Section++)
     {
         //
         // How many descriptors of the requested type exist in this section?
         //
-        ulNumDescs = USBDescGetNum(
-                (tDescriptorHeader *)psConfig->psSections[ulSection]->pucData,
-                (unsigned int)psConfig->psSections[ulSection]->ucSize,
-                ulType);
+        ui32NumDescs = USBDescGetNum(
+            (tDescriptorHeader *)psConfig->psSections[ui32Section]->pui8Data,
+            psConfig->psSections[ui32Section]->ui16Size, ui32Type);
 
         //
         // Does this section contain the descriptor whose index we are looking
         // for?
         //
-        if((ulTotalDescs + ulNumDescs) > ulIndex)
+        if((ui32TotalDescs + ui32NumDescs) > ui32Index)
         {
             //
             // We know the requested descriptor exists in the current
             // block so write the section number to the caller's storage.
             //
-            *pulSection = ulSection;
+            *pui32Section = ui32Section;
 
             //
             // Now find the actual descriptor requested and return its pointer.
             //
             return(USBDescGet(
-                 (tDescriptorHeader *)psConfig->psSections[ulSection]->pucData,
-                 (unsigned int)psConfig->psSections[ulSection]->ucSize,
-                 ulType,
-                 ulIndex - ulTotalDescs));
+              (tDescriptorHeader *)psConfig->psSections[ui32Section]->pui8Data,
+               psConfig->psSections[ui32Section]->ui16Size,
+               ui32Type, ui32Index - ui32TotalDescs));
         }
 
         //
@@ -377,7 +370,7 @@ USBDCDConfigDescGet(const tConfigHeader *psConfig, unsigned int ulType,
         // count of the number of type matches found so far then move on to
         // the next section.
         //
-        ulTotalDescs += ulNumDescs;
+        ui32TotalDescs += ui32NumDescs;
     }
 
     //
@@ -392,11 +385,11 @@ USBDCDConfigDescGet(const tConfigHeader *psConfig, unsigned int ulType,
 //! \internal
 //!
 //! Determines the number of different alternate configurations for a given
-//! interface within a config descriptor.
+//! interface within a configuration descriptor.
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor that is to be searched.
-//! \param ucInterfaceNumber is the interface number for which the number of
+//! \param ui8InterfaceNumber is the interface number for which the number of
 //! alternate configurations is to be counted.
 //!
 //! This function can be used to count the number of alternate settings for a
@@ -408,24 +401,23 @@ USBDCDConfigDescGet(const tConfigHeader *psConfig, unsigned int ulType,
 //! a single, contiguous block of data to perform the same enumeration.
 //!
 //! \return Returns the number of alternate versions of the specified interface
-//! or 0 if the interface number supplied cannot be found in the config
+//! or 0 if the interface number supplied cannot be found in the configuration
 //! descriptor.
 //
 //*****************************************************************************
-unsigned int
+uint32_t
 USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
-                                      unsigned char ucInterfaceNumber)
+                                      uint8_t ui8InterfaceNumber)
 {
     tDescriptorHeader *psDescCheck;
-    unsigned int ulCount;
-    unsigned int ulSec;
+    uint32_t ui32Count, ui32Sec;
 
     //
     // Set up for our descriptor counting loop.
     //
-    psDescCheck = (tDescriptorHeader *)psConfig->psSections[0]->pucData;
-    ulSec = 0;
-    ulCount = 0;
+    psDescCheck = (tDescriptorHeader *)psConfig->psSections[0]->pui8Data;
+    ui32Sec = 0;
+    ui32Count = 0;
 
     //
     // Keep looking through the supplied data until we reach the end.
@@ -437,24 +429,24 @@ USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
         //
         if((psDescCheck->bDescriptorType == USB_DTYPE_INTERFACE) &&
             (((tInterfaceDescriptor *)psDescCheck)->bInterfaceNumber ==
-             ucInterfaceNumber))
+             ui8InterfaceNumber))
         {
             //
             // Yes - increment our count.
             //
-            ulCount++;
+            ui32Count++;
         }
 
         //
         // Move on to the next descriptor.
         //
-        psDescCheck = NextConfigDescGet(psConfig, &ulSec, psDescCheck);
+        psDescCheck = NextConfigDescGet(psConfig, &ui32Sec, psDescCheck);
     }
 
     //
     // Return the descriptor count to the caller.
     //
-    return(ulCount);
+    return(ui32Count);
 }
 
 //*****************************************************************************
@@ -466,18 +458,18 @@ USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor that is to be searched.
-//! \param ulIndex is the zero based index of the interface that is to be
-//! found.  If \e ulAlt is set to a value other than \b USB_DESC_ANY, this will
-//! be equivalent to the interface number being searched for.
-//! \param ulAlt is the alternate setting number which is to be
+//! \param ui32Index is the zero based index of the interface that is to be
+//! found.  If \e ui32Alt is set to a value other than \b USB_DESC_ANY, this
+//! is equivalent to the interface number being searched for.
+//! \param ui32Alt is the alternate setting number which is to be
 //! searched for.  If this value is \b USB_DESC_ANY, the alternate setting
 //! is ignored and all interface descriptors are considered in the search.
-//! \param pulSection points to storage which will receive the index of the
+//! \param pui32Section points to storage which will receive the index of the
 //! config descriptor section which contains the requested interface
 //! descriptor.
 //!
 //! Return a pointer to the n-th interface descriptor found in the supplied
-//! configuration descriptor.  If \e ulAlt is not \b USB_DESC_ANY, only
+//! configuration descriptor.  If \e ui32Alt is not \b USB_DESC_ANY, only
 //! interface descriptors which are part of the supplied alternate setting are
 //! considered in the search otherwise all interface descriptors are
 //! considered.
@@ -486,8 +478,8 @@ USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
 //! interface basis, the number of interfaces offered is fixed for a given
 //! config descriptor.  Hence, this function will correctly find the unique
 //! interface descriptor for that interface's alternate setting number \e
-//! ulAlt if \e ulIndex is set to the required interface number and \e ulAlt
-//! is set to a valid alternate setting number for that interface.
+//! ui32Alt if \e ui32Index is set to the required interface number and
+//! \e ui32Alt is set to a valid alternate setting number for that interface.
 //!
 //! The search performed by this function traverses through the list of
 //! sections comprising the configuration descriptor.  Note that the similar
@@ -499,35 +491,35 @@ USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
 //
 //*****************************************************************************
 tInterfaceDescriptor *
-USBDCDConfigGetInterface(const tConfigHeader *psConfig, unsigned int ulIndex,
-                         unsigned int ulAlt, unsigned int *pulSection)
+USBDCDConfigGetInterface(const tConfigHeader *psConfig, uint32_t ui32Index,
+                         uint32_t ui32Alt, uint32_t *pui32Section)
 {
     //
     // If we are being told to ignore the alternate configuration, this boils
     // down to a very simple query.
     //
-    if(ulAlt == USB_DESC_ANY)
+    if(ui32Alt == USB_DESC_ANY)
     {
         //
-        // Return the ulIndex-th interface descriptor we find in the
+        // Return the ui32Index-th interface descriptor we find in the
         // configuration descriptor.
         //
         return((tInterfaceDescriptor *)USBDCDConfigDescGet(psConfig,
                                                            USB_DTYPE_INTERFACE,
-                                                           ulIndex,
-                                                           pulSection));
+                                                           ui32Index,
+                                                           pui32Section));
     }
     else
     {
         //
         // In this case, a specific alternate setting number is required.
         // Given that interface numbers are zero based indices, we can
-        // pass the supplied ulIndex parameter directly as the interface
-        // number to USBDescGetAlternateInterface to retrieve the requested
+        // pass the supplied ui32Index parameter directly as the interface
+        // number to USBDescGetAlternateInterface() to retrieve the requested
         // interface descriptor pointer.
         //
-        return(ConfigAlternateInterfaceGet(psConfig, ulIndex, ulAlt,
-                                           pulSection));
+        return(ConfigAlternateInterfaceGet(psConfig, ui32Index, ui32Alt,
+                                           pui32Section));
     }
 }
 
@@ -540,27 +532,18 @@ USBDCDConfigGetInterface(const tConfigHeader *psConfig, unsigned int ulIndex,
 //!
 //! \param psConfig points to the header structure for the configuration
 //! descriptor that is to be searched.
-//! \param ulInterfaceNumber is the interface number whose endpoint is to be
+//! \param ui32InterfaceNumber is the interface number whose endpoint is to be
 //! found.
-//! \param ulAltCfg is the alternate setting number which is to be searched
+//! \param ui32AltCfg is the alternate setting number which is to be searched
 //! for.  This must be a valid alternate setting number for the requested
 //! interface.
-//! \param ulIndex is the zero based index of the endpoint that is to be
+//! \param ui32Index is the zero based index of the endpoint that is to be
 //! found within the appropriate alternate setting for the interface.
 //!
 //! Return a pointer to the n-th endpoint descriptor found in the supplied
-//! interface descriptor.  If the \e ulIndex parameter is invalid (greater
+//! interface descriptor.  If the \e ui32Index parameter is invalid (greater
 //! than or equal to the bNumEndpoints field of the interface descriptor) or
-//! the endpoint cannot be found within \e ulSize bytes of the interface
-//! descriptor pointer, the function will return NULL.
-//!
-//! Note that, although the USB 2.0 specification states that endpoint
-//! descriptors must follow the interface descriptor that they relate to, it
-//! also states that device specific descriptors should follow any standard
-//! descriptor that they relate to.  As a result, we cannot assume that each
-//! interface descriptor will be followed by nothing but an ordered list of
-//! its own endpoints and, hence, the function needs to be provided ulSize to
-//! limit the search range.
+//! the endpoint descriptor cannot be found, the function will return NULL.
 //!
 //! The search performed by this function traverses through the list of
 //! sections comprising the configuration descriptor.  Note that the similar
@@ -573,19 +556,18 @@ USBDCDConfigGetInterface(const tConfigHeader *psConfig, unsigned int ulIndex,
 //*****************************************************************************
 tEndpointDescriptor *
 USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
-                                 unsigned int ulInterfaceNumber,
-                                 unsigned int ulAltCfg, unsigned int ulIndex)
+                                 uint32_t ui32InterfaceNumber,
+                                 uint32_t ui32AltCfg, uint32_t ui32Index)
 {
     tInterfaceDescriptor *psInterface;
     tDescriptorHeader *psEndpoint;
-    unsigned int ulSection;
-    unsigned int ulCount;
+    uint32_t ui32Section, ui32Count;
 
     //
     // Find the requested interface descriptor.
     //
-    psInterface = USBDCDConfigGetInterface(psConfig, ulInterfaceNumber,
-                                           ulAltCfg, &ulSection);
+    psInterface = USBDCDConfigGetInterface(psConfig, ui32InterfaceNumber,
+                                           ui32AltCfg, &ui32Section);
 
     //
     // Did we find the requested interface?
@@ -595,7 +577,7 @@ USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
         //
         // Is the index passed valid?
         //
-        if(ulIndex >= psInterface->bNumEndpoints)
+        if(ui32Index >= psInterface->bNumEndpoints)
         {
             //
             // It's out of bounds so return a NULL.
@@ -609,7 +591,7 @@ USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
             // the interface descriptor and look for following endpoint
             // descriptors.
             //
-            ulCount = 0;
+            ui32Count = 0;
             psEndpoint = (tDescriptorHeader *)psInterface;
 
             while(psEndpoint)
@@ -620,7 +602,7 @@ USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
                     // We found an endpoint descriptor.  Have we reached the
                     // one we want?
                     //
-                    if(ulCount == ulIndex)
+                    if(ui32Count == ui32Index)
                     {
                         //
                         // Yes - return the descriptor pointer to the caller.
@@ -631,20 +613,20 @@ USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
                     //
                     // Move on to look for the next endpoint.
                     //
-                    ulCount++;
+                    ui32Count++;
                 }
 
                 //
                 // Move to the next descriptor.
                 //
-                psEndpoint = NextConfigDescGet(psConfig, &ulSection,
+                psEndpoint = NextConfigDescGet(psConfig, &ui32Section,
                                                psEndpoint);
             }
         }
     }
 
     //
-    // We couldn't find the requested interface or we got to the end of the
+    // We could not find the requested interface or we got to the end of the
     // descriptor without finding the requested endpoint.
     //
     return((tEndpointDescriptor *)0);
