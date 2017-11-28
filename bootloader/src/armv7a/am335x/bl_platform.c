@@ -37,6 +37,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "ff.h"
 #include "hw_types.h"
 #include "hw_cm_cefuse.h"
 #include "hw_cm_device.h"
@@ -389,7 +390,9 @@
 **                     Local function Declarations
 *******************************************************************************/
 
+#ifdef evmskAM335x
 static void DDRVTTEnable(void);
+#endif
 extern void SPIConfigure(void);
 extern void I2C1ModuleClkConfig(void);
 
@@ -1364,6 +1367,7 @@ void ConfigVddOpVoltage(void)
     I2CMasterSlaveAddrSet(SOC_I2C_0_REGS, PMIC_TPS65217_I2C_SLAVE_ADDR);
 
     TPS65217RegRead(STATUS, &pmic_status);
+
     /* Increase USB current limit to 1300mA */
     TPS65217RegWrite(PROT_LEVEL_NONE, POWER_PATH, USB_INPUT_CUR_LIMIT_1300MA,
                        USB_INPUT_CUR_LIMIT_MASK);
@@ -1489,6 +1493,7 @@ static void DDR3PhyInit(void)
     HWREG(CMD2_INVERT_CLKOUT_0) = DDR3_CMD2_INVERT_CLKOUT_0;
 
     /* DATA macro configuration */
+#ifndef pocketbeagle
     HWREG(DATA0_RD_DQS_SLAVE_RATIO_0)  = DDR3_DATA0_RD_DQS_SLAVE_RATIO_0;
     HWREG(DATA0_WR_DQS_SLAVE_RATIO_0)  = DDR3_DATA0_WR_DQS_SLAVE_RATIO_0;
     HWREG(DATA0_FIFO_WE_SLAVE_RATIO_0) = DDR3_DATA0_FIFO_WE_SLAVE_RATIO_0;
@@ -1497,6 +1502,17 @@ static void DDR3PhyInit(void)
     HWREG(DATA1_WR_DQS_SLAVE_RATIO_0)  = DDR3_DATA0_WR_DQS_SLAVE_RATIO_1;
     HWREG(DATA1_FIFO_WE_SLAVE_RATIO_0) = DDR3_DATA0_FIFO_WE_SLAVE_RATIO_1;
     HWREG(DATA1_WR_DATA_SLAVE_RATIO_0) = DDR3_DATA0_WR_DATA_SLAVE_RATIO_1;
+#else
+    // initialisation values according to Octavo TRM
+    HWREG(DATA0_RD_DQS_SLAVE_RATIO_0) =  0x0000003A;
+    HWREG(DATA0_WR_DQS_SLAVE_RATIO_0) =  0x00000045;
+    HWREG(DATA0_FIFO_WE_SLAVE_RATIO_0) = 0x00000095;
+    HWREG(DATA0_WR_DATA_SLAVE_RATIO_0) = 0x0000007F;
+    HWREG(DATA1_RD_DQS_SLAVE_RATIO_0) =  0x0000003A;
+    HWREG(DATA1_WR_DQS_SLAVE_RATIO_0) =  0x00000045;
+    HWREG(DATA1_FIFO_WE_SLAVE_RATIO_0) = 0x00000095;
+    HWREG(DATA1_WR_DATA_SLAVE_RATIO_0) = 0x0000007F;
+#endif
 
 }
 
@@ -1529,6 +1545,9 @@ void DDR3Init(void)
 
     HWREG(SOC_CONTROL_REGS + CONTROL_DDR_CKE_CTRL) |= CONTROL_DDR_CKE_CTRL_DDR_CKE_CTRL;
 
+#ifdef pocketbeagle
+    HWREG(SOC_EMIF_0_REGS + EMIF_DDR_PHY_CTRL_1) = 0x00100007;
+#else
     HWREG(SOC_EMIF_0_REGS + EMIF_DDR_PHY_CTRL_1) = DDR3_EMIF_DDR_PHY_CTRL_1;
 
     /* Dynamic Power Down */
@@ -1549,6 +1568,7 @@ void DDR3Init(void)
         HWREG(SOC_EMIF_0_REGS + EMIF_DDR_PHY_CTRL_1_SHDW) |=
                                          DDR3_EMIF_DDR_PHY_CTRL_1_SHDW_DY_PWRDN;
     }
+#endif
 
     HWREG(SOC_EMIF_0_REGS + EMIF_DDR_PHY_CTRL_2) = DDR3_EMIF_DDR_PHY_CTRL_2;
 
@@ -1565,7 +1585,9 @@ void DDR3Init(void)
 
     HWREG(SOC_EMIF_0_REGS + EMIF_ZQ_CONFIG)     = DDR3_EMIF_ZQ_CONFIG_VAL;
     HWREG(SOC_EMIF_0_REGS + EMIF_SDRAM_CONFIG)     = DDR3_EMIF_SDRAM_CONFIG;
-	
+#ifdef pocketbeagle
+    HWREG(SOC_EMIF_0_REGS + EMIF_SDRAM_CONFIG_2) = 0x00000000;
+#endif
     /* The CONTROL_SECURE_EMIF_SDRAM_CONFIG register exports SDRAM configuration 
        information to the EMIF */
     HWREG(SOC_CONTROL_REGS + CONTROL_SECURE_EMIF_SDRAM_CONFIG) = DDR3_EMIF_SDRAM_CONFIG;
@@ -1909,7 +1931,7 @@ void BlPlatformConfig(void)
 {
     BoardInfoInit();
 #ifdef beaglebone	
-    if(!strcmp(boardName,BNL_BOARD_NAME))
+    if(!strcmp((char*)boardName,BNL_BOARD_NAME))
     {
         isBBB = TRUE;
     }
@@ -1976,7 +1998,7 @@ void BlPlatformConfig(void)
 #else
     if(isBBB)
     {
-        DDRVTTEnable();
+//        DDRVTTEnable();
         DDR3Init();
     }
     else
@@ -1992,6 +2014,7 @@ void BlPlatformConfig(void)
 **
 */
 
+#ifdef evmskAM335x
 static void DDRVTTEnable(void)
 {
     GPIO0ModuleClkConfig();
@@ -2013,6 +2036,7 @@ static void DDRVTTEnable(void)
                  GPIO_PIN_HIGH);
 
 }
+#endif
 
 /*
  * \brief This function does any post boot setup/init
