@@ -93,8 +93,6 @@ typedef struct _fatDevice
 
     /* File system pointer */
     FATFS *fs;
-    /* state */
-    unsigned int initDone;
 }fatDevice;
 #endif
 extern fatDevice fat_devices[2];
@@ -187,7 +185,7 @@ tFresultString g_sFresultStrings[] =
     FRESULT_ENTRY(FR_INVALID_DRIVE),
     FRESULT_ENTRY(FR_DENIED),
     FRESULT_ENTRY(FR_EXIST),
-//    FRESULT_ENTRY(FR_RW_ERROR),
+    FRESULT_ENTRY(FR_RW_ERROR),
     FRESULT_ENTRY(FR_WRITE_PROTECTED),
     FRESULT_ENTRY(FR_NOT_ENABLED),
     FRESULT_ENTRY(FR_NO_FILESYSTEM),
@@ -437,7 +435,10 @@ static void HSMMCSDControllerSetup(void)
 */
 void HSMMCSDFsMount(unsigned int driveNum, void *ptr)
 {
-    f_mount(&g_sFatFs,(TCHAR*)"0:",1);
+    if (driveNum==0)
+     f_mount(&g_sFatFs,"0:",1);
+    else
+     f_mount(&g_sFatFs,"1:",1);
     fat_devices[0].dev = ptr;
     fat_devices[0].fs = &g_sFatFs;
 }
@@ -474,7 +475,9 @@ unsigned int HSMMCSDImageCopy(void)
     }
     else
     {
-        UARTPuts("Copying application image from MMC/SD card to RAM\r\n", -1);
+        UARTPuts("Copying application image ",-1);
+		UARTPuts(fname, -1);
+		UARTPuts(" to RAM...", -1);
         fresult = f_read(&g_sFileObject, (unsigned char *)&imageHdr, 8,
                          &usBytesRead);
         if(fresult != FR_OK)
@@ -497,6 +500,7 @@ unsigned int HSMMCSDImageCopy(void)
     */
     do
     {
+        UARTPuts(".", -1);
         /*
         ** Read a block of data from the file.  Read as much as can fit in the
         ** temporary buffer, including a space for the trailing null.
@@ -510,7 +514,7 @@ unsigned int HSMMCSDImageCopy(void)
         */
         if(fresult != FR_OK)
         {
-            UARTPuts("\r\n Error reading application file\r\n", -1);
+            UARTPuts("\r\nError loading application file\r\n", -1);
             return 0;
         }
 
@@ -528,7 +532,9 @@ unsigned int HSMMCSDImageCopy(void)
         /*
         ** Read the last chunk of the file that was received.
         */
+#ifndef ENV_FWTEST
         memcpy(destAddr, g_cTmpBuf, (sizeof(g_cTmpBuf) - 1));
+#endif
         destAddr += (sizeof(g_cTmpBuf) - 1);
         /*
         ** Continue reading until less than the full number of bytes are read.
@@ -536,6 +542,7 @@ unsigned int HSMMCSDImageCopy(void)
         */
     }
     while(usBytesRead == sizeof(g_cTmpBuf) - 1);
+    UARTPuts(".done\r\n", -1);
 
     /*
     ** Close the file.

@@ -41,7 +41,9 @@
 #include <string.h>
 
 #include "uartStdio.h"
+#ifdef NAND
 #include "nandlib.h"
+#endif
 #include "hw_types.h"
 
 #include "bl.h"

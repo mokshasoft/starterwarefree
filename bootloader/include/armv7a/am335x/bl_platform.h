@@ -121,6 +121,8 @@
 #elif defined(MMCSD)
 
     #define MMCSD_BASE                     SOC_MMCHS_0_REGS
+    #define SD_BASE                        SOC_MMCHS_0_REGS
+    #define MMC_BASE                       SOC_MMCHS_1_REGS
     #define MMCSD_DMA_BASE                 SOC_EDMA30CC_0_REGS
 
     #define MMCSD_IN_FREQ                  96000000 /* 96MHz */

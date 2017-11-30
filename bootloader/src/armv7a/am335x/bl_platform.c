@@ -37,7 +37,6 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "ff.h"
 #include "hw_types.h"
 #include "hw_cm_cefuse.h"
 #include "hw_cm_device.h"
@@ -1310,7 +1309,9 @@ void SetVdd1OpVoltage(unsigned int opVolSelector)
 #ifdef beaglebone
 
     /* Set DCDC2 (MPU) voltage */
+#ifndef ENV_FWTEST
     TPS65217VoltageUpdate(DEFDCDC2, opVolSelector);
+#endif //ENV_FWTEST
 
 #elif  defined (evmAM335x) || defined (evmskAM335x)
 
@@ -1367,7 +1368,6 @@ void ConfigVddOpVoltage(void)
     I2CMasterSlaveAddrSet(SOC_I2C_0_REGS, PMIC_TPS65217_I2C_SLAVE_ADDR);
 
     TPS65217RegRead(STATUS, &pmic_status);
-
     /* Increase USB current limit to 1300mA */
     TPS65217RegWrite(PROT_LEVEL_NONE, POWER_PATH, USB_INPUT_CUR_LIMIT_1300MA,
                        USB_INPUT_CUR_LIMIT_MASK);
@@ -1508,6 +1508,7 @@ static void DDR3PhyInit(void)
     HWREG(DATA0_WR_DQS_SLAVE_RATIO_0) =  0x00000045;
     HWREG(DATA0_FIFO_WE_SLAVE_RATIO_0) = 0x00000095;
     HWREG(DATA0_WR_DATA_SLAVE_RATIO_0) = 0x0000007F;
+
     HWREG(DATA1_RD_DQS_SLAVE_RATIO_0) =  0x0000003A;
     HWREG(DATA1_WR_DQS_SLAVE_RATIO_0) =  0x00000045;
     HWREG(DATA1_FIFO_WE_SLAVE_RATIO_0) = 0x00000095;
@@ -1864,7 +1865,7 @@ void BlPlatformMMCSDSetup(void)
 {
     /* Enable clock for MMCSD and Do the PINMUXing */
     HSMMCSDPinMuxSetup();
-    HSMMCSDModuleClkConfig();
+    HSMMCSDModuleClkConfig(1);
 }
 #endif
 
@@ -1929,23 +1930,35 @@ void UARTSetup(void)
 */
 void BlPlatformConfig(void)
 {
+#ifndef ENV_FWTEST
     BoardInfoInit();
+#endif //ENV_FWTEST
+#ifdef pocketbeagle
+   isBBB=TRUE;
+#else
 #ifdef beaglebone	
-    if(!strcmp((char*)boardName,BNL_BOARD_NAME))
+    if(!strcmp(boardName,BNL_BOARD_NAME))
     {
         isBBB = TRUE;
     }
-#endif
+ #endif // beaglebone
+#endif // pocketbeagle
     deviceVersion = DeviceVersionGet();
+#ifndef ENV_FWTEST
     ConfigVddOpVoltage();
+#endif //ENV_FWTEST
     oppMaxIdx = BootMaxOppGet();
     SetVdd1OpVoltage(oppTable[oppMaxIdx].pmicVolt);
 
     HWREG(SOC_WDT_1_REGS + WDT_WSPR) = 0xAAAAu;
+#ifndef ENV_FWTEST
     while(HWREG(SOC_WDT_1_REGS + WDT_WWPS) != 0x00);
+#endif
 
     HWREG(SOC_WDT_1_REGS + WDT_WSPR) = 0x5555u;
+#ifndef ENV_FWTEST
     while(HWREG(SOC_WDT_1_REGS + WDT_WWPS) != 0x00);
+#endif
 
     /* Configure DDR frequency */
 #ifdef evmskAM335x

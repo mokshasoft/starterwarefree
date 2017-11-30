@@ -79,17 +79,15 @@ int main(void)
     /* Configures PLL and DDR controller*/
     BlPlatformConfig();
 
-    UARTPuts("StarterWare ", -1);
-    UARTPuts(deviceType, -1);
-    UARTPuts(" Boot Loader\n\r", -1);
+    UARTprintf("HALaser Systems AM335x bootloader\r\n");
 
     /* Copies application from non-volatile flash memory to RAM */
     ImageCopy();
 
-    UARTPuts("Jumping to StarterWare Application...\r\n\n", -1);
-
     /* Do any post-copy config before leaving boot loader */
     BlPlatformConfigPostBoot();
+
+    UARTprintf("Jumping to 0x%X\r\n",entryPoint);
 
     /* Giving control to the application */
     appEntry = (void (*)(void)) entryPoint;
