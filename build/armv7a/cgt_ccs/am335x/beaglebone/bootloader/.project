@@ -95,5 +95,20 @@
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/third_party/xmodem/xmodem.c</locationURI>
 		</link>
+		<link>
+			<name>DEBUG_MMCSD_PocketBeagle/boot.out</name>
+			<type>1</type>
+			<locationURI>EXTERNAL_BUILD_ARTIFACT</locationURI>
+		</link>
+		<link>
+			<name>Debug_MMCSD/boot.out</name>
+			<type>1</type>
+			<locationURI>EXTERNAL_BUILD_ARTIFACT</locationURI>
+		</link>
+		<link>
+			<name>RELEASE_MMCSD_PB/boot.out</name>
+			<type>1</type>
+			<locationURI>EXTERNAL_BUILD_ARTIFACT</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
