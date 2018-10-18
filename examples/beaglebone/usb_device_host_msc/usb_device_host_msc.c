@@ -1753,16 +1753,16 @@ void MMUConfigAndEnable(void)
 int
 main(void)
 {
-    
-    int iStatus;    
-    
-    /* MMU needs to be turned on to provide HW support unaligned 
+
+    int iStatus;
+
+    /* MMU needs to be turned on to provide HW support unaligned
        access to USB structures */
     MMUConfigAndEnable();
-  
+
     /* Enable Data Cache */
     CacheEnable(CACHE_ALL);
-  
+
     //
     // Initially wait for device connection.
     //

@@ -110,9 +110,9 @@ void StopTimer()
 }
 
 /**
- * \brief   This function checks whether timer is expired for set milli secs 
+ * \brief   This function checks whether timer is expired for set milli secs
  *
- * \param   None. 
+ * \param   None.
  *
  * \return  None.
  *

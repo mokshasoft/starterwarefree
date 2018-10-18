@@ -50,7 +50,7 @@
 /**
  * \brief   This function selects the UART pins for use. The UART pins
  *          are multiplexed with pins of other peripherals in the SoC
- *          
+ *
  * \param   instanceNum       The instance number of the UART to be used.
  *
  * \return  TRUE/FALSE
@@ -65,7 +65,7 @@ unsigned int UARTPinMuxSetup(unsigned int instanceNum)
     unsigned int profile = 0;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch (profile)
     {
@@ -81,12 +81,12 @@ unsigned int UARTPinMuxSetup(unsigned int instanceNum)
             if(0 == instanceNum)
             {
                 /* RXD */
-                HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_RXD(0)) = 
-                (CONTROL_CONF_UART0_RXD_CONF_UART0_RXD_PUTYPESEL | 
+                HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_RXD(0)) =
+                (CONTROL_CONF_UART0_RXD_CONF_UART0_RXD_PUTYPESEL |
                  CONTROL_CONF_UART0_RXD_CONF_UART0_RXD_RXACTIVE);
 
                 /* TXD */
-                HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_TXD(0)) = 
+                HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_TXD(0)) =
                 CONTROL_CONF_UART0_TXD_CONF_UART0_TXD_PUTYPESEL;
                 status = TRUE;
             }

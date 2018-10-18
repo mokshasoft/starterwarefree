@@ -55,7 +55,7 @@
 ******************************************************************************/
 /**
  * \brief   This function saves the platform related context
- *          
+ *
  * \param   Pointer to the structure where context needs to be saved
  *
  * \return  None
@@ -66,7 +66,7 @@ void ControlRegContextSave(CTRLREGCONTEXT *contextPtr)
     unsigned int ioPadIdx;
 
     contextPtr->pwmssctrl = HWREG(SOC_CONTROL_REGS + CONTROL_PWMSS_CTRL);
-    contextPtr->gmiisel = HWREG(SOC_CONTROL_REGS + CONTROL_GMII_SEL); 
+    contextPtr->gmiisel = HWREG(SOC_CONTROL_REGS + CONTROL_GMII_SEL);
 
     for(ioPadIdx = 0; ioPadIdx < CTRL_NUM_IOPAD_REGS; ioPadIdx++)
     {

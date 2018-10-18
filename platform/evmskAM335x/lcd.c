@@ -75,10 +75,10 @@ static volatile unsigned int flag = 1;
 **              FUNCTION DEFINITIONS
 ******************************************************************************/
 
-/**  
- * \brief  This API pin multiplexes the lcd data and control signal lines. 
- * 
- * \param  None  
+/**
+ * \brief  This API pin multiplexes the lcd data and control signal lines.
+ *
+ * \param  None
  */
 
 unsigned int LCDPinMuxSetup(void)
@@ -89,41 +89,41 @@ unsigned int LCDPinMuxSetup(void)
                (1 << CONTROL_CONF_LCD_DATA0_CONF_LCD_DATA0_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA0_CONF_LCD_DATA0_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA0_CONF_LCD_DATA0_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA0_CONF_LCD_DATA0_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA0_CONF_LCD_DATA0_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(1)) =
                (0 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_SLEWCTRL_SHIFT);  
+               (0 << CONTROL_CONF_LCD_DATA1_CONF_LCD_DATA1_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(2)) =
                (0 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_SLEWCTRL_SHIFT);  
+               (0 << CONTROL_CONF_LCD_DATA2_CONF_LCD_DATA2_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(3)) =
                (0 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA3_CONF_LCD_DATA3_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(4)) =
                (0 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA4_CONF_LCD_DATA4_SLEWCTRL_SHIFT);
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(5)) =
                (0 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA5_CONF_LCD_DATA5_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(6)) =
                (0 << CONTROL_CONF_LCD_DATA6_CONF_LCD_DATA6_MMODE_SHIFT)    |
@@ -144,28 +144,28 @@ unsigned int LCDPinMuxSetup(void)
                (1 << CONTROL_CONF_LCD_DATA8_CONF_LCD_DATA8_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA8_CONF_LCD_DATA8_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA8_CONF_LCD_DATA8_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA8_CONF_LCD_DATA8_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA8_CONF_LCD_DATA8_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(9)) =
                (0 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA9_CONF_LCD_DATA9_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(10)) =
                (0 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_MMODE_SHIFT)    |
                (1 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_PUDEN_SHIFT)    |
                (0 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_PUTYPESEL_SHIFT)|
                (1 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_RXACTIVE_SHIFT) |
-               (0 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA10_CONF_LCD_DATA10_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(11)) =
                (0 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_MMODE_SHIFT)     |
                (1 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_PUDEN_SHIFT)     |
                (0 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_PUTYPESEL_SHIFT) |
                (1 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_RXACTIVE_SHIFT)  |
-               (0 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_SLEWCTRL_SHIFT); 
+               (0 << CONTROL_CONF_LCD_DATA11_CONF_LCD_DATA11_SLEWCTRL_SHIFT);
 
      HWREG(SOC_CONTROL_REGS + CONTROL_CONF_LCD_DATA(12)) =
                (0 << CONTROL_CONF_LCD_DATA12_CONF_LCD_DATA12_MMODE_SHIFT)     |
@@ -282,10 +282,10 @@ unsigned int LCDPinMuxSetup(void)
 }
 
 
-/**  
- * \brief  This API returns a unique number which identifies itself  
- *         with the LCDC IP in AM335x SoC.  
- * \param  None  
+/**
+ * \brief  This API returns a unique number which identifies itself
+ *         with the LCDC IP in AM335x SoC.
+ * \param  None
  * \return This returns a number '2' which is unique to LCDC IP in AM335x.
  */
 unsigned int LCDVersionGet(void)
@@ -301,75 +301,75 @@ unsigned int LCDVersionGet(void)
  */
 void LCDModuleClkConfig(void)
 {
-    HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) |=
                              CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) &
      CM_PER_L3S_CLKSTCTRL_CLKTRCTRL) != CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) |=
                              CM_PER_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) &
      CM_PER_L3_CLKSTCTRL_CLKTRCTRL) != CM_PER_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) |=
                              CM_PER_L3_INSTR_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) & 
-                               CM_PER_L3_INSTR_CLKCTRL_MODULEMODE) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) &
+                               CM_PER_L3_INSTR_CLKCTRL_MODULEMODE) !=
                                    CM_PER_L3_INSTR_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) |=
                              CM_PER_L3_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) &
         CM_PER_L3_CLKCTRL_MODULEMODE) != CM_PER_L3_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) |=
                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) & 
-                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) &
+                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL) !=
                                 CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) |=
                              CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) & 
-                             CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) &
+                             CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL) !=
                                CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) |=
                              CM_PER_L4LS_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) &
       CM_PER_L4LS_CLKCTRL_MODULEMODE) != CM_PER_L4LS_CLKCTRL_MODULEMODE_ENABLE);
 
-    /* lcd pixel clock is derived from peripheral pll */    
-    HWREG(SOC_CM_DPLL_REGS + CM_DPLL_CLKSEL_LCDC_PIXEL_CLK) = 
+    /* lcd pixel clock is derived from peripheral pll */
+    HWREG(SOC_CM_DPLL_REGS + CM_DPLL_CLKSEL_LCDC_PIXEL_CLK) =
                              CM_DPLL_CLKSEL_LCDC_PIXEL_CLK_CLKSEL_SEL3;
 
-    HWREG(SOC_PRCM_REGS + CM_PER_LCDC_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_LCDC_CLKCTRL) |=
                              CM_PER_LCDC_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_LCDC_CLKCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_LCDC_CLKCTRL) &
       CM_PER_LCDC_CLKCTRL_MODULEMODE) != CM_PER_LCDC_CLKCTRL_MODULEMODE_ENABLE);
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) & 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) &
             CM_PER_L3S_CLKSTCTRL_CLKACTIVITY_L3S_GCLK));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) & 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) &
             CM_PER_L3_CLKSTCTRL_CLKACTIVITY_L3_GCLK));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) & 
-           (CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L3_GCLK | 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) &
+           (CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L3_GCLK |
             CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L4_GCLK)));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) & 
-           (CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_L4LS_GCLK | 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) &
+           (CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_L4LS_GCLK |
             CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_LCDC_GCLK)));
-    
+
 }
 
  /*
@@ -377,7 +377,7 @@ void LCDModuleClkConfig(void)
  ** it to high,so that backlight is enabled
  */
 #define  GPIO_INSTANCE_PIN_NUMBER      (17u)
- 
+
 void LCDBackLightEnable(void)
 {
     GPIO3ModuleClkConfig();
@@ -390,7 +390,7 @@ void LCDBackLightEnable(void)
     /* Enabling the GPIO module. */
     GPIOModuleEnable(SOC_GPIO_3_REGS);
 
-    /* Setting the GPIO pin as an input pin. */    
+    /* Setting the GPIO pin as an input pin. */
     GPIODirModeSet(SOC_GPIO_3_REGS,
                    GPIO_INSTANCE_PIN_NUMBER,
                    GPIO_DIR_OUTPUT);
@@ -409,7 +409,7 @@ void LCDBackLightDisable(void)
                  GPIO_PIN_HIGH);
 }
 
-/* 
+/*
 **UPDN pin is pulled low to overcome mirroring of image
 **on lcd
 */
@@ -474,7 +474,7 @@ static void SetUpI2CTransmit(unsigned int dcount)
     while(I2CMasterBusBusy(SOC_I2C_0_REGS) == 0);
 
     while(flag);
-    
+
     while(I2CMasterBusy(SOC_I2C_0_REGS));
 
     /* Wait untill I2C registers are ready to access */
@@ -529,11 +529,11 @@ static void SetUpReception(unsigned int dcount)
     while(I2CMasterBusBusy(SOC_I2C_0_REGS) == 0);
 
     while(flag);
-    
+
     flag = 1;
 }
 
-/* 
+/*
 **UPDN pin is pulled low to overcome mirroring of image
 **on lcd
 */
@@ -550,7 +550,7 @@ static void UPDNControl(void)
     dataFromSlave[1] = 0;
     rCount = 0;
     tCount = 0;
-    
+
     SetUpReception(1);
 
     /* Write back the value, exit low power */
@@ -583,7 +583,7 @@ static void ClearInterrupts(void)
 
 /*
 ** I2C Interrupt Service Routine. This function will read and write
-** data through I2C bus. 
+** data through I2C bus.
 */
 static void I2CIsr(void)
 {
@@ -592,9 +592,9 @@ static void I2CIsr(void)
     /* Get only Enabled interrupt status */
     status = I2CMasterIntStatus(SOC_I2C_0_REGS);
 
-    /* 
+    /*
     ** Clear all enabled interrupt status except receive ready and
-    ** transmit ready interrupt status 
+    ** transmit ready interrupt status
     */
     I2CMasterIntClearEx(SOC_I2C_0_REGS,
                         (status & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY)));
@@ -615,7 +615,7 @@ static void I2CIsr(void)
               I2CMasterStop(SOC_I2C_0_REGS);
 
          }
-             
+
     }
 
     if (status & I2C_INT_TRANSMIT_READY)
@@ -632,7 +632,7 @@ static void I2CIsr(void)
               I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);
          }
     }
-  
+
     if (status & I2C_INT_STOP_CONDITION)
     {
          /* Disable transmit data ready and receive data read interupt */
@@ -641,7 +641,7 @@ static void I2CIsr(void)
                                                I2C_INT_STOP_CONDITION);
          flag = 0;
     }
-   
+
     if(status & I2C_INT_NO_ACK)
     {
          I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY  |

@@ -289,7 +289,7 @@ unsigned char ConsoleUtilsGetChar(void)
     {
         byte = UARTGetc();
         rxByte = byte;
-        
+
         /* Wait until the byte entered is new line or carriage return */
         while((rxByte != '\n') && (rxByte != '\r'))
         {

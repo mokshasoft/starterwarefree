@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -92,8 +92,8 @@ USB0DeviceIntHandler(void)
     //
     HWREG(g_USBInstance[0].uiSubBaseAddr + USB_0_IRQ_STATUS_0) = epStatus;
 
-#ifdef DMA_MODE    
-    HWREG(USBSS_BASE + USBSS_IRQ_STATUS) = 
+#ifdef DMA_MODE
+    HWREG(USBSS_BASE + USBSS_IRQ_STATUS) =
         HWREG(USBSS_BASE + USBSS_IRQ_STATUS);
 #endif
     //
@@ -109,7 +109,7 @@ USB0DeviceIntHandler(void)
     HWREG(USBSS_BASE + USBSS_IRQ_EOI) = 0;
 #endif
 
-#else    
+#else
     //
     // Get the controller interrupt status.
     //
@@ -129,7 +129,7 @@ USB0DeviceIntHandler(void)
 
     // End of Interrupts
     HWREG(g_USBInstance[0].uiSubBaseAddr + USB_0_END_OF_INTR) = 0;
-#endif    
+#endif
 
 }
 
@@ -160,8 +160,8 @@ USB1DeviceIntHandler(void)
     //
     HWREG(g_USBInstance[1].uiSubBaseAddr + USB_0_IRQ_STATUS_0) = epStatus;
 
-#ifdef DMA_MODE    
-    HWREG(USBSS_BASE + USBSS_IRQ_STATUS) = 
+#ifdef DMA_MODE
+    HWREG(USBSS_BASE + USBSS_IRQ_STATUS) =
         HWREG(USBSS_BASE + USBSS_IRQ_STATUS);
 #endif
     //

@@ -1,7 +1,7 @@
 /**
  * \file     cm3wkup_proxy.c
  *
- * \brief    This file contains the function prototypes for inter-processor 
+ * \brief    This file contains the function prototypes for inter-processor
 			 communication between A8 and M3.
  */
 
@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #include <string.h>
 #include "hw_types.h"
 #include "hw_prm_mpu.h"
@@ -176,14 +176,14 @@ deepSleepData dsDataM3reset = {
  *
  * \return 	  None
  */
-  
+
 void configIPCRegs(deepSleepData pmDsDataVar)
 {
 
 	/*	Command ID	*/
 	HWREG(SOC_CONTROL_REGS + CONTROL_IPC_MSG_REG(1)) = pmDsDataVar.dsParams.short1;
 		
-	if((PM_CMD_RTC_MODE == pmDsDataVar.dsDataBits.cmdID) || 
+	if((PM_CMD_RTC_MODE == pmDsDataVar.dsDataBits.cmdID) ||
 			(PM_CMD_RTC_FAST_MODE == pmDsDataVar.dsDataBits.cmdID))
 	{
 		/*	RTC time out value	*/
@@ -208,7 +208,7 @@ void configIPCRegs(deepSleepData pmDsDataVar)
  *
  * \return 	  trace		trace data indicating the state of CM3
  */
- 
+
 unsigned int readCM3Trace(void)
 {
 	return HWREG(SOC_CONTROL_REGS + CONTROL_IPC_MSG_REG(4));
@@ -222,7 +222,7 @@ unsigned int readCM3Trace(void)
  *
  * \return 	  status 	status of the last sent command
  */
- 
+
 unsigned short readCmdStatus(void)
 {
 	return ((HWREG(SOC_CONTROL_REGS + CONTROL_IPC_MSG_REG(1))) >> PM_STATUS_SHIFT);

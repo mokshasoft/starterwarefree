@@ -52,16 +52,16 @@
  * \param     baseAdd	Memory address of the mailbox instance used.
  * \return 	  None
  */
- 
+
 void MBresetMailbox(unsigned int baseAdd)
 {
 	/*	Start the soft reset sequence	*/
-	HWREG(baseAdd + MAILBOX_SYSCONFIG) = 
-		(MAILBOX_SYSCONFIG_SOFTRESET_MANUAL << 
+	HWREG(baseAdd + MAILBOX_SYSCONFIG) =
+		(MAILBOX_SYSCONFIG_SOFTRESET_MANUAL <<
 					MAILBOX_SYSCONFIG_SOFTRESET_SHIFT);
 					
 	/*	Wait till the reset is complete	*/
-	while(HWREG(baseAdd + MAILBOX_SYSCONFIG) & 
+	while(HWREG(baseAdd + MAILBOX_SYSCONFIG) &
 	(MAILBOX_SYSCONFIG_SOFTRESET << MAILBOX_SYSCONFIG_SOFTRESET_SHIFT));
 }
 
@@ -73,15 +73,15 @@ void MBresetMailbox(unsigned int baseAdd)
  * \param     idleMode	Idle mode to be configured. Possible values are
  *						0x0: Force-idle. An idle request is acknowledged unconditionally
  *						0x1: No-idle. An idle request is never acknowledged
- *						0x2: Smart-idle. Acknowledgement to an idle request is given based 
+ *						0x2: Smart-idle. Acknowledgement to an idle request is given based
  *						on the internal activity of the module
  * \return 	  None
  */
- 
+
 void MBconfigIdleMode(unsigned int baseAdd, unsigned int idleMode)
 {
 	/*	Configure idle mode	*/
-	HWREG(baseAdd + MAILBOX_SYSCONFIG) = 
+	HWREG(baseAdd + MAILBOX_SYSCONFIG) =
 		(idleMode << MAILBOX_SYSCONFIG_SIDLEMODE_SHIFT);
 }
 
@@ -95,12 +95,12 @@ void MBconfigIdleMode(unsigned int baseAdd, unsigned int idleMode)
  *
  * \return 	  Validity	The return value indicates whether the message is valid
  */
- 
+
 unsigned int MBgetMessage(unsigned int baseAdd, unsigned int queueId, unsigned int *msgPtr)
 {
 	/*	Check if queue is not empty	*/
-	if((HWREG(baseAdd + MAILBOX_MESSAGESTATUS(queueId)) & 
-		(MAILBOX_MESSAGESTATUS_NBOFMSGMBM << 
+	if((HWREG(baseAdd + MAILBOX_MESSAGESTATUS(queueId)) &
+		(MAILBOX_MESSAGESTATUS_NBOFMSGMBM <<
 			MAILBOX_MESSAGESTATUS_NBOFMSGMBM_SHIFT)) > 0)
 	{
 		/*	Read message	*/
@@ -122,16 +122,16 @@ unsigned int MBgetMessage(unsigned int baseAdd, unsigned int queueId, unsigned i
  * \param     queueId	Queue to be written
  * \param     msg		Message which has to be sent
  *
- * \return 	  status	The return value indicates whether the message is 
+ * \return 	  status	The return value indicates whether the message is
  *			  			written to the queue. Possible values are,
  *							0	-	Written successfully
  *							0	-	Queue full
  */
- 
+
 unsigned int MBsendMessage(unsigned int baseAdd, unsigned int queueId, unsigned int msg)
 {
 
-	unsigned int fifoFullMask = (MAILBOX_FIFOSTATUS_FIFOFULLMBM << 
+	unsigned int fifoFullMask = (MAILBOX_FIFOSTATUS_FIFOFULLMBM <<
 							MAILBOX_FIFOSTATUS_FIFOFULLMBM_SHIFT);
 
 	/*	Check if queue is not full	*/
@@ -158,10 +158,10 @@ unsigned int MBsendMessage(unsigned int baseAdd, unsigned int queueId, unsigned 
  *
  * \return 	  None
  */
- 
+
 void MBenableNewMsgInt(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQENABLE_SET(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQENABLE_SET(userId)) =
 			(MAILBOX_IRQENABLE_SET_NEWMSGSTATUSUUMB(queueId) <<
 				MAILBOX_IRQENABLE_SET_NEWMSGSTATUSUUMB_SHIFT(queueId));
 }
@@ -176,10 +176,10 @@ void MBenableNewMsgInt(unsigned int baseAdd, unsigned int userId, unsigned int q
  *
  * \return 	  None
  */
- 
+
 void MBenableQueueNotFullInt(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQENABLE_SET(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQENABLE_SET(userId)) =
 			(MAILBOX_IRQENABLE_SET_NOTFULLSTATUSUUMB(queueId) <<
 				MAILBOX_IRQENABLE_SET_NOTFULLSTATUSUUMB_SHIFT(queueId));
 }
@@ -194,10 +194,10 @@ void MBenableQueueNotFullInt(unsigned int baseAdd, unsigned int userId, unsigned
  *
  * \return 	  None
  */
- 
+
 void MBdisableNewMsgInt(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQENABLE_CLR(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQENABLE_CLR(userId)) =
 			(MAILBOX_IRQENABLE_CLR_NEWMSGSTATUSUUMB(queueId) <<
 				MAILBOX_IRQENABLE_CLR_NEWMSGSTATUSUUMB_SHIFT(queueId));
 }
@@ -212,10 +212,10 @@ void MBdisableNewMsgInt(unsigned int baseAdd, unsigned int userId, unsigned int 
  *
  * \return 	  None
  */
- 
+
 void MBdisableQueueNotFullInt(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQENABLE_CLR(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQENABLE_CLR(userId)) =
 			(MAILBOX_IRQENABLE_CLR_NOTFULLSTATUSUUMB(queueId) <<
 				MAILBOX_IRQENABLE_CLR_NOTFULLSTATUSUUMB_SHIFT(queueId));
 }
@@ -229,10 +229,10 @@ void MBdisableQueueNotFullInt(unsigned int baseAdd, unsigned int userId, unsigne
  *
  * \return 	  status	status of new message
  */
- 
+
 unsigned int MBgetNewMsgStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) & 
+	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) &
 				MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB(queueId)) >>	
 					MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB_SHIFT(queueId));
 }
@@ -247,10 +247,10 @@ unsigned int MBgetNewMsgStatus(unsigned int baseAdd, unsigned int userId, unsign
  *
  * \return 	  status	Queue not full status
  */
- 
+
 unsigned int MBgetQueueNotFullStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) & 
+	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) &
 				MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB(queueId)) >>	
 					MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB_SHIFT(queueId));
 }
@@ -265,10 +265,10 @@ unsigned int MBgetQueueNotFullStatus(unsigned int baseAdd, unsigned int userId, 
  *
  * \return 	  None
  */
- 
+
 void MBclrNewMsgStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) =
 							(MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB(queueId) <<
 								MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB_SHIFT(queueId));
 }
@@ -283,10 +283,10 @@ void MBclrNewMsgStatus(unsigned int baseAdd, unsigned int userId, unsigned int q
  *
  * \return 	  None
  */
- 
+
 void MBclrQueueNotFullStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) = 
+	HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) =
 							(MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB(queueId) <<
 								MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB_SHIFT(queueId));
 }
@@ -301,10 +301,10 @@ void MBclrQueueNotFullStatus(unsigned int baseAdd, unsigned int userId, unsigned
  *
  * \return 	  status	status of new message
  */
- 
+
 unsigned int MBgetRawNewMsgStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) & 
+	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) &
 				MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB(queueId)) >>	
 					MAILBOX_IRQSTATUS_CLR_NEWMSGSTATUSUUMB_SHIFT(queueId));
 }
@@ -319,10 +319,10 @@ unsigned int MBgetRawNewMsgStatus(unsigned int baseAdd, unsigned int userId, uns
  *
  * \return 	  status	Queue not full status
  */
- 
+
 unsigned int MBgetRawQueueNotFullStatus(unsigned int baseAdd, unsigned int userId, unsigned int queueId)
 {
-	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) & 
+	return ((HWREG(baseAdd + MAILBOX_IRQSTATUS_CLR(userId)) &
 				MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB(queueId)) >>	
 					MAILBOX_IRQSTATUS_CLR_NOTFULLSTATUSUUMB_SHIFT(queueId));
 }

@@ -53,14 +53,14 @@
 #include "bl_copy.h"
 
 /******************************************************************************
-**                     External variable Declaration 
+**                     External variable Declaration
 *******************************************************************************/
 
 extern void BootAbort(void);
 
 
 /******************************************************************************
-**                     Local function Declaration 
+**                     Local function Declaration
 *******************************************************************************/
 
 #if defined(SPI)
@@ -78,7 +78,7 @@ extern NandInfo_t *BlNANDConfigure(void);
 
 
 /******************************************************************************
-**                       Global Function Definitions 
+**                       Global Function Definitions
 *******************************************************************************/
 
 void ImageCopy(void)
@@ -98,7 +98,7 @@ void ImageCopy(void)
 }
 
 /******************************************************************************
-**                       Local Function Definitions 
+**                       Local Function Definitions
 *******************************************************************************/
 
 /**
@@ -116,8 +116,8 @@ static unsigned int SPIBootCopy(void)
     rprcSectionHeader section;
     int offset = IMAGE_OFFSET;
     int sectionCount;
-    
-    /* Spi Initialization */ 
+
+    /* Spi Initialization */
     BlPlatformSPISetup();
     BlSPIConfigure();
 
@@ -151,7 +151,7 @@ static unsigned int SPIBootCopy(void)
 
     /* Get loadable section count */
     SPI_readBytes(&sectionCount, &offset, 4);
-          
+
     /* Skip over any remaining text header */
     offset += (rprcHeader.text_len - 4);
 
@@ -223,11 +223,11 @@ static unsigned int NANDBootCopy(void)
     rprcSectionHeader section;
     int offset = IMAGE_OFFSET;
     int sectionCount = 0;
-    
+
     /* NAND Initialization */
     BlPlatformNANDSetup();
     hNandInfo = BlNANDConfigure();
-    
+
     /* Check magic number and read image size from NAND header */
     NAND_readBytes(hNandInfo, &nandBootHeader, &offset, sizeof(nandBootHeader));
     if ((nandBootHeader.magicNum != MAGIC_NUM_SF) &&
@@ -256,10 +256,10 @@ static unsigned int NANDBootCopy(void)
       UARTPuts("ERROR: RPRC Boot image header is malformed.\r\n", -1);
       BootAbort();
     }
-    
+
     /* Get loadable section count */
     NAND_readBytes(hNandInfo, &sectionCount, &offset, 4);
-          
+
     /* Skip over any remaining text header */
     offset += rprcHeader.text_len - 4;
 
@@ -302,7 +302,7 @@ static unsigned int NANDBootCopy(void)
  *
  * \param  NandInfo_t *hNandInfo: Nand Info structure
  * \param  void *value: pointer to memory to which bytes will be read
- * \param  int *cursor: pointer to offset into memory we are reading from 
+ * \param  int *cursor: pointer to offset into memory we are reading from
  * \param  int size: number of bytes to read
  *
  * \return none
@@ -327,7 +327,7 @@ static unsigned int MMCSDBootCopy(void)
 {
     HSMMCSDInit();
     HSMMCSDImageCopy();
-    
+
     return true;
 }
 #endif

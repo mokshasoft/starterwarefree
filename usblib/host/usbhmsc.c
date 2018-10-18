@@ -4,21 +4,21 @@
 //
 // Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
-// This is part of AM1808 StarterWare USB Library, resused from revision 6288 of the 
+//
+// This is part of AM1808 StarterWare USB Library, resused from revision 6288 of the
 // stellaris USB Library
 //
 //*****************************************************************************
@@ -95,7 +95,7 @@ USBHMSCOpen(tUSBHostDevice *pDevice, unsigned int ulInstance)
     tUSBHMSCInstance *sUSBHMSCDevice;
 
     sUSBHMSCDevice = (tUSBHMSCInstance *)ulInstance;
-    
+
     unsigned int ulIndex = sUSBHMSCDevice->ulIndex;
 
     //
@@ -220,7 +220,7 @@ USBHMSCClose(void *pvInstance)
 
     tUSBHMSCInstance *sUSBHMSCDevice;
     sUSBHMSCDevice = (tUSBHMSCInstance *)pvInstance;
-        
+
     //
     // Do nothing if there is not a driver open.
     //
@@ -280,12 +280,12 @@ USBHMSCClose(void *pvInstance)
 //
 //*****************************************************************************
 static void
-USBHMSCGetMaxLUN(unsigned int ulIndex, unsigned int ulAddress, 
+USBHMSCGetMaxLUN(unsigned int ulIndex, unsigned int ulAddress,
                           unsigned int ulInterface, unsigned char *pucMaxLUN)
 {
     tUSBRequest SetupPacket;
-    
-    
+
+
     //
     // This is a Class specific interface IN request.
     //
@@ -368,7 +368,7 @@ USBHMSCDriveReady(unsigned int ulInstance)
     // Issue a SCSI Inquiry to get basic information on the device
     //
     ulSize = SCSI_INQUIRY_DATA_SZ;
-    if((USBHSCSIInquiry(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe, 
+    if((USBHSCSIInquiry(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
                         pMSCDevice->ulBulkOutPipe,
                         pBuffer, &ulSize) != SCSI_CMD_STATUS_PASS))
     {
@@ -386,15 +386,15 @@ USBHMSCDriveReady(unsigned int ulInstance)
         //
         ulSize = SCSI_REQUEST_SENSE_SZ;
         USBHSCSIRequestSense(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
-                             pMSCDevice->ulBulkOutPipe, pBuffer, &ulSize);    
+                             pMSCDevice->ulBulkOutPipe, pBuffer, &ulSize);
     }
-    
-    //	   
-    // Send Request Sense agian, return if device returnss command fail 
+
+    //
+    // Send Request Sense agian, return if device returnss command fail
     //
     ulSize = SCSI_REQUEST_SENSE_SZ;
-    if(USBHSCSIRequestSense(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe, 
-                            pMSCDevice->ulBulkOutPipe, pBuffer, &ulSize) 
+    if(USBHSCSIRequestSense(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
+                            pMSCDevice->ulBulkOutPipe, pBuffer, &ulSize)
                             != SCSI_CMD_STATUS_PASS)
     {
         return(-1);
@@ -410,7 +410,7 @@ USBHMSCDriveReady(unsigned int ulInstance)
     // Get the size of the drive.
     //
     ulSize = SCSI_INQUIRY_DATA_SZ;
-    if(USBHSCSIReadCapacity(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe, 
+    if(USBHSCSIReadCapacity(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
                             pMSCDevice->ulBulkOutPipe,
                             pBuffer, &ulSize) != SCSI_CMD_STATUS_PASS)
     {
@@ -439,7 +439,7 @@ USBHMSCDriveReady(unsigned int ulInstance)
             (pBuffer[3] | (pBuffer[2] << 8) | pBuffer[1] << 16 |
              (pBuffer[0] << 24));
     }
-   
+
     //
     // Check whether unit is ready again
     //
@@ -454,7 +454,7 @@ USBHMSCDriveReady(unsigned int ulInstance)
         USBHSCSIRequestSense(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
                              pMSCDevice->ulBulkOutPipe, pBuffer, &ulSize);
         return(-1);
-    }	
+    }
     else
     {
 	//
@@ -487,7 +487,7 @@ USBHMSCDriveReady(unsigned int ulInstance)
 //
 //*****************************************************************************
 unsigned int
-USBHMSCDriveOpen(unsigned int ulIndex, unsigned int ulDrive, 
+USBHMSCDriveOpen(unsigned int ulIndex, unsigned int ulDrive,
                             tUSBHMSCCallback pfnCallback)
 {
     //
@@ -502,7 +502,7 @@ USBHMSCDriveOpen(unsigned int ulIndex, unsigned int ulDrive,
     // Save the callback.
     //
     g_USBHMSCDevice[ulDrive].pfnCallback = pfnCallback;
-    
+
 
     g_USBHMSCDevice[ulDrive].ulIndex = ulIndex;
 
@@ -595,7 +595,7 @@ USBHMSCBlockRead(unsigned int ulInstance, unsigned int ulLBA,
     //
     // Perform the SCSI read command.
     //
-    if(USBHSCSIRead10(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe, 
+    if(USBHSCSIRead10(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
                       pMSCDevice->ulBulkOutPipe, ulLBA, pucData, &ulSize,
                       ulNumBlocks) != SCSI_CMD_STATUS_PASS)
     {
@@ -657,7 +657,7 @@ USBHMSCBlockWrite(unsigned int ulInstance, unsigned int ulLBA,
     //
     // Perform the SCSI write command.
     //
-    if(USBHSCSIWrite10(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe, 
+    if(USBHSCSIWrite10(pMSCDevice->ulIndex, pMSCDevice->ulBulkInPipe,
                        pMSCDevice->ulBulkOutPipe, ulLBA, pucData, &ulSize,
                        ulNumBlocks) != SCSI_CMD_STATUS_PASS)
     {

@@ -42,35 +42,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -160,7 +160,7 @@ int main(void)
          else
          {
               ConsoleUtilsPrintf("%c", (temp + 0x37));
-         } 
+         }
 
          /* Collecting the Least Significant Nibble of the data byte. */
          temp = (dataRead[i] & 0x0F);
@@ -173,7 +173,7 @@ int main(void)
          {
               ConsoleUtilsPrintf("%c", (temp + 0x37));
          }
-         
+
          ConsoleUtilsPrintf("%c", ',');
     }
 
@@ -182,7 +182,7 @@ int main(void)
 }
 
 
- /* 
+ /*
  ** Reads data from a specific address of e2prom
  */
 static void E2promRead(unsigned char *data)
@@ -242,7 +242,7 @@ void I2CAINTCConfigure(void)
 }
 
 /*
-** Receives data over I2C bus 
+** Receives data over I2C bus
 */
 static void SetupI2CReception(unsigned int dcount)
 {
@@ -307,7 +307,7 @@ void CleanUpInterrupts(void)
 
 /*
 ** I2C Interrupt Service Routine. This function will read and write
-** data through I2C bus. 
+** data through I2C bus.
 */
 void I2CIsr(void)
 {
@@ -316,28 +316,28 @@ void I2CIsr(void)
     /* Get only Enabled interrupt status */
     status = I2CMasterIntStatus(SOC_I2C_0_REGS);
 
-    /* 
+    /*
     ** Clear all enabled interrupt status except receive ready and
-    ** transmit ready interrupt status 
+    ** transmit ready interrupt status
     */
     I2CMasterIntClearEx(SOC_I2C_0_REGS,
 	                    (status & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY)));
-						
+
     if(status & I2C_INT_RECV_READY)
     {
          /* Receive data from data receive register */
         dataFromSlave[rCount++] = I2CMasterDataGet(SOC_I2C_0_REGS);
 
-	/* Clear receive ready interrupt status */	
+	/* Clear receive ready interrupt status */
         I2CMasterIntClearEx(SOC_I2C_0_REGS,  I2C_INT_RECV_READY);
-		
+
          if(rCount == numOfBytes)
          {
               /* Disable the receive ready interrupt */
               I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_RECV_READY);
               /* Generate a STOP */
               I2CMasterStop(SOC_I2C_0_REGS);
-			  
+
          }
     }
 
@@ -347,8 +347,8 @@ void I2CIsr(void)
         I2CMasterDataPut(SOC_I2C_0_REGS, dataToSlave[tCount++]);
 
         /* Clear Transmit interrupt status */
-	I2CMasterIntClearEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);		 
-						
+	I2CMasterIntClearEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);
+
          if(tCount == numOfBytes)
          {
               /* Disable the transmit ready interrupt */
@@ -356,7 +356,7 @@ void I2CIsr(void)
          }
 
     }
-        
+
     if (status & I2C_INT_STOP_CONDITION)
     {
       	 /* Disable transmit data ready and receive data read interupt */
@@ -365,7 +365,7 @@ void I2CIsr(void)
 					       I2C_INT_STOP_CONDITION);
          flag = 0;
     }
-   
+
     if(status & I2C_INT_NO_ACK)
     {
          I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY  |

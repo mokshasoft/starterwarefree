@@ -71,19 +71,19 @@ unsigned int DCANPinMuxSetUp(unsigned int instanceNum)
     {
     }
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     if(1 == profile)
     {
         /* Pin Mux for DCAN0 Tx Pin */
-        HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_CTSN(0)) = 
+        HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_CTSN(0)) =
                   DCAN_SLEWFAST_RXDISABLED_PULLDWN_PUPDENABLED_MODE2;
 
         /* Pin Mux for DCAN0 Rx Pin */
-        HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_RTSN(0)) = 
+        HWREG(SOC_CONTROL_REGS + CONTROL_CONF_UART_RTSN(0)) =
                   DCAN_SLEWFAST_RXENABLED_PULLUP_PUPDENABLED_MODE2;
-       
-        status = TRUE; 
+
+        status = TRUE;
     }
 
     return status;
@@ -101,13 +101,13 @@ void DCANMsgRAMInit(unsigned int instanceNum)
 {
     if(1 == instanceNum)
     {
-        HWREG(SOC_CONTROL_REGS + CONTROL_DCAN_RAMINIT) |= 
+        HWREG(SOC_CONTROL_REGS + CONTROL_DCAN_RAMINIT) |=
               CONTROL_DCAN_RAMINIT_DCAN0_RAMINIT_START;
     }
     else
     {
         return;
-    }  
+    }
 }
 
 /**
@@ -163,18 +163,18 @@ void DCANModuleClkConfig(void)
     while((HWREG(SOC_CM_PER_REGS + CM_PER_L4LS_CLKCTRL) &
       CM_PER_L4LS_CLKCTRL_MODULEMODE) != CM_PER_L4LS_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_CM_PER_REGS + CM_PER_DCAN1_CLKCTRL) = 
+    HWREG(SOC_CM_PER_REGS + CM_PER_DCAN1_CLKCTRL) =
                                   CM_PER_DCAN1_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_CM_PER_REGS + CM_PER_DCAN1_CLKCTRL) & 
-                         CM_PER_DCAN1_CLKCTRL_MODULEMODE) != 
+    while((HWREG(SOC_CM_PER_REGS + CM_PER_DCAN1_CLKCTRL) &
+                         CM_PER_DCAN1_CLKCTRL_MODULEMODE) !=
                          CM_PER_DCAN1_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_CM_PER_REGS + CM_PER_DCAN0_CLKCTRL) = 
+    HWREG(SOC_CM_PER_REGS + CM_PER_DCAN0_CLKCTRL) =
                                   CM_PER_DCAN0_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_CM_PER_REGS + CM_PER_DCAN0_CLKCTRL) & 
-                         CM_PER_DCAN0_CLKCTRL_MODULEMODE) != 
+    while((HWREG(SOC_CM_PER_REGS + CM_PER_DCAN0_CLKCTRL) &
+                         CM_PER_DCAN0_CLKCTRL_MODULEMODE) !=
                          CM_PER_DCAN0_CLKCTRL_MODULEMODE_ENABLE);
 
     while(!(HWREG(SOC_CM_PER_REGS + CM_PER_L3S_CLKSTCTRL) &
@@ -185,7 +185,7 @@ void DCANModuleClkConfig(void)
 
     while(!(HWREG(SOC_CM_PER_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) &
            (CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L3_GCLK |
-            CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L4_GCLK))); 
+            CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L4_GCLK)));
 
     while(!(HWREG(SOC_CM_PER_REGS + CM_PER_L4LS_CLKSTCTRL) &
            (CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_L4LS_GCLK |

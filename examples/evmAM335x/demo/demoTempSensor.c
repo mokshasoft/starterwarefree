@@ -94,15 +94,15 @@ extern volatile unsigned int  rCount[I2C_INSTANCE];
 void initTempSensor(void)
 {
     unsigned char configData;
-    
+
     /*
     **  configures temperature sensor to 12bit resolution
     **  active low polarity of alert pin ,generate the 1 consecutive fault,
     **  compare mode of operation.
-    */  
+    */
     configData = CONFIG_DATA(3, 0, 1, 0, 0,0);
 
-    /* 
+    /*
     ** Configure pointer register to select configuration
     ** register
     */
@@ -113,16 +113,16 @@ void initTempSensor(void)
 
 void updateTemperature(unsigned int *intVal, unsigned int *floatVal)
 {
-	/* 
+	/*
 	** Configure pointer register to read temperature
 	** register
 	*/
 	ptrReg = 0;
-    
+
 	TemperatureRegRead(temperature, ptrReg);
-    
+
 	TemperatureCalc(temperature, result);
-    
+
 	*intVal = result[0];
 	*floatVal = result[1];
 }
@@ -143,7 +143,7 @@ static void TemperatureCalc(unsigned char *data, int *result)
     if(val1 & 0x800)
     {
          result[1] = DecimalValGet(val1);
-    
+
          val1 = ~val1;
 
          val1 = val1 + 0x01;
@@ -162,7 +162,7 @@ static void TemperatureCalc(unsigned char *data, int *result)
 
          temp = (short int)val1 >> 4;
 
-         result[0] = temp; 
+         result[0] = temp;
     }
 }
 
@@ -181,10 +181,10 @@ static unsigned int DecimalValGet(short int val)
 }
 
 /*
-** This function selects Configuratio register of 
+** This function selects Configuratio register of
 ** temperature sensor and configures with
 ** input data
-*/  
+*/
 static void ConfigureTempSensor(unsigned char configData, unsigned char ptrReg)
 {
     /* Reg offset of temperature sensor */
@@ -211,7 +211,7 @@ static void TemperatureRegRead(unsigned char *data, unsigned char ptrReg)
     /* Reg offset of temperature sensor */
     dataToSlave[I2C_1][0] = ptrReg;
     SetupReception(2, I2C_1);
-  
+
     for(i = 2; i ; i--)
     {
         *data = dataFromSlave[I2C_1][i-1];

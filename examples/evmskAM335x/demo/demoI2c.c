@@ -1,7 +1,7 @@
 /**
  * \file     pmRtc.c
  *
- * \brief    This file contains the API's for RTC which is to be used by the 
+ * \brief    This file contains the API's for RTC which is to be used by the
  *             Power management application
   */
 
@@ -63,7 +63,7 @@
 /******************************************************************************
 **              GLOBAL VARIABLES
 ******************************************************************************/
- 
+
 volatile unsigned char dataFromSlave[I2C_INSTANCE][2];
 volatile unsigned char dataToSlave[I2C_INSTANCE][3];
 volatile unsigned int tCount[I2C_INSTANCE];
@@ -96,8 +96,8 @@ unsigned int getI2CAddr(unsigned int instNum)
     if(I2C_1 == instNum)
         return SOC_I2C_1_REGS;
     if(I2C_2 == instNum)
-        return SOC_I2C_2_REGS;        
-        
+        return SOC_I2C_2_REGS;
+
     return 0;
 }
 
@@ -108,7 +108,7 @@ void cleanupInterrupts(unsigned int instNum)
 {
     unsigned int instAddr;
     instAddr = getI2CAddr(instNum);
-    
+
     I2CMasterIntEnableEx(instAddr, 0x7FF);
     I2CMasterIntClearEx(instAddr,  0x7FF);
     I2CMasterIntDisableEx(instAddr, 0x7FF);
@@ -121,12 +121,12 @@ void I2CInit(unsigned int instNum)
 {
     unsigned int instAddr;
     instAddr = getI2CAddr(instNum);
-    
+
     /* Put i2c in reset/disabled state */
     I2CMasterDisable(instAddr);
-    
+
     I2CSoftReset(instAddr);
-    
+
     /* Disable auto Idle functionality */
     I2CAutoIdleDisable(instAddr);
 
@@ -138,7 +138,7 @@ void I2CInit(unsigned int instNum)
 
     /* Bring I2C module out of reset */
     I2CMasterEnable(instAddr);
-    
+
     while(!I2CSystemStatusGet(instAddr));
 }
 
@@ -154,13 +154,13 @@ void I2CIntRegister(unsigned int instNum)
     if(I2C_1 == instNum)
         IntRegister(SYS_INT_I2C1INT, I2C1Isr);
     //if(I2C_2 == instNum)
-        //IntRegister(SYS_INT_I2C2INT, I2C0Isr);        
+        //IntRegister(SYS_INT_I2C2INT, I2C0Isr);
 }
 
 
 /*
 ** I2C0 Interrupt Service Routine. This function will read and write
-** data through I2C bus. 
+** data through I2C bus.
 */
 void I2C0Isr(void)
 {
@@ -170,35 +170,35 @@ void I2C0Isr(void)
 
     I2CMasterIntClearEx(SOC_I2C_0_REGS,
                         (status & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY)));
-                        
+
     if(status & I2C_INT_RECV_READY)
     {
          /* Receive data from data receive register */
         dataFromSlave[I2C_0][rCount[I2C_0]++] = I2CMasterDataGet(SOC_I2C_0_REGS);
         I2CMasterIntClearEx(SOC_I2C_0_REGS,  I2C_INT_RECV_READY);
-        
+
          if(rCount[I2C_0] == numOfBytes[I2C_0])
          {
               I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_RECV_READY);
               /* Generate a STOP */
               I2CMasterStop(SOC_I2C_0_REGS);
-              
+
          }
     }
     if (status & I2C_INT_TRANSMIT_READY)
     {
          /* Put data to data transmit register of i2c */
-         
+
         I2CMasterDataPut(SOC_I2C_0_REGS, dataToSlave[I2C_0][tCount[I2C_0]++]);
-        I2CMasterIntClearEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);         
-                        
+        I2CMasterIntClearEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);
+
          if(tCount[I2C_0] == numOfBytes[I2C_0])
          {
             I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY);
-            
+
          }
     }
-        
+
     if (status & I2C_INT_STOP_CONDITION)
     {
            /* Disable transmit data ready and receive data read interupt */
@@ -207,7 +207,7 @@ void I2C0Isr(void)
                                                I2C_INT_STOP_CONDITION);
          flag[I2C_0] = 0;
     }
-   
+
     if(status & I2C_INT_NO_ACK)
     {
          I2CMasterIntDisableEx(SOC_I2C_0_REGS, I2C_INT_TRANSMIT_READY  |
@@ -238,7 +238,7 @@ void I2C1Isr(void)
          /* Put data to data transmit register of i2c */
          I2CMasterDataPut(SOC_I2C_1_REGS, dataToSlave[I2C_1][tCount[I2C_1]++]);
          I2CMasterIntClearEx(SOC_I2C_1_REGS, I2C_INT_TRANSMIT_READY);
- 
+
          if(numOfBytes[I2C_1] == tCount[I2C_1])
          {
               I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_TRANSMIT_READY);
@@ -250,7 +250,7 @@ void I2C1Isr(void)
          /* Receive data from data receive register */
          dataFromSlave[I2C_1][rCount[I2C_1]++] = I2CMasterDataGet(SOC_I2C_1_REGS);
          I2CMasterIntClearEx(SOC_I2C_1_REGS, I2C_INT_RECV_READY);
- 
+
          if(numOfBytes[I2C_1] == rCount[I2C_1])
          {
               I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_RECV_READY);
@@ -284,19 +284,19 @@ void I2C1Isr(void)
 
 
 /*
-** Transmits data over I2C0 bus 
+** Transmits data over I2C0 bus
 */
 void SetupI2CTransmit(unsigned int dcount, unsigned int instNum)
 {
     unsigned int instAddr;
     instAddr = getI2CAddr(instNum);
-    
+
     I2CSetDataCount(instAddr, dcount);
 
     numOfBytes[instNum] = I2CDataCountGet(instAddr);
-    
+
     cleanupInterrupts(instNum);
-    
+
     I2CMasterControl(instAddr, I2C_CFG_MST_TX | I2C_CFG_STOP);
 
     I2CMasterIntEnableEx(instAddr, I2C_INT_TRANSMIT_READY |
@@ -307,26 +307,26 @@ void SetupI2CTransmit(unsigned int dcount, unsigned int instNum)
     while(I2CMasterBusBusy(instAddr) == 0);
 
     while(flag[instNum]);
-    
+
     while(I2CMasterBusy(instAddr));
-    
+
     while(0 == (I2CMasterIntRawStatus(instAddr) & I2C_INT_ADRR_READY_ACESS));
-    
+
     flag[instNum] = 1;
 }
 
 /*
-** Receives data over I2C0 bus 
+** Receives data over I2C0 bus
 */
 void SetupReception(unsigned int dcount, unsigned int instNum)
 {
     unsigned int instAddr;
     instAddr = getI2CAddr(instNum);
-    
+
     I2CSetDataCount(instAddr, 1);
 
     numOfBytes[instNum] = I2CDataCountGet(instAddr);
-    
+
     cleanupInterrupts(instNum);
     I2CMasterControl(instAddr, I2C_CFG_MST_TX );
 
@@ -337,15 +337,15 @@ void SetupReception(unsigned int dcount, unsigned int instNum)
     while(I2CMasterBusBusy(instAddr) == 0);
 
     while(tCount[instNum] != 0x01);
-    
+
     while(0 == (I2CMasterIntRawStatus(instAddr) & I2C_INT_ADRR_READY_ACESS));
-    
+
     I2CSetDataCount(instAddr, dcount);
 
     numOfBytes[instNum] = I2CDataCountGet(instAddr);
-    
+
     cleanupInterrupts(instNum);
-    
+
     I2CMasterControl(instAddr, I2C_CFG_MST_RX);
 
     I2CMasterIntEnableEx(instAddr, I2C_INT_RECV_READY |
@@ -356,6 +356,6 @@ void SetupReception(unsigned int dcount, unsigned int instNum)
     while(I2CMasterBusBusy(instAddr) == 0);
 
     while(flag[instNum]);
-    
+
     flag[instNum] = 1;
 }

@@ -1,7 +1,7 @@
 /**
  * \file   evmskAM335x.h
  *
- * \brief  This file contains prototype declarations of functions which 
+ * \brief  This file contains prototype declarations of functions which
  *         performs EVM configurations for EVM-SK.
  */
 
@@ -54,12 +54,12 @@ extern "C" {
 
 #define PRINT_WRG(x)                        UARTPuts ("\r\n|WARNING|", -1);\
                                             UARTPuts (x, -1); \
-                                            UARTPuts ("|\r\n", -1);            
-                                 
+                                            UARTPuts ("|\r\n", -1);
+
 #define PRINT_ERR(x)                        UARTPuts ("\r\n|ERROR|", -1); \
                                             UARTPuts (x, -1); \
-                                            UARTPuts ("|\r\n", -1);                                                                   
-                                 
+                                            UARTPuts ("|\r\n", -1);
+
 #define EVMSK_BOARD_NAME                    ("A335_S")
 #define EVMSK_1_2B_VERSION                  ("1.2B")
 #define EVMSK_1_3A_VERSION                  ("1.3A")
@@ -117,7 +117,7 @@ extern void WatchdogTimer1ModuleClkConfig(void);
 extern void McASP1PinMuxSetup(void);
 extern void McASP1ModuleClkConfig(void);
 extern void EDMAModuleClkConfig(void);
-extern unsigned int EDMA3CrossBarChannelMap(unsigned int baseAdd, 
+extern unsigned int EDMA3CrossBarChannelMap(unsigned int baseAdd,
                                      unsigned int crossBarEvent,
                                      unsigned int Channel);
 extern unsigned int EDMAVersionGet(void);

@@ -77,17 +77,17 @@ unsigned int ydata = 0;
 **                     FUNCTION DEFINITIONS
 *******************************************************************************/
 /*
-** Initializes the touch screen 
+** Initializes the touch screen
 */
 void InitTouchScreen(void)
 {
-    unsigned int i;  
-	
+    unsigned int i;
+
 	/*	TSC clock config	*/
 	TSCADCModuleClkConfig();
 	/*	TSC pin mux	*/
 	TSCADCPinMuxSetUp();
-	
+
 	/*	Timer3 Clock config	*/
 	DMTimer3ModuleClkConfig();
 
@@ -148,7 +148,7 @@ void InitTouchScreen(void)
                                        TSCADC_WPNSW_PIN_OFF);
 
     TSCADCTSChargeStepOpenDelayConfig(SOC_ADC_TSC_0_REGS, 0x200);
-	
+
     for(i = 0; i < SAMPLES; i++)
     {
          StepConfigX(i);
@@ -176,13 +176,13 @@ void InitTouchScreen(void)
 
     DMTimerModeConfigure(SOC_DMTIMER_3_REGS, DMTIMER_ONESHOT_CMP_ENABLE);
     DMTimerReloadSet(SOC_DMTIMER_3_REGS, 0xffffffff);
-    DMTimerCompareSet(SOC_DMTIMER_3_REGS, 0xfffff); 
+    DMTimerCompareSet(SOC_DMTIMER_3_REGS, 0xfffff);
 
     DMTimerIntStatusClear(SOC_DMTIMER_3_REGS, DMTIMER_INT_MAT_EN_FLAG);
 
     /* Enable the DMTimer interrupts */
     DMTimerIntEnable(SOC_DMTIMER_3_REGS, DMTIMER_INT_MAT_EN_FLAG);
-	
+
 	/*	Interrupt register	*/
 	TouchIntEnable();
 	/*	enable touch	*/
@@ -199,12 +199,12 @@ static void Timer3Isr(void)
 
     DMTimerDisable(SOC_DMTIMER_3_REGS);
     DMTimerCounterSet(SOC_DMTIMER_3_REGS, 0);
-   
+
     touchRelease = 1;
 }
 
 /*
-** This function tells if a touch is detected. 
+** This function tells if a touch is detected.
 */
 unsigned int TouchDetect(void)
 {
@@ -221,7 +221,7 @@ unsigned int TouchDetect(void)
 }
 
 /*
-** This function tells if a touch is detected. 
+** This function tells if a touch is detected.
 */
 unsigned int TouchReleaseDetect(void)
 {
@@ -238,7 +238,7 @@ unsigned int TouchReleaseDetect(void)
 }
 
 /*
-** This function resolves the coordinates of the location on the 
+** This function resolves the coordinates of the location on the
 ** touch screen being touched.
 */
 void TouchCoOrdGet(int *pX, int *pY)
@@ -307,50 +307,50 @@ static void TouchScreenIsr(void)
     unsigned int ready1;
 
     status = TSCADCIntStatus(SOC_ADC_TSC_0_REGS);
-	
+
 	wordsLeft = TSCADCFIFOWordCountRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);
 
     if(status & TSCADC_FIFO1_THRESHOLD_INT)
     {
-         for (i = 0; i < wordsLeft; i++) 
-         { 
+         for (i = 0; i < wordsLeft; i++)
+         {
               readx1 = TSCADCFIFOADCDataRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_0);
-              readx1 = readx1 & 0xfff; 
+              readx1 = readx1 & 0xfff;
 
-              if (readx1 > prevVal_x) 
+              if (readx1 > prevVal_x)
               {
-                   currDiff_x = readx1 - prevVal_x; 
-              }
-              else 
-              { 
-                   currDiff_x = prevVal_x - readx1; 
-              }
-              if (currDiff_x < prevDiff_x) 
-              { 
-                   prevDiff_x = currDiff_x; 
-                   xdata = readx1; 
-              } 
-              prevVal_x = readx1;
- 
-              ready1 = TSCADCFIFOADCDataRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);
-              ready1 &= 0xfff; 
-
-              if (ready1 > prevVal_y) 
-              {
-                  currDiff_y = ready1 - prevVal_y; 
+                   currDiff_x = readx1 - prevVal_x;
               }
               else
-              { 
-                  currDiff_y = prevVal_y - ready1; 
+              {
+                   currDiff_x = prevVal_x - readx1;
               }
-              if (currDiff_y < prevDiff_y) 
-              { 
-                  prevDiff_y = currDiff_y; 
-                  ydata = ready1; 
-              } 
-              prevVal_y = ready1; 
-              wordsLeft = TSCADCFIFOWordCountRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);			  
-         } 
+              if (currDiff_x < prevDiff_x)
+              {
+                   prevDiff_x = currDiff_x;
+                   xdata = readx1;
+              }
+              prevVal_x = readx1;
+
+              ready1 = TSCADCFIFOADCDataRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);
+              ready1 &= 0xfff;
+
+              if (ready1 > prevVal_y)
+              {
+                  currDiff_y = ready1 - prevVal_y;
+              }
+              else
+              {
+                  currDiff_y = prevVal_y - ready1;
+              }
+              if (currDiff_y < prevDiff_y)
+              {
+                  prevDiff_y = currDiff_y;
+                  ydata = ready1;
+              }
+              prevVal_y = ready1;
+              wordsLeft = TSCADCFIFOWordCountRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);
+         }
 
          x_data[dbidx] = xdata;
          y_data[dbidx] = ydata;
@@ -376,7 +376,7 @@ static void TouchScreenIsr(void)
 
     IsTSPress = 1;
     touchRelease = 0;
-   
+
     StepEnable();
 }
 
@@ -477,7 +477,7 @@ void clearTSFifos(void)
 
 	TSCADCIntStatusClear(SOC_ADC_TSC_0_REGS,   TSCADC_FIFO1_THRESHOLD_INT |
 										   TSCADC_FIFO0_THRESHOLD_INT);
-										   
+
 	//TSCADCSetADCPowerDown(SOC_ADC_TSC_0_REGS);
 }
 

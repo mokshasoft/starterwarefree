@@ -98,7 +98,7 @@ void EcapBkLightVary(void)
     /* Set Counter */
     ECAPCounterConfig(SOC_ECAP_2_REGS, 0);
 
-    while(cnt <= 2500) 
+    while(cnt <= 2500)
     {
         cnt++;
 
@@ -108,14 +108,14 @@ void EcapBkLightVary(void)
         delay(1);
     }
 	
-	while(cnt > 0) 
+	while(cnt > 0)
     {
         cnt--;
 
         /* Configure ECAP to generate PWM waveform with duty cycle */
         ECAPAPWMCaptureConfig(SOC_ECAP_2_REGS, 3000 - cnt, 3300);
 
-        delay(1); 
+        delay(1);
     }
 
     /* Configure ECAP to generate PWM waveform with 0% duty cycle */

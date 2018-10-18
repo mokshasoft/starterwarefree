@@ -67,35 +67,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -129,7 +129,7 @@
 
 /* EDMA3 Event queue number. */
 #define EVT_QUEUE_NUM                  0
- 
+
 /* EDMA3 Region Number. */
 #define REGION_NUMBER                  0
 
@@ -150,7 +150,7 @@
 /* EDMA instance related macros. */
 #define EDMA_INST_BASE                 (SOC_EDMA30CC_0_REGS)
 #define EDMA_COMPLTN_INT_NUM           (SYS_INT_EDMACOMPINT)
-#define EDMA_ERROR_INT_NUM             (SYS_INT_EDMAERRINT) 
+#define EDMA_ERROR_INT_NUM             (SYS_INT_EDMAERRINT)
 
 /* EDMA Events */
 #define MMCSD_TX_EDMA_CHAN             (EDMA3_CHA_MMCSD0_TX)
@@ -185,11 +185,11 @@ static void (*cb_Fxn[EDMA3_NUM_TCC]) (unsigned int tcc, unsigned int status);
 *******************************************************************************/
 /* Global flags for interrupt handling */
 volatile unsigned int sdBlkSize = HSMMCSD_BLK_SIZE;
-volatile unsigned int callbackOccured = 0; 
-volatile unsigned int xferCompFlag = 0; 
+volatile unsigned int callbackOccured = 0;
+volatile unsigned int xferCompFlag = 0;
 volatile unsigned int dataTimeout = 0;
 volatile unsigned int cmdCompFlag = 0;
-volatile unsigned int cmdTimeout = 0; 
+volatile unsigned int cmdTimeout = 0;
 volatile unsigned int errFlag = 0;
 
 #ifdef __IAR_SYSTEMS_ICC__
@@ -201,7 +201,7 @@ unsigned char data[HSMMCSD_DATA_SIZE];
 unsigned char data[HSMMCSD_DATA_SIZE];
 
 #elif defined(gcc)
-unsigned char data[HSMMCSD_DATA_SIZE] 
+unsigned char data[HSMMCSD_DATA_SIZE]
                     __attribute__ ((aligned (SOC_CACHELINE_SIZE)))= {0};
 
 #else
@@ -217,7 +217,7 @@ static volatile unsigned int pageTable[MMU_PAGETABLE_NUM_ENTRY];
 #pragma data_alignment=MMU_PAGETABLE_ALIGN_SIZE
 static volatile unsigned int pageTable[MMU_PAGETABLE_NUM_ENTRY];
 #elif defined(gcc)
-static volatile unsigned int pageTable[MMU_PAGETABLE_NUM_ENTRY] 
+static volatile unsigned int pageTable[MMU_PAGETABLE_NUM_ENTRY]
             __attribute__((aligned(MMU_PAGETABLE_ALIGN_SIZE)));
 #else
 #error "Unsupported Compiler. \r\n"
@@ -605,7 +605,7 @@ static void HSMMCSDIsr(void)
     volatile unsigned int status = 0;
 
     status = HSMMCSDIntrStatusGet(ctrlInfo.memBase, 0xFFFFFFFF);
-    
+
     HSMMCSDIntrStatusClear(ctrlInfo.memBase, status);
 
     if (status & HS_MMCSD_STAT_CMDCOMP)
@@ -657,7 +657,7 @@ static void EDMA3AINTCConfigure(void)
 
     /* Enabling the EDMA3CC completion interrupt in AINTC. */
     IntSystemEnable(EDMA_COMPLTN_INT_NUM);
-    
+
     /* Enabling the EDMA3CC Error interrupt in AINTC. */
     IntSystemEnable(EDMA_ERROR_INT_NUM);
 
@@ -675,7 +675,7 @@ static void EDMA3AINTCConfigure(void)
 }
 
 
-/* 
+/*
 ** Powering up, initializing and registering interrupts for EDMA.
 */
 
@@ -684,7 +684,7 @@ static void EDMA3Initialize(void)
     /* Initialization of EDMA3 */
     EDMA3Init(EDMA_INST_BASE, EVT_QUEUE_NUM);
 
-    /* Configuring the AINTC to receive EDMA3 interrupts. */ 
+    /* Configuring the AINTC to receive EDMA3 interrupts. */
     EDMA3AINTCConfigure();
 }
 

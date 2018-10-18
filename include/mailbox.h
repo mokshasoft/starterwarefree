@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #ifndef      __MAIL_BOX_H__
 #define      __MAIL_BOX_H__
 
@@ -72,7 +72,7 @@ extern "C" {
 
 
 /*****************************************************************************
-**                   FUNCTION DECLARATIONS                                   
+**                   FUNCTION DECLARATIONS
 *****************************************************************************/
 
 /*	Queue Access API's	*/

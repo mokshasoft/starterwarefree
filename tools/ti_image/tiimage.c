@@ -61,7 +61,7 @@ static unsigned int tiimage_swap32(unsigned int data)
     result |= (data & 0x00FF0000) >> 8;
     result |= (data & 0x0000FF00) << 8;
     result |= (data & 0x000000FF) << 24;
-   
+
     return result;
 }
 
@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
     int i = 0, len;
     unsigned int extra;
     char dummy[4] = {0,0,0,0};
-    char *boot; 
+    char *boot;
 
 
     if (argc < 5)
@@ -112,7 +112,7 @@ int main (int argc, char *argv[])
 
        if(extra)
            fwrite(&dummy, sizeof(char), 4 - extra, in_fp);
- 
+
         /* adjust the image size for SPI to be a multiple of 4 */
        image_size = (image_size + 3) & ~(0x03);
     }
@@ -121,9 +121,9 @@ int main (int argc, char *argv[])
     /* Size of  new image is actual bin image size + header */
     hdr.image_size = image_size + sizeof(hdr);
     hdr.load_addr = strtoul(argv[1], NULL, 0);
-  
+
     if(0 == strcmp(argv[2], "SPI"))
-    { 
+    {
         hdr.image_size = tiimage_swap32(hdr.image_size);
         hdr.load_addr = tiimage_swap32(hdr.load_addr);
     }

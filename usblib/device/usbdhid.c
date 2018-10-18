@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -43,7 +43,7 @@
 
 
 //*****************************************************************************
-//This macro is used to diable the bit band operartion. Need to undefine this macro to use the 
+//This macro is used to diable the bit band operartion. Need to undefine this macro to use the
 // bit band operation.
 //***************************************************************************
 #define DISABLE_BIT_BAND
@@ -346,21 +346,21 @@ const tConfigHeader * const g_pHIDConfigDescriptors[] =
 // Forward references for device handler callbacks
 //
 //*****************************************************************************
-static void HandleGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void HandleGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest,
                                                             unsigned int ulIndex);
-static void HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                                                             unsigned int ulIndex);
-static void HandleConfigChange(void *pvInstance, unsigned int ulInfo, 
+static void HandleConfigChange(void *pvInstance, unsigned int ulInfo,
                                                             unsigned int ulIndex);
-static void HandleEP0DataReceived(void *pvInstance, unsigned int ulInfo, 
+static void HandleEP0DataReceived(void *pvInstance, unsigned int ulInfo,
                                                             unsigned int ulIndex);
-static void HandleEP0DataSent(void *pvInstance, unsigned int ulInfo, 
+static void HandleEP0DataSent(void *pvInstance, unsigned int ulInfo,
                                                             unsigned int ulIndex);
 static void HandleReset(void *pvInstance);
 static void HandleSuspend(void *pvInstance);
 static void HandleResume(void *pvInstance);
 static void HandleDisconnect(void *pvInstance);
-static void HandleEndpoints(void *pvInstance, unsigned int ulStatus, 
+static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                             unsigned int ulIndex);
 static void HandleDevice(void *pvInstance, unsigned int ulRequest,
                          void *pvRequestData);
@@ -941,7 +941,7 @@ ScheduleReportTransmission(tHIDInstance *psInst)
 //
 //*****************************************************************************
 static tBoolean
-ProcessDataFromHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus, 
+ProcessDataFromHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
                                                             unsigned int ulIndex)
 {
     unsigned int ulEPStatus;
@@ -1030,7 +1030,7 @@ ProcessDataFromHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
 //
 //*****************************************************************************
 static tBoolean
-ProcessDataToHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus, 
+ProcessDataToHost(const tUSBDHIDDevice *psDevice, unsigned int ulStatus,
                                                             unsigned int ulIndex)
 {
     tHIDInstance *psInst;
@@ -1142,7 +1142,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
 //
 //*****************************************************************************
 static void
-HandleConfigChange(void *pvInstance, unsigned int ulInfo,  
+HandleConfigChange(void *pvInstance, unsigned int ulInfo,
                                                 unsigned int ulIndex)
 {
     tHIDInstance *psInst;
@@ -1305,7 +1305,7 @@ HandleDisconnect(void *pvInstance)
 //
 //*****************************************************************************
 static void
-HandleGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest, 
+HandleGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest,
                                                             unsigned int ulIndex)
 {
     unsigned int ulSize;
@@ -1422,7 +1422,7 @@ HandleGetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest,
 //
 //*****************************************************************************
 static void
-HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest, 
+HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
                                             unsigned int ulIndex)
 {
     tHIDInstance *psInst;
@@ -1688,7 +1688,7 @@ HandleRequest(void *pvInstance, tUSBRequest *pUSBRequest,
 //
 //*****************************************************************************
 static void
-HandleEP0DataReceived(void *pvInstance, unsigned int ulDataSize, 
+HandleEP0DataReceived(void *pvInstance, unsigned int ulDataSize,
                                                         unsigned int ulIndex)
 {
     tHIDInstance *psInst;
@@ -1745,7 +1745,7 @@ HandleEP0DataReceived(void *pvInstance, unsigned int ulDataSize,
 //
 //*****************************************************************************
 static void
-HandleEP0DataSent(void *pvInstance, unsigned int ulInfo, 
+HandleEP0DataSent(void *pvInstance, unsigned int ulInfo,
                                             unsigned int ulIndex)
 {
     tHIDInstance *psInst;
@@ -2005,9 +2005,9 @@ USBDHIDInit(unsigned int ulIndex, const tUSBDHIDDevice *psDevice)
 //
 //! Initializes HID device operation for a given USB controller.
 //!
-//! This function is used for initializing an instance related information of the 
-//! HID device. 
-//! 
+//! This function is used for initializing an instance related information of the
+//! HID device.
+//!
 //! \param ulIndex is the index of the USB controller which is to be
 //! initialized for HID device operation.
 //! \param psDevice points to a structure containing parameters customizing

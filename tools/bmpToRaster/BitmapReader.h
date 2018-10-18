@@ -63,17 +63,17 @@ typedef enum BmpFormat
 
 #pragma pack (push, 1)
 
-typedef struct tagBITMAPFILEHEADER 
+typedef struct tagBITMAPFILEHEADER
 {
-	unsigned short int			bfType;		/*Magic Number used to identify the BMP file*/ 
-	unsigned int				bfSize; 	/*Size of BMP file in bytes*/	
+	unsigned short int			bfType;		/*Magic Number used to identify the BMP file*/
+	unsigned int				bfSize; 	/*Size of BMP file in bytes*/
 	unsigned short int			bfReserved1; 	/*Reserved*/
 	unsigned short int			bfReserved2; 	/*Reserved*/
 	unsigned int				bfOffBits; 	/*Offset i.e. starting address of the byte where bitmap image data can be found*/
-} BITMAPFILEHEADER; 
+} BITMAPFILEHEADER;
 
-typedef struct tagBITMAPINFOHEADER 
-{ 
+typedef struct tagBITMAPINFOHEADER
+{
 	unsigned int				biSize; 	/*Size of header*/
 	unsigned int				biWidth; 	/*Bitmap width in pixels*/
 	unsigned int 				biHeight; 	/*Bitmap height in pixels*/
@@ -81,24 +81,24 @@ typedef struct tagBITMAPINFOHEADER
 	unsigned short int			biBitCount;	/*Number of bits per pixel (colour depth of image)(1,4,8,16,24,32)*/
 	unsigned int				biCompression; 	/*Compression method being used*/
 	unsigned int				biSizeImage; 	/*Image size (Size of Raw bitmap data)*/
-	unsigned int 				biXPelsPerMeter;/*Horizontal Resolution of the image*/ 
-	unsigned int 				biYPelsPerMeter;/*Vertical Resolution of the image*/ 
+	unsigned int 				biXPelsPerMeter;/*Horizontal Resolution of the image*/
+	unsigned int 				biYPelsPerMeter;/*Vertical Resolution of the image*/
 	unsigned int				biClrUsed; 	/*Number of colours in the colour palette*/
 	unsigned int 				biClrImportant; /*Number of important colours used*/
-} BITMAPINFOHEADER; 
+} BITMAPINFOHEADER;
 
-typedef struct tagRGBQUAD 
-{ 
-	 unsigned char				rgbBlue;	/*8 Bits for BLUE*/
- 	 unsigned char				rgbGreen;	/*8 Bits for GREEN*/ 
- 	 unsigned char				rgbRed;		/*8 Bits for RED*/
- 	 unsigned char				rgbReserved;	
+typedef struct tagRGBQUAD
+{
+	unsigned char				rgbBlue;	/*8 Bits for BLUE*/
+	unsigned char				rgbGreen;	/*8 Bits for GREEN*/
+	unsigned char				rgbRed;		/*8 Bits for RED*/
+	unsigned char				rgbReserved;
 } RGBQUAD;
 
-typedef struct tagBITMAPINFO 
-{ 
-	BITMAPINFOHEADER bmiHeader; 
-	RGBQUAD bmiColors[1]; 
+typedef struct tagBITMAPINFO
+{
+	BITMAPINFOHEADER bmiHeader;
+	RGBQUAD bmiColors[1];
 } BITMAPINFO;
 
 typedef struct tagIMAGEHOLDER
@@ -107,7 +107,7 @@ typedef struct tagIMAGEHOLDER
         unsigned int* pwFrameBuffer_24;
 }IMAGEPTR;
 
-enum pixelOdering {RGB, BGR}; 
+enum pixelOdering {RGB, BGR};
 
 #pragma pack(pop)
 

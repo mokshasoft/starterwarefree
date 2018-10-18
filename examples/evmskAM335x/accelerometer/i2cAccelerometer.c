@@ -39,35 +39,35 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -92,7 +92,7 @@
 
 #define  I2C_OUTPUT_CLOCK              100000
 
-#define  I2C_CLEAR_ALL_INTERRUPTS      0x7FF 
+#define  I2C_CLEAR_ALL_INTERRUPTS      0x7FF
 
 /* I2C address of LIS331DLH accelerometer*/
 #define  I2C_SLAVE_ADDR               (0x18)
@@ -120,11 +120,11 @@
                                        NORMAL_POWER_MODE)
 
 #define  CONFIG_CNTL_REG4             (FULL_SCALE_2g    |    \
-                                       BLOCK_DATA_UPDATE)   
+                                       BLOCK_DATA_UPDATE)
 
-#define  INTERNAL_FILTER_BYPASS       (0x00) 
+#define  INTERNAL_FILTER_BYPASS       (0x00)
 
-#define  DISABLE_SLEEP_TO_WAKEUP      (0x00)  
+#define  DISABLE_SLEEP_TO_WAKEUP      (0x00)
 
 #define  START_ADDR_DDR               (0x80000000)
 
@@ -168,7 +168,7 @@ unsigned char y_high;
 unsigned char z_high;
 
  /* This array is used as cosine lookup table.
- ** Each index of this array represnts the degree(0 to 90). The value at 
+ ** Each index of this array represnts the degree(0 to 90). The value at
  ** the corresponding index represents the cosine value of the degree.
  */
 unsigned int cosine [] = {10000, 99985, 99939, 99863, 99756, 99619, 99452, 99255,
@@ -215,8 +215,8 @@ void MMUConfigAndEnable(void)
 {
     /*
     ** Define DDR memory region of AM335x. DDR can be configured as Normal
-    ** memory with R/W access in user/privileged modes. The cache attributes 
-    ** specified here are, 
+    ** memory with R/W access in user/privileged modes. The cache attributes
+    ** specified here are,
     ** Inner - Write through, No Write Allocate
     ** Outer - Write Back, Write Allocate
     */
@@ -228,7 +228,7 @@ void MMUConfigAndEnable(void)
                         (unsigned int*)pageTable
                        };
     /*
-    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given. 
+    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given.
     */
     REGION regionOcmc = {
                          MMU_PGTYPE_SECTION, START_ADDR_OCMC, NUM_SECTIONS_OCMC,
@@ -338,8 +338,8 @@ int main()
          y_axis = (y_axis >> 4) & 0xfff;
          z_axis = (z_axis >> 4) & 0xfff;
 
-        
-         /* 
+
+         /*
          **If condition is true, then acceleration is along negative x-axis.
          **Else it is along positive x-axis.
          */
@@ -350,8 +350,8 @@ int main()
               x_axis =  x_axis & 0xfff;
               x_direction = -1;
          }
-         
-         /* 
+
+         /*
          **If condition is true, then acceleration is along negative y-axis.
          **Else it is along positive y-axis.
          */
@@ -362,9 +362,9 @@ int main()
               y_axis =  y_axis & 0xfff;
               y_direction = -1;
          }
-      
 
-         /* 
+
+         /*
          **If condition is true, then acceleration is along negative z-axis.
          **Else it is along positive z-axis.
          */
@@ -374,14 +374,14 @@ int main()
               z_axis = z_axis + 1;
               z_axis = z_axis & 0xfff;
               z_direction = -1;
-         } 
+         }
 
-         /* 
+         /*
          **cosine-inverse(z_axis/g) gives the degree by which
          **the device is tilted. 1g is eqvivalent to 1024 digital
          **value.
          */
-         z_axis = (z_axis * 100000) / 1024; 
+         z_axis = (z_axis * 100000) / 1024;
 
          /*
          **(z_axis/g) results in a fraction. The function 'BinarySearch()'
@@ -393,7 +393,7 @@ int main()
 
          if( Index != 0)
          {
-   
+
               if( y_axis > x_axis)
               {
                    if(y_direction == -1)
@@ -418,16 +418,16 @@ int main()
                     }
               }
         }
-         
-        if(((y_direction == 1) && (z_direction == -1)) || 
+
+        if(((y_direction == 1) && (z_direction == -1)) ||
           ((y_direction == -1) && (z_direction == -1)))
         {
               Index = 180 - Index;
         }
-        
+
         x_direction = 1;
         y_direction = 1;
-        z_direction = 1; 
+        z_direction = 1;
 
         ConsoleUtilsPrintf("%d degree \n", Index);
 
@@ -490,11 +490,11 @@ static void AccelerometerRegRead(unsigned char regOffset, unsigned char* data)
     rCount = 0;
 
     dataToSlave[0] = regOffset;
-        
+
     SetupI2CReception(1);
 
     *data = dataFromSlave[0];
-} 
+}
 
 
  /*
@@ -526,7 +526,7 @@ static void SetupI2C(void)
 }
 
 /*
-** Transmits data over I2C bus 
+** Transmits data over I2C bus
 */
 static void SetupI2CTransmit(unsigned int dcount)
 {
@@ -554,7 +554,7 @@ static void SetupI2CTransmit(unsigned int dcount)
 }
 
 /*
-** Receives data over I2C bus 
+** Receives data over I2C bus
 */
 static void SetupI2CReception(unsigned int dcount)
 {
@@ -631,7 +631,7 @@ void cleanupInterrupts(void)
 
 /*
 ** I2C Interrupt Service Routine. This function will read and write
-** data through I2C bus. 
+** data through I2C bus.
 */
 void I2CIsr(void)
 {
@@ -641,39 +641,39 @@ void I2CIsr(void)
 
     I2CMasterIntClearEx(I2C_INSTANCE,
 	                    (status & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY)));
-						
+
     if(status & I2C_INT_RECV_READY)
     {
          /* Receive data from data receive register */
          dataFromSlave[rCount++] = I2CMasterDataGet(I2C_INSTANCE);
 	 I2CMasterIntClearEx(I2C_INSTANCE,  I2C_INT_RECV_READY);
-		
+
          if(rCount == numOfBytes)
          {
               I2CMasterIntDisableEx(I2C_INSTANCE, I2C_INT_RECV_READY);
               /* Generate a STOP */
               I2CMasterStop(I2C_INSTANCE);
-			  
+
          }
 
-             
+
     }
     if (status & I2C_INT_TRANSMIT_READY)
     {
          /* Put data to data transmit register of i2c */
-		 
+
         I2CMasterDataPut(I2C_INSTANCE, dataToSlave[tCount++]);
-	I2CMasterIntClearEx(I2C_INSTANCE, I2C_INT_TRANSMIT_READY);		 
-						
+	I2CMasterIntClearEx(I2C_INSTANCE, I2C_INT_TRANSMIT_READY);
+
          if(tCount == numOfBytes)
          {
 	      I2CMasterIntDisableEx(I2C_INSTANCE, I2C_INT_TRANSMIT_READY);
-			
+
          }
 
     }
-  
-        
+
+
     if (status & I2C_INT_STOP_CONDITION)
     {
       	 /* Disable transmit data ready and receive data read interupt */
@@ -682,7 +682,7 @@ void I2CIsr(void)
 			                       I2C_INT_STOP_CONDITION);
          flag = 0;
     }
-   
+
     if(status & I2C_INT_NO_ACK)
     {
          I2CMasterIntDisableEx(I2C_INSTANCE, I2C_INT_TRANSMIT_READY  |

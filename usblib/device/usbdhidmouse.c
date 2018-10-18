@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -474,10 +474,10 @@ USBDHIDMouseInit(unsigned int ulIndex, const tUSBDHIDMouseDevice *psDevice)
 //! \param psDevice points to a structure containing parameters customizing
 //! the operation of the HID mouse device.
 //!
-//! An application wishing to make use of a composite 
+//! An application wishing to make use of a composite
 //! USB bulk communication channel needs to call this function.
-//! This function is used for initializing an instance related information of the 
-//! HID mouse device. 
+//! This function is used for initializing an instance related information of the
+//! HID mouse device.
 //!
 //! \return Returns zero on failure or a non-zero instance value that should be
 //! used with the remaining USB HID Mouse APIs.

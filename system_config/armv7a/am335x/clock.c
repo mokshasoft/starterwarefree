@@ -95,7 +95,7 @@ static void updateClockDivider(ClockDivider *clkDDiv, unsigned int OPPSupported)
  **/
 static void setDividerAutoGateCtrl(ClockDivider *clkDDiv)
 {
-	HWREG(clkDDiv->dividerConfigReg) = 
+	HWREG(clkDDiv->dividerConfigReg) =
 		(HWREG(clkDDiv->dividerConfigReg) & (~clkDDiv->clkoutAutoGateCtrlMask)) |
 													clkDDiv->clkoutAutoGateCtrl;
 }
@@ -113,7 +113,7 @@ static void setDividerAutoPDCtrl(ClockDivider *clkDDiv)
 {
 	if(true == clkDDiv->isPdCtrlValid)
 	{
-		HWREG(clkDDiv->dividerConfigReg) = 
+		HWREG(clkDDiv->dividerConfigReg) =
 			(HWREG(clkDDiv->dividerConfigReg) & (~clkDDiv->clkAutoPDCtrlMask)) |
 														clkDDiv->clkAutoPDCtrl;
 	}
@@ -138,12 +138,12 @@ static void updateClockDivider(ClockDivider *clkDDiv, unsigned int OPPSupported)
 	//						clkDDiv->clkDivUpdatedStatusShift;
 
 	/*	Configure divider value	*/
-	HWREG(clkDDiv->dividerConfigReg) = 
+	HWREG(clkDDiv->dividerConfigReg) =
 		(HWREG(clkDDiv->dividerConfigReg) & (~clkDDiv->clkDividerMask)) |
 										clkDDiv->clkDividerValue[OPPSupported];
 	
 	/*	Wait till the new divider value is updated	*/
-	/*while(dividerUpdate == ((HWREG(clkDDiv->dividerConfigReg) & 
+	/*while(dividerUpdate == ((HWREG(clkDDiv->dividerConfigReg) &
 		clkDDiv->clkDivUpdatedStatusMask) >> clkDDiv->clkDivUpdatedStatusShift));*/ 	/*	TBD - Status not getting updated	*/
 }
 
@@ -197,14 +197,14 @@ static void configADPLLAutoIdleCtrl(ADPLL *adpllPtr)
  **/
 static void setBypassClockSource(ADPLL *adpllPtr)
 {
-	HWREG(adpllPtr->adpllConfigReg) = 
+	HWREG(adpllPtr->adpllConfigReg) =
 		(HWREG(adpllPtr->adpllConfigReg) & (~adpllPtr->adpllBypassClkMask)) |
 												adpllPtr->adpllBypassClkSource;
 }
 
 
 /**
- * \brief   This API will configure multiplier, divider, and sigma-delta 
+ * \brief   This API will configure multiplier, divider, and sigma-delta
  *			divider of the PLL
  *
  * \param   *adpllPtr		Pointer to clock divider structure
@@ -216,17 +216,17 @@ static void setBypassClockSource(ADPLL *adpllPtr)
 static void setClkMultDiv(ADPLL *adpllPtr, unsigned int OPPSupported)
 {
 	/*	Configure multiplier	*/
-	HWREG(adpllPtr->adpllConfigReg) = 
+	HWREG(adpllPtr->adpllConfigReg) =
 		(HWREG(adpllPtr->adpllConfigReg) & (~adpllPtr->adpllMultiplierMask)) |
 									adpllPtr->adpllMultiplier[OPPSupported];
 	
 	/*	Configure divider	*/
-	HWREG(adpllPtr->adpllConfigReg) = 
+	HWREG(adpllPtr->adpllConfigReg) =
 		(HWREG(adpllPtr->adpllConfigReg) & (~adpllPtr->adpllDividerMask)) |
 									adpllPtr->adpllDivider[OPPSupported];
 										
 	/*	Configure sigma delta divider	*/
-	HWREG(adpllPtr->adpllConfigReg) = 
+	HWREG(adpllPtr->adpllConfigReg) =
 		(HWREG(adpllPtr->adpllConfigReg) & (~adpllPtr->adpllSigmaDeltaDividerMask)) |
 									adpllPtr->adpllSigmaDeltaDivider[OPPSupported];
 }
@@ -244,7 +244,7 @@ void setLPBypassMode(ADPLL *adpllPtr, unsigned int isNormalByp)
 {
 	if(CLK_LP_MODE_NORMAL == isNormalByp)
 	{
-		HWREG(adpllPtr->adpllModeReg) = 
+		HWREG(adpllPtr->adpllModeReg) =
 			(HWREG(adpllPtr->adpllModeReg) & (~(adpllPtr->adpllLowPowerMask))) |
 											adpllPtr->adpllLowPowerNormalVal;
 		/*	Wait till the PLL is LOCKED	*/
@@ -253,7 +253,7 @@ void setLPBypassMode(ADPLL *adpllPtr, unsigned int isNormalByp)
 
 	if(CLK_LP_MODE_BYPASS == isNormalByp)
 	{
-		HWREG(adpllPtr->adpllModeReg) = 
+		HWREG(adpllPtr->adpllModeReg) =
 			(HWREG(adpllPtr->adpllModeReg) & (~(adpllPtr->adpllLowPowerMask))) |
 											adpllPtr->adpllLowPowerBypassVal;
 											
@@ -273,7 +273,7 @@ void setLPBypassMode(ADPLL *adpllPtr, unsigned int isNormalByp)
  **/
 static void setRelockRampCtrl(ADPLL *adpllPtr)
 {
-	HWREG(adpllPtr->adpllModeReg) = 
+	HWREG(adpllPtr->adpllModeReg) =
 		(HWREG(adpllPtr->adpllModeReg) & (~adpllPtr->adpllRelockRampMask)) |
 											adpllPtr->adpllRelockRampVal;
 }
@@ -430,8 +430,8 @@ static void enableClock(Clock *clkPtr)
 	/*	Select inputs for Multiplexer	*/
 	if(NULL != clkPtr->muxInputSelReg)
 	{
-		HWREG(clkPtr->muxInputSelReg) = 
-				(HWREG(clkPtr->muxInputSelReg) & (~clkPtr->muxInputSelMask)) | 
+		HWREG(clkPtr->muxInputSelReg) =
+				(HWREG(clkPtr->muxInputSelReg) & (~clkPtr->muxInputSelMask)) |
 													clkPtr->muxInputSelVal;
 	}
 	
@@ -542,7 +542,7 @@ void enableModuleClock(unsigned int moduleId)
  *
  * \param   clkDomainptr	pointer to the clock domain
  *
- * \return  result	Indicates whether the clock domain is disabled or not. 
+ * \return  result	Indicates whether the clock domain is disabled or not.
  *					Possible values are
  *						-	FAIL
  *						-	SUCCESS
@@ -579,7 +579,7 @@ result disableClockDomain(ClockDomain *clkDomainptr)
 
 
 /**
- * \brief   This API disables the clock. 
+ * \brief   This API disables the clock.
  *
  * \param   clkPtr	pointer to the clock
  *
@@ -608,7 +608,7 @@ static void disableClock(Clock *clkPtr)
 
 /**
  * \brief   This API disables the module clock. The following actions are performed
- *			-	Check whether the module is idle 
+ *			-	Check whether the module is idle
 				-	return with error status if not idle or wait if isBlockingCall is true
 			-	If the module is idle, disable the module
 			-	Check whether the module is disabled
@@ -619,7 +619,7 @@ static void disableClock(Clock *clkPtr)
  * \param   moduleId		Module id of the module
  * \param   isBlockingCall	Variable indicating whether this is a blocking call or not
  *
- * \return  result	Indicates whether the module clock is disabled or not. 
+ * \return  result	Indicates whether the module clock is disabled or not.
  *					Possible values are
  *						-	MODULE_NOT_DISABLED
  *						-	MODULE_NOT_IDLE
@@ -703,8 +703,8 @@ unsigned int getModuleState(unsigned int moduleId)
 {
 	ModuleClock *moduleClk = ModuleClockList[moduleId];
 	
-	return ((HWREG(moduleClk->moduleStatusReg) & 
-				moduleClk->idleStatusMask) >> 
+	return ((HWREG(moduleClk->moduleStatusReg) &
+				moduleClk->idleStatusMask) >>
 				moduleClk->idleStatusShift);		
 }
 
@@ -721,7 +721,7 @@ int getGclockGateState(Clock *clkPtr)
 {
 	if(NULL != clkPtr->clkGateStatusReg)
 	{
-		return ((HWREG(clkPtr->clkGateStatusReg) & 
+		return ((HWREG(clkPtr->clkGateStatusReg) &
 				clkPtr->clockGateStatusMask) >> clkPtr->clockGateStatusShift);	
 	}
 	else
@@ -743,7 +743,7 @@ unsigned int getADPLLIdleStatus(ADPLL *adpllPtr)
 {
 	if(NULL != (adpllPtr->idleStatusReg))
 	{
-		return ((HWREG(adpllPtr->idleStatusReg) & 
+		return ((HWREG(adpllPtr->idleStatusReg) &
 				adpllPtr->adpllClkStatusMask) >> adpllPtr->adpllClkStatusShift);
 	}
 	else
@@ -765,8 +765,8 @@ unsigned int getDividerClkGateStatus(Clock *clkPtr)
 {
 	if(NULL != clkPtr->clkDivider->dividerConfigReg)
 	{
-		return ((HWREG(clkPtr->clkDivider->dividerConfigReg) & 
-		clkPtr->clkDivider->clkoutGateStatusMask) >> 
+		return ((HWREG(clkPtr->clkDivider->dividerConfigReg) &
+		clkPtr->clkDivider->clkoutGateStatusMask) >>
 			clkPtr->clkDivider->clkoutGateStatusShift);			
 	}
 	else
@@ -887,7 +887,7 @@ result clkdomainGateStatus(unsigned int clkDomainId)
 
 
 /**
- * \brief   This API will check whether all the clocks of the given 
+ * \brief   This API will check whether all the clocks of the given
  *			clock domain list are gated
  *
  * \param   clockDomainStatusList - List of clock domains to be checked

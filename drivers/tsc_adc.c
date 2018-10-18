@@ -4,7 +4,7 @@
  *  \brief TOUCH SCREEN APIs.
  *
  *  This file contains the device abstraction layer APIs for
- *  Touch Screen. 
+ *  Touch Screen.
  */
 
 /*
@@ -74,12 +74,12 @@ unsigned int TSCADCGetRevision(unsigned int baseAdd)
  * 		       2 - TSCADC_SMART_IDLE
  * 		       3 - TSCADC_SMART_IDLE_WAKEUP
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCIdleModeSet(unsigned int baseAdd, unsigned int idleMode)
 {
-    HWREG(baseAdd + TSC_ADC_SS_SYSCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_SYSCONFIG) &=
                                   ~TSC_ADC_SS_SYSCONFIG_IDLEMODE;
 
     HWREG(baseAdd + TSC_ADC_SS_SYSCONFIG) |= (idleMode <<
@@ -106,7 +106,7 @@ void TSCADCIdleModeSet(unsigned int baseAdd, unsigned int idleMode)
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCRawIntStatusSet(unsigned int baseAdd, unsigned int intFlag)
@@ -134,7 +134,7 @@ void TSCADCRawIntStatusSet(unsigned int baseAdd, unsigned int intFlag)
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
  *
- * \return  Raw status of the specified interrupts. 
+ * \return  Raw status of the specified interrupts.
  *
  **/
 unsigned int TSCADCRawIntStatusRead(unsigned int baseAdd, unsigned int intFlag)
@@ -174,7 +174,7 @@ unsigned int TSCADCRawIntStatus(unsigned int baseAdd)
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCIntStatusClear(unsigned int baseAdd, unsigned int intFlag)
@@ -202,8 +202,8 @@ void TSCADCIntStatusClear(unsigned int baseAdd, unsigned int intFlag)
  *          TSCADC_FIFO1_OVER_RUN_INT.\n
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
- *          
- * \return  The interrupt status of specified interrupts. 
+ *
+ * \return  The interrupt status of specified interrupts.
  *
  **/
 unsigned int TSCADCIntStatusRead(unsigned int baseAdd, unsigned int intFlag)
@@ -244,7 +244,7 @@ unsigned int TSCADCIntStatus(unsigned int baseAdd)
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCEventInterruptEnable(unsigned int baseAdd, unsigned int event)
@@ -272,7 +272,7 @@ void TSCADCEventInterruptEnable(unsigned int baseAdd, unsigned int event)
  *          TSCADC_OUT_OF_RANGE_INT.\n
  *          TSCADC_PEN_UP_EVENT_INT.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCEventInterruptDisable(unsigned int baseAdd, unsigned int event)
@@ -282,7 +282,7 @@ void TSCADCEventInterruptDisable(unsigned int baseAdd, unsigned int event)
 
 /**
  * \brief   This API enables/disables the Wake Up Generation for HW Pen event.
- * 	    Enabling the Wake Up Generation shall generate an asynchronous 
+ * 	    Enabling the Wake Up Generation shall generate an asynchronous
  * 	    Wake UP using the SWAKEup Protocol if it detects a touch
  * 	    even if the Module and the clocks are off.
  *
@@ -295,7 +295,7 @@ void TSCADCEventInterruptDisable(unsigned int baseAdd, unsigned int event)
  *           TSCADC_WAKEUP_DISABLE - Wakeup is disabled.\n
  *           TSCADC_WAKEUP_ENABLE  - Wakeup is enabled .\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCWakeUpPenEventConfig(unsigned int baseAdd, unsigned int enableWakeUp)
@@ -312,9 +312,9 @@ void TSCADCWakeUpPenEventConfig(unsigned int baseAdd, unsigned int enableWakeUp)
  *          fifoSel can take following macros.\n
  *
  *          TSCADC_FIFO_0.\n
- *          TSCADC_FIFO_1.\n 
+ *          TSCADC_FIFO_1.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCDMAFIFOEnable(unsigned int baseAdd, unsigned char fifoSel)
@@ -331,9 +331,9 @@ void TSCADCDMAFIFOEnable(unsigned int baseAdd, unsigned char fifoSel)
  *          fifoSel can take following macros.\n
  *
  *          TSCADC_FIFO_0.\n
- *          TSCADC_FIFO_1.\n 
+ *          TSCADC_FIFO_1.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCDMAFIFODisable(unsigned int baseAdd, unsigned char fifoSel)
@@ -350,7 +350,7 @@ void TSCADCDMAFIFODisable(unsigned int baseAdd, unsigned char fifoSel)
  *          fifoSel can take following values.\n
  *
  *          TSCADC_FIFO_0.\n
- *          TSCADC_FIFO_1.\n 
+ *          TSCADC_FIFO_1.\n
  *
  * \return  returns the DMA Enable Status
  * 	    TRUE - Enabled
@@ -371,16 +371,16 @@ unsigned int TSCADCIsDMAFIFOEnabled(unsigned int baseAdd, unsigned int fifoSel)
  * 				   be enabled.
  *
  *          enableHWEventPreempt can take following macros.\n
- * 
+ *
  *          0 - Preemption is disabled.\n
  *          1 - Preemption is Enabled.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCConfigHWEventPrempt(unsigned int baseAdd, unsigned int enableHWEventPreempt)
 {
-    HWREG(baseAdd + TSC_ADC_SS_CTRL) &= 
+    HWREG(baseAdd + TSC_ADC_SS_CTRL) &=
                              ~TSC_ADC_SS_CTRL_HW_EVENT_MAPPING;
 
     HWREG(baseAdd + TSC_ADC_SS_CTRL) |= enableHWEventPreempt <<
@@ -395,17 +395,17 @@ void TSCADCConfigHWEventPrempt(unsigned int baseAdd, unsigned int enableHWEventP
  * 		      Events are.\n
  *
  *          hwEvent can take following macros.\n
- * 
+ *
  *          TSCADC_HW_INPUT_EVENT.\n
  *          TSCADC_PEN_TOUCH.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCHWEventMapSet(unsigned int baseAdd, unsigned int hwEvent)
 {
     HWREG(baseAdd + TSC_ADC_SS_CTRL) &= ~TSC_ADC_SS_CTRL_HW_EVENT_MAPPING;
-    HWREG(baseAdd + TSC_ADC_SS_CTRL) |=  hwEvent << 
+    HWREG(baseAdd + TSC_ADC_SS_CTRL) |=  hwEvent <<
                                    TSC_ADC_SS_CTRL_HW_EVENT_MAPPING_SHIFT;
 }
 
@@ -421,7 +421,7 @@ void TSCADCHWEventMapSet(unsigned int baseAdd, unsigned int hwEvent)
  *          TSCADC_TRANSISTOR_DISABLE - Disables the transistor.\n
  *          TSCADC_TRANSISTOR_ENABLE  - Enables the transistor.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCTSTransistorConfig(unsigned int baseAdd, unsigned int enableTSTransistor)
@@ -444,14 +444,14 @@ void TSCADCTSTransistorConfig(unsigned int baseAdd, unsigned int enableTSTransis
  *          TSCADC_FIVE_WIRE_MODE.\n
  *          TSCADC_GENERAL_PURPOSE_MODE.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCTSModeConfig(unsigned int baseAdd, unsigned int tsMode)
 {
     HWREG(baseAdd + TSC_ADC_SS_CTRL) &= ~TSC_ADC_SS_CTRL_AFE_PEN_CTRL;
 
-    HWREG(baseAdd + TSC_ADC_SS_CTRL) |= tsMode << 
+    HWREG(baseAdd + TSC_ADC_SS_CTRL) |= tsMode <<
                                    TSC_ADC_SS_CTRL_AFE_PEN_CTRL_SHIFT;
 }
 
@@ -460,7 +460,7 @@ void TSCADCTSModeConfig(unsigned int baseAdd, unsigned int tsMode)
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCSetADCPowerDown(unsigned int baseAdd)
@@ -475,7 +475,7 @@ void TSCADCSetADCPowerDown(unsigned int baseAdd)
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCSetADCPowerUp(unsigned int baseAdd)
@@ -488,27 +488,27 @@ void TSCADCSetADCPowerUp(unsigned int baseAdd)
  *
  * \param   baseAdd     Base Address of the TouchScreen Module Registers.
  * \param   adcBiasSel   Select internal or external ADC Bias.
- *    
+ *
  *          adcBiasSel can take following values.\n
- *            
+ *
  *	    TSCADC_INTERNAL_AC_BIAS - Internal ac bias.\n
  *	    TSCADC_EXTERNAL_AC_BIAS - External ac bias.\n
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCBiasConfig(unsigned int baseAdd, unsigned int adcBiasSel)
 {
     HWREG(baseAdd + TSC_ADC_SS_CTRL) &= ~TSC_ADC_SS_CTRL_ADC_BIAS_SELECT;
-    HWREG(baseAdd + TSC_ADC_SS_CTRL) |= adcBiasSel << 
+    HWREG(baseAdd + TSC_ADC_SS_CTRL) |= adcBiasSel <<
                                    TSC_ADC_SS_CTRL_ADC_BIAS_SELECT_SHIFT;
 }
 
 /**
- * \brief   This API enables the protection of Step Config Registers. 
+ * \brief   This API enables the protection of Step Config Registers.
  *
  * \param   baseAdd    Base Address of the TouchScreen Module Registers.
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCStepConfigProtectionEnable(unsigned int baseAdd)
@@ -518,27 +518,27 @@ void TSCADCStepConfigProtectionEnable(unsigned int baseAdd)
 }
 
 /**
- * \brief   This API disables the protection of Step Config Registers. 
+ * \brief   This API disables the protection of Step Config Registers.
  *
  * \param   baseAdd    Base Address of the TouchScreen Module Registers.
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCStepConfigProtectionDisable(unsigned int baseAdd)
 {
-    HWREG(baseAdd + TSC_ADC_SS_CTRL) |= 
+    HWREG(baseAdd + TSC_ADC_SS_CTRL) |=
                       TSC_ADC_SS_CTRL_STEPCONFIG_WRITEPROTECT_N;
 }
 
 /**
  * \brief   This API enables/disables the channel ID store along with the
- * 	     captured ADC data 
+ * 	     captured ADC data
  *
  * \param   baseAdd	      Base Address of the TouchScreen Module Registers.
  * \param   enableStepIDTag   Whether or not step ID is to be stored.
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCStepIDTagConfig(unsigned int baseAdd, unsigned int enableStepIDTag)
@@ -549,7 +549,7 @@ void TSCADCStepIDTagConfig(unsigned int baseAdd, unsigned int enableStepIDTag)
 }
 
 /**
- * \brief   This API Enables/Disables the TSCADC Module 
+ * \brief   This API Enables/Disables the TSCADC Module
  *
  * \param   baseAdd       Base Address of the TouchScreen Module Registers.
  * \param   enableModule   Whether the module is to be enabled.
@@ -559,7 +559,7 @@ void TSCADCStepIDTagConfig(unsigned int baseAdd, unsigned int enableStepIDTag)
  *          TSCADC_MODULE_DISABLE - Disables  module.\n
  *          TSCADC_MODULE_ENABLE  - Enables the module.\n
  *
- * \return  None 
+ * \return  None
  *
  **/
 void TSCADCModuleStateSet(unsigned int baseAdd, unsigned int enableModule)
@@ -569,7 +569,7 @@ void TSCADCModuleStateSet(unsigned int baseAdd, unsigned int enableModule)
 }
 
 /**
- * \brief   This API reads the PEN_IRQ Status of the Sequencer 
+ * \brief   This API reads the PEN_IRQ Status of the Sequencer
  *
  * \param   baseAdd    Base Address of the TouchScreen Module Registers.
  * \param   penIRQSel   Penirq for which the status is to be read.
@@ -579,48 +579,48 @@ void TSCADCModuleStateSet(unsigned int baseAdd, unsigned int enableModule)
  *          TSCADC_PEN_IRQ_0.\n
  *          TSCADC_PEN_IRQ_1.\n
  *
- * \return  returns the IRQ status 
+ * \return  returns the IRQ status
  *
  **/
-unsigned int TSCADCSequencerPenIrqStatusRead(unsigned int baseAdd, 
+unsigned int TSCADCSequencerPenIrqStatusRead(unsigned int baseAdd,
                                           unsigned int penIRQSel)
 {
-    if (TSCADC_PEN_IRQ_0 == penIRQSel) 
+    if (TSCADC_PEN_IRQ_0 == penIRQSel)
     {
          return ((HWREG(baseAdd + TSC_ADC_SS_ADCSTAT) &
-		   TSC_ADC_SS_ADCSTAT_PEN_IRQ0) 
+		   TSC_ADC_SS_ADCSTAT_PEN_IRQ0)
                   >>  TSC_ADC_SS_ADCSTAT_PEN_IRQ0_SHIFT);
-    } 
-    else 
-    {    
+    }
+    else
+    {
          return ((HWREG(baseAdd + TSC_ADC_SS_ADCSTAT) &
-		   TSC_ADC_SS_ADCSTAT_PEN_IRQ1) 
+		   TSC_ADC_SS_ADCSTAT_PEN_IRQ1)
                   >>  TSC_ADC_SS_ADCSTAT_PEN_IRQ1_SHIFT);
     }
 }
 
 /**
- * \brief   This API reads the Sequencer Busy Status 
+ * \brief   This API reads the Sequencer Busy Status
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  *
- * \return  returns the Sequencer Status 
+ * \return  returns the Sequencer Status
  *
  **/
 unsigned int TSCADCSequencerFSMBusyStatus(unsigned int baseAdd)
 {
-    return ((HWREG(baseAdd + TSC_ADC_SS_ADCSTAT) & 
+    return ((HWREG(baseAdd + TSC_ADC_SS_ADCSTAT) &
               TSC_ADC_SS_ADCSTAT_FSM_BUSY ) >>
 	      TSC_ADC_SS_ADCSTAT_FSM_BUSY_SHIFT);
 }
 
 /**
  * \brief   This API reads the STEP ID currently being executed by
- * 	    the sequencer 
+ * 	    the sequencer
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  *
- * \return  returns the Step ID  
+ * \return  returns the Step ID
  *
  **/
 unsigned int TSCADCSequencerCurrentStepID(unsigned int baseAdd)
@@ -635,18 +635,18 @@ unsigned int TSCADCSequencerCurrentStepID(unsigned int baseAdd)
  * \param   lowVal     Minimum threshold value for ADC Output.
  * \param   highVal    Maximum threshold value for ADC output.
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCOutputRangeConfig(unsigned int baseAdd, unsigned short lowVal,
 	                     unsigned short highVal)
 {
-    HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) &= 
+    HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) &=
                         ~TSC_ADC_SS_ADCRANGE_LOW_RANGE_DATA;
 
     HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) |= lowVal;
 
-    HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) &= 
+    HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) &=
                         ~TSC_ADC_SS_ADCRANGE_HIGH_RANGE_DATA;
 
     HWREG(baseAdd + TSC_ADC_SS_ADCRANGE) |= highVal <<
@@ -654,20 +654,20 @@ void TSCADCOutputRangeConfig(unsigned int baseAdd, unsigned short lowVal,
 }
 
 /**
- * \brief   This API sets the AFE clock 
+ * \brief   This API sets the AFE clock
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   clkDiv     Divider Value.
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCConfigureAFEClock(unsigned int baseAdd, unsigned int moduleClk,
                           unsigned int inputClk)
 {
     unsigned int clkDiv;
-    
-    clkDiv = moduleClk / inputClk;    
+
+    clkDiv = moduleClk / inputClk;
 
     HWREG(baseAdd + TSC_ADC_SS_ADC_CLKDIV) &=
                         ~TSC_ADC_SS_ADC_CLKDIV_ADC_CLK_DIV;
@@ -677,13 +677,13 @@ void TSCADCConfigureAFEClock(unsigned int baseAdd, unsigned int moduleClk,
 
 /**
  * \brief   This API Controls spare in values sent to AFE and captures spare out
- * 	     from AFE 
+ * 	     from AFE
  *
  * \param   baseAdd         Base Address of the TouchScreen Module Registers.
  * \param   spareOutputVal   Spare Output Pins.
  * \param   spareInputVal    Spare Input Pins.
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCConfigureMisc(unsigned int baseAdd, unsigned char spareInputVal,
@@ -691,32 +691,32 @@ void TSCADCConfigureMisc(unsigned int baseAdd, unsigned char spareInputVal,
 {
     HWREG(baseAdd + TSC_ADC_SS_ADC_MISC) &=
                           ~TSC_ADC_SS_ADC_MISC_AFE_SPARE_INPUT;
- 
+
     HWREG(baseAdd + TSC_ADC_SS_ADC_MISC) |= spareInputVal;
 
     HWREG(baseAdd + TSC_ADC_SS_ADC_MISC) &=
                            ~TSC_ADC_SS_ADC_MISC_AFE_SPARE_OUTPUT;
-                              
+
     HWREG(baseAdd + TSC_ADC_SS_ADC_MISC) |= spareOutputVal <<
 	                    TSC_ADC_SS_ADC_MISC_AFE_SPARE_OUTPUT_SHIFT;
 }
 
 /**
- * \brief   This API Enables/Disables the given step. 
+ * \brief   This API Enables/Disables the given step.
  *
  * \param   baseAdd     Base Address of the TouchScreen Module Registers.
  * \param   stepEn_Dis   Enables/Disables the Step.\n
- *            
+ *
  *          stepEn_Dis can take '0' or '1'
  *
  *          0 - Disables the step.\n
- *          1 - Enables the step.\n  
- *           
+ *          1 - Enables the step.\n
+ *
  * \param   stepSel      Select the step.\n
  *
  *          stepSel can take any value bteween 1 to 16.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCConfigureStepEnable(unsigned int baseAdd, unsigned int stepSel,
@@ -728,7 +728,7 @@ void TSCADCConfigureStepEnable(unsigned int baseAdd, unsigned int stepSel,
 
 /**
  * \brief   This API configures ADC to single ended or differential operation
- *          mode. 
+ *          mode.
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   mode       It is the value which determines whether to
@@ -738,83 +738,83 @@ void TSCADCConfigureStepEnable(unsigned int baseAdd, unsigned int stepSel,
  *          mode can take following macros.
  *
  *          TSCADC_ADC_SINGLE_ENDED_OPER_MODE.\n
- *          TSCADC_ADC_DIFFERENTIAL_OPER_MODE.\n  
- * 
- * \return  none  
+ *          TSCADC_ADC_DIFFERENTIAL_OPER_MODE.\n
+ *
+ * \return  none
  *
  **/
 void TSCADCIdleStepOperationModeControl(unsigned int baseAdd, unsigned int mode)
 {
     if(mode)
     {
-         HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= 
+         HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |=
                              TSC_ADC_SS_IDLECONFIG_DIFF_CNTRL;
     }
     else
     {
-         HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= 
+         HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &=
                            ~TSC_ADC_SS_IDLECONFIG_DIFF_CNTRL;
     }
 }
 
 /**
- * \brief   This API configure the reference volatage and Input to Idle Step 
+ * \brief   This API configure the reference volatage and Input to Idle Step
  *
  * \param   baseAdd	 	Base Address of the TouchScreen Module Registers.
  * \param   adcNegativeRef	Selects the ADC Negative Reference Voltage.\n
  *
  *          adcNegativeRef can take following values.\n
  *
- *           TSCADC_NEGATIVE_REF_VSSA.\n                
- *           TSCADC_NEGATIVE_REF_XNUR.\n                
- *           TSCADC_NEGATIVE_REF_YNLR.\n                
- *           TSCADC_NEGATIVE_REF_ADCREFM.\n                
- *  
+ *           TSCADC_NEGATIVE_REF_VSSA.\n
+ *           TSCADC_NEGATIVE_REF_XNUR.\n
+ *           TSCADC_NEGATIVE_REF_YNLR.\n
+ *           TSCADC_NEGATIVE_REF_ADCREFM.\n
+ *
  * \param   adcPositiveInput 	Selects the Positive Analog Input Source.\n
  *
- *           adcPositiveInput can take following values.\n   
+ *           adcPositiveInput can take following values.\n
  *
- *           TSCADC_POSITIVE_INP_CHANNEL1.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL2.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL3.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL4.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL5.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL6.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL7.\n            
+ *           TSCADC_POSITIVE_INP_CHANNEL1.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL2.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL3.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL4.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL5.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL6.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL7.\n
  *           TSCADC_POSITIVE_INP_CHANNEL8.\n
  *           TSCADC_POSITIVE_INP_ADCREFM.\n
- *            
+ *
  * \param   adcNegativeInput 	Selects the Negative Analog Input Source.\n
  *
  *          adcNegativeInput can take following values.\n
  *
- *          TSCADC_NEGATIVE_INP_CHANNEL1.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL2.\n           
- *          TSCADC_NEGATIVE_INP_CHANNEL3.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL4.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL5.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL6.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL8.\n            
+ *          TSCADC_NEGATIVE_INP_CHANNEL1.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL2.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL3.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL4.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL5.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL6.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL8.\n
  *          TSCADC_NEGATIVE_INP_ADCREFRM.\n
- *            
+ *
  * \param   adcPositiveRef 	Selects the ADC Positive Reference Voltage.\n
  *
  *          adcPositiveRef can take following values.\n
  *
- *          TSCADC_POSITIVE_REF_VDDA.\n                
- *          TSCADC_POSITIVE_REF_XNUR.\n                
- *          TSCADC_POSITIVE_REF_YNLR.\n                
+ *          TSCADC_POSITIVE_REF_VDDA.\n
+ *          TSCADC_POSITIVE_REF_XNUR.\n
+ *          TSCADC_POSITIVE_REF_YNLR.\n
  *          TSCADC_POSITIVE_REF_ADCREFP.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCIdleStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
-                       unsigned int adcPositiveInp, unsigned int adcNegativeInp, 
+                       unsigned int adcPositiveInp, unsigned int adcNegativeInp,
                        unsigned int adcPositiveRef)
 {
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &=
                           ~TSC_ADC_SS_IDLECONFIG_SEL_RFM_SWC;
 
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= adcNegativeRef <<
@@ -825,13 +825,13 @@ void TSCADCIdleStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= adcPositiveInp <<
 	                   TSC_ADC_SS_IDLECONFIG_SEL_INP_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &=
                           ~TSC_ADC_SS_IDLECONFIG_SEL_INM_SWM;
 
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= adcNegativeInp <<
 	                   TSC_ADC_SS_IDLECONFIG_SEL_INM_SWM_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &=
                           ~TSC_ADC_SS_IDLECONFIG_SEL_RFP_SWC;
 
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= adcPositiveRef <<
@@ -841,7 +841,7 @@ void TSCADCIdleStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
 /**
  * \brief   This API configure the Idle Step Transistor Biasing for
  *          xnpsw,xppsw and yppsw pins through which analog supply
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   xnpsw 	XNPSW pin SW configuration.\n
@@ -849,7 +849,7 @@ void TSCADCIdleStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
  *          xnpsw can take following values.\n
  *
  *          TSCADC_XPPSW_PIN_ON.\n
- *          TSCADC_XPPSW_PIN_OFF.\n                                          
+ *          TSCADC_XPPSW_PIN_OFF.\n
  *
  * \param   xnpsw 	YPPSW pin SW configuration.\n
  *
@@ -857,15 +857,15 @@ void TSCADCIdleStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
  *
  *          TSCADC_XNPSW_PIN_ON.\n
  *          TSCADC_XNPSW_PIN_OFF.\n
- *                     
+ *
  * \param   yppsw 	YPPSW pin SW configuration.\n
  *
  *          xppsw can take following values.\n
  *
  *          TSCADC_YPPSW_PIN_ON.\n
- *          TSCADC_YPPSW_PIN_OFF.\n                     
+ *          TSCADC_YPPSW_PIN_OFF.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCIdleStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
@@ -874,14 +874,14 @@ void TSCADCIdleStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_XPPSW_SWC;
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_XNPSW_SWC;
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_YPPSW_SWC;
-		  
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xppsw << 
+
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xppsw <<
                                 TSC_ADC_SS_IDLECONFIG_XPPSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xnpsw << 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xnpsw <<
                                 TSC_ADC_SS_IDLECONFIG_XNPSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= yppsw << 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= yppsw <<
                                 TSC_ADC_SS_IDLECONFIG_YPPSW_SWC_SHIFT;
 }
 
@@ -889,15 +889,15 @@ void TSCADCIdleStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
 /**
  * \brief   This API configure the Idle Step Transistor Biasing for
  *          xnnsw, ypnsw, ynnsw and wpnsw pins through which analog ground
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   xnnsw 	XNNSW pin SW configuration.\n
- *           
+ *
  *          xnnsw can take following values.\n
  *
  *          TSCADC_XNNSW_PIN_ON.\n
- *          TSCADC_XNNSW_PIN_OFF.\n                                        
+ *          TSCADC_XNNSW_PIN_OFF.\n
  *
  * \param   ypnsw 	YPNSW pin SW configuration.\n
  *
@@ -912,15 +912,15 @@ void TSCADCIdleStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
  *
  *          TSCADC_YNNSW_PIN_ON.\n
  *          TSCADC_YNNSW_PIN_OFF.\n
- *                     
+ *
  * \param   wpnsw 	WPNSW pin SW configuration.\n
- *          
+ *
  *          wpnsw can take following values.\n
  *
  *          TSCADC_WPNSW_PIN_ON.\n
- *          TSCADC_WPNSW_PIN_OFF.\n                      
+ *          TSCADC_WPNSW_PIN_OFF.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCIdleStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
@@ -931,24 +931,24 @@ void TSCADCIdleStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_YPNSW_SWC;
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_YNNSW_SWC;
     HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) &= ~TSC_ADC_SS_IDLECONFIG_WPNSW_SWC;
-		  
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xnnsw << 
+
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= xnnsw <<
                                 TSC_ADC_SS_IDLECONFIG_XNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= ypnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= ypnsw <<
                                 TSC_ADC_SS_IDLECONFIG_YPNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= ynnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= ynnsw <<
                                 TSC_ADC_SS_IDLECONFIG_YNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= wpnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_IDLECONFIG) |= wpnsw <<
                                 TSC_ADC_SS_IDLECONFIG_WPNSW_SWC_SHIFT;
 }
 
 
 /**
  * \brief   This API configures ADC to single ended or differential operation
- *          mode. 
+ *          mode.
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   mode      It is the value which determines whether to
@@ -958,101 +958,101 @@ void TSCADCIdleStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
  *          mode can take following macros.
  *
  *          TSCADC_ADC_SINGLE_ENDED_OPER_MODE.\n
- *          TSCADC_ADC_DIFFERENTIAL_OPER_MODE.\n  
- * 
- * \return  none  
+ *          TSCADC_ADC_DIFFERENTIAL_OPER_MODE.\n
+ *
+ * \return  none
  *
  **/
 void TSCADCChargeStepOperationModeControl(unsigned int baseAdd, unsigned int mode)
 {
     if(mode)
     {
-         HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= 
+         HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |=
                            TSC_ADC_SS_TS_CHARGE_STEPCONFIG_DIFF_CNTRL;
     }
     else
     {
-         HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+         HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                           ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_DIFF_CNTRL;
     }
 }
 
 
 /**
- * \brief  This API configures the Touch Screen ChargeStep 
+ * \brief  This API configures the Touch Screen ChargeStep
  *
  * \param   baseAdd	 	Base Address of the TouchScreen Module Registers.
  * \param   adcNegativeRef	Selects the ADC Negative Reference Voltage.\n
  *
  *          adcNegativeRef can take following values.\n
  *
- *           TSCADC_NEGATIVE_REF_VSSA.\n                
- *           TSCADC_NEGATIVE_REF_XNUR.\n                
- *           TSCADC_NEGATIVE_REF_YNLR.\n                
- *           TSCADC_NEGATIVE_REF_ADCREFM.\n                
- *  
+ *           TSCADC_NEGATIVE_REF_VSSA.\n
+ *           TSCADC_NEGATIVE_REF_XNUR.\n
+ *           TSCADC_NEGATIVE_REF_YNLR.\n
+ *           TSCADC_NEGATIVE_REF_ADCREFM.\n
+ *
  * \param   adcPositiveInput 	Selects the Positive Analog Input Source.\n
  *
- *           adcPositiveInput can take following values.\n   
+ *           adcPositiveInput can take following values.\n
  *
- *           TSCADC_POSITIVE_INP_CHANNEL1.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL2.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL3.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL4.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL5.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL6.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL7.\n            
+ *           TSCADC_POSITIVE_INP_CHANNEL1.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL2.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL3.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL4.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL5.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL6.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL7.\n
  *           TSCADC_POSITIVE_INP_CHANNEL8.\n
  *           TSCADC_POSITIVE_INP_ADCREFM.\n
- *            
+ *
  * \param   adcNegativeInput 	Selects the Negative Analog Input Source.\n
  *
  *          adcNegativeInput can take following values.\n
  *
- *          TSCADC_NEGATIVE_INP_CHANNEL1.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL2.\n           
- *          TSCADC_NEGATIVE_INP_CHANNEL3.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL4.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL5.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL6.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL8.\n            
+ *          TSCADC_NEGATIVE_INP_CHANNEL1.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL2.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL3.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL4.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL5.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL6.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL8.\n
  *          TSCADC_NEGATIVE_INP_ADCREFRM.\n
- *            
+ *
  * \param   adcPositiveRef 	Selects the ADC Positive Reference Voltage.\n
  *
  *          adcPositiveRef can take following values.\n
  *
- *          TSCADC_POSITIVE_REF_VDDA.\n                
- *          TSCADC_POSITIVE_REF_XPUL.\n                
- *          TSCADC_POSITIVE_REF_YPLL.\n                
+ *          TSCADC_POSITIVE_REF_VDDA.\n
+ *          TSCADC_POSITIVE_REF_XPUL.\n
+ *          TSCADC_POSITIVE_REF_YPLL.\n
  *          TSCADC_POSITIVE_REF_ADCREFP.\n
- * 
- * \return  none  
+ *
+ * \return  none
  *
  **/
 void TSCADCChargeStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
                          unsigned int adcPositiveInp,unsigned int adcNegativeInp,
                          unsigned int adcPositiveRef)
 {
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                          ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_RFM_SWC;
 
     HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= adcNegativeRef <<
 		         TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_RFM_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                          ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_INP_SWC;
 
     HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= adcPositiveInp <<
 		         TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_INP_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                         ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_INM_SWM;
 
     HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= adcNegativeInp <<
 		         TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_INM_SWM_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                          ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_SEL_RFP_SWC;
 
     HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= adcPositiveRef <<
@@ -1062,7 +1062,7 @@ void TSCADCChargeStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
 /**
  * \brief   This API configure the TouchScreen ChargeStep Transistor Biasing for
  *          xnpsw,xppsw and yppsw pins through which analog supply
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   xnpsw 	XNPSW pin SW configuration.\n
@@ -1070,7 +1070,7 @@ void TSCADCChargeStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
  *          xnpsw can take following values.\n
  *
  *          TSCADC_XPPSW_PIN_ON.\n
- *          TSCADC_XPPSW_PIN_OFF.\n                                          
+ *          TSCADC_XPPSW_PIN_OFF.\n
  *
  * \param   xnppsw 	XNPSW pin SW configuration.\n
  *
@@ -1078,49 +1078,49 @@ void TSCADCChargeStepConfig(unsigned int baseAdd, unsigned int adcNegativeRef,
  *
  *          TSCADC_XNPSW_PIN_ON.\n
  *          TSCADC_XNPSW_PIN_OFF.\n
- *                     
+ *
  * \param   yppsw 	YPPSW pin SW configuration.\n
  *
  *          yppsw can take following values.\n
  *
  *          TSCADC_YPPSW_PIN_ON.\n
- *          TSCADC_YPPSW_PIN_OFF.\n                     
+ *          TSCADC_YPPSW_PIN_OFF.\n
  *
- * \return  none 
+ * \return  none
  *
  **/
 void TSCADCChargeStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
                                      unsigned int xnpsw, unsigned int yppsw)
 {
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                              ~ TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XPPSW_SWC;
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                              ~ TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XNPSW_SWC;
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                              ~ TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YPPSW_SWC;
-		  
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xppsw << 
+
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xppsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XPPSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xnpsw << 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xnpsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XNPSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= yppsw << 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= yppsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YPPSW_SWC_SHIFT;
 }
 
 /**
  * \brief   This API configure the TouchScreen ChargeStep Transistor Biasing for
  *          xnnsw, ypnsw, ynnsw and wpnsw pins through which analog ground
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   xnnsw 	XNNSW pin SW configuration.\n
- *           
+ *
  *          xnnsw can take following values.\n
  *
  *          TSCADC_XNNSW_PIN_ON.\n
- *          TSCADC_XNNSW_PIN_OFF.\n                                        
+ *          TSCADC_XNNSW_PIN_OFF.\n
  *
  * \param   ypnsw 	YPNSW pin SW configuration.\n
  *
@@ -1135,50 +1135,50 @@ void TSCADCChargeStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw
  *
  *          TSCADC_YNNSW_PIN_ON.\n
  *          TSCADC_YNNSW_PIN_OFF.\n
- *                     
+ *
  * \param   wpnsw 	WPNSW pin SW configuration.\n
- *          
+ *
  *          wpnsw can take following values.\n
  *
  *          TSCADC_WPNSW_PIN_ON.\n
- *          TSCADC_WPNSW_PIN_OFF.\n                      
+ *          TSCADC_WPNSW_PIN_OFF.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCChargeStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
                                      unsigned int ypnsw, unsigned int ynnsw,
                                      unsigned int wpnsw)
 {
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                            ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XNNSW_SWC;
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                            ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YPNSW_SWC;
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                            ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YNNSW_SWC;
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &= 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) &=
                            ~TSC_ADC_SS_TS_CHARGE_STEPCONFIG_WPNSW_SWC;
-		  
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xnnsw << 
+
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= xnnsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_XNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= ypnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= ypnsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YPNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= ynnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= ynnsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_YNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= wpnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_TS_CHARGE_STEPCONFIG) |= wpnsw <<
                                 TSC_ADC_SS_TS_CHARGE_STEPCONFIG_WPNSW_SWC_SHIFT;
 }
 
 /**
- * \brief   This API configures the open delay for Touch Screen ChargeStep 
+ * \brief   This API configures the open delay for Touch Screen ChargeStep
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   delayVal   Open delay value
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSChargeStepOpenDelayConfig(unsigned int baseAdd,
@@ -1189,7 +1189,7 @@ void TSCADCTSChargeStepOpenDelayConfig(unsigned int baseAdd,
 
 /**
  * \brief   This API configures ADC to single ended or differential operation
- *          mode. 
+ *          mode.
  *
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   mode       It is the value which determines whether to
@@ -1206,9 +1206,9 @@ void TSCADCTSChargeStepOpenDelayConfig(unsigned int baseAdd,
  *
  *
  *          stepSelect can take any value between 0 to 15.\n
- *          
- * 
- * \return  none  
+ *
+ *
+ * \return  none
  *
  **/
 void TSCADCTSStepOperationModeControl(unsigned int baseAdd, unsigned int mode,
@@ -1216,19 +1216,19 @@ void TSCADCTSStepOperationModeControl(unsigned int baseAdd, unsigned int mode,
 {
     if(mode)
     {
-         HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= 
-                                      TSC_ADC_SS_STEPCONFIG_DIFF_CNTRL;  
+         HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |=
+                                      TSC_ADC_SS_STEPCONFIG_DIFF_CNTRL;
     }
     else
     {
-         HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+         HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                                     ~TSC_ADC_SS_STEPCONFIG_DIFF_CNTRL;
     }
 }
 
 /**
- * \brief  This API configures the reference voltage and input for 
- *         given Step (other than Idle and Touch Screen charge Step) 
+ * \brief  This API configures the reference voltage and input for
+ *         given Step (other than Idle and Touch Screen charge Step)
  *
  * \param   baseAdd	 	Base Address of the TouchScreen Module Registers.
  *
@@ -1238,48 +1238,48 @@ void TSCADCTSStepOperationModeControl(unsigned int baseAdd, unsigned int mode,
  *
  *          adcNegativeRef can take following values.\n
  *
- *           TSCADC_NEGATIVE_REF_VSSA.\n                
- *           TSCADC_NEGATIVE_REF_XNUR.\n                
- *           TSCADC_NEGATIVE_REF_YNLR.\n                
- *           TSCADC_NEGATIVE_REF_ADCREFM.\n                
- *  
+ *           TSCADC_NEGATIVE_REF_VSSA.\n
+ *           TSCADC_NEGATIVE_REF_XNUR.\n
+ *           TSCADC_NEGATIVE_REF_YNLR.\n
+ *           TSCADC_NEGATIVE_REF_ADCREFM.\n
+ *
  * \param   adcPositiveInput 	Selects the Positive Analog Input Source.\n
  *
- *           adcPositiveInput can take following values.\n   
+ *           adcPositiveInput can take following values.\n
  *
- *           TSCADC_POSITIVE_INP_CHANNEL1.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL2.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL3.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL4.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL5.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL6.\n            
- *           TSCADC_POSITIVE_INP_CHANNEL7.\n            
+ *           TSCADC_POSITIVE_INP_CHANNEL1.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL2.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL3.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL4.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL5.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL6.\n
+ *           TSCADC_POSITIVE_INP_CHANNEL7.\n
  *           TSCADC_POSITIVE_INP_CHANNEL8.\n
  *           TSCADC_POSITIVE_INP_ADCREFM.\n
- *            
+ *
  * \param   adcNegativeInput 	Selects the Negative Analog Input Source.\n
  *
  *          adcNegativeInput can take following values.\n
  *
- *          TSCADC_NEGATIVE_INP_CHANNEL1.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL2.\n           
- *          TSCADC_NEGATIVE_INP_CHANNEL3.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL4.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL5.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL6.\n            
- *          TSCADC_NEGATIVE_INP_CHANNEL8.\n            
+ *          TSCADC_NEGATIVE_INP_CHANNEL1.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL2.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL3.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL4.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL5.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL6.\n
+ *          TSCADC_NEGATIVE_INP_CHANNEL8.\n
  *          TSCADC_NEGATIVE_INP_ADCREFM.\n
- *            
+ *
  * \param   adcPositiveRef 	Selects the ADC Positive Reference Voltage.\n
  *
  *          adcPositiveRef can take following values.\n
  *
- *          TSCADC_POSITIVE_REF_VDDA.\n                
- *          TSCADC_POSITIVE_REF_XNUR.\n                
- *          TSCADC_POSITIVE_REF_YNLR.\n                
+ *          TSCADC_POSITIVE_REF_VDDA.\n
+ *          TSCADC_POSITIVE_REF_XNUR.\n
+ *          TSCADC_POSITIVE_REF_YNLR.\n
  *          TSCADC_POSITIVE_REF_ADCREFP.\n
  *
- * \return  none  
+ * \return  none
  *
  * Note: stepSelect can take any integer value b/w 0 to 15
  *
@@ -1291,8 +1291,8 @@ void TSCADCTSStepConfig(unsigned int baseAdd, unsigned int stepSelect,
 
     HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                                    ~TSC_ADC_SS_STEPCONFIG_SEL_RFM_SWC;
-		
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= 
+
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |=
                    adcNegativeRef << TSC_ADC_SS_STEPCONFIG_SEL_RFM_SWC_SHIFT;
 
     HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
@@ -1303,21 +1303,21 @@ void TSCADCTSStepConfig(unsigned int baseAdd, unsigned int stepSelect,
 
     HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                                    ~TSC_ADC_SS_STEPCONFIG_SEL_INM_SWM;
- 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= 
+
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |=
                          adcNegativeInp << TSC_ADC_SS_STEPCONFIG_SEL_INM_SWM_SHIFT;
 
     HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
 	                           ~TSC_ADC_SS_STEPCONFIG_SEL_RFP_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |=
                           adcPositiveRef << TSC_ADC_SS_STEPCONFIG_SEL_RFP_SWC_SHIFT;
 }
 
 /**
  * \brief   This API configure the TouchScreen Step Transistor Biasing for
  *          xnpsw,xppsw and yppsw pins through which analog supply
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   stepSelect	Step to be configured
@@ -1327,7 +1327,7 @@ void TSCADCTSStepConfig(unsigned int baseAdd, unsigned int stepSelect,
  *          xppsw can take following values.\n
  *
  *          TSCADC_XPPSW_PIN_ON.\n
- *          TSCADC_XPPSW_PIN_OFF.\n                                          
+ *          TSCADC_XPPSW_PIN_OFF.\n
  *
  * \param   xnpsw 	XNPSW pin SW configuration.\n
  *
@@ -1335,15 +1335,15 @@ void TSCADCTSStepConfig(unsigned int baseAdd, unsigned int stepSelect,
  *
  *          TSCADC_XNPSW_PIN_ON.\n
  *          TSCADC_XNPSW_PIN_OFF.\n
- *                     
+ *
  * \param   yppsw 	YPPSW pin SW configuration.\n
  *
  *          yppsw can take following values.\n
  *
  *          TSCADC_YPPSW_PIN_ON.\n
- *          TSCADC_YPPSW_PIN_OFF.\n 
+ *          TSCADC_YPPSW_PIN_OFF.\n
  *
- * \return  none  
+ * \return  none
  *
  * Note: stepSelect can take any integer value b/w 0 to 15
  **/
@@ -1351,39 +1351,39 @@ void TSCADCTSStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
                                  unsigned int xnpsw, unsigned int yppsw,
                                  unsigned int stepSelect)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_XPPSW_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_XNPSW_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_YPPSW_SWC;
-		  
-    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xppsw << 
+
+    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xppsw <<
                             TSC_ADC_SS_STEPCONFIG_XPPSW_SWC_SHIFT;
 
-    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xnpsw << 
+    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xnpsw <<
                             TSC_ADC_SS_STEPCONFIG_XNPSW_SWC_SHIFT;
 
-    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= yppsw << 
+    HWREG(baseAdd +  TSC_ADC_SS_STEPCONFIG(stepSelect)) |= yppsw <<
                             TSC_ADC_SS_STEPCONFIG_YPPSW_SWC_SHIFT;
 }
 
 /**
  * \brief   This API configure the TouchScreen Step Transistor Biasing for
  *          xnnsw, ypnsw, ynnsw and wpnsw pins through which analog ground
- *          is provided to the touch screen. 
+ *          is provided to the touch screen.
  *
  * \param   baseAdd 	Base Address of the TouchScreen Module Registers.
  * \param   stepSelect	Step to be configured.
  *
  * \param   xnnsw 	XNNSW pin SW configuration.\n
- *           
+ *
  *          xnnsw can take following values.\n
  *
  *          TSCADC_XNNSW_PIN_ON.\n
- *          TSCADC_XNNSW_PIN_OFF.\n                                        
+ *          TSCADC_XNNSW_PIN_OFF.\n
  *
  * \param   ypnsw 	YPNSW pin SW configuration.\n
  *
@@ -1398,15 +1398,15 @@ void TSCADCTSStepAnalogSupplyConfig(unsigned int baseAdd, unsigned int xppsw,
  *
  *          TSCADC_YNNSW_PIN_ON.\n
  *          TSCADC_YNNSW_PIN_OFF.\n
- *                     
+ *
  * \param   wpnsw 	WPNSW pin SW configuration.\n
- *          
+ *
  *          wpnsw can take following values.\n
  *
  *          TSCADC_WPNSW_PIN_ON.\n
- *          TSCADC_WPNSW_PIN_OFF.\n 
+ *          TSCADC_WPNSW_PIN_OFF.\n
  *
- * \return  none  
+ * \return  none
  *
  * Note: stepSelect can take any integer value b/w 0 to 15
  **/
@@ -1414,28 +1414,28 @@ void TSCADCTSStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
                                  unsigned int ypnsw, unsigned int ynnsw,
                                  unsigned int wpnsw, unsigned int stepSelect)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_XNNSW_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_YPNSW_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_YNNSW_SWC;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) &=
                            ~TSC_ADC_SS_STEPCONFIG_WPNSW_SWC;
-		  
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xnnsw << 
+
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= xnnsw <<
                                 TSC_ADC_SS_STEPCONFIG_XNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= ypnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= ypnsw <<
                                 TSC_ADC_SS_STEPCONFIG_YPNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= ynnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= ynnsw <<
                                 TSC_ADC_SS_STEPCONFIG_YNNSW_SWC_SHIFT;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= wpnsw << 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSelect)) |= wpnsw <<
                                 TSC_ADC_SS_STEPCONFIG_WPNSW_SWC_SHIFT;
 }
 
@@ -1445,13 +1445,13 @@ void TSCADCTSStepAnalogGroundConfig(unsigned int baseAdd, unsigned int xnnsw,
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   stepSel    Step to be configured
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepOutOfRangeCheckEnable(unsigned int baseAdd, unsigned int stepSel)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) |= 
-                          TSC_ADC_SS_STEPCONFIG_RANGE_CHECK; 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) |=
+                          TSC_ADC_SS_STEPCONFIG_RANGE_CHECK;
 }
 
 /**
@@ -1460,13 +1460,13 @@ void TSCADCTSStepOutOfRangeCheckEnable(unsigned int baseAdd, unsigned int stepSe
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   stepSel    Step to be configured
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepOutOfRangeCheckDisable(unsigned int baseAdd, unsigned int stepSel)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) &= 
-                         ~TSC_ADC_SS_STEPCONFIG_RANGE_CHECK; 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) &=
+                         ~TSC_ADC_SS_STEPCONFIG_RANGE_CHECK;
 }
 
 /**
@@ -1477,20 +1477,20 @@ void TSCADCTSStepOutOfRangeCheckDisable(unsigned int baseAdd, unsigned int stepS
  * \param   FIFOSel    Selects the FIFO.\n
  *
  *          FIFOSel can take following macros.\n
- * 
+ *
  *          TSCADC_FIFO_0.\n
  *          TSCADC_FIFO_1.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepFIFOSelConfig(unsigned int baseAdd, unsigned int stepSel,
 	                    unsigned int FIFOSel)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) &=
                           ~TSC_ADC_SS_STEPCONFIG_FIFO_SELECT;
 
-    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) |= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPCONFIG(stepSel)) |=
                            FIFOSel << TSC_ADC_SS_STEPCONFIG_FIFO_SELECT_SHIFT;
 }
 
@@ -1508,7 +1508,7 @@ void TSCADCTSStepFIFOSelConfig(unsigned int baseAdd, unsigned int stepSel,
  *          TSCADC_EIGHT_SAMPLES_AVG.\n
  *          TSCADC_SIXTEEN_SAMPLES_AVG.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepAverageConfig(unsigned int baseAdd, unsigned int stepSel,
@@ -1535,7 +1535,7 @@ void TSCADCTSStepAverageConfig(unsigned int baseAdd, unsigned int stepSel,
  *          TSCADC_ONE_SHOT_HARDWARE_SYNC.\n
  *          TSCADC_CONTINIOUS_HARDWARE_SYNC.\n
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepModeConfig(unsigned int baseAdd, unsigned int stepSel,
@@ -1554,13 +1554,13 @@ void TSCADCTSStepModeConfig(unsigned int baseAdd, unsigned int stepSel,
  * \param   stepSel    Step to be configured
  * \param   delay      Sample Delay value
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepSampleDelayConfig(unsigned int baseAdd, unsigned int stepSel,
 	                        unsigned int delay)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) &=
                    ~TSC_ADC_SS_STEPDELAY_SAMPLE_DELAY;
     HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) |= delay <<
                                 TSC_ADC_SS_STEPDELAY_SAMPLE_DELAY_SHIFT;
@@ -1573,13 +1573,13 @@ void TSCADCTSStepSampleDelayConfig(unsigned int baseAdd, unsigned int stepSel,
  * \param   stepSel    Step to be configured
  * \param   delay      Open Delay value
  *
- * \return  none  
+ * \return  none
  *
  **/
 void TSCADCTSStepOpenDelayConfig(unsigned int baseAdd, unsigned int stepSel,
                               unsigned int delay)
 {
-    HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) &= 
+    HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) &=
                          ~TSC_ADC_SS_STEPDELAY_OPEN_DELAY;
     HWREG(baseAdd + TSC_ADC_SS_STEPDELAY(stepSel)) |= delay;
 }
@@ -1590,13 +1590,13 @@ void TSCADCTSStepOpenDelayConfig(unsigned int baseAdd, unsigned int stepSel,
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   FIFOSel    Selects the FIFO
  *
- * \return  returns the channel ID  
+ * \return  returns the channel ID
  *
  **/
 unsigned int TSCADCFIFOChannelIDRead(unsigned int baseAdd, unsigned int FIFOSel)
 {
     return ((HWREG(baseAdd + TSC_ADC_SS_FIFODATA(FIFOSel)) &
-		                TSC_ADC_SS_FIFODATA_ADCCHLNID) 
+		                TSC_ADC_SS_FIFODATA_ADCCHLNID)
                       >> TSC_ADC_SS_FIFODATA_ADCCHLNID_SHIFT);
 }
 
@@ -1606,7 +1606,7 @@ unsigned int TSCADCFIFOChannelIDRead(unsigned int baseAdd, unsigned int FIFOSel)
  * \param   baseAdd   Base Address of the TouchScreen Module Registers.
  * \param   FIFOSel    Selects the FIFO.\n
  *
- * \return  returns the channel ID  
+ * \return  returns the channel ID
  *
  **/
 unsigned int TSCADCFIFOADCDataRead(unsigned int baseAdd, unsigned int FIFOSel)
@@ -1621,7 +1621,7 @@ unsigned int TSCADCFIFOADCDataRead(unsigned int baseAdd, unsigned int FIFOSel)
  * \param   baseAdd  Base Address of the TouchScreen Module Registers.
  * \param   FIFOSel   Selects the FIFO
  *
- * \return  returns the channel ID  
+ * \return  returns the channel ID
  *
  **/
 unsigned int TSCADCFIFOWordCountRead(unsigned int baseAdd, unsigned int FIFOSel)
@@ -1635,17 +1635,17 @@ unsigned int TSCADCFIFOWordCountRead(unsigned int baseAdd, unsigned int FIFOSel)
  * \param   baseAdd	      Base Address of the TouchScreen Module Registers.
  *
  * \param   FIFOSel           It is the value which determines the whether to
- *                            to configure the threshold level for FIFO0 or 
+ *                            to configure the threshold level for FIFO0 or
  *                            FIFO1.\n
  *
  *          FIFOSel can take following macros.\n
- *              
+ *
  *          TSCADC_FIFO_0.\n
  *          TSCADC_FIFO_1.\n
  *
  * \param   numberOfSamples   It is the threshold level to be configured.
  *
- * \return  none 
+ * \return  none
  *
  **/
 void TSCADCFIFOIRQThresholdLevelConfig(unsigned int baseAdd, unsigned char FIFOSel,
@@ -1660,11 +1660,11 @@ void TSCADCFIFOIRQThresholdLevelConfig(unsigned int baseAdd, unsigned char FIFOS
  * \param   baseAdd	      Base Address of the TouchScreen Module Registers.
  * \param   numberOfSamples   Selects the FIFO
  *
- * \return  none 
+ * \return  none
  *
  **/
-void TSCADCFIFODMAThresholdLevelConfig(unsigned int baseAdd, 
-                                    unsigned int FIFOSel, 
+void TSCADCFIFODMAThresholdLevelConfig(unsigned int baseAdd,
+                                    unsigned int FIFOSel,
                                     unsigned int numberOfSamples)
 {
     HWREG(baseAdd + TSC_ADC_SS_DMAREQ(FIFOSel)) = numberOfSamples - 1;

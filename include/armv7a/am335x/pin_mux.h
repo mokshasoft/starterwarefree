@@ -53,7 +53,7 @@ extern "C" {
 
 /****************************************************************************
 **   Macros for every GPIO Pin defining the offset addresses of the Pad
-**   Control Registers in the Control Module.                    
+**   Control Registers in the Control Module.
 ****************************************************************************/
 
 /* Macros of Pins in GPIO0 instance. */
@@ -226,7 +226,7 @@ extern "C" {
 #define PAD_FS_RXE_NA_PUPDD(n)       (CONTROL_CONF_RXACTIVE | \
                                       CONTROL_CONF_PULLUDDISABLE | \
                                       CONTROL_CONF_MUXMODE(n))
-                                      
+
 /* Slow Slew Rate - Receiver Enabled - NA - PU/PD feature Disabled. */
 #define PAD_SL_RXE_NA_PUPDD(n)       (CONTROL_CONF_SLOWSLEW | \
                                       CONTROL_CONF_RXACTIVE | \
@@ -273,7 +273,7 @@ extern "C" {
 **   A Parameterized macro that receives the GPIO Instance Number, Pin Number
 **   and the Pad Control Register value as parameters. The GPIO Instance
 **   Number and the Pin Number will be used to obtain the offset address of
-**   the respective Pad Control Register in the Contorl Module. The Pad 
+**   the respective Pad Control Register in the Contorl Module. The Pad
 **   Control Register offset and value is passed to another function
 **   which does the necessary Pin Multiplexing.
 ******************************************************************************/

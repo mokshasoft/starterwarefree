@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -170,7 +170,7 @@ const struct OSProperties g_pOSProperties =
 #define MAX_REQUEST_DATA_SIZE sizeof(tLineCoding)
 
 //*****************************************************************************
-//This macro is used to diable the bit band operartion. Need to undefine this macro to use the 
+//This macro is used to diable the bit band operartion. Need to undefine this macro to use the
 // bit band operation.
 //***************************************************************************
 #define DISABLE_BIT_BAND
@@ -698,14 +698,14 @@ static unsigned short g_ui16MaxPacketSize = USBFIFOSizeToBytes(USB_FIFO_SZ_512);
 // Forward references for device handler callbacks
 //
 //*****************************************************************************
-static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                                         unsigned int ulIndex);
-static void HandleConfigChange(void *pvInstance, unsigned int ulInfo, 
+static void HandleConfigChange(void *pvInstance, unsigned int ulInfo,
                                                         unsigned int ulIndex);
-static void HandleEP0Data(void *pvInstance, unsigned int ulDataSize,  
+static void HandleEP0Data(void *pvInstance, unsigned int ulDataSize,
                                                         unsigned int ulIndex);
 static void HandleDisconnect(void *pvInstance);
-static void HandleEndpoints(void *pvInstance, unsigned int ulStatus, 
+static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                         unsigned int ulIndex);
 static void HandleSuspend(void *pvInstance);
 static void HandleResume(void *pvInstance);
@@ -1252,7 +1252,7 @@ SendSerialState(const tUSBDCDCDevice *psDevice)
 //
 //*****************************************************************************
 tBoolean
-ProcessDataFromHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus, 
+ProcessDataFromHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus,
                                                             unsigned int ulIndex)
 {
     unsigned int ulEPStatus;
@@ -1873,14 +1873,14 @@ HandleDevice(void *pvCDCDevice, uint32_t ui32Request, void *pvRequestData)
 //
 //*****************************************************************************
 static void
-HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                                 unsigned int ulIndex)
 {
     const tUSBDCDCDevice *psDevice;
     tCDCSerInstance *psInst;
     tLineCoding sLineCoding;
     tBoolean bRetcode;
-    
+
 
     ASSERT(pvInstance != 0);
 
@@ -2033,7 +2033,7 @@ HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
         //
         case USB_CDC_GET_LINE_CODING:
         {
-            //                        
+            //
             // ACK what we have already received
             //
             USBDevEndpointDataAck(psInst->ui32USBBase, USB_EP_0, false);
@@ -2638,8 +2638,8 @@ USBDCDCInit(unsigned int ulIndex, const tUSBDCDCDevice *psCDCDevice)
         // the CDC device on the bus.
         //
         USBDCDInit(ulIndex, psInst->psDevInfo);
-        
-       
+
+
     }
 
     return(pvRet);
@@ -2854,7 +2854,7 @@ USBDCDCPacketWrite(void *pvInstance, unsigned char *pcData,
 {
     tCDCSerInstance *psInst;
     int iRetcode;
-    
+
     ASSERT(pvInstance);
 
     //

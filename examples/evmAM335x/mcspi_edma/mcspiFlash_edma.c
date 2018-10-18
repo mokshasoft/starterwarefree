@@ -1,5 +1,5 @@
 /**
- * \file   mcspiFlash_edma.c 
+ * \file   mcspiFlash_edma.c
  *
  * \brief  This is a sample application file which invokes some APIs from the
  *         McSPI device abstraction layer and EDMA device abstraction layer to
@@ -45,35 +45,35 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -116,10 +116,10 @@
 /*                      LOCAL FUNCTION PROTOTYPES                            */
 /*****************************************************************************/
 static void McSpiTxEdmaParamSet(unsigned int tccNum, unsigned int chNum,
-                                volatile unsigned char *buffer, 
+                                volatile unsigned char *buffer,
                                 unsigned short buffLength);
 static void McSpiRxEdmaParamSet(unsigned int tccNum, unsigned int chNum,
-                                volatile unsigned char *buffer, 
+                                volatile unsigned char *buffer,
                                 unsigned short buffLength,
                                 unsigned int destBidxFlag);
 static void CallBack(unsigned int tccNum, unsigned int status);
@@ -254,11 +254,11 @@ static unsigned char FlashStatusRead(void)
     length = 2;
 
     /* Configure the flash status read parameters of McSPI for Edma transmit.*/
-    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer, 
+    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer,
                         length);
 
     /* Configure the flash status read parameters of McSPI for Edma receive.*/
-    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, rxBuffer, 
+    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, rxBuffer,
                         length, TRUE);
 
     /* Register the call-back function for Tx/Rx edma events of McSPI.*/
@@ -289,7 +289,7 @@ static void EDMA3Initialize(void)
 /*
 **  This function will verify the data written to and read from flash and will
 **  print the appropriate message.
-*/ 
+*/
 static void VerifyData(void)
 {
     unsigned int index = 0;
@@ -310,7 +310,7 @@ static void VerifyData(void)
             break;
         }
     }
-    
+
     if(260 == index)
     {
         ConsoleUtilsPrintf("\r\nThe data in the Flash and the one written ");
@@ -339,11 +339,11 @@ static void ReadFromFlash(void)
     length = 260;
 
     /* Configure the read data parameters of McSPI for Edma transmit.*/
-    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer, 
+    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer,
                         length);
 
     /* Configure the read data parameters of McSPI for Edma receive.*/
-    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, rxBuffer, 
+    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, rxBuffer,
                         length, TRUE);
 
     /* Register the call-back function for Tx/Rx edma events of McSPI.*/
@@ -379,11 +379,11 @@ static void FlashPageProgram(void)
     length = 260;
 
     /* Configure the Page-program parameters for Edma transmit.*/
-    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer, 
+    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer,
                         length);
 
     /* Configure the Page-program parameters for Edma receive.*/
-    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, (unsigned char *)dummy, 
+    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, (unsigned char *)dummy,
                         length, FALSE);
 
     /* Register the call-back function for McSPI Tx/Rx events.*/
@@ -396,7 +396,7 @@ static void FlashPageProgram(void)
 }
 
 /*
-**  This function will send a sector erase command and will erase a sector of 
+**  This function will send a sector erase command and will erase a sector of
 **  Flash.
 */
 static void FlashSectorErase(void)
@@ -412,11 +412,11 @@ static void FlashSectorErase(void)
     length = 4;
 
     /* Configure the Sector erase parameters for Edma transmit.*/
-    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer, 
+    McSpiTxEdmaParamSet(MCSPI_TX_EVENT, MCSPI_TX_EVENT, txBuffer,
                         length);
 
     /* Configure the sector erase parameters for Edma receive.*/
-    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, (unsigned char *)dummy, 
+    McSpiRxEdmaParamSet(MCSPI_RX_EVENT, MCSPI_RX_EVENT, (unsigned char *)dummy,
                         length, FALSE);
 
     /* Register the call-back function for McSPI Tx/Rx events.*/
@@ -436,7 +436,7 @@ static void FlashSectorErase(void)
 static void IsFlashBusy(void)
 {
     unsigned char temp = 0;
-    
+
     do
     {
         temp = FlashStatusRead();
@@ -487,24 +487,24 @@ static void IsWriteEnabled(void)
         /* Read the status from flash */
         temp = FlashStatusRead();
     }
-    while(!(temp & WRITE_EN_LATCHED)); 
+    while(!(temp & WRITE_EN_LATCHED));
 }
 
 /*
-** This function will Assert the Chip select line before transmission, will 
-** enable the Edma events for Tx/Rx of McSPI peripheral, will De-assert the 
+** This function will Assert the Chip select line before transmission, will
+** enable the Edma events for Tx/Rx of McSPI peripheral, will De-assert the
 ** Chip select once communication is complete.
 */
 static void McSPITransfer(unsigned short length)
 {
     /* Set the word count field with the data length to be transferred.*/
     McSPIWordCountSet(SOC_SPI_0_REGS, length);
-    
+
     /* Force the SPIEN to low state.*/
     McSPICSAssert(SOC_SPI_0_REGS, MCSPI_CH_NUM);
 
     /* Enable the Tx/Rx DMA events for McSPI. */
-    McSPIDMAEnable(SOC_SPI_0_REGS, (MCSPI_DMA_RX_EVENT | MCSPI_DMA_TX_EVENT), 
+    McSPIDMAEnable(SOC_SPI_0_REGS, (MCSPI_DMA_RX_EVENT | MCSPI_DMA_TX_EVENT),
                    MCSPI_CH_NUM);
 
     /* Enable the McSPI channel for communication.*/
@@ -602,7 +602,7 @@ static void Edma3ErrorHandlerIsr(void)
 
         /* Disable Edma Transfer */
         EDMA3DisableTransfer(SOC_EDMA30CC_0_REGS , MCSPI_RX_EVENT,
-                             EDMA3_TRIG_MODE_EVENT);    
+                             EDMA3_TRIG_MODE_EVENT);
 
         flagRx = 1;
     }
@@ -610,7 +610,7 @@ static void Edma3ErrorHandlerIsr(void)
 
 
 /*
-** Call back function. Here we disable the Tx/Rx DMA events of McSPI 
+** Call back function. Here we disable the Tx/Rx DMA events of McSPI
 ** peripheral.
 */
 static void CallBack(unsigned int tccNum, unsigned int status)
@@ -618,10 +618,10 @@ static void CallBack(unsigned int tccNum, unsigned int status)
     if(tccNum == MCSPI_TX_EVENT)
     {
         flagTx = 1;
-    
-        /* Disable McSPI Transmit event */ 
+
+        /* Disable McSPI Transmit event */
         McSPIDMADisable(SOC_SPI_0_REGS, MCSPI_DMA_TX_EVENT, MCSPI_CH_NUM);
-                       
+
     }
 
     if(tccNum == MCSPI_RX_EVENT)
@@ -635,11 +635,11 @@ static void CallBack(unsigned int tccNum, unsigned int status)
 
 /*
 ** This function is used to set the PaRAM entries of EDMA3 for the Receive
-** event of channel 0 of McSPI0 instance. The corresponding EDMA3 channel 
+** event of channel 0 of McSPI0 instance. The corresponding EDMA3 channel
 ** is also enabled for reception.
 */
 static void McSpiRxEdmaParamSet(unsigned int tccNum, unsigned int chNum,
-                                volatile unsigned char *buffer, 
+                                volatile unsigned char *buffer,
                                 unsigned short buffLength,
                                 unsigned int destBidxFlag)
 {
@@ -716,7 +716,7 @@ static void McSpiRxEdmaParamSet(unsigned int tccNum, unsigned int chNum,
 ** for transmission.
 */
 static void McSpiTxEdmaParamSet(unsigned int tccNum, unsigned int chNum,
-                                volatile unsigned char *buffer, 
+                                volatile unsigned char *buffer,
                                 unsigned short buffLength)
 {
     EDMA3CCPaRAMEntry paramSet;
@@ -818,8 +818,8 @@ static void McSPISetUp(void)
     McSPIMasterModeConfig(SOC_SPI_0_REGS, MCSPI_SINGLE_CH, MCSPI_TX_RX_MODE,
                           MCSPI_DATA_LINE_COMM_MODE_1, MCSPI_CH_NUM);
 
-    /* Configure the McSPI output frequency. */ 
-    McSPIClkConfig(SOC_SPI_0_REGS, MCSPI_IN_CLK, MCSPI_OUT_FREQ, 
+    /* Configure the McSPI output frequency. */
+    McSPIClkConfig(SOC_SPI_0_REGS, MCSPI_IN_CLK, MCSPI_OUT_FREQ,
                    MCSPI_CH_NUM, MCSPI_CLK_MODE_0);
 
     /* Configure the word length.*/

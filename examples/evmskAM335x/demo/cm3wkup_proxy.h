@@ -1,8 +1,8 @@
 /**
  * \file     cm3wkup_proxy.h
  *
- * \brief    This file contains the function prototypes for inter-processor 
-			 communication between A8 and M3. It helps in communicating PM 
+ * \brief    This file contains the function prototypes for inter-processor
+			 communication between A8 and M3. It helps in communicating PM
 			service requests to CM3. This code will run from A8.
  */
 
@@ -39,7 +39,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #ifndef      __CM3WKUP_PROXY_H__
 #define      __CM3WKUP_PROXY_H__
 
@@ -94,14 +94,14 @@ extern "C" {
 
 /******************** COMMAND STATUS *********************/
 
-/* In init phase this denotes that CM3 was initialized successfully. 
+/* In init phase this denotes that CM3 was initialized successfully.
 When other commands are to be executed, this indicates completion of command */
 #define PM_CMD_PASS			(0x0)
 
 /* Early indication of command being carried out */
 #define PM_IN_PROGRESS		(0x3)
 
-/* In init phase 0x2 denotes CM3 could not initialize properly. 
+/* In init phase 0x2 denotes CM3 could not initialize properly.
 When other tasks are to be done, this indicates some error in carrying out the task. */
 #define PM_CMD_FAIL			(0x1)
 
@@ -289,7 +289,7 @@ extern deepSleepData standbyData;
 extern deepSleepData dsDataM3reset;
 
 /*****************************************************************************
-**                   FUNCTION DECLARATIONS                                   
+**                   FUNCTION DECLARATIONS
 *****************************************************************************/
 
 void configIPCRegs(deepSleepData pmDsDataVar);

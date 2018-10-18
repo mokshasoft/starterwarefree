@@ -107,7 +107,7 @@ tValStr voltStrMap[] =
     {0, ""}                          /* NULL */
 };
 
-/* 
+/*
 ** This function determines the vdd1 voltage for OPP.
 */
 unsigned int VddVoltageGet(unsigned int Opp)
@@ -175,7 +175,7 @@ unsigned int VddVoltageGet(unsigned int Opp)
     return false;
 }
 
-/* 
+/*
 ** This function returns the frequency corresponding to an OPP.
 */
 unsigned int FrequencyGet(unsigned int Opp)
@@ -402,12 +402,12 @@ void MPUConfigure(unsigned int freq)
     HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_MPU) = regVal;
 
     /* Wait for DPLL to go in to bypass mode */
-    while(!(HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_MPU) & 
+    while(!(HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_MPU) &
                 CM_WKUP_CM_IDLEST_DPLL_MPU_ST_MN_BYPASS));
 
     /* Clear the MULT and DIV field of DPLL_MPU register */
-    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKSEL_DPLL_MPU) &= 
-                      ~(CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT | 
+    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKSEL_DPLL_MPU) &=
+                      ~(CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT |
                         CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_DIV);
 
     /* Set the multiplier and divider values for the PLL */
@@ -432,7 +432,7 @@ void MPUConfigure(unsigned int freq)
 
     HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_MPU) = regVal;
 
-    while(!(HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_MPU) & 
+    while(!(HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_MPU) &
                              CM_WKUP_CM_IDLEST_DPLL_MPU_ST_DPLL_CLK));
 }
 

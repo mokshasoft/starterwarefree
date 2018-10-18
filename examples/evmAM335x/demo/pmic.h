@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #ifndef      __PMIC_H__
 #define      __PMIC_H__
 
@@ -51,7 +51,7 @@ extern "C" {
 #endif
 
 /*****************************************************************************
-**                   MACRO DEFINITIONS                                   
+**                   MACRO DEFINITIONS
 *****************************************************************************/
 
 #define SMPS_DRIVE_SCLSR_EN1	(0x0u)
@@ -59,7 +59,7 @@ extern "C" {
 
 
 /*****************************************************************************
-**                   FUNCTION DECLARATIONS                                   
+**                   FUNCTION DECLARATIONS
 *****************************************************************************/
 
 /*	Initialize I2C0 over which PMIC is interfaced	*/

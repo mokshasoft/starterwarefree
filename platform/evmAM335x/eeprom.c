@@ -62,7 +62,7 @@ static void I2C0PinMux(void);
 ******************************************************************************/
 /**
  * \brief   Sets up the EEPROM I2C interface
- *          
+ *
  * \param   slaveAddr   Slave Address of the EEPROM
  *
  * \return  None.
@@ -97,7 +97,7 @@ void EEPROMI2CSetUp(unsigned int slaveAddr)
 
 /**
  * \brief   This function reads data from EEPROM.
- *          
+ *
  * \param   data    Address where data is to be read.
  * \param   length  Length of data to be read
  * \param   offset  Address of the byte from which data to be read.

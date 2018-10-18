@@ -1,7 +1,7 @@
 /*
  * locator.h
  *
- * declarations for locator services for ethernet. 
+ * declarations for locator services for ethernet.
  *
 */
 /*

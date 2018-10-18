@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #include "clock.h"
 #include "soc_AM335x.h"
 #include "hw_control_AM335x.h"
@@ -114,7 +114,7 @@ ADPLL dpllCore = {
 	/*to have deterministic value for showing power numbers
 		in the demo auto idle is disabled*/
 	.autoIdleCtrlVal	=	
-		(CM_WKUP_CM_AUTOIDLE_DPLL_CORE_AUTO_DPLL_MODE_AUTO_CTL_DISABLE << 
+		(CM_WKUP_CM_AUTOIDLE_DPLL_CORE_AUTO_DPLL_MODE_AUTO_CTL_DISABLE <<
 							CM_WKUP_CM_AUTOIDLE_DPLL_CORE_AUTO_DPLL_MODE_SHIFT),
 	.idleStatusReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_CORE),
 	.adpllClkStatusMask =	CM_WKUP_CM_IDLEST_DPLL_CORE_ST_DPLL_CLK,
@@ -123,7 +123,7 @@ ADPLL dpllCore = {
 	.adpllClkMNBypassStatusShift =	CM_WKUP_CM_IDLEST_DPLL_CORE_ST_MN_BYPASS_SHIFT,
 	.adpllConfigReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKSEL_DPLL_CORE),
 	/*.adpllBypassClkSource = NULL // MOSC is the only bypass clock, so no config is reqd */
-	/* 1000Mhz as dpll o/p */ 
+	/* 1000Mhz as dpll o/p */
 	.adpllMultiplierMask=	 CM_WKUP_CM_CLKSEL_DPLL_CORE_DPLL_MULT,
 	.adpllMultiplier	=	{(1000 << CM_WKUP_CM_CLKSEL_DPLL_CORE_DPLL_MULT_SHIFT),
 							 (1000 << CM_WKUP_CM_CLKSEL_DPLL_CORE_DPLL_MULT_SHIFT),
@@ -165,7 +165,7 @@ ADPLL dpllMpu = {
 	.isPLLConfigured	=	FALSE,
 	.autoIdleCtrlReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_AUTOIDLE_DPLL_MPU),
 	.autoIdleCtrlVal	=	
-		(CM_WKUP_CM_AUTOIDLE_DPLL_MPU_AUTO_DPLL_MODE_AUTO_CTL_DISABLE << 
+		(CM_WKUP_CM_AUTOIDLE_DPLL_MPU_AUTO_DPLL_MODE_AUTO_CTL_DISABLE <<
 							CM_WKUP_CM_AUTOIDLE_DPLL_MPU_AUTO_DPLL_MODE_SHIFT),
 	.idleStatusReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_MPU),	
 	.adpllClkStatusMask =	CM_WKUP_CM_IDLEST_DPLL_MPU_ST_DPLL_CLK,
@@ -177,9 +177,9 @@ ADPLL dpllMpu = {
 	.adpllBypassClkSource = (CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_BYP_CLKSEL_SEL0 <<
 							CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_BYP_CLKSEL_SHIFT),
 	.adpllMultiplierMask=	 CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT,
-	.adpllMultiplier	=	{(720 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT), 
-							(650 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT), 
-							(550 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT), 
+	.adpllMultiplier	=	{(720 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT),
+							(650 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT),
+							(550 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT),
 							(275 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_MULT_SHIFT)},
 	.adpllDividerMask	=	CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_DIV,
 	.adpllDivider		=	{(23 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_DIV_SHIFT),
@@ -188,7 +188,7 @@ ADPLL dpllMpu = {
 							(23 << CM_WKUP_CM_CLKSEL_DPLL_MPU_DPLL_DIV_SHIFT)},
 	.adpllModeReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_MPU),
 	
-	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_MPU_DPLL_LPMODE_EN | 
+	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_MPU_DPLL_LPMODE_EN |
 							CM_WKUP_CM_CLKMODE_DPLL_MPU_DPLL_EN),
 	.adpllLowPowerNormalVal	=	((CM_WKUP_CM_CLKMODE_DPLL_MPU_DPLL_LPMODE_EN_DISABLED << 	/* disable */
 								CM_WKUP_CM_CLKMODE_DPLL_MPU_DPLL_LPMODE_EN_SHIFT) |
@@ -218,7 +218,7 @@ ADPLL dpllPer = {
 	.isPLLConfigured	=	FALSE,
 	.autoIdleCtrlReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_AUTOIDLE_DPLL_PER),
 	.autoIdleCtrlVal	=	
-		(CM_WKUP_CM_AUTOIDLE_DPLL_PER_AUTO_DPLL_MODE_AUTO_CTL_DISABLE << 
+		(CM_WKUP_CM_AUTOIDLE_DPLL_PER_AUTO_DPLL_MODE_AUTO_CTL_DISABLE <<
 							CM_WKUP_CM_AUTOIDLE_DPLL_PER_AUTO_DPLL_MODE_SHIFT),
 	.idleStatusReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_PER),	
 	.adpllClkStatusMask =	CM_WKUP_CM_IDLEST_DPLL_PER_ST_DPLL_CLK,
@@ -254,7 +254,7 @@ ADPLL dpllDisp = {
 	.isPLLConfigured	=	FALSE,
 	.autoIdleCtrlReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_AUTOIDLE_DPLL_DISP),
 	.autoIdleCtrlVal	=	
-		(CM_WKUP_CM_AUTOIDLE_DPLL_DISP_AUTO_DPLL_MODE_AUTO_CTL_DISABLE << 
+		(CM_WKUP_CM_AUTOIDLE_DPLL_DISP_AUTO_DPLL_MODE_AUTO_CTL_DISABLE <<
 							CM_WKUP_CM_AUTOIDLE_DPLL_DISP_AUTO_DPLL_MODE_SHIFT),
 	.idleStatusReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_DISP),	
 	.adpllClkStatusMask =	CM_WKUP_CM_IDLEST_DPLL_DISP_ST_DPLL_CLK,
@@ -279,7 +279,7 @@ ADPLL dpllDisp = {
 							 (11 << CM_WKUP_CM_CLKSEL_DPLL_DISP_DPLL_DIV_SHIFT)},
 	.adpllModeReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_DISP),
 	
-	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_DISP_DPLL_LPMODE_EN | 
+	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_DISP_DPLL_LPMODE_EN |
 							CM_WKUP_CM_CLKMODE_DPLL_DISP_DPLL_EN),
 	.adpllLowPowerNormalVal	=	((CM_WKUP_CM_CLKMODE_DPLL_DISP_DPLL_LPMODE_EN_DISABLED << 	/* disable */
 								CM_WKUP_CM_CLKMODE_DPLL_DISP_DPLL_LPMODE_EN_SHIFT) |
@@ -309,7 +309,7 @@ ADPLL dpllDDR = {
 	.isPLLConfigured	=	FALSE,
 	.autoIdleCtrlReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_AUTOIDLE_DPLL_DDR),
 	.autoIdleCtrlVal	=	
-		(CM_WKUP_CM_AUTOIDLE_DPLL_DDR_AUTO_DPLL_MODE_AUTO_CTL_DISABLE << 
+		(CM_WKUP_CM_AUTOIDLE_DPLL_DDR_AUTO_DPLL_MODE_AUTO_CTL_DISABLE <<
 							CM_WKUP_CM_AUTOIDLE_DPLL_DDR_AUTO_DPLL_MODE_SHIFT),
 	.idleStatusReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_IDLEST_DPLL_DDR),	
 	.adpllClkStatusMask =	CM_WKUP_CM_IDLEST_DPLL_DDR_ST_DPLL_CLK,
@@ -346,7 +346,7 @@ ADPLL dpllDDR = {
 	.adpllDividerMask	=	CM_WKUP_CM_CLKSEL_DPLL_DDR_DPLL_DIV,		
 	.adpllModeReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_DDR),
 	
-	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_DDR_DPLL_LPMODE_EN | 
+	.adpllLowPowerMask	=	(CM_WKUP_CM_CLKMODE_DPLL_DDR_DPLL_LPMODE_EN |
 							CM_WKUP_CM_CLKMODE_DPLL_DDR_DPLL_EN),
 							
 	.adpllLowPowerNormalVal	=	((CM_WKUP_CM_CLKMODE_DPLL_DDR_DPLL_LPMODE_EN_DISABLED << 	/* disable */
@@ -399,7 +399,7 @@ Clock clkRC32KClock = {
 //	.clockCtrlReg		=	(SOC_CONTROL_REGS + CONTROL_RCOSC_CTRL),
 //	.enableValue		=	((~CONTROL_RCOSC_CTRL_STOPOSC) << 	
 								//CONTROL_RCOSC_CTRL_STOPOSC_SHIFT),
-//	.disableValue		=	(CONTROL_RCOSC_CTRL_STOPOSC << 
+//	.disableValue		=	(CONTROL_RCOSC_CTRL_STOPOSC <<
 //								CONTROL_RCOSC_CTRL_STOPOSC_SHIFT),
 //	.enDisActiveLogic	=	CLK_ACTIVE_LOW_LOGIC,								
 	.activeChildCount	=	0,
@@ -435,15 +435,15 @@ Clock tclkinClock = {
 	.activeChildCount	=	0,
 };
 
-/*	Clock out 1	- NOT USED AS OF NOW - commented code to be moved 
+/*	Clock out 1	- NOT USED AS OF NOW - commented code to be moved
 	to corresponding module	*/
 Clock clkout1Clock = {
 	.clkName			=	"clkout1Clock",
 	.clockSpeedHz		=	CLK_EXT_CRYSTAL_SPEED,
 //	.clockCtrlReg		=	(SOC_CONTROL_REGS + CONTROL_STATUS ),	
-//	.enableValue		=	(CONTROL_STATUS_SYSBOOT0_CLKOUT1_ENABLE << 
+//	.enableValue		=	(CONTROL_STATUS_SYSBOOT0_CLKOUT1_ENABLE <<
 //							CONTROL_STATUS_SYSBOOT0_SHIFT),
-//	.disableValue		=	((~CONTROL_STATUS_SYSBOOT0_CLKOUT1_ENABLE) << 
+//	.disableValue		=	((~CONTROL_STATUS_SYSBOOT0_CLKOUT1_ENABLE) <<
 //							CONTROL_STATUS_SYSBOOT0_SHIFT),
 	.parentClock		=	&sysClkInClock,
 	.activeChildCount	=	0,
@@ -556,7 +556,7 @@ Clock dpllDdrClock = {
 ClockDivider dpllDdrM2ClkDivider = {
 	.dividerConfigReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M2_DPLL_DDR),
 	.clkDividerMask		=	CM_WKUP_CM_DIV_M2_DPLL_DDR_DPLL_CLKOUT_DIV,
-	.clkDividerValue	= 	{1,1,1,1}, 
+	.clkDividerValue	= 	{1,1,1,1},
 	.clkDivUpdatedStatusMask = CM_WKUP_CM_DIV_M2_DPLL_DDR_DPLL_CLKOUT_DIVCHACK,
 	.clkDivUpdatedStatusShift = CM_WKUP_CM_DIV_M2_DPLL_DDR_DPLL_CLKOUT_DIVCHACK_SHIFT,
 	.clkoutAutoGateCtrlMask	=	CM_WKUP_CM_DIV_M2_DPLL_DDR_DPLL_CLKOUT_GATE_CTRL,
@@ -739,7 +739,7 @@ ClockDomain l4lsClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_L4LS_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(	CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_CAN_CLK |
 								CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_GPIO_1_GDBCLK |
@@ -855,7 +855,7 @@ ClockDomain rtcClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_RTC_REGS + CM_RTC_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_RTC_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_RTC_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_RTC_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_RTC_CLKSTCTRL_CLKACTIVITY_L4_RTC_GCLK |
 							CM_RTC_CLKSTCTRL_CLKACTIVITY_RTC_32KCLK),
@@ -958,7 +958,7 @@ ClockDomain wkupClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_WKUP_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_WKUP_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_WKUP_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(	CM_WKUP_CLKSTCTRL_CLKACTIVITY_ADC_FCLK |
 								CM_WKUP_CLKSTCTRL_CLKACTIVITY_GPIO0_GDBCLK |
@@ -1015,7 +1015,7 @@ ClockDomain perL3ClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_L3_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_L3_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_L3_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 								CM_PER_L3_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(	CM_PER_L3_CLKSTCTRL_CLKACTIVITY_CPTS_RFT_GCLK |
 								//CM_PER_L3_CLKSTCTRL_CLKACTIVITY_EMIF_GCLK |
@@ -1171,7 +1171,7 @@ ClockDomain l4WkupAonClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL_CLKACTIVITY_L4_WKUP_AON_GCLK),
 	.clkList			= 	{
@@ -1219,7 +1219,7 @@ ClockDomain mpuClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_MPU_REGS + CM_MPU_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_MPU_CLKSTCTRL_CLKTRCTRL_SW_SLEEP << 
+	.clkStateTransValue	=	(CM_MPU_CLKSTCTRL_CLKTRCTRL_SW_SLEEP <<
 							CM_MPU_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_MPU_CLKSTCTRL_CLKACTIVITY_MPU_CLK),
 	.clkList			 =	{
@@ -1384,7 +1384,7 @@ ClockDomain lcdcClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_LCDC_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_LCDC_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_LCDC_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_LCDC_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_PER_LCDC_CLKSTCTRL_CLKACTIVITY_LCDC_L3_OCP_GCLK |
 							CM_PER_LCDC_CLKSTCTRL_CLKACTIVITY_LCDC_L4_OCP_GCLK),
@@ -1564,7 +1564,7 @@ ClockDomain l4fwClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_L4FW_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_L4FW_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_L4FW_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_L4FW_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_PER_L4FW_CLKSTCTRL_CLKACTIVITY_L4FW_GCLK),
 	.clkList			= 	{
@@ -1593,7 +1593,7 @@ Clock l4fwIclkClock = {
 	.activeChildCount	=	0,
 };
 
-/*	EMIF_FW Interconnect - NOT USED AS OF NOW - commented code to be moved 
+/*	EMIF_FW Interconnect - NOT USED AS OF NOW - commented code to be moved
 	to corresponding module	*/
 Clock emifFwClock = {
 	.clkName			=	"emifFwClock",
@@ -1617,7 +1617,7 @@ ClockDomain l3sClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_L3S_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_PER_L3S_CLKSTCTRL_CLKACTIVITY_L3S_GCLK),
 	.clkList			= 	{
@@ -1871,7 +1871,7 @@ ClockDomain cpsw125MhzClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_CPSW_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_CPSW_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_CPSW_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_CPSW_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_PER_CPSW_CLKSTCTRL_CLKACTIVITY_CPSW_125MHZ_GCLK),
 	.clkList			= 	{
@@ -1919,7 +1919,7 @@ ClockDomain l4hsClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_L4HS_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_L4HS_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_L4HS_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_L4HS_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	( CM_PER_L4HS_CLKSTCTRL_CLKACTIVITY_CPSW_250MHZ_GCLK |
 							  CM_PER_L4HS_CLKSTCTRL_CLKACTIVITY_CPSW_50MHZ_GCLK |
@@ -2091,7 +2091,7 @@ ClockDomain clk24MhzClkDomain = {
 	.isCDInitialized	=	false,
 	.activeClockCount	=	0,
 	.clkStateTransCtrlReg = (unsigned int *)(SOC_CM_PER_REGS + CM_PER_CLK_24MHZ_CLKSTCTRL),
-	.clkStateTransValue	=	(CM_PER_CLK_24MHZ_CLKSTCTRL_CLKTRCTRL_NO_SLEEP << 
+	.clkStateTransValue	=	(CM_PER_CLK_24MHZ_CLKSTCTRL_CLKTRCTRL_NO_SLEEP <<
 							CM_PER_CLK_24MHZ_CLKSTCTRL_CLKTRCTRL_SHIFT),
 	.clkGateStatusMask	=	(CM_PER_CLK_24MHZ_CLKSTCTRL_CLKACTIVITY_CLK_24MHZ_GCLK),
 	.clkList			= 	{
@@ -2111,7 +2111,7 @@ Clock clk24MhzGclkClock = {
 	.clockGateStatusShift =	CM_PER_CLK_24MHZ_CLKSTCTRL_CLKACTIVITY_CLK_24MHZ_GCLK_SHIFT,	
 };
 
-/*	CLKDIV32K Interface clock - NOT USED AS OF NOW - commented code to be moved 
+/*	CLKDIV32K Interface clock - NOT USED AS OF NOW - commented code to be moved
 	to corresponding module	*/
 Clock clkdiv32KIclkCLock = {
 	.clkName			=	"clkdiv32KIclkCLock",
@@ -2290,12 +2290,12 @@ ModuleClock mpuModClock = {
 
 /*	EMIF	*/
 ModuleClock emifModClock = {	
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_EMIF_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_EMIF_CLKCTRL),
 		.enableValue		=	(CM_PER_EMIF_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_EMIF_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_PER_EMIF_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_EMIF_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_EMIF_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_EMIF_CLKCTRL),
 		.idleStatusMask		=	CM_PER_EMIF_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_PER_EMIF_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2308,7 +2308,7 @@ ModuleClock timer2ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_TIMER2_CLKCTRL),
 		.enableValue		=	(CM_PER_TIMER2_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_TIMER2_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_PER_TIMER2_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_PER_TIMER2_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_TIMER2_CLKCTRL_MODULEMODE_SHIFT),	
 		.moduleStatusReg	=	(unsigned int *)(CM_PER_TIMER2_CLKCTRL + SOC_CM_PER_REGS),
 		.idleStatusMask		=	CM_PER_TIMER2_CLKCTRL_IDLEST,
@@ -2324,7 +2324,7 @@ ModuleClock timer3ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_TIMER3_CLKCTRL),
 		.enableValue		=	(CM_PER_TIMER3_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_TIMER3_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_PER_TIMER3_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_PER_TIMER3_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_TIMER3_CLKCTRL_MODULEMODE_SHIFT),	
 		.moduleStatusReg	=	(unsigned int *)(CM_PER_TIMER3_CLKCTRL + SOC_CM_PER_REGS),
 		.idleStatusMask		=	CM_PER_TIMER3_CLKCTRL_IDLEST,
@@ -2340,7 +2340,7 @@ ModuleClock timer4ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_TIMER4_CLKCTRL),
 		.enableValue		=	(CM_PER_TIMER4_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_TIMER4_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_PER_TIMER4_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_PER_TIMER4_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_TIMER4_CLKCTRL_MODULEMODE_SHIFT),	
 		.moduleStatusReg	=	(unsigned int *)(CM_PER_TIMER4_CLKCTRL + SOC_CM_PER_REGS),
 		.idleStatusMask		=	CM_PER_TIMER4_CLKCTRL_IDLEST,
@@ -2372,7 +2372,7 @@ ModuleClock timer7ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_TIMER7_CLKCTRL),
 		.enableValue		=	(CM_PER_TIMER7_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_TIMER7_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_PER_TIMER7_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_PER_TIMER7_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_TIMER7_CLKCTRL_MODULEMODE_SHIFT),	
 		.moduleStatusReg	=	(unsigned int *)(CM_PER_TIMER7_CLKCTRL + SOC_CM_PER_REGS),
 		.idleStatusMask		=	CM_PER_TIMER7_CLKCTRL_IDLEST,
@@ -2389,7 +2389,7 @@ ModuleClock timer1ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_TIMER1_CLKCTRL),
 		.enableValue		=	(CM_WKUP_TIMER1_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_WKUP_TIMER1_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_WKUP_TIMER1_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_WKUP_TIMER1_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_WKUP_TIMER1_CLKCTRL_MODULEMODE_SHIFT),	
 		.moduleStatusReg	=	(unsigned int *)(CM_WKUP_TIMER1_CLKCTRL + SOC_CM_WKUP_REGS),
 		.idleStatusMask		=	CM_WKUP_TIMER1_CLKCTRL_IDLEST,
@@ -2401,12 +2401,12 @@ ModuleClock timer1ModClock = {
 
 /*	I2C1	*/
 ModuleClock i2c1ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_I2C1_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_I2C1_CLKCTRL),
 		.enableValue		=	(CM_PER_I2C1_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_I2C1_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_PER_I2C1_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_I2C1_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_I2C1_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_I2C1_CLKCTRL),
 		.idleStatusMask		=	CM_PER_I2C1_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_PER_I2C1_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2431,12 +2431,12 @@ ModuleClock gpio3ModClock = {
 
 /*	SPI0	*/
 ModuleClock spi0ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_SPI0_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_SPI0_CLKCTRL),
 		.enableValue		=	(CM_PER_SPI0_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_SPI0_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_PER_SPI0_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_SPI0_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_SPI0_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_SPI0_CLKCTRL),
 		.idleStatusMask		=	CM_PER_SPI0_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_PER_SPI0_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2447,12 +2447,12 @@ ModuleClock spi0ModClock = {
 
 /*	UART0	*/
 ModuleClock uart0ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_UART0_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_UART0_CLKCTRL),
 		.enableValue		=	(CM_WKUP_UART0_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_WKUP_UART0_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_WKUP_UART0_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_WKUP_UART0_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_UART0_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_UART0_CLKCTRL),
 		.idleStatusMask		=	CM_WKUP_UART0_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_WKUP_UART0_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2494,7 +2494,7 @@ ModuleClock rtcModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_RTC_REGS + CM_RTC_RTC_CLKCTRL),
 		.enableValue		=	(CM_RTC_RTC_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_RTC_RTC_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_RTC_RTC_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_RTC_RTC_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_RTC_RTC_CLKCTRL_MODULEMODE_SHIFT),
 		.moduleStatusReg	=	(unsigned int *)(SOC_CM_RTC_REGS + CM_RTC_RTC_CLKCTRL),
 		.idleStatusMask		=	CM_RTC_RTC_CLKCTRL_IDLEST,
@@ -2523,7 +2523,7 @@ ModuleClock wdt1ModClock = {
 		.clockCtrlReg		= 	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_WDT1_CLKCTRL),
 		.enableValue		=	(CM_WKUP_WDT1_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_WKUP_WDT1_CLKCTRL_MODULEMODE_SHIFT),
-		.disableValue		=	(CM_WKUP_WDT1_CLKCTRL_MODULEMODE_DISABLE << 
+		.disableValue		=	(CM_WKUP_WDT1_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_WKUP_WDT1_CLKCTRL_MODULEMODE_SHIFT),
 		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_WDT1_CLKCTRL),
 		.idleStatusMask		=	CM_WKUP_WDT1_CLKCTRL_IDLEST,
@@ -2745,12 +2745,12 @@ ModuleClock l4fwModClock = {
 
 /*	CPGMAC0	*/
 ModuleClock cpgmac0ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_CPGMAC0_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_CPGMAC0_CLKCTRL),
 		.enableValue		=	(CM_PER_CPGMAC0_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_CPGMAC0_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_PER_CPGMAC0_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_CPGMAC0_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_CPGMAC0_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_CPGMAC0_CLKCTRL),
 		.idleStatusMask		=	CM_PER_CPGMAC0_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_PER_CPGMAC0_CLKCTRL_IDLEST_SHIFT,
 		.stbyStatusMask		=	CM_PER_CPGMAC0_CLKCTRL_STBYST,
@@ -2767,12 +2767,12 @@ ModuleClock cpgmac0ModClock = {
 
 /*	I2C0	*/
 ModuleClock i2c0ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_I2C0_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_I2C0_CLKCTRL),
 		.enableValue		=	(CM_WKUP_I2C0_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_WKUP_I2C0_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_WKUP_I2C0_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_WKUP_I2C0_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_I2C0_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_I2C0_CLKCTRL),
 		.idleStatusMask		=	CM_WKUP_I2C0_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_WKUP_I2C0_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2783,12 +2783,12 @@ ModuleClock i2c0ModClock = {
 
 /*	GPIO0	*/
 ModuleClock gpio0ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_GPIO0_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_GPIO0_CLKCTRL),
 		.enableValue		=	(CM_WKUP_GPIO0_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_WKUP_GPIO0_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_WKUP_GPIO0_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_WKUP_GPIO0_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_GPIO0_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_WKUP_REGS + CM_WKUP_GPIO0_CLKCTRL),
 		.idleStatusMask		=	CM_WKUP_GPIO0_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_WKUP_GPIO0_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2799,12 +2799,12 @@ ModuleClock gpio0ModClock = {
 
 /*	GPIO1	*/
 ModuleClock gpio1ModClock = {
-		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_GPIO1_CLKCTRL), 
+		.clockCtrlReg		=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_GPIO1_CLKCTRL),
 		.enableValue		=	(CM_PER_GPIO1_CLKCTRL_MODULEMODE_ENABLE <<
 								CM_PER_GPIO1_CLKCTRL_MODULEMODE_SHIFT),
 		.disableValue		=	(CM_PER_GPIO1_CLKCTRL_MODULEMODE_DISABLE <<
 								CM_PER_GPIO1_CLKCTRL_MODULEMODE_SHIFT),
-		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_GPIO1_CLKCTRL), 
+		.moduleStatusReg	=	(unsigned int *)(SOC_CM_PER_REGS + CM_PER_GPIO1_CLKCTRL),
 		.idleStatusMask		=	CM_PER_GPIO1_CLKCTRL_IDLEST,
 		.idleStatusShift	=	CM_PER_GPIO1_CLKCTRL_IDLEST_SHIFT,
 	
@@ -2814,7 +2814,7 @@ ModuleClock gpio1ModClock = {
 
 
 /*	List of clocks	*/
-ModuleClock *ModuleClockList[] = 
+ModuleClock *ModuleClockList[] =
 {
 	&mpuModClock,
 	&emifModClock,
@@ -2854,7 +2854,7 @@ ModuleClock *ModuleClockList[] =
 };
 
 /*	List of clock domains	*/
-ClockDomain *clockDomainList[] = 
+ClockDomain *clockDomainList[] =
 {
 	&l4lsClkDomain,
 	&rtcClkDomain,

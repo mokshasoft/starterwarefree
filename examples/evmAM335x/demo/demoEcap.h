@@ -1,7 +1,7 @@
 /**
  * \file   demoEnet.h
  *
- * \brief  Function prototypes for the Ethernet 
+ * \brief  Function prototypes for the Ethernet
 */
 
 /*

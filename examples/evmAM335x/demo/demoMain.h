@@ -67,9 +67,9 @@ typedef struct touchSpec
 typedef struct imageContext
 {
     unsigned int const *pImageAddr;
-    
+
     /* The number of icons in the image */
-    unsigned int numIcon; 
+    unsigned int numIcon;
 
     TOUCHSPEC const *touchSpec;
 }IMAGECONTEXT;

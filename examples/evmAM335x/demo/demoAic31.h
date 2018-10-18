@@ -1,7 +1,7 @@
 /**
  * \file  aic31.h
- * 
- * \brief The macro definitions and function prototypes for 
+ *
+ * \brief The macro definitions and function prototypes for
  *        configuring AIC31 codec
  *
  */

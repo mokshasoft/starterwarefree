@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 //
 //*****************************************************************************
 
@@ -105,7 +105,7 @@ GrOffScreen24BPPRectFill(void *pvDisplayData, const tRectangle *pRect,
 
     //
     // Get the starting X and Y coordinate of the rectangle.
-    // Also, get the number of pixels per line and the number of lines 
+    // Also, get the number of pixels per line and the number of lines
     //
     lX = pRect->sXMin;
 
@@ -224,7 +224,7 @@ GrOffScreen24BPPLineDrawV(void *pvDisplayData, int lX, int lY1, int lY2,
     //
     // Compute the number of bytes per row in the image buffer.
     //
-    lBytesPerRow = (*(unsigned short *)(pucData)) * 4;    
+    lBytesPerRow = (*(unsigned short *)(pucData)) * 4;
 
     //
     // Get the offset to the byte of the image buffer that contains the
@@ -331,7 +331,7 @@ GrOffScreen24BPPPixelDrawMultiple(void *pvDisplayData, int lX, int lY,
     unsigned int ulByte;
     int lBytesPerRow;
     unsigned char *pucPtr;	
-    
+
     //
     // Check the arguments.
     //
@@ -400,7 +400,7 @@ GrOffScreen24BPPPixelDrawMultiple(void *pvDisplayData, int lX, int lY,
                     //
                     *pucPtr++ = (ulByte & 0x00FF);
                     *pucPtr++ = (ulByte & 0xFF00) >> 8;
-                    
+
                 }
 
                 //
@@ -453,7 +453,7 @@ GrOffScreen24BPPPixelDrawMultiple(void *pvDisplayData, int lX, int lY,
                         //
                         *(unsigned int *)pucPtr = (*(unsigned int *)(pucPalette + ulByte) & 0x00ffffff);
 						pucPtr+=4;
-                        
+
                         //
                         // Decrement the count of pixels to draw.
                         //
@@ -543,7 +543,7 @@ GrOffScreen24BPPPixelDrawMultiple(void *pvDisplayData, int lX, int lY,
         case 16:
             {
                 unsigned short pixColor = 0;	/*	16bpp	*/
-                
+
                 pucData++;
                 while(lCount--)
                 {
@@ -616,10 +616,10 @@ GrOffScreen24BPPInit(tDisplay *pDisplay, unsigned char *pucImage, int lWidth,
     pDisplay->pfnColorTranslate = GrOffScreen24BPPColorTranslate;
     //pDisplay->pfnFlush = GrOffScreen24BPPFlush;
 
-    /* IMAGE FORMAT */    
+    /* IMAGE FORMAT */
     *(unsigned short *)(pucImage + 0) = lWidth;
     *(unsigned short *)(pucImage + 2) = lHeight;
-    
+
 }
 
 

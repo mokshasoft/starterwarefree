@@ -126,7 +126,7 @@ int main(int argc,char *argv[])
                         {
                              printf("specify pixel odering RGB/BGR");
                         }
- 
+
                         format = 1;
                 }
                 else
@@ -134,7 +134,7 @@ int main(int argc,char *argv[])
                         printf("format is niether 565 nor 24");
                         return -1;
                 }
- 
+
 		ProcessDataForFrameBuffer(fd,g_bmpInfo.bmiHeader.biSizeImage,&Image,fp);
 
 		/* We need to close the file */
@@ -215,7 +215,7 @@ void ProcessDataForFrameBuffer(int fd, unsigned int dwSize, IMAGEPTR* Image, FIL
 		   pPixel_16 = (unsigned short int *)&Image->pwFrameBuffer_16[i * g_bmpInfo.bmiHeader.biWidth];
                 }
                 else
-                {                
+                {
 		   pPixel_24 = (unsigned int *)&Image->pwFrameBuffer_24[i * g_bmpInfo.bmiHeader.biWidth];
                 }
 
@@ -228,11 +228,11 @@ void ProcessDataForFrameBuffer(int fd, unsigned int dwSize, IMAGEPTR* Image, FIL
 			green = pData[pos++];
 
 			red = pData[pos++];
- 
+
                         if(format == 0)
-                        {  
+                        {
 		             *pPixel_16 = RGB16(red, green, blue);
-	                      pPixel_16++; 
+	                      pPixel_16++;
                         }
                         else
                         {    if(RGB == oderingType)
@@ -256,7 +256,7 @@ void ProcessDataForFrameBuffer(int fd, unsigned int dwSize, IMAGEPTR* Image, FIL
 	for(i = 0;i <= (row - 1); i++)
 	{
             pPixel_24 = (unsigned int *) &Image->pwFrameBuffer_24[i * g_bmpInfo.bmiHeader.biWidth];
-            
+
 	    for(j = 0;j < col; j++)
 	    {
                 Pixel24Val = *pPixel_24;
@@ -272,7 +272,7 @@ void ProcessDataForFrameBuffer(int fd, unsigned int dwSize, IMAGEPTR* Image, FIL
                     {
                         fprintf(fp,"0x%08x", Pixel24Val);
 		        fprintf(fp,"%c ",comma);
-                        fprintf(fp,"0x%08x", Pixel24Cnt); 
+                        fprintf(fp,"0x%08x", Pixel24Cnt);
 		        fprintf(fp,"%c ",comma);
 		        l += 2;
                     }
@@ -303,13 +303,13 @@ void ProcessDataForFrameBuffer(int fd, unsigned int dwSize, IMAGEPTR* Image, FIL
 		   pPixel_16 = (unsigned short int *) &Image->pwFrameBuffer_16[i * g_bmpInfo.bmiHeader.biWidth];
                 }
                 else
-                {                
+                {
 		   pPixel_24 = (unsigned int *) &Image->pwFrameBuffer_24[i * g_bmpInfo.bmiHeader.biWidth];
                 }
 
 		for(j = 0;j < col; j++)
 		{
-                         
+
                         if(format == 0)
                         {
 			     fprintf(fp,"0x%04x", *pPixel_16);

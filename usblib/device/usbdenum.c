@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2007-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -63,11 +63,11 @@ static void USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest, uint3
 static void USBDSetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest, uint32_t ui32Index);
 static void USBDGetConfiguration(void *pvInstance,tUSBRequest *psUSBRequest, uint32_t ui32Index);
 static void USBDSetConfiguration(void *pvInstance,tUSBRequest *psUSBRequest, uint32_t ui32Index);
-static void USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest, 
+static void USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
                                                         uint32_t ui32Index);
-static void USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest, 
+static void USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
                                                         uint32_t ui32Index);
-static void USBDSyncFrame(void *pvInstance, tUSBRequest *psUSBRequest, 
+static void USBDSyncFrame(void *pvInstance, tUSBRequest *psUSBRequest,
                                                         uint32_t ui32Index);
 static void USBDEP0StateTx(uint32_t ui32Index);
 static void USBDEP0StateTxConfig(uint32_t ui32Index);
@@ -433,7 +433,7 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice)
     g_psUSBDevice[ui32Index].pvCBData = psDevice;
     g_psUSBDevice[ui32Index].pvInstance = psDevice->pvInstance;
     g_psUSBDevice[ui32Index].iEP0State = eUSBStateIdle;
-     
+
     //
     // If no mode is set then make the mode become device mode.
     //
@@ -451,7 +451,7 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice)
         //
         // Enable Clocking to the USB controller.
         //
-    
+
         USBModuleClkEnable(ui32Index, g_USBInstance[ui32Index].uiBaseAddr);
 
         USBReset(g_USBInstance[ui32Index].uiSubBaseAddr);
@@ -461,7 +461,7 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice)
         UsbPhyOn(ui32Index);
     }
 
-    
+
 
     //
     // Only do hardware update if the stack is in Device mode, do not touch the
@@ -490,7 +490,7 @@ USBDCDInit(uint32_t ui32Index, tDeviceInfo *psDevice)
                                        USB_INTCTRL_SUSPEND |
                                        USB_INTCTRL_SOF);
         USBIntEnableEndpoint(g_USBInstance[ui32Index].uiBaseAddr, USB_INTEP_ALL);
-        
+
     }
 
     //
@@ -622,7 +622,7 @@ USBDCDTerm(uint32_t ui32Index)
     // Disable the USB peripheral
     //
     USBModuleClkDisable(ui32Index, g_USBInstance[ui32Index].uiBaseAddr);
-     
+
 }
 
 //*****************************************************************************
@@ -1187,7 +1187,7 @@ USBDeviceEnumHandler(tDeviceInstance *pDevInstance, uint32_t ui32Index)
             //
             // Get the data from the USB controller end point 0.
             //
-            USBEndpointDataGet(g_USBInstance[ui32Index].uiBaseAddr, USB_EP_0, 
+            USBEndpointDataGet(g_USBInstance[ui32Index].uiBaseAddr, USB_EP_0,
                                 pDevInstance->pui8EP0Data, &ui32DataSize);
 
             //
@@ -1351,8 +1351,8 @@ USBDeviceEnumResetHandler(tDeviceInstance *pDevInstance)
 //
 //*****************************************************************************
 static void
-USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest, 
-                                            uint32_t ui32Index)    
+USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest,
+                                            uint32_t ui32Index)
 {
     uint16_t ui16Data, ui16Index;
     uint32_t ui32Dir;
@@ -1484,7 +1484,7 @@ USBDGetStatus(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest,
                                                 uint32_t ui32Index)
 {
     tDeviceInstance *psUSBControl;
@@ -1624,7 +1624,7 @@ USBDClearFeature(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest,
                                             uint32_t ui32Index)
 {
     tDeviceInstance *psUSBControl;
@@ -1750,7 +1750,7 @@ USBDSetFeature(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDSetAddress(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSetAddress(void *pvInstance, tUSBRequest *psUSBRequest,
                                             uint32_t ui32Index)
 {
     tDeviceInstance *psUSBControl;
@@ -1808,7 +1808,7 @@ USBDSetAddress(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
                                                 uint32_t ui32Index)
 {
     tBoolean bConfig;
@@ -1859,7 +1859,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
             //
             // The size of the device descriptor is in the first byte.
             //
-            psUSBControl->ui32EP0DataRemain = 
+            psUSBControl->ui32EP0DataRemain =
                psDevice->pui8DeviceDescriptor[0];
 
             break;
@@ -1904,7 +1904,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
                 //
                 psUSBControl->ui8ConfigSection = 0;
                 psUSBControl->ui16SectionOffset = 0;
-                psUSBControl->pui8EP0Data = 
+                psUSBControl->pui8EP0Data =
                                 (uint8_t *)psConfig->psSections[0]->pui8Data;
 
                 //
@@ -2063,7 +2063,7 @@ USBDGetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static int32_t
-USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index, 
+USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index,
                                                             uint32_t ui32Index)
 {
     tString0Descriptor *pLang;
@@ -2094,7 +2094,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index,
     // subtracting 2 for the header and dividing by two (the size of each
     // language code).
     //
-    ui32NumLangs = 
+    ui32NumLangs =
             (g_psUSBDevice[ui32Index].pvCBData->ppStringDescriptors[0][0] - 2) / 2;
 
     //
@@ -2105,7 +2105,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index,
     // structure?) but it's needed since we didn't want to change the API
     // after the first release which did not support multiple languages.
     //
-    ui32NumStringi16PerLang = 
+    ui32NumStringi16PerLang =
         ((g_psUSBDevice[ui32Index].pvCBData->ulNumStringDescriptors - 1) / ui32NumLangs);
 
     //
@@ -2166,7 +2166,7 @@ USBDStringIndexFromRequest(uint16_t ui16Lang, uint16_t ui16Index,
 //
 //*****************************************************************************
 static void
-USBDSetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
                                                 uint32_t ui32Index)
 {
     //
@@ -2197,7 +2197,7 @@ USBDSetDescriptor(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDGetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDGetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
                                                     uint32_t ui32Index)
 {
     uint8_t ui8Value;
@@ -2258,7 +2258,7 @@ USBDGetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
                                                     uint32_t ui32Index)
 {
     tDeviceInstance *psUSBControl;
@@ -2310,7 +2310,7 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
             // be the first section in the current configuration.
             //
             psHdr = psDevice->ppsConfigDescriptors[psUSBRequest->wValue - 1];
-            psDesc = 
+            psDesc =
                 (const tConfigDescriptor *)(psHdr->psSections[0]->pui8Data);
 
             //
@@ -2343,7 +2343,7 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
         //
         if(psDevice->psCallbacks.pfnConfigChange)
         {
-            psDevice->psCallbacks.pfnConfigChange(psUSBControl->pvInstance, 
+            psDevice->psCallbacks.pfnConfigChange(psUSBControl->pvInstance,
                                      psUSBControl->ui32Configuration, ui32Index);
         }
     }
@@ -2364,7 +2364,7 @@ USBDSetConfiguration(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
                                                 uint32_t ui32Index)
 {
     uint8_t ui8Value;
@@ -2444,7 +2444,7 @@ USBDGetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
                                                 uint32_t ui32Index)
 {
     const tConfigHeader *psConfig;
@@ -2473,7 +2473,7 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
     //
     // Use the current configuration.
     //
-    psConfig = 
+    psConfig =
         psDevice->ppsConfigDescriptors[psUSBControl->ui32Configuration - 1];
 
     //
@@ -2520,7 +2520,7 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
                 // Reconfigure the endpoints to match the requirements of the
                 // new alternate setting for the interface.
                 //
-                bRetcode = USBDeviceConfigAlternate(0, psConfig, 
+                bRetcode = USBDeviceConfigAlternate(0, psConfig,
                                                ui8Interface,
                                                psInterface->bAlternateSetting);
 
@@ -2565,7 +2565,7 @@ USBDSetInterface(void *pvInstance, tUSBRequest *psUSBRequest,
 //
 //*****************************************************************************
 static void
-USBDSyncFrame(void *pvInstance, tUSBRequest *psUSBRequest, 
+USBDSyncFrame(void *pvInstance, tUSBRequest *psUSBRequest,
                                             uint32_t ui32Index)
 {
     //
@@ -2667,8 +2667,8 @@ USBDEP0StateTx(uint32_t ui32Index)
             // Call the custom handler.
             //
             g_psUSBDevice[ui32Index].pvCBData->psCallbacks.pfnDataSent(
-                                                           g_psUSBDevice[ui32Index].pvInstance, 
-                                                           g_psUSBDevice[ui32Index].ui32OUTDataSize, 
+                                                           g_psUSBDevice[ui32Index].pvInstance,
+                                                           g_psUSBDevice[ui32Index].ui32OUTDataSize,
                                                            ui32Index);
 
             //
@@ -2897,7 +2897,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
             // Call the custom handler.
             //
             g_psUSBDevice[ui32Index].pvCBData->psCallbacks.pfnDataSent(
-                g_psUSBDevice[ui32Index].pvInstance, g_psUSBDevice[ui32Index].ui32OUTDataSize, 
+                g_psUSBDevice[ui32Index].pvInstance, g_psUSBDevice[ui32Index].ui32OUTDataSize,
                                                                     ui32Index);
 
             //
@@ -2935,7 +2935,7 @@ USBDEP0StateTxConfig(uint32_t ui32Index)
 //
 //*****************************************************************************
 void
-USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status, 
+USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status,
                                                     uint32_t *endPStatus)
 {
     static uint32_t ui32SOFDivide = 0;
@@ -2943,7 +2943,7 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status,
     void *pvInstance;
     uint32_t epStatus;
     uint32_t epnStatus = 0;
-    
+
     //
     // Get the controller interrupt status from the wrapper registers
     // Only the lower 16bits contain EP intr data
@@ -2957,8 +2957,8 @@ USBDeviceIntHandlerInternal(uint32_t ui32Index, uint32_t ui32Status,
     {
         epStatus = *endPStatus;
     }
-    
-    ui32Status |= USBIntStatusControl(g_USBInstance[ui32Index].uiBaseAddr);    
+
+    ui32Status |= USBIntStatusControl(g_USBInstance[ui32Index].uiBaseAddr);
 
     //
     // If device initialization has not been performed then just disconnect

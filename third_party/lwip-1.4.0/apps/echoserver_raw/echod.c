@@ -69,7 +69,7 @@ void echo_close_conn(struct tcp_pcb *pcb)
 
 /**
  * Here the data that was received, is first copied into a local buffer
- * The actaul received pbuf is freed. 
+ * The actaul received pbuf is freed.
  * The copy buffer is then used to send the data back (echo) to the client
  * Also, the local buffer size is capped at 1460 assuming MTU limits
  */
@@ -84,8 +84,8 @@ err_t echo_send_data(struct tcp_pcb *pcb, struct pbuf *p)
   tot_len = p->tot_len;
 
   /**
-   * traverse pbuf chain and store payload 
-   * of each pbuf into buffer 
+   * traverse pbuf chain and store payload
+   * of each pbuf into buffer
    */
   do {
         data = (char*)p->payload;
@@ -98,7 +98,7 @@ err_t echo_send_data(struct tcp_pcb *pcb, struct pbuf *p)
 
     }while(p!=NULL);
 
-  /* free pbuf's */    
+  /* free pbuf's */
   pbuf_free(temp);
 
   /**
@@ -121,7 +121,7 @@ err_t echo_recv(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err)
     /* Inform TCP that we have taken the data. */
     tcp_recved(pcb, p->tot_len);
    }
-  
+
   if ((err != ERR_OK) || (p == NULL)){
     /* error or closed by other side */
     if (p != NULL) {

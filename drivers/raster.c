@@ -48,13 +48,13 @@
 *                       INTERNAL API DEFINITIONS
 *******************************************************************************/
 /**
-* \brief  This function configures clkdiv to generate required frequency of 
+* \brief  This function configures clkdiv to generate required frequency of
 *         of pixel clock and selects the raster control.\n
 *
 * \param  baseAddr   is the Memory address of LCD.\n
 * \param  pClk       is the required Pixel Clock frequency.\n
 * \param  modulck    is the input clk to LCD module from PLL.\n
-* 
+*
 * \return none.
 **/
 void RasterClkConfig(unsigned int baseAddr, unsigned int pClk,
@@ -65,13 +65,13 @@ void RasterClkConfig(unsigned int baseAddr, unsigned int pClk,
     clkDiv = moduleClk / pClk ;
 
     HWREG(baseAddr + LCDC_LCD_CTRL) = LCDC_LCD_CTRL_MODESEL;
-   
+
     HWREG(baseAddr + LCDC_LCD_CTRL) |= (clkDiv <<  LCDC_LCD_CTRL_CLKDIV_SHIFT);
 }
 
 /**
 * \brief  This function returns the Reversion Id of LCD controller.
-*  
+*
 * \param  baseAddr   is the Memory address of LCD.
 *
 **/
@@ -84,7 +84,7 @@ unsigned int RasterIdGet(unsigned int baseAddr)
 * \brief  This function enables auto under flow feature.
 *
 * \param  baseAddr   is the Memory address of LCD.\n
-* 
+*
 * \return none.
 **/
 void RasterAutoUnderFlowEnable(unsigned int baseAddr)
@@ -96,7 +96,7 @@ void RasterAutoUnderFlowEnable(unsigned int baseAddr)
 * \brief  This function disables auto under flow feature.
 *
 * \param  baseAddr   is the Memory address of LCD.\n
-* 
+*
 * \return none.
 **/
 void RasterAutoUnderFlowDisable(unsigned int baseAddr)
@@ -143,9 +143,9 @@ void RasterDisable(unsigned int baseAddr)
 *         Below mentioned macros are only applicable to AM335x.
 *
 *         RASTER_DISPLAY_MODE_TFT_PACKED   - TFT mode is selected with
-*                                            24 bit packed data support.  
+*                                            24 bit packed data support.
 *         RASTER_DISPLAY_MODE_TFT_UNPACKED - TFT mode is selected with
-*                                            24 bit unpacked data support.  
+*                                            24 bit unpacked data support.
 *
 * \param displayType is the value to select either color or monochrome mode.\n
 *
@@ -153,24 +153,24 @@ void RasterDisable(unsigned int baseAddr)
 *
 *         RASTER_MONOCHROME  - monochrome mode is selected.\n
 *         RASTER_COLOR       - color mode is selected.\n
-*         
+*
 * \param paletteMode is the value to select type of palette loading.\n
-* 
+*
 *        paletteMode can take following values.\n
-*         
+*
 *        RASTER_PALETTE_DATA   - palette and  data is loaded.\n
 *        RASTER_PALETTE        - only palette is loaded.\n
 *        RASTER_DATA           - only data is loaded.\n
 *
 * \param flag  Optional argument depending on the display mode and type
-* 
+*
 *        flag can take following values.\n
 *
 *        RASTER_RIGHT_ALIGNED - Right aligned output pixel data
 *        RASTER_EXTRAPOLATE   - Extrapolated (to RGB565) output pixel data
 *        RASTER_MONO8B        - Output 8 bit mono pixel data
 *        RASTER_MONO4B        - Output 4 bit mono pixel data
-* 
+*
 * \return none.
 **/
 void RasterModeConfig(unsigned int baseAddr, unsigned int displayMode,
@@ -212,11 +212,11 @@ void RasterModeConfig(unsigned int baseAddr, unsigned int displayMode,
 *
 * \param baseAddr is the Memory address of the LCD module.\n
 *
-* \return None.   
+* \return None.
 **/
 void RasterLSBDataOrderSelect(unsigned int baseAddr)
 {
-    HWREG(baseAddr + LCDC_RASTER_CTRL) &= ~LCDC_RASTER_CTRL_RD_ORDER; 
+    HWREG(baseAddr + LCDC_RASTER_CTRL) &= ~LCDC_RASTER_CTRL_RD_ORDER;
 }
 
 /**
@@ -239,7 +239,7 @@ void RasterMSBDataOrderSelect(unsigned int baseAddr)
 *
 * \param flag is the value specifies the which interrupts to be
 *        enabled.\n
-*     
+*
 *         flag can take following values.\n
 *
 *         Below mentioned macros are only applicable to AM1808.
@@ -252,7 +252,7 @@ void RasterMSBDataOrderSelect(unsigned int baseAddr)
 *
 *         Below mentioned API are only for AM335x raster.\n
 *
-*         RASTER_DONE_INT               -  Raster Done interrupt \n.                
+*         RASTER_DONE_INT               -  Raster Done interrupt \n.
 *         RASTER_END_OF_FRAME0_INT      -  End of frame0 interrupt \n.
 *         RASTER_END_OF_FRAME1_INT      -  End of frame1 interrupt \n.
 *
@@ -296,7 +296,7 @@ void RasterIntEnable(unsigned int baseAddr, unsigned int flag)
 *
 *         Below mentioned API are only for AM335x raster.\n
 *
-*         RASTER_DONE_INT               -  Raster Done interrupt \n.                
+*         RASTER_DONE_INT               -  Raster Done interrupt \n.
 *         RASTER_END_OF_FRAME0_INT      -  End of frame0 interrupt \n.
 *         RASTER_END_OF_FRAME1_INT      -  End of frame1 interrupt \n.
 *
@@ -361,7 +361,7 @@ void RasterFIFODMADelayConfig(unsigned int baseAddr, unsigned int delay)
                                           LCDC_RASTER_CTRL_FIFO_DMA_DELAY_SHIFT);
 }
 /**
-* \brief This function configuers horizontal timing parametes and number of 
+* \brief This function configuers horizontal timing parametes and number of
 *        pixel per line.
 *
 * \param baseAddr is the Memory address of the LCD module
@@ -389,25 +389,25 @@ void RasterHparamConfig(unsigned int baseAddr, unsigned int numOfppl,
 
          ppl = (ppl & 0x000003f0) | ((ppl & 0x00000400) >> 7);
 
-         HWREG(baseAddr + LCDC_RASTER_TIMING_0) = ppl; 
+         HWREG(baseAddr + LCDC_RASTER_TIMING_0) = ppl;
     }
     else if(RASTER_REV_AM1808 == version)
     {
-   
+
          ppl = (numOfppl / 16) - 1;
 
-         HWREG(baseAddr + LCDC_RASTER_TIMING_0) =  (ppl <<                       
+         HWREG(baseAddr + LCDC_RASTER_TIMING_0) =  (ppl <<
                                                 LCDC_RASTER_TIMING_0_PPL_SHIFT);
     }
     else
     {
          ;/* Do nothing */
     }
-    
-    HWREG(baseAddr + LCDC_RASTER_TIMING_0) |= ((hsw - 1) <<                   
+
+    HWREG(baseAddr + LCDC_RASTER_TIMING_0) |= ((hsw - 1) <<
                                                LCDC_RASTER_TIMING_0_HSW_SHIFT);
 
-    HWREG(baseAddr + LCDC_RASTER_TIMING_0) |= ((hfp - 1) <<                   
+    HWREG(baseAddr + LCDC_RASTER_TIMING_0) |= ((hfp - 1) <<
                                                LCDC_RASTER_TIMING_0_HFP_SHIFT);
 
     HWREG(baseAddr + LCDC_RASTER_TIMING_0) |= ((hbp - 1) <<
@@ -442,14 +442,14 @@ void RasterVparamConfig(unsigned int baseAddr, unsigned int lpp,
          HWREG(baseAddr + LCDC_RASTER_TIMING_1) = ((lpp - 1) & 0x3ff);
 
          HWREG(baseAddr + LCDC_RASTER_TIMING_2) &=  0xfbffffff;
-  
-         HWREG(baseAddr + LCDC_RASTER_TIMING_2) |=  (((lpp - 1) & 0x400) >> 10) 
-                                                    << LCDC_RASTER_TIMING_2_LPP_B10_SHIFT;           
+
+         HWREG(baseAddr + LCDC_RASTER_TIMING_2) |=  (((lpp - 1) & 0x400) >> 10)
+                                                    << LCDC_RASTER_TIMING_2_LPP_B10_SHIFT;
     }
     else if(RASTER_REV_AM1808 == version)
     {
- 
-         HWREG(baseAddr + LCDC_RASTER_TIMING_1) =  ((lpp - 1) <<             
+
+         HWREG(baseAddr + LCDC_RASTER_TIMING_1) =  ((lpp - 1) <<
                                               LCDC_RASTER_TIMING_1_LPP_SHIFT);
     }
     else
@@ -457,41 +457,41 @@ void RasterVparamConfig(unsigned int baseAddr, unsigned int lpp,
          ;/* Do nothing */
     }
 
-    HWREG(baseAddr + LCDC_RASTER_TIMING_1) |= ((vsw - 1) <<                  
+    HWREG(baseAddr + LCDC_RASTER_TIMING_1) |= ((vsw - 1) <<
                                                LCDC_RASTER_TIMING_1_VSW_SHIFT);
 
-    HWREG(baseAddr + LCDC_RASTER_TIMING_1) |= (vfp <<                       
+    HWREG(baseAddr + LCDC_RASTER_TIMING_1) |= (vfp <<
                                                LCDC_RASTER_TIMING_1_VFP_SHIFT);
 
     HWREG(baseAddr + LCDC_RASTER_TIMING_1) |= (vbp <<
                                                LCDC_RASTER_TIMING_1_VBP_SHIFT);
 }
-/** 
+/**
 * \brief This function configures the polartiy of various timing parameters of
 *        LCD Controller.
 *
 * \param baseAddr  is the Memory Address of the LCD Module.
 *
-* \param flag      is the value which detemines polarity of various timing 
+* \param flag      is the value which detemines polarity of various timing
 *                  parameter of LCD controller.\n
 *
-*                  flag can take following values.\n 
+*                  flag can take following values.\n
 *
-*                   RASTER_FRAME_CLOCK_HIGH - active high frame clock.\n                
+*                   RASTER_FRAME_CLOCK_HIGH - active high frame clock.\n
 *                   RASTER_FRAME_CLOCK_LOW  - active low frame clock.\n
 *                   RASTER_LINE_CLOCK_HIGH  - active high line clock.\n
 *                   RASTER_LINE_CLOCK_LOW   - active low line clock.\n
-*                   RASTER_PIXEL_CLOCK_HIGH - active high pixel clock.\n               
-*                   RASTER_PIXEL_CLOCK_LOW  - active low pixel clock.\n               
-*                   RASTER_AC_BIAS_HIGH     - active high ac bias.\n           
-*                   RASTER_AC_BIAS_LOW      - active low ac bias.\n          
+*                   RASTER_PIXEL_CLOCK_HIGH - active high pixel clock.\n
+*                   RASTER_PIXEL_CLOCK_LOW  - active low pixel clock.\n
+*                   RASTER_AC_BIAS_HIGH     - active high ac bias.\n
+*                   RASTER_AC_BIAS_LOW      - active low ac bias.\n
 *                   RASTER_SYNC_EDGE_RISING - rising sync edge.\n
 *                   RASTER_SYNC_EDGE_FALLING- falling sync edge.\n
 *                   RASTER_SYNC_CTRL_ACTIVE - active sync control.\n
 *                   RASTER_SYNC_CTRL_INACTIVE-inactive sync control.\n
 *
 * \param acb_i      is the value which specify the number of AC Bias
-*                   (LCD_AC_ENB_CS) output transition counts before 
+*                   (LCD_AC_ENB_CS) output transition counts before
 *                   setting the AC bias interrupt bit in register LCD_STAT.
 *
 * \param acb        is value which defines the number of Line Clock
@@ -518,40 +518,40 @@ void RasterTiming2Configure(unsigned int baseAddr, unsigned int flag,
 *
 * \param  baseAddr is the Memory address of LCD module.
 *
-* \param  frmMode  is the value which detemines either to use single frame 
+* \param  frmMode  is the value which detemines either to use single frame
 *                  or double frame buffer.\n
 *
 *                 frmMode can take following values.\n
 *
-*                 RASTER_SINGLE_FRAME_BUFFER - single frame buffer.\n     
+*                 RASTER_SINGLE_FRAME_BUFFER - single frame buffer.\n
 *                 RASTER_DOUBLE_FRAME_BUFFER - double frame buffer.\n
-*          
+*
 * \param bustSz   is the value which detemines burst size of DMA.\n
-* 
+*
 *                 bustSz can take following values.\n
-* 
-*                 RASTER_BURST_SIZE_1   -  burst size of DMA is one.\n                
-*                 RASTER_BURST_SIZE_2   -  burst size of DMA is two.\n            
-*                 RASTER_BURST_SIZE_4   -  burst size of DMA is four.\n              
+*
+*                 RASTER_BURST_SIZE_1   -  burst size of DMA is one.\n
+*                 RASTER_BURST_SIZE_2   -  burst size of DMA is two.\n
+*                 RASTER_BURST_SIZE_4   -  burst size of DMA is four.\n
 *                 RASTER_BURST_SIZE_16  -  burst size of DMA is sixteen.\n
 *
-* \param fifoTh   is the value which detemines when the input FIFO can be 
+* \param fifoTh   is the value which detemines when the input FIFO can be
 *                 read by raster controller.\n
 *
 *                 fifoTh can take following values.\n
 *
-*                 RASTER_FIFO_THRESHOLD_8    -   DMA FIFO Threshold is eight.\n             
-*                 RASTER_FIFO_THRESHOLD_16   -   DMA FIFO Threshold is sixteen.\n          
-*                 RASTER_FIFO_THRESHOLD_32   -   DMA FIFO Threshold is thirtytwo.\n       
-*                 RASTER_FIFO_THRESHOLD_64   -   DMA FIFO Threshold is sixtyfour.\n     
-*                 RASTER_FIFO_THRESHOLD_128  -   DMA FIFO Threshold is one twenty 
+*                 RASTER_FIFO_THRESHOLD_8    -   DMA FIFO Threshold is eight.\n
+*                 RASTER_FIFO_THRESHOLD_16   -   DMA FIFO Threshold is sixteen.\n
+*                 RASTER_FIFO_THRESHOLD_32   -   DMA FIFO Threshold is thirtytwo.\n
+*                 RASTER_FIFO_THRESHOLD_64   -   DMA FIFO Threshold is sixtyfour.\n
+*                 RASTER_FIFO_THRESHOLD_128  -   DMA FIFO Threshold is one twenty
 *                                                eight.\n
-*                 RASTER_FIFO_THRESHOLD_256  -   DMA FIFO Threshold is two 
-*                                                fifty six.\n     
-*                 RASTER_FIFO_THRESHOLD_512  -   DMA FIFO Threshold is five 
-*                                                twelve.\n    
+*                 RASTER_FIFO_THRESHOLD_256  -   DMA FIFO Threshold is two
+*                                                fifty six.\n
+*                 RASTER_FIFO_THRESHOLD_512  -   DMA FIFO Threshold is five
+*                                                twelve.\n
 *
-* \param endian   is value determines whether to use big endian for data 
+* \param endian   is value determines whether to use big endian for data
 *                 reordering or not.\n
 *
 *                 endian can take following values.\n
@@ -560,7 +560,7 @@ void RasterTiming2Configure(unsigned int baseAddr, unsigned int flag,
 *                 RASTER_BIG_ENDIAN_ENABLE - big endian disabled.\n
 *
 * \return None
-**/          
+**/
 void RasterDMAConfig(unsigned int baseAddr, unsigned int frmMode,
                      unsigned int bustSz, unsigned int fifoTh,
                      unsigned int endian)
@@ -647,11 +647,11 @@ void RasterEndOfFrameIntDisable(unsigned int baseAddr)
 *         RASTER_END_OF_FRAME0_INT_STAT   -  end of frame 0 interrupt status.\n
 *         RASTER_END_OF_FRAME1_INT_STAT   -  end of frame 1 interrupt status.\n
 *
-*         This flag should used for Raster under AM335x 
+*         This flag should used for Raster under AM335x
 *
 *         RASTER_DONE_INT                 -  Raster Done interrupt.\n
-* 
-* \returns Interrupt status of Raster for AM335x or am1808 based on revid. 
+*
+* \returns Interrupt status of Raster for AM335x or am1808 based on revid.
 **/
 unsigned int RasterIntStatus(unsigned int baseAddr, unsigned int flag)
 {
@@ -695,12 +695,12 @@ unsigned int RasterIntStatus(unsigned int baseAddr, unsigned int flag)
 *         RASTER_END_OF_FRAME1_INT_STAT   -  end of frame 1 interrupt status.\n
 *
 *         This flag should used for Raster under AM335x
-* 
+*
 *         RASTER_DONE_INT                 -  Frame Done interrupt.\n
 *
 * \return Interrupt raw status of Raster for only AM335x.
 *
-* If this function is used to read interrupt status of Raster for am1808,it will 
+* If this function is used to read interrupt status of Raster for am1808,it will
 * return -1.
 *
 * This API is only supported for AM335x raster.
@@ -761,7 +761,7 @@ void RasterIntRawStatusSet(unsigned int baseAddr, unsigned int flag)
 * \param  ceiling  is the end address of the array which contain
 *                  pixels of image to be displayed on lcd.
 *
-* \param  flag     is the value which determines whether to write 
+* \param  flag     is the value which determines whether to write
 *                  base and ceiling to Frame Buffer one or Fram buffer two.
 *
 *         passing zero(i.e. 0) as argument configures base and ceiling for
@@ -770,7 +770,7 @@ void RasterIntRawStatusSet(unsigned int baseAddr, unsigned int flag)
 *         passing one(i.e. 0) as argument configures base and ceiling for
 *         frame buffer one(i.e FB1).
 *
-* \return None.   
+* \return None.
 *
 **/
 void RasterDMAFBConfig(unsigned int baseAddr, unsigned int base,
@@ -794,7 +794,7 @@ void RasterDMAFBConfig(unsigned int baseAddr, unsigned int base,
 *
 * \param flag     is the value which detemines status of which
 *                 interrupt to be cleared.\n
-*  
+*
 *         flag can take following values.\n
 *
 *         RASTER_ACBIAS_COUNT_INT_STAT    -  ACBias Count interrupt status.\n
@@ -802,9 +802,9 @@ void RasterDMAFBConfig(unsigned int baseAddr, unsigned int base,
 *         RASTER_SYNC_LOST_INT_STAT       -  Sync lost interrupt status.\n
 *         RASTER_FIFO_UNDRFLOW_INT_STAT   -  FIFO underflow interrupt status.\n
 *         RASTER_FRAME_DONE_INT_STAT      -  frame done interrupt status.\n
-*         RASTER_END_OF_FRAME0_INT_STAT   -  end of frame 0 interrupt status.\n   
-*         RASTER_END_OF_FRAME1_INT_STAT   -  end of frame 1 interrupt status.\n   
-*         RASTER_DONE_INT                 -  Raster Done interrupt.\n    
+*         RASTER_END_OF_FRAME0_INT_STAT   -  end of frame 0 interrupt status.\n
+*         RASTER_END_OF_FRAME1_INT_STAT   -  end of frame 1 interrupt status.\n
+*         RASTER_DONE_INT                 -  Raster Done interrupt.\n
 *
 * \return Interrupt status of Raster for AM335x or am1808 based on rev id.
 *
@@ -870,7 +870,7 @@ void RasterSubPanelDisable(unsigned int baseAddr)
 * \hols     is the value indicates the position of subpanel compared to the
 *           LPPT(lines per panel threshold) value.
 *
-* \lppt     lines per panel threshold defines the number of lines to be 
+* \lppt     lines per panel threshold defines the number of lines to be
 *           refreshed
 *
 * \dpd      DPD(default pixel data) defines the default value of the pixel
@@ -892,30 +892,30 @@ void RasterSubPanelConfig(unsigned int baseAddr, unsigned int hols,
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) &= 0xffff0000;
 
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) = ((dpd & 0xffff));
-         
+
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL2) &= 0xff00ffff;
 
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL2) = ((dpd & 0xff0000) >> 15);
 
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) &= 0xfc00ffff;
-                                            
+
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) |= ((lppt & 0x3ff) <<
                                               LCDC_RASTER_SUBPANEL_LPPT_SHIFT);
 
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL2) &= 0xfffffeff;
 
-         HWREG(baseAddr + LCDC_RASTER_SUBPANEL2) |= ((lppt & 0x400) >> 11) 
+         HWREG(baseAddr + LCDC_RASTER_SUBPANEL2) |= ((lppt & 0x400) >> 11)
                                         << LCDC_RASTER_SUBPANEL_LPPT_B10_SHIFT;
-                                             
+
     }
     else if(RASTER_REV_AM1808 == version)
     {
-   
+
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) &= 0xfc00ffff;
 
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) |= (lppt <<
                                               LCDC_RASTER_SUBPANEL_LPPT_SHIFT);
-    
+
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) &= 0xffff000f;
          HWREG(baseAddr + LCDC_RASTER_SUBPANEL) |= (dpd<<
                                               LCDC_RASTER_SUBPANEL_DPD_SHIFT);
@@ -1046,7 +1046,7 @@ void RasterSoftWareResetControlEnable(unsigned int baseAddr, unsigned int flag)
 }
 
 /**
-* \brief This function disables Software Resets for LCD module or DMA submodule 
+* \brief This function disables Software Resets for LCD module or DMA submodule
 *        or Core which encompasses Raster Active Matrix and Passive Matrix
 *        logic based on the "flag"  argument passed to this function.
 *
@@ -1085,8 +1085,8 @@ void RasterSoftWareResetControlDisable(unsigned int baseAddr, unsigned int flag)
 }
 
 /**
-* \brief  This function sets the priority for the L3 OCP Master Bus. 
-* 
+* \brief  This function sets the priority for the L3 OCP Master Bus.
+*
 * \param  baseAddr is the Memory address of the LCD instace used.
 * \param  flag     is the value which sets the pritority.
 *
@@ -1103,17 +1103,17 @@ void RasterDmaMasterPrioritySet(unsigned int baseAddr, unsigned int flag)
 /**
 * \brief  This function configures raster in different standby modes based
 *         on the flag argument passed to it.
-* 
+*
 * \param  baseAddr is the Memory address of the LCD instace used.
 * \param  flag     is the value which determines type of standby
 *                  mode.\n
 *
 *         flag can take following values.\n
-*        
-*         RASTER_FORCE_STAND_BY.\n  
-*         RASTER_NO_STAND_BY.\n            
-*         RASTER_SMART_STAND_BY.\n         
-*         RASTER_SMART_STAND_BY_WAKE_UP.\n 
+*
+*         RASTER_FORCE_STAND_BY.\n
+*         RASTER_NO_STAND_BY.\n
+*         RASTER_SMART_STAND_BY.\n
+*         RASTER_SMART_STAND_BY_WAKE_UP.\n
 *
 * \returns  None
 *
@@ -1128,7 +1128,7 @@ void RasterStandbyModeConfig(unsigned int baseAddr, unsigned int flag)
 /**
 * \brief  This function configures raster in different Idle modes based
 *         on the flag argument passed to it.
-* 
+*
 * \param  baseAddr is the Memory address of the LCD instace used.
 * \param  flag     is the value which determines type of Idle
 *                  mode.\n
@@ -1154,9 +1154,9 @@ void RasterIdleModeConfig(unsigned int baseAddr, unsigned int flag)
 * \brief  This function saves the context of Raster registers.
 *         This is useful in power management, where the power supply to raster
 *         controller will be cut off.
-* 
+*
 * \param  baseAddr    Memory address of the LCD instace used
-* \param  contextPtr  The pointer to the structure where the context has to be 
+* \param  contextPtr  The pointer to the structure where the context has to be
 *                     saved.
 * \returns  None
 **/
@@ -1180,9 +1180,9 @@ void RasterContextSave(unsigned int baseAddr, RASTERCONTEXT *contextPtr)
 * \brief  This function restores the context of Raster registers.
 *         This is useful in power management, where the power supply to raster
 *         controller will be cut off.
-* 
+*
 * \param  baseAddr    Memory address of the LCD instace used
-* \param  contextPtr  The pointer to the structure where the context has to be 
+* \param  contextPtr  The pointer to the structure where the context has to be
 *                     restored from
 * \returns  None
 **/

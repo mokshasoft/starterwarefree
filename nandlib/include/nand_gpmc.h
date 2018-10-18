@@ -1,9 +1,9 @@
 /**
  *  \file   nand_gpmc.h
  *
- *  \brief  This file contains the NAND GPMC controller specific struct 
+ *  \brief  This file contains the NAND GPMC controller specific struct
  *          definition, macros and function prototypes.
- *          
+ *
  */
 
 /*
@@ -58,7 +58,7 @@ extern "C" {
 /*
 ** Contains the timing params and base address info for the GPMC NAND access.
 */
-typedef struct _GPMC_NAND_TIMING_INFO_ 
+typedef struct _GPMC_NAND_TIMING_INFO_
 {
 
     unsigned int CSWrOffTime;
@@ -109,7 +109,7 @@ extern unsigned int     GPMCNANDWaitPinStatusGet(NandInfo_t *nandInfo);
 extern unsigned int     GPMCNANDWriteBufReady(NandInfo_t *nandInfo);
 extern NandStatus_t     GPMCNANDDMAXfer( NandInfo_t *nandInfo,
                                           unsigned char *data,
-                                          unsigned int len, 
+                                          unsigned int len,
                                           NandDmaDir_t dir);
 
 
@@ -119,7 +119,7 @@ extern void             GPMCNANDECCEnable(NandInfo_t *nandInfo);
 extern void             GPMCNANDECCDisable(NandInfo_t *nandInfo);
 extern void             GPMCNANDECCReadSet(NandInfo_t *nandInfo);
 extern void             GPMCNANDECCWriteSet(NandInfo_t *nandInfo);
-extern void             GPMCNANDECCCalculate( NandInfo_t *nandInfo, 
+extern void             GPMCNANDECCCalculate( NandInfo_t *nandInfo,
                                               unsigned char *ptrEccData);
 extern NandStatus_t     GPMCNANDECCCheckAndCorrect( NandInfo_t *nandInfo,
                                                     unsigned char *eccRead,

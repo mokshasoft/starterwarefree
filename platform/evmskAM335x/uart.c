@@ -50,7 +50,7 @@
 /**
  * \brief   This function selects the UART pins for use. The UART pins
  *          are multiplexed with pins of other peripherals in the SoC
- *          
+ *
  * \param   instanceNum    The instance number of the UART to be used.
  *
  * \return  None

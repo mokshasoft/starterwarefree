@@ -39,7 +39,7 @@
 *
 */
 
- 
+
 #ifndef      __PRCM_H__
 #define      __PRCM_H__
 
@@ -55,7 +55,7 @@
 extern "C" {
 #endif
 
-typedef enum { 
+typedef enum {
     FAIL     = 0,
     SUCCESS = 1
 }result;
@@ -195,7 +195,7 @@ typedef enum {
 #define     CLK_NAME_MAX_SIZE                    (30)
 
 #define     CLK_DOMAIN_CLOCK_GATED               (0x0)
-                                                
+
 #define     CLK_LP_MODE_NORMAL                   (0x0)
 #define     CLK_LP_MODE_BYPASS                   (0x1)
 
@@ -292,14 +292,14 @@ typedef struct {
 
         /**
          * \brief Auto idle register
-         * Register to be written to configure the automatic control of the 
+         * Register to be written to configure the automatic control of the
          * DPLL activity
          */
         unsigned int *autoIdleCtrlReg;
 
         /**
          * \brief Auto idle config value
-         * Value to be written to configure the automatic control of the 
+         * Value to be written to configure the automatic control of the
          * DPLL activity
          */
         unsigned int autoIdleCtrlVal;
@@ -462,7 +462,7 @@ struct genericClock{
 
         /**
          * \brief Divider
-         * Pointer to clock divider 
+         * Pointer to clock divider
          */
         ClockDivider *clkDivider;
 
@@ -655,7 +655,7 @@ typedef struct mapModule
 } tMapModule;
 
 /*****************************************************************************
-**                   FUNCTION DECLARATIONS                                   
+**                   FUNCTION DECLARATIONS
 *****************************************************************************/
 
 /*    Clock management API's    */

@@ -6,35 +6,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -120,15 +120,15 @@ void RtcInit(void)
 }
 
 /*
-** Sets the Time and Calender in the RTC. This is a blocking call. 
+** Sets the Time and Calender in the RTC. This is a blocking call.
 ** The time and date are entered through UART.
 */
 void RtcTimeCalSet(void)
 {
-    unsigned int time = 0; 
+    unsigned int time = 0;
     unsigned int cal = 0;
-    unsigned int temp = 0; 
- 
+    unsigned int temp = 0;
+
     ConsoleUtilsPrintf("\n\rEnter Hours (0 to 23):");
     ConsoleUtilsScanf("%d", &temp);
 
@@ -152,7 +152,7 @@ void RtcTimeCalSet(void)
 
     time |= (((temp / 10) << 4) << SHIFT_MIN)
             | ((temp % 10) << SHIFT_MIN);
- 
+
     ConsoleUtilsPrintf("\n\rEnter Seconds (0 to 59):");
     ConsoleUtilsScanf("%d", &temp);
 
@@ -211,7 +211,7 @@ void RtcTimeCalSet(void)
     }
 
     cal |= (((temp / 10) << 4)) | ((temp % 10));
- 
+
     /* Set the calendar registers of RTC with received calendar information.*/
     RTCCalendarSet(SOC_RTC_0_REGS, cal);
 
@@ -220,7 +220,7 @@ void RtcTimeCalSet(void)
 
     /* Run the RTC. The seconds tick from now on.*/
     RTCRun(SOC_RTC_0_REGS);
- 
+
     ConsoleUtilsPrintf("\n\rThe Time and Date are set successfully! \n\n\r");
 
     rtcSetFlag = TRUE;

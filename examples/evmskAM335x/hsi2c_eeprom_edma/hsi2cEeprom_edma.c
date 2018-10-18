@@ -44,35 +44,35 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -446,7 +446,7 @@ static void SetupI2C(void)
     I2CMasterEnable(I2C_INST_BASE);
 }
 
-/* 
+/*
 ** Reads data from EEPROM starting from the specified address.
 */
 static void EEPROMRead(void)
@@ -465,7 +465,7 @@ static void EEPROMRead(void)
 }
 
 /*
-** Transmits and Receives data over I2C bus. 
+** Transmits and Receives data over I2C bus.
 */
 static void SetupI2CReception(unsigned short dataCountVal)
 {
@@ -550,7 +550,7 @@ static void SetupI2CReception(unsigned short dataCountVal)
 static void I2CEdmaReceiveConfig(unsigned char* rxBuffer, unsigned short length)
 {
     EDMA3CCPaRAMEntry paramSet;
-  
+
     paramSet.srcAddr   = (I2C_INST_BASE + I2C_DATA);
     paramSet.destAddr  = (unsigned int)rxBuffer;
 
@@ -567,7 +567,7 @@ static void I2CEdmaReceiveConfig(unsigned char* rxBuffer, unsigned short length)
 
     /*
     ** The Destination indices should increment since the Destination location
-    ** is memory. 
+    ** is memory.
     */
     paramSet.destBIdx   = 0x01;
     paramSet.destCIdx   = 0x00;
@@ -583,8 +583,8 @@ static void I2CEdmaReceiveConfig(unsigned char* rxBuffer, unsigned short length)
 
     /* Enable the Completion Interrupt. */
     paramSet.opt |= (1 << EDMA3CC_OPT_TCINTEN_SHIFT);
- 
-    /* Now write to the respective PaRAM set. */ 
+
+    /* Now write to the respective PaRAM set. */
     EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, EDMA3_I2C_RX_CHA_NUM, &paramSet);
 
     /* Enable the EDMA transfer. */
@@ -594,7 +594,7 @@ static void I2CEdmaReceiveConfig(unsigned char* rxBuffer, unsigned short length)
 }
 
 /*
-** This function is used to set the PaRAM entries in EDMA3 for the Transmit 
+** This function is used to set the PaRAM entries in EDMA3 for the Transmit
 ** Channel of I2C. The EDMA is also enabled to transfer the data.
 ** However, the actual transfer shall happen only when the DMA
 ** feature is enabled in the I2C.
@@ -618,7 +618,7 @@ static void I2CEdmaTransmitConfig(unsigned char* txBuffer, unsigned short length
 
     /*
     ** The Source indices should increment since the Source location is memory.
-    */ 
+    */
     paramSet.srcBIdx    = 0x01;
     paramSet.srcCIdx    = 0x00;
 
@@ -640,7 +640,7 @@ static void I2CEdmaTransmitConfig(unsigned char* txBuffer, unsigned short length
     /* Enable the Completion Interrupt.*/
     paramSet.opt |= (1 << EDMA3CC_OPT_TCINTEN_SHIFT);
 
-    /* Now write to the respective PaRAM set. */ 
+    /* Now write to the respective PaRAM set. */
     EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, EDMA3_I2C_TX_CHA_NUM , &paramSet);
 
     /* Enable the EDMA transfer. */
@@ -745,8 +745,8 @@ static void I2CEdmaErrIsr(void)
     if((pendingIrqs & (0x01 << (EDMA3_I2C_TX_CHA_NUM  - 32))))
     {
         /* Clear the secondary and missed I2C EDMA events. */
-        EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS, EDMA3_I2C_TX_CHA_NUM);  
-    
+        EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS, EDMA3_I2C_TX_CHA_NUM);
+
         /* Disable the I2C Transmit event. */
         I2CDMATxEventDisable(I2C_INST_BASE);
 
@@ -760,7 +760,7 @@ static void I2CEdmaErrIsr(void)
     else if((pendingIrqs & (0x01 << (EDMA3_I2C_RX_CHA_NUM - 32))))
     {
         /* Clear the secondary and missed I2C EDMA events. */
-        EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS, EDMA3_I2C_RX_CHA_NUM);  
+        EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS, EDMA3_I2C_RX_CHA_NUM);
 
         /* Disable the I2C Receive event. */
         I2CDMARxEventDisable(I2C_INST_BASE);

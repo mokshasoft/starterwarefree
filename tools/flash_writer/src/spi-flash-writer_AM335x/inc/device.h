@@ -17,7 +17,7 @@
 #define I2C0_SD0_OFF       (0x988)
 #define I2C0_SCL_OFF       (0x98c)
 
-#define MODE(val)        (val << 0)       
+#define MODE(val)        (val << 0)
 
 #define PULL_UD_DISABLE  (1 << 3) /* PULL UP/DOWN disabled */ 	
 #define PULL_TYPESEL     (1 << 4) /* PULL UP Select */

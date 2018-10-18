@@ -1,7 +1,7 @@
 /**
  * \file   demoCfg.h
- * 
- * \brief  Configuration values for the Demo Application  
+ *
+ * \brief  Configuration values for the Demo Application
  *
  */
 
@@ -135,7 +135,7 @@
 #define NUM_ICON_USB_MOUSE	                   (7u)
 
 /*
-** The indexes of Each Icon in the html page 
+** The indexes of Each Icon in the html page
 */
 #define CLICK_IDX_MENU                         (1u)
 #define CLICK_IDX_INTRO                        (2u)
@@ -293,7 +293,7 @@
 #define XMAX_TIMER								(X_ALIGN_COL_1 + ICON_WIDTH)
 #define YMIN_TIMER								(Y_ALIGN_ROW_2)
 #define YMAX_TIMER								(Y_ALIGN_ROW_2 + ICON_HEIGHT)
-							   
+
 /*
 ** Coordinates of the Menu Ethernet icon displayed in the Menu slide.
 */

@@ -1,7 +1,7 @@
 /**
  * \file   evmAM335x.h
  *
- * \brief  This file contains prototype declarations of functions which 
+ * \brief  This file contains prototype declarations of functions which
  *         performs EVM configurations.
  */
 
@@ -54,12 +54,12 @@ extern "C" {
 
 #define PRINT_WRG(x)                        UARTPuts ("\r\n|WARNING|", -1);\
                                             UARTPuts (x, -1); \
-                                            UARTPuts ("|\r\n", -1);            
-                                 
+                                            UARTPuts ("|\r\n", -1);
+
 #define PRINT_ERR(x)                        UARTPuts ("\r\n|ERROR|", -1); \
                                             UARTPuts (x, -1); \
-                                            UARTPuts ("|\r\n", -1);                                                                   
-                                 
+                                            UARTPuts ("|\r\n", -1);
+
 #define EVM_BOARD_NAME                      ("A33515B")
 #define EVM_1_5X_VERSION                    ("1.5") /* EVM 1.5x version board */
 #define EVM_1_2X_VERSION                    ("1.2") /* EVM 1.2x version board */

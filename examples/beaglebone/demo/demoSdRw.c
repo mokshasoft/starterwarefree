@@ -6,35 +6,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -92,11 +92,11 @@ static void (*cb_Fxn[EDMA3_NUM_TCC]) (unsigned int tcc, unsigned int status);
 #define MMCSD_INT_NUM                  (SYS_INT_MMCSD0INT)
 
 /* Global flags for interrupt handling */
-volatile unsigned int callbackOccured = 0; 
-volatile unsigned int xferCompFlag = 0; 
+volatile unsigned int callbackOccured = 0;
+volatile unsigned int xferCompFlag = 0;
 volatile unsigned int dataTimeout = 0;
 volatile unsigned int cmdCompFlag = 0;
-volatile unsigned int cmdTimeout = 0; 
+volatile unsigned int cmdTimeout = 0;
 volatile unsigned int errFlag = 0;
 volatile unsigned int sdBlkSize = HSMMCSD_BLK_SIZE;
 
@@ -118,7 +118,7 @@ unsigned char data[HSMMCSD_DATA_SIZE];
 unsigned char data[HSMMCSD_DATA_SIZE];
 
 #elif defined(gcc)
-unsigned char data[HSMMCSD_DATA_SIZE] 
+unsigned char data[HSMMCSD_DATA_SIZE]
                     __attribute__ ((aligned (SOC_CACHELINE_SIZE)))= {0};
 
 #else
@@ -155,7 +155,7 @@ static unsigned int HSMMCSDCmdStatusGet(mmcsdCtrlInfo *ctrl)
     unsigned int status = 0;
 
     while ((cmdCompFlag == 0) && (cmdTimeout == 0));
-    
+
     if (cmdCompFlag)
     {
         status = 1;
@@ -176,7 +176,7 @@ static unsigned int HSMMCSDXferStatusGet(mmcsdCtrlInfo *ctrl)
     unsigned int status = 0;
 
     while ((xferCompFlag == 0) && (dataTimeout == 0));
-    
+
     if (xferCompFlag)
     {
         status = 1;
@@ -212,7 +212,7 @@ static void HSMMCSDRxDmaConfig(void *ptr, unsigned int blkSize, unsigned int nbl
     paramSet.destBIdx   = 4;
     paramSet.destCIdx   = blkSize;
     paramSet.aCnt       = 0x4;
-    paramSet.bCnt       = blkSize/4;              
+    paramSet.bCnt       = blkSize/4;
     paramSet.cCnt       = nblks;
     paramSet.bCntReload = 0x0;
     paramSet.linkAddr   = 0xffff;
@@ -429,7 +429,7 @@ static void HSMMCSDIsr(void)
     volatile unsigned int status = 0;
 
     status = HSMMCSDIntrStatusGet(ctrlInfo.memBase, 0xFFFFFFFF);
-    
+
     HSMMCSDIntrStatusClear(ctrlInfo.memBase, status);
 
     if (status & HS_MMCSD_STAT_CMDCOMP)
@@ -541,8 +541,8 @@ unsigned int HSMMCSDCardPresentStat(void)
    {
        return FALSE;
    }
-  
-   else 
+
+   else
    {
        return TRUE;
    }
@@ -554,7 +554,7 @@ void HSMMCSDCardAccessSetup(void)
     MMCSDCtrlInit(&ctrlInfo);
     MMCSDIntEnable(&ctrlInfo);
     HSMMCSDFsMount(0, &sdCard);
-   
+
     HSMMCSDFsProcessCmdLine();
 }
 

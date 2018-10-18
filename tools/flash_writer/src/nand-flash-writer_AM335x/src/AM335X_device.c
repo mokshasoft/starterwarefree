@@ -3,35 +3,35 @@
  */
 
 /*
- * Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+ * Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
  */
-/* 
- *  Redistribution and use in source and binary forms, with or without 
- *  modification, are permitted provided that the following conditions 
+/*
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
  *  are met:
  *
- *    Redistributions of source code must retain the above copyright 
+ *    Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
  *
  *    Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the   
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
  *    distribution.
  *
  *    Neither the name of Texas Instruments Incorporated nor the names of
  *    its contributors may be used to endorse or promote products derived
  *    from this software without specific prior written permission.
  *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
  *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
  *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -303,7 +303,7 @@ AM335X_NAND_InfoHandle AM335X_NAND_open(Uint32 base_CS, Uint8 busWidth) {
 	hNandInfo->nandhardware.startaddddr       = AM335X_DEVICE_DDR2_START_ADDR;
 	hNandInfo->nandhardware.startrbl          = AM335X_DEVICE_NAND_RBL_SEARCH_START_BLOCK;
 	hNandInfo->nandhardware.endrbl            = AM335X_DEVICE_NAND_RBL_SEARCH_END_BLOCK;
-	hNandInfo->nandhardware.maxbyteperop      = AM335X_DEVICE_NAND_MAX_BYTES_PER_OP; 
+	hNandInfo->nandhardware.maxbyteperop      = AM335X_DEVICE_NAND_MAX_BYTES_PER_OP;
 	hNandInfo->nandhardware.minsparebyteperop = 3;
 	hNandInfo->nandhardware.maxsparebyteperop = 16;
 	hNandInfo->nandhardware.timeout           = AM335X_DEVICE_NAND_TIMEOUT;
@@ -392,7 +392,7 @@ AM335X_ASYNC_MEM_InfoHandle AM335X_ASYNC_MEM_Open(AM335X_ASYNC_MEM_Type memType,
 
 static void AM335X_DEVICE_setPad() {
 	/* configure pad - pinmuxing */
-	// No Pin Configuration required in AM335X 
+	// No Pin Configuration required in AM335X
 }
 
 static void DEVICE_ASYNC_MEM_Init(AM335X_ASYNC_MEM_InfoHandle hAsyncMemInfo) {

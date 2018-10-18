@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -294,10 +294,10 @@ const tConfigHeader * const g_pBulkConfigDescriptors[] =
 // Forward references for device handler callbacks
 //
 //*****************************************************************************
-static void HandleConfigChange(void *pvInstance, unsigned int ulInfo, 
+static void HandleConfigChange(void *pvInstance, unsigned int ulInfo,
                                             unsigned int ulIndex);
 static void HandleDisconnect(void *pvInstance);
-static void HandleEndpoints(void *pvInstance, unsigned int ulStatus, 
+static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                         unsigned int ulIndex);
 static void HandleSuspend(void *pvInstance);
 static void HandleResume(void *pvInstance);
@@ -391,7 +391,7 @@ SetDeferredOpFlag(volatile unsigned short *pusDeferredOp, unsigned short usBit,
 //
 //*****************************************************************************
 static tBoolean
-ProcessDataFromHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus, 
+ProcessDataFromHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
                                                             unsigned int ulIndex)
 {
     unsigned int ulEPStatus;
@@ -479,7 +479,7 @@ ProcessDataFromHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
 //
 //*****************************************************************************
 static tBoolean
-ProcessDataToHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus, 
+ProcessDataToHost(const tUSBDBulkDevice *psDevice, unsigned int ulStatus,
                                                     unsigned int ulIndex)
 {
     tBulkInstance *psInst;
@@ -568,7 +568,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
 //
 //*****************************************************************************
 static void
-HandleConfigChange(void *pvInstance, unsigned int ulInfo,  
+HandleConfigChange(void *pvInstance, unsigned int ulInfo,
                                             unsigned int ulIndex)
 {
     tBulkInstance *psInst;
@@ -850,10 +850,10 @@ USBDBulkInit(unsigned int ulIndex, const tUSBDBulkDevice *psDevice)
 //! \param psDevice points to a structure containing parameters customizing
 //! the operation of the bulk device.
 //!
-//! An application wishing to make use of a composite  
+//! An application wishing to make use of a composite
 //! USB bulk communication channel needs to call this function.
-//! This function is used for initializing an instance related information of the 
-//! bulk device. 
+//! This function is used for initializing an instance related information of the
+//! bulk device.
 //!
 //! \return Returns zero on failure or a non-zero value that should be
 //! used with the remaining USB HID Bulk APIs.

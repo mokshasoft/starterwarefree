@@ -24,7 +24,7 @@
  *               1) Single ended operation mode for a 4 wire touchcreen mode.
  *               2) Use of FIFO threshold level interrupts
  *               This example calibrates the TouchScreen by asking user for some
- *               touch inputs. Later on it displays the coordinates for every 
+ *               touch inputs. Later on it displays the coordinates for every
  *               touch event on the display Panel.
  *
  *           Running the example:
@@ -36,34 +36,34 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 *
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -111,7 +111,7 @@ int getDisplayPoint(POINT * displayPtr,
 
 #define LCD_WIDTH     800
 
-#define LCD_HEIGHT    480 
+#define LCD_HEIGHT    480
 /******************************************************************************
 **              GLOBAL VARIABLE DEFINITIONS
 ******************************************************************************/
@@ -163,12 +163,12 @@ static void SetupIntc(void)
 static void TouchScreenInit(void)
 {
     unsigned int i = 0;
-      
+
     TSCADCModuleClkConfig();
 
     TSCADCPinMuxSetUp();
 
-    /* configures ADC to 3Mhz */ 
+    /* configures ADC to 3Mhz */
     TSCADCConfigureAFEClock(SOC_ADC_TSC_0_REGS, 24000000, 3000000);
 
     SetUPTSADCControl();
@@ -239,10 +239,10 @@ static void FIFOConfigure(void)
 static void IdleStepConfig(void)
 {
     /* Configure ADC to Single ended operation mode */
-    TSCADCIdleStepOperationModeControl(SOC_ADC_TSC_0_REGS, 
+    TSCADCIdleStepOperationModeControl(SOC_ADC_TSC_0_REGS,
                                     TSCADC_SINGLE_ENDED_OPER_MODE);
 
-    /* Configure reference volatage and input to idlestep */ 
+    /* Configure reference volatage and input to idlestep */
     TSCADCIdleStepConfig(SOC_ADC_TSC_0_REGS, TSCADC_NEGATIVE_REF_VSSA,
                          TSCADC_POSITIVE_INP_CHANNEL1, TSCADC_NEGATIVE_INP_ADCREFM,
                          TSCADC_POSITIVE_REF_VDDA);
@@ -251,7 +251,7 @@ static void IdleStepConfig(void)
     TSCADCIdleStepAnalogSupplyConfig(SOC_ADC_TSC_0_REGS, TSCADC_XPPSW_PIN_OFF,
                                      TSCADC_XNPSW_PIN_OFF, TSCADC_YPPSW_PIN_OFF);
 
-     /* 
+     /*
      **Configure the Analong Ground of Touch screen.
      */
     TSCADCIdleStepAnalogGroundConfig(SOC_ADC_TSC_0_REGS, TSCADC_XNNSW_PIN_OFF,
@@ -262,10 +262,10 @@ static void IdleStepConfig(void)
 static void TSchargeStepConfig(void)
 {
     /* Configure ADC to Single ended operation mode */
-    TSCADCChargeStepOperationModeControl(SOC_ADC_TSC_0_REGS, 
+    TSCADCChargeStepOperationModeControl(SOC_ADC_TSC_0_REGS,
                                          TSCADC_SINGLE_ENDED_OPER_MODE);
 
-    /* Configure reference volatage and input to charge step*/ 
+    /* Configure reference volatage and input to charge step*/
     TSCADCChargeStepConfig(SOC_ADC_TSC_0_REGS, TSCADC_NEGATIVE_REF_XNUR,
                            TSCADC_POSITIVE_INP_CHANNEL2, TSCADC_NEGATIVE_INP_CHANNEL2,
                            TSCADC_POSITIVE_REF_XPUL);
@@ -288,7 +288,7 @@ static void StepConfigX(unsigned int stepSelc)
     TSCADCTSStepOperationModeControl(SOC_ADC_TSC_0_REGS,
                                     TSCADC_SINGLE_ENDED_OPER_MODE, stepSelc);
 
-    /* Configure reference volatage and input to charge step*/ 
+    /* Configure reference volatage and input to charge step*/
     TSCADCTSStepConfig(SOC_ADC_TSC_0_REGS, stepSelc,TSCADC_NEGATIVE_REF_VSSA,
                        TSCADC_POSITIVE_INP_CHANNEL3,TSCADC_NEGATIVE_INP_CHANNEL1,
                        TSCADC_POSITIVE_REF_VDDA);
@@ -308,18 +308,18 @@ static void StepConfigX(unsigned int stepSelc)
 
     /* Configure in One short hardware sync mode */
     TSCADCTSStepModeConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_ONE_SHOT_HARDWARE_SYNC);
-    
-    TSCADCTSStepAverageConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_SIXTEEN_SAMPLES_AVG); 
+
+    TSCADCTSStepAverageConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_SIXTEEN_SAMPLES_AVG);
 }
 
 static void StepConfigY(unsigned int stepSelc)
 {
 
     /* Configure ADC to Single ended operation mode */
-    TSCADCTSStepOperationModeControl(SOC_ADC_TSC_0_REGS, 
+    TSCADCTSStepOperationModeControl(SOC_ADC_TSC_0_REGS,
                                      TSCADC_SINGLE_ENDED_OPER_MODE, stepSelc);
 
-    /* Configure reference volatage and input to charge step*/ 
+    /* Configure reference volatage and input to charge step*/
     TSCADCTSStepConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_NEGATIVE_REF_VSSA,
                        TSCADC_POSITIVE_INP_CHANNEL1, TSCADC_NEGATIVE_INP_ADCREFM,
                        TSCADC_POSITIVE_REF_VDDA);
@@ -339,7 +339,7 @@ static void StepConfigY(unsigned int stepSelc)
     /* Configure in One short hardware sync mode */
     TSCADCTSStepModeConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_ONE_SHOT_HARDWARE_SYNC);
 
-    TSCADCTSStepAverageConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_SIXTEEN_SAMPLES_AVG); 
+    TSCADCTSStepAverageConfig(SOC_ADC_TSC_0_REGS, stepSelc, TSCADC_SIXTEEN_SAMPLES_AVG);
 }
 
 static void StepEnable(void)
@@ -441,7 +441,7 @@ static void TouchScreenIsr()
 static void TouchCalibrate(void)
 {
     unsigned char i;
- 
+
     POINT stDisplayPoint[3] = {{0, 0},{800, 0}, {0, 480}};
     POINT stTouchScreenPoint[3];
 
@@ -449,7 +449,7 @@ static void TouchCalibrate(void)
 
     while(!IsTSPress);
 
-    IsTSPress = 1; 
+    IsTSPress = 1;
 
     for(i = 0; i < 3; i++)
     {
@@ -480,7 +480,7 @@ static void TouchCalibrate(void)
 
     setCalibrationMatrix( stDisplayPoint, stTouchScreenPoint, &stMatrix);
 }
-  
+
 
 static void ReadTouchScreenPress(void)
 {
@@ -490,13 +490,13 @@ static void ReadTouchScreenPress(void)
 
    POINT stTouchScreenPoint;
    do {
-              if(IsTSPress) 
-              {  
-                   IsTSPress = 0;                 
+              if(IsTSPress)
+              {
+                   IsTSPress = 0;
  		   stTouchScreenPoint.x = x_val[0];
 		   stTouchScreenPoint.y = y_val[0];
 		   getDisplayPoint(&stDisplayPoint, &stTouchScreenPoint, &stMatrix);
-                
+
                    xDpos = stDisplayPoint.x;
 
                    xDpos = LCD_WIDTH - xDpos;
@@ -528,38 +528,38 @@ static void ReadTouchScreenPress(void)
                    {
                         yDpos = 480;
                    }
-                   
+
                    ConsoleUtilsPrintf("yDpos=");
 
                    ConsoleUtilsPrintf("%d", yDpos);
 
                    ConsoleUtilsPrintf("\r\n");
-                  
+
                  }
     } while (1);
 }
 
 /**********************************************************************
- *  
+ *
  *       Function: setCalibrationMatrix()
- *    
+ *
  *       Description: Calling this function with valid input data
- *                    in the display and screen input arguments 
+ *                    in the display and screen input arguments
  *                    causes the calibration factors between the
  *                    screen and display points to be calculated,
- *                    and the output argument - matrixPtr - to be 
+ *                    and the output argument - matrixPtr - to be
  *                    populated.
- *           
+ *
  *                    This function needs to be called only when new
  *                    calibration factors are desired.
- *                             
- *                 
- *       Argument(s): displayPtr (input) - Pointer to an array of three 
+ *
+ *
+ *       Argument(s): displayPtr (input) - Pointer to an array of three
  *                                         sample, reference points.
- *                    screenPtr (input) - Pointer to the array of touch 
- *                                         screen points corresponding 
+ *                    screenPtr (input) - Pointer to the array of touch
+ *                                         screen points corresponding
  *                                         to the reference display points.
- *                    matrixPtr (output) - Pointer to the calibration 
+ *                    matrixPtr (output) - Pointer to the calibration
  *                                         matrix computed for the set
  *                                         of points being provided.
  */
@@ -582,56 +582,56 @@ int setCalibrationMatrix(POINT *displayPtr,
         }
         else
         {
-              temp = ((displayPtr[0].x - displayPtr[2].x) 
+              temp = ((displayPtr[0].x - displayPtr[2].x)
                       * (screenPtr[1].y - screenPtr[2].y));
 
-              temp1 = ((displayPtr[1].x - displayPtr[2].x) 
+              temp1 = ((displayPtr[1].x - displayPtr[2].x)
                       * (screenPtr[0].y - screenPtr[2].y));
 
               matrixPtr->An =((temp - temp1)) / (matrixPtr->Divider /10000);
 
-              temp = ((screenPtr[0].x - screenPtr[2].x) 
+              temp = ((screenPtr[0].x - screenPtr[2].x)
                      * (displayPtr[1].x - displayPtr[2].x));
 
-              temp1 = ((displayPtr[0].x - displayPtr[2].x) 
+              temp1 = ((displayPtr[0].x - displayPtr[2].x)
                       * (screenPtr[1].x - screenPtr[2].x));
 
               matrixPtr->Bn = ((temp - temp1)) / (matrixPtr->Divider / 10000);
 
-              temp  = ((screenPtr[2].x * displayPtr[1].x 
+              temp  = ((screenPtr[2].x * displayPtr[1].x
                       - screenPtr[1].x * displayPtr[2].x)) * screenPtr[0].y;
 
-              temp1 = ((screenPtr[0].x * displayPtr[2].x 
+              temp1 = ((screenPtr[0].x * displayPtr[2].x
                       - screenPtr[2].x * displayPtr[0].x)) * screenPtr[1].y;
 
-              temp2 = ((screenPtr[1].x * displayPtr[0].x 
+              temp2 = ((screenPtr[1].x * displayPtr[0].x
                       - screenPtr[0].x * displayPtr[1].x)) * screenPtr[2].y;
 
               matrixPtr->Cn = ((temp + temp1 + temp2)) / matrixPtr->Divider;
 
-              temp  = ((displayPtr[0].y - displayPtr[2].y) 
+              temp  = ((displayPtr[0].y - displayPtr[2].y)
                       * (screenPtr[1].y - screenPtr[2].y));
 
-              temp1 = ((displayPtr[1].y - displayPtr[2].y) 
+              temp1 = ((displayPtr[1].y - displayPtr[2].y)
                       * (screenPtr[0].y - screenPtr[2].y));
 
               matrixPtr->Dn = ((temp - temp1) / (matrixPtr->Divider / 10000));
 
-              temp =  ((screenPtr[0].x - screenPtr[2].x) 
+              temp =  ((screenPtr[0].x - screenPtr[2].x)
                       * (displayPtr[1].y - displayPtr[2].y));
 
-              temp1 = ((displayPtr[0].y - displayPtr[2].y) 
+              temp1 = ((displayPtr[0].y - displayPtr[2].y)
                       * (screenPtr[1].x - screenPtr[2].x));
 
               matrixPtr->En= ((temp - temp1)) / (matrixPtr->Divider / 10000);
 
-              temp =  (screenPtr[2].x * displayPtr[1].y 
+              temp =  (screenPtr[2].x * displayPtr[1].y
                       - screenPtr[1].x * displayPtr[2].y) * screenPtr[0].y;
 
-              temp1 = (screenPtr[0].x * displayPtr[2].y 
+              temp1 = (screenPtr[0].x * displayPtr[2].y
                       - screenPtr[2].x * displayPtr[0].y) * screenPtr[1].y;
 
-              temp2 = (screenPtr[1].x * displayPtr[0].y 
+              temp2 = (screenPtr[1].x * displayPtr[0].y
                       - screenPtr[0].x * displayPtr[1].y) * screenPtr[2].y;
 
               matrixPtr->Fn = (temp + temp1 + temp2) /matrixPtr->Divider;
@@ -643,17 +643,17 @@ int setCalibrationMatrix(POINT *displayPtr,
 } /* end of setCalibrationMatrix() */
 
 /**********************************************************************
- *  
+ *
  *        Function: getDisplayPoint()
- *    
+ *
  *       Description: Given a valid set of calibration factors and a point
  *                    value reported by the touch screen, this function
  *                    calculates and returns the true (or closest to true)
- *                    display point below the spot where the touch screen 
+ *                    display point below the spot where the touch screen
  *                    was touched.
- *           
- *           
- *             
+ *
+ *
+ *
  *       Argument(s): displayPtr (output) - Pointer to the calculated
  *                                          (true) display point.
  *                    ScreenPtr (input) -   Pointer to the reported touch
@@ -667,15 +667,15 @@ int getDisplayPoint(POINT *displayPtr,
                     MATRIX *matrixPtr )
 {
     int  retValue = 0 ;
-    
+
     if( matrixPtr->Divider != 0 )
     {
-         displayPtr->x = (((matrixPtr->An * screenPtr->x + 
+         displayPtr->x = (((matrixPtr->An * screenPtr->x +
                             matrixPtr->Bn * screenPtr->y) / 10000)
                             + (matrixPtr->Cn));
 
 	 displayPtr->y = (((matrixPtr->Dn * screenPtr->x +
-			    matrixPtr->En * screenPtr->y) / 10000) 
+			    matrixPtr->En * screenPtr->y) / 10000)
                             + (matrixPtr->Fn));
     }
     else

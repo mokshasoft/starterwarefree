@@ -3,7 +3,7 @@
  *
  *  \brief  Definitions used for NAND Abstractin Library.
  *
- *   This file contains the macros, structures, function prototypes used by 
+ *   This file contains the macros, structures, function prototypes used by
  *   nand application, abstraction layer, and platform spcific layer.
  */
 
@@ -55,13 +55,13 @@ extern "C" {
 
 /*****************************************************************************/
 /*
-** Macros which defines the number of NAND devices can be connected to system 
+** Macros which defines the number of NAND devices can be connected to system
 */
 #define NAND_MAX_CHIP_SELECTS                         (4)
 
 /*****************************************************************************/
 /*
-** Macros which can be used as 'chip select' to the NANDInfoInit, 
+** Macros which can be used as 'chip select' to the NANDInfoInit,
 ** NANDCtrlInfoInit and NANDDevInfoInit functions.
 */
 #define NAND_CHIP_SELECT_0                            (0)
@@ -121,7 +121,7 @@ extern "C" {
 /*****************************************************************************/
 /*
 ** Macros which can be used as 'busWidth' in NANDDevInfo structure.
-** 
+**
 */
 typedef enum _NAND_BUSWIDTH_
 {
@@ -186,7 +186,7 @@ typedef enum _NAND_STATUS_
 {
     NAND_STATUS_PASSED                          =  (0x001),
     NAND_STATUS_FAILED                          =  (0x002),
-    NAND_STATUS_NOT_FOUND                       =  (0x004),    
+    NAND_STATUS_NOT_FOUND                       =  (0x004),
     NAND_STATUS_DEVBUSY                         =  (0x008),
     NAND_STATUS_DEVWRPROTECT                    =  (0x010),
     NAND_STATUS_WAITTIMEOUT                     =  (0x020),
@@ -213,7 +213,7 @@ NandBlockStatus_t;
 /*****************************************************************************/
 /*
 ** Typedef which is used as 'dir' to DMAXfer, DMAXferSetup funcitons to indicate
-** the transfer direction. 
+** the transfer direction.
 **
 */
 typedef enum _NAND_DMA_DIR_
@@ -241,8 +241,8 @@ NandXFerMode_t;
 *******************************************************************************/
 
 
-/* A consolidated structure which is the main object instantiated by the user. 
-** This contains all the other information for a NAND device/controller 
+/* A consolidated structure which is the main object instantiated by the user.
+** This contains all the other information for a NAND device/controller
 ** transaction. It contains the info like --
 **      1)NAND Device information that is connected.
 **      2)NAND Controller information that is being used.
@@ -256,7 +256,7 @@ typedef struct _NAND_INFO_
 
     /* Opmode. i.e CPU or DMA  */
     NandXFerMode_t opMode;
-    
+
     /* ECC algorithm required by the NAND device */
     NandEccAlgo_t eccType;
 
@@ -264,7 +264,7 @@ typedef struct _NAND_INFO_
     unsigned char manId;
     /* Device ID        */
     unsigned char devId;
-    
+
     /* Count of chip selects the nand device uses */
     int chipSelectCnt;
     /* NAND die cnt - how many die in package */
@@ -322,10 +322,10 @@ typedef struct _NAND_CTRL_INFO_
     unsigned int waitPinPol;
     /* Write protect pin polarity  */
     unsigned int wpPinPol;
-    /* Chip select base address  */    
+    /* Chip select base address  */
     unsigned int chipSelectBaseAddr[NAND_MAX_CHIP_SELECTS];
     /* Chip select region size  */
-    unsigned int chipSelectRegionSize[NAND_MAX_CHIP_SELECTS];    
+    unsigned int chipSelectRegionSize[NAND_MAX_CHIP_SELECTS];
     /* Curr chip select in use by the memory controller */
     int currChipSelect;
 }
@@ -365,7 +365,7 @@ typedef struct _NAND_DMA_INFO_
     /* Function to transfer the Data through DMA */
     NandStatus_t (*DMAXfer)(NandInfo_t *nandInfo,
                             unsigned char *data,
-                            unsigned int len, 
+                            unsigned int len,
                             NandDmaDir_t dir);
     /* Function to setup the DMA transfer */
     void (*DMAXferSetup)(NandInfo_t *nandInfo,

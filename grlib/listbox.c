@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2008-2010 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 6288 of the Stellaris Graphics Library.
 //
 //*****************************************************************************
@@ -426,16 +426,16 @@ ListBoxPointer(tListBoxWidget *pListBox, unsigned int ulMsg, int lX, int lY)
                 	
                     //
                     // Adjust the start entry appropriately, taking care to handle
-                    // the wrap case.  The use of a temporary variable here is 
+                    // the wrap case.  The use of a temporary variable here is
                     // required to work around a compiler bug which resulted in an
-                    // invalid value of pListBox->usStartEntry following the 
+                    // invalid value of pListBox->usStartEntry following the
                     // calculation.
                     //
                     lTemp = pListBox->usStartEntry;
                     lTemp += lScroll;
                     lTemp %= (int)pListBox->usMaxEntries;
                     pListBox->usStartEntry = (unsigned short)lTemp;
-                
+
                     //
                     // Remember that we scrolled.
                     //

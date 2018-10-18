@@ -1,8 +1,8 @@
 /**
- * \file   demoRaster.c 
+ * \file   demoRaster.c
  *
  * \brief  This file contains Raster related functions.
- *        
+ *
 */
 
 /*
@@ -80,7 +80,7 @@ static volatile unsigned int fbSync = 0;
 **                      INTERNAL FUNCTION DEFINITIONS
 *******************************************************************************/
 /*
-** Configures raster to display image 
+** Configures raster to display image
 */
 void Raster0Init(void)
 {
@@ -121,21 +121,21 @@ void Raster0Init(void)
 }
 
 /*
-** Displays the banner image. 
+** Displays the banner image.
 */
 void Raster0Start(void)
 {
     /* configuring the base ceiling */
-    RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+    RasterDMAFBConfig(SOC_LCDC_0_REGS,
                       (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET),
                       (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET) + (SIZE_IMAGE_ARRAY*4) - 1,
 					  FRAME_BUFFER_0);
 
-    RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+    RasterDMAFBConfig(SOC_LCDC_0_REGS,
                       (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET),
                       (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET) + (SIZE_IMAGE_ARRAY*4) - 1,
 					  FRAME_BUFFER_1);
-					  
+
      /* enable raster */
      RasterEnable(SOC_LCDC_0_REGS);
 }
@@ -173,7 +173,7 @@ void Raster0IntRegister(void)
 }
 
 /*
-** Interrupt Service Routine(ISR) for Raster. This function displays an image 
+** Interrupt Service Routine(ISR) for Raster. This function displays an image
 ** on the LCD.
 */
 static void Raster0Isr(void)
@@ -187,15 +187,15 @@ static void Raster0Isr(void)
     if (status & RASTER_END_OF_FRAME0_INT_STAT)
     {
 		/* configuring the base ceiling */
-		RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+		RasterDMAFBConfig(SOC_LCDC_0_REGS,
 						  (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET),
 						  (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET) + (SIZE_IMAGE_ARRAY*4) - 1,
 						  FRAME_BUFFER_0);
 	}
-	
+
     if(status & RASTER_END_OF_FRAME1_INT_STAT)
     {
-		RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+		RasterDMAFBConfig(SOC_LCDC_0_REGS,
 						  (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET),
 						  (unsigned int)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET) + (SIZE_IMAGE_ARRAY*4) - 1,
 					  FRAME_BUFFER_1);

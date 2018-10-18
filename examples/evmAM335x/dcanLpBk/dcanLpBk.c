@@ -36,35 +36,35 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -89,7 +89,7 @@
 #define CAN_TX_MSG_STD_ID                 (0x02u)
 
 /******************************************************************************
-**                       INTERNAL FUNCTION PROTOTYPES                     
+**                       INTERNAL FUNCTION PROTOTYPES
 ******************************************************************************/
 static void DCANAintcConfigure(void);
 static void ConfigureDCAN(void);
@@ -97,7 +97,7 @@ static void DCANParityIsr(void);
 static void DCANIsr0(void);
 
 /******************************************************************************
-**                       GLOBAL VARIABLE DEFINITIONS                   
+**                       GLOBAL VARIABLE DEFINITIONS
 ******************************************************************************/
 /* CAN frame details */
 static unsigned int rxflag = (CAN_DATA_FRAME | CAN_MSG_DIR_RX);
@@ -152,8 +152,8 @@ int main(void)
     entry.flag = rxflag;
     entry.id = canId;
 
-    /* 
-    ** Configure a receive message object to accept CAN 
+    /*
+    ** Configure a receive message object to accept CAN
     ** frames with standard ID.
     */
     CANMsgObjectConfig(SOC_DCAN_1_REGS, &entry);
@@ -210,7 +210,7 @@ static void DCANParityIsr(void)
     unsigned int wrdNum;
     unsigned int msgNum;
 
-    if(DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) == 
+    if(DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) ==
                            DCAN_ERROR_OCCURED)
     {
         /* Check the status of DCAN Status and error register */
@@ -247,20 +247,20 @@ static void DCANIsr0(void)
 
     while(DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT))
     {
-        if(DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) == 
+        if(DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) ==
                                DCAN_ERROR_OCCURED)
         {
             /* Check the status of DCAN Status and error register */
-            errVal = DCANErrAndStatusRegInfoGet(SOC_DCAN_1_REGS);       
-            
+            errVal = DCANErrAndStatusRegInfoGet(SOC_DCAN_1_REGS);
+
             if(errVal & DCAN_MOD_IN_BUS_OFF_STATE)
             {
                 ConsoleUtilsPrintf("**DCAN is in Bus-off state**\n");
 
-                /* 
-                ** This feature will automatically get the CAN bus to bus-on 
-                ** state once the error counters are below the error warning 
-                ** limit. 
+                /*
+                ** This feature will automatically get the CAN bus to bus-on
+                ** state once the error counters are below the error warning
+                ** limit.
                 */
                 DCANAutoBusOnControl(SOC_DCAN_1_REGS, DCAN_AUTO_BUS_ON_ENABLE);
             }
@@ -271,15 +271,15 @@ static void DCANIsr0(void)
                 ConsoleUtilsPrintf(" reached the error warning limit\n");
             }
         }
-    
-        if((DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) != 
-                                DCAN_NO_INT_PENDING) && 
-           ((DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) != 
+
+        if((DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) !=
+                                DCAN_NO_INT_PENDING) &&
+           ((DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT) !=
                                 DCAN_ERROR_OCCURED)))
         {
             /* Get the number of the message object which caused the interrupt */
             msgNum = DCANIntRegStatusGet(SOC_DCAN_1_REGS, DCAN_INT_LINE0_STAT);
-    
+
             /* Interrupt handling for transmit objects */
             if(msgNum < (CAN_NUM_OF_MSG_OBJS/2))
             {
@@ -290,13 +290,13 @@ static void DCANIsr0(void)
             if((msgNum >= (CAN_NUM_OF_MSG_OBJS/2)) && (msgNum < CAN_NUM_OF_MSG_OBJS))
             {
                 /* Read a received message from message RAM to interface register */
-                CANReadMsgObjData(SOC_DCAN_1_REGS, msgNum, (unsigned int*) canData, 
+                CANReadMsgObjData(SOC_DCAN_1_REGS, msgNum, (unsigned int*) canData,
                                   DCAN_IF2_REG);
 
-                if((DCANIFArbStatusGet(SOC_DCAN_1_REGS, DCAN_IF2_REG) & 
+                if((DCANIFArbStatusGet(SOC_DCAN_1_REGS, DCAN_IF2_REG) &
                     DCAN_EXT_ID_READ) == DCAN_29_BIT_ID)
                 {
-                    entry.flag = (CAN_EXT_FRAME | CAN_DATA_FRAME | CAN_MSG_DIR_TX); 
+                    entry.flag = (CAN_EXT_FRAME | CAN_DATA_FRAME | CAN_MSG_DIR_TX);
                     entry.id = CAN_TX_MSG_EXTD_ID;
                 }
                 else
@@ -307,12 +307,12 @@ static void DCANIsr0(void)
 
                 /* Clear the Interrupt pending status */
                 CANClrIntPndStat(SOC_DCAN_1_REGS, msgNum, DCAN_IF2_REG);
-    
+
                 dataPtr = (unsigned char*) canData;
 
                 ConsoleUtilsPrintf("Data received = ");
 
-                bytes = (DCANIFMsgCtlStatusGet(SOC_DCAN_1_REGS, DCAN_IF2_REG) & 
+                bytes = (DCANIFMsgCtlStatusGet(SOC_DCAN_1_REGS, DCAN_IF2_REG) &
                                                DCAN_DAT_LEN_CODE_READ);
 
                 /* Print the received data bytes on the UART console */
@@ -320,7 +320,7 @@ static void DCANIsr0(void)
                 {
                     ConsoleUtilsPrintf("%c", *dataPtr++);
                 }
- 
+
                 ConsoleUtilsPrintf("\r\n");
 
                 isrFlag = 0;

@@ -34,7 +34,7 @@ static Uint8 rx[512];
 struct spi_slave *slave;
 struct spi_flash *flash;
 
-static int getPlatform(void); 
+static int getPlatform(void);
 
 #ifdef CONFIG_TI816X_EVM
 #define MAX_DSPUBL_SIZE	(0)
@@ -123,7 +123,7 @@ Int32 main( )
 	Uint16  page_size;
 	FILE	*fPtr;
    	Int32	fileSize = 0;
-	Int32   no_of_pages;  
+	Int32   no_of_pages;
 	Int32   no_of_sectors;
 	Int32	offset = -1;
 	Int8	fileName[256];
@@ -262,7 +262,7 @@ Int32 main( )
 		tx[nbytes] = '\0';
 
 		flash->read (flash, i * page_size, page_size, (Uint8 *)rx);
-		rx[nbytes] = '\0'; 
+		rx[nbytes] = '\0';
 		if(strcmp((const char *)rx,(const char *)tx)!= 0) {
 			printf("Did not match @ %d\n", ftell(fPtr));
 			goto finish;

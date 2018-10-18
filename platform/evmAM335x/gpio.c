@@ -62,7 +62,7 @@ unsigned int GPIO0Pin6PinMuxSetup(void)
     unsigned int profile = 0;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -84,9 +84,9 @@ unsigned int GPIO0Pin6PinMuxSetup(void)
         /* Fall through for case 5. */
         case 5:
         default:
-        break; 
+        break;
     }
-    
+
     return status;
 }
 
@@ -108,7 +108,7 @@ unsigned int GPIO1Pin30PinMuxSetup(void)
     unsigned int profile = 1;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -194,7 +194,7 @@ unsigned int GPIO1Pin16PinMuxSetup(void)
     unsigned int profile = 0;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -238,7 +238,7 @@ unsigned int GPIO1Pin28PinMuxSetup(void)
     unsigned int profile = 1;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -280,7 +280,7 @@ unsigned int GPIO0Pin7PinMuxSetup(void)
     unsigned int profile = 0;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -322,7 +322,7 @@ unsigned int GPIO0Pin19PinMuxSetup(void)
     unsigned int profile = 7;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch(profile)
     {
@@ -360,13 +360,13 @@ unsigned int GPIO0Pin2PinMuxSetup(void)
     unsigned int profile = 7;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 	
     switch(profile)
     {
         case 0:
 		case 3:
-				HWREG(SOC_CONTROL_REGS + CONTROL_CONF_SPI0_SCLK) = 
+				HWREG(SOC_CONTROL_REGS + CONTROL_CONF_SPI0_SCLK) =
 					((CONTROL_CONF_SPI0_SCLK_CONF_SPI0_SCLK_RXACTIVE |
 					 CONTROL_CONF_SPI0_SCLK_CONF_SPI0_SCLK_PUDEN |
 					  CONTROL_CONF_MUXMODE(7)) & (~CONTROL_CONF_SPI0_SCLK_CONF_SPI0_SCLK_PUTYPESEL));
@@ -389,14 +389,14 @@ unsigned int GPIO1Pin2PinMuxSetup(void)
     unsigned int profile = 7;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 	
     switch(profile)
     {
         case 0:
 		case 3:
-				//HWREG(SOC_CONTROL_REGS + CONTROL_CONF_SPI0_D0) = 
-				HWREG(SOC_CONTROL_REGS + CONTROL_CONF_GPMC_AD(2)) = 
+				//HWREG(SOC_CONTROL_REGS + CONTROL_CONF_SPI0_D0) =
+				HWREG(SOC_CONTROL_REGS + CONTROL_CONF_GPMC_AD(2)) =
 					((CONTROL_CONF_GPMC_AD_CONF_GPMC_AD_RXACTIVE |
 					 CONTROL_CONF_GPMC_AD_CONF_GPMC_AD_PUDEN |
 					  CONTROL_CONF_MUXMODE(7)) & (~CONTROL_CONF_GPMC_AD_CONF_GPMC_AD_PUTYPESEL));

@@ -152,7 +152,7 @@ int spi_claim_bus(struct spi_slave *slave) {
 		div = 0xC;
 
 	conf = readl(&ds->regs->channel[ds->slave.cs].chconf);
-	conf |= OMAP3_MCSPI_CHCONF_TCS | OMAP3_MCSPI_CHCONF_FFEW | 
+	conf |= OMAP3_MCSPI_CHCONF_TCS | OMAP3_MCSPI_CHCONF_FFEW |
 			OMAP3_MCSPI_CHCONF_FFER;
 	/* standard 4-wire master mode:  SCK, MOSI/out, MISO/in, nCS
 	 * REVISIT: this controller could support SPI_3WIRE mode.

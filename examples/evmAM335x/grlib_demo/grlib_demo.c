@@ -54,35 +54,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -135,7 +135,7 @@
 #define INT_CHANNEL_MCASP                     (2u)
 #define INT_CHANNEL_EDMACC                    (2u)
 /* AIC3106 codec address */
-#define I2C_SLAVE_CODEC_AIC31                 (0x1Bu) 
+#define I2C_SLAVE_CODEC_AIC31                 (0x1Bu)
 
 #define NUM_PUSH_BUTTONS        (sizeof(g_psPushButtons)/sizeof(g_psPushButtons[0]))
 
@@ -162,7 +162,7 @@ unsigned char g_pucBuffer[GrOffScreen24BPPSize(LCD_WIDTH, LCD_HEIGHT, PIXEL_24_B
 tDisplay g_s35_800x480x24Display;
 
 // 32 byte Palette.
-unsigned int palette_32b[PALETTE_SIZE/sizeof(unsigned int)] = 
+unsigned int palette_32b[PALETTE_SIZE/sizeof(unsigned int)] =
             {0x4000u, 0x0000u, 0x0000u, 0x0000u, 0x0000u, 0x0000u, 0x0000u, 0x0000u};
 
 
@@ -220,7 +220,7 @@ extern volatile unsigned int IsTSPress;
 // application.
 //
 //*****************************************************************************
-Canvas(g_sIntroduction, g_psPanels, 0, 0, &g_s35_800x480x24Display, 0+X_OFFSET, 
+Canvas(g_sIntroduction, g_psPanels, 0, 0, &g_s35_800x480x24Display, 0+X_OFFSET,
         24+Y_OFFSET, 320, 166, CANVAS_STYLE_APP_DRAWN, 0, 0, 0, 0, 0, 0, OnIntroPaint);
 
 //*****************************************************************************
@@ -518,17 +518,17 @@ tSliderWidget g_psSliders[] =
 //*****************************************************************************
 tCanvasWidget g_psPanels[] =
 {
-    CanvasStruct(0, 0, &g_sIntroduction, &g_s35_800x480x24Display, 0+X_OFFSET, 
+    CanvasStruct(0, 0, &g_sIntroduction, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
-    CanvasStruct(0, 0, &g_sPrimitives, &g_s35_800x480x24Display, 0+X_OFFSET, 
+    CanvasStruct(0, 0, &g_sPrimitives, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
-    CanvasStruct(0, 0, &g_sCanvas1, &g_s35_800x480x24Display, 0+X_OFFSET, 24+Y_OFFSET, 
+    CanvasStruct(0, 0, &g_sCanvas1, &g_s35_800x480x24Display, 0+X_OFFSET, 24+Y_OFFSET,
                  320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
-    CanvasStruct(0, 0, g_psCheckBoxes, &g_s35_800x480x24Display, 0+X_OFFSET, 
+    CanvasStruct(0, 0, g_psCheckBoxes, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
-    CanvasStruct(0, 0, &g_sContainer1, &g_s35_800x480x24Display, 0+X_OFFSET, 
+    CanvasStruct(0, 0, &g_sContainer1, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
-    CanvasStruct(0, 0, g_psPushButtons, &g_s35_800x480x24Display, 0+X_OFFSET, 
+    CanvasStruct(0, 0, g_psPushButtons, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
     CanvasStruct(0, 0, g_psRadioContainers, &g_s35_800x480x24Display, 0+X_OFFSET,
                  24+Y_OFFSET, 320, 166, CANVAS_STYLE_FILL, ClrBlack, 0, 0, 0, 0, 0, 0),
@@ -1153,16 +1153,16 @@ int main(void)
     SetupIntc();
 
     SetUpLCD();
-  
+
     /* configuring the base ceiling */
-    RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+    RasterDMAFBConfig(SOC_LCDC_0_REGS,
                       (unsigned int)(g_pucBuffer+PALETTE_OFFSET),
                       (unsigned int)(g_pucBuffer+PALETTE_OFFSET) + sizeof(g_pucBuffer) - 2 -
 					  PALETTE_OFFSET, FRAME_BUFFER_0);
 
-    RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+    RasterDMAFBConfig(SOC_LCDC_0_REGS,
                       (unsigned int)(g_pucBuffer+PALETTE_OFFSET),
-                      (unsigned int)(g_pucBuffer+PALETTE_OFFSET) + sizeof(g_pucBuffer) - 2 - 
+                      (unsigned int)(g_pucBuffer+PALETTE_OFFSET) + sizeof(g_pucBuffer) - 2 -
 					  PALETTE_OFFSET, FRAME_BUFFER_1);
 
     src = (unsigned char *) palette_32b;
@@ -1175,7 +1175,7 @@ int main(void)
 	}
 
 	GrOffScreen24BPPInit(&g_s35_800x480x24Display, g_pucBuffer, LCD_WIDTH, LCD_HEIGHT);
-	
+
 	// Initialize a drawing context.
 	GrContextInit(&sContext, &g_s35_800x480x24Display);
 
@@ -1186,15 +1186,15 @@ int main(void)
     RasterEnable(SOC_LCDC_0_REGS);
 
     DisplayGR();
-	
+
     SoundInit();
 
     // TS init
     PeripheralsSetup();
     InitTouchScreen();
 	IsTSPress = 0;
-	
-    // Loop forever handling widget messages.    
+
+    // Loop forever handling widget messages.
     while(1)
 	{
             if(TRUE == TouchReleaseDetect() || slider)
@@ -1216,29 +1216,29 @@ int main(void)
 }
 
 /*
-** Configures raster to display image 
+** Configures raster to display image
 */
 static void SetUpLCD(void)
 {
-    /* Enable clock for LCD Module */ 
+    /* Enable clock for LCD Module */
     LCDModuleClkConfig();
 
     LCDPinMuxSetup();
 
-    /* 
+    /*
     **Clock for DMA,LIDD and for Core(which encompasses
-    ** Raster Active Matrix and Passive Matrix logic) 
+    ** Raster Active Matrix and Passive Matrix logic)
     ** enabled.
     */
     RasterClocksEnable(SOC_LCDC_0_REGS);
 
     /* Disable raster */
     RasterDisable(SOC_LCDC_0_REGS);
-    
+
     /* Configure the pclk */
     RasterClkConfig(SOC_LCDC_0_REGS, 23040000, 192000000);
 
-    /* Configuring DMA of LCD controller */ 
+    /* Configuring DMA of LCD controller */
     RasterDMAConfig(SOC_LCDC_0_REGS, RASTER_DOUBLE_FRAME_BUFFER,
                     RASTER_BURST_SIZE_16, RASTER_FIFO_THRESHOLD_8,
                     RASTER_BIG_ENDIAN_DISABLE);
@@ -1269,7 +1269,7 @@ static void SetUpLCD(void)
 
 
 /*
-** configures arm interrupt controller to generate raster interrupt 
+** configures arm interrupt controller to generate raster interrupt
 */
 static void LCDAINTCConfigure(void)
 {
@@ -1284,7 +1284,7 @@ static void LCDAINTCConfigure(void)
 
 
 /*
-** configures arm interrupt controller to generate raster interrupt 
+** configures arm interrupt controller to generate raster interrupt
 */
 static void SetupIntc(void)
 {
@@ -1297,12 +1297,12 @@ static void SetupIntc(void)
     LCDBackLightEnable();
 
     UPDNPinControl();
-	
+
     TouchIntRegister();
 }
 
 /*
-** For each end of frame interrupt base and ceiling is reconfigured 
+** For each end of frame interrupt base and ceiling is reconfigured
 */
 static void LCDIsr(void)
 {
@@ -1311,12 +1311,12 @@ static void LCDIsr(void)
     status = RasterIntStatus(SOC_LCDC_0_REGS,RASTER_END_OF_FRAME0_INT_STAT |
                                              RASTER_END_OF_FRAME1_INT_STAT );
 
-    status = RasterClearGetIntStatus(SOC_LCDC_0_REGS, status);   
+    status = RasterClearGetIntStatus(SOC_LCDC_0_REGS, status);
 
     if (status & RASTER_END_OF_FRAME0_INT_STAT)
     {
         /* configuring the base ceiling */
-        RasterDMAFBConfig(SOC_LCDC_0_REGS, 
+        RasterDMAFBConfig(SOC_LCDC_0_REGS,
                           (unsigned int)(g_pucBuffer+4),
                           (unsigned int)(g_pucBuffer+4) + sizeof(g_pucBuffer) - 2 - 4,
                           0);
@@ -1335,7 +1335,7 @@ static void LCDIsr(void)
 static void DisplayGR(void)
 {
     tRectangle sRect;
-	
+
     //GrImageDraw(&sContext, baseImage, 0, 0);
 
     // Fill the top 24 rows of the screen with blue to create the banner.
@@ -1349,16 +1349,16 @@ static void DisplayGR(void)
     // Put a white box around the banner.
     GrContextForegroundSet(&sContext, ClrWhite);
     GrRectDraw(&sContext, &sRect);
-	
+
 
     // Put the application name in the middle of the banner.
     GrContextFontSet(&sContext, &g_sFontCm20);
     GrStringDrawCentered(&sContext, "grlib demo", -1,
                          GrContextDpyWidthGet(&sContext) / 2, 15, 0);
-						 
+
 	GrStringDrawCentered(&sContext, "Touch here to proceed ", -1,
                          GrContextDpyWidthGet(&sContext) / 2, 230, 0);
-						 
+
 
     // Initialize the sound driver.
 
@@ -1437,13 +1437,13 @@ void ClickPlay(void)
 {
 	// I2C in Codec mode
 	I2CCodecIfInit(SOC_I2C_1_REGS, I2C_SLAVE_CODEC_AIC31);
-	
+
 	// play sound
 	SoundClickPlay((unsigned char*)toneRaw, sizeof(toneRaw));
-	
+
 	// I2C in TS mode
 //	I2C0IfConfig(I2C_SLAVE_PMIC_ADDR, 50000);
 //	ConfigureAINTCIntI2C();
-	
+
 	delay(0x9FFFF);
 }

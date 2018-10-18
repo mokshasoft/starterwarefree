@@ -114,7 +114,7 @@ unsigned int cosine [] = {10000, 99985, 99939, 99863, 99756, 99619, 99452, 99255
 void initAccelerometer()
 {
     volatile unsigned int delay = 0xffff;
-	
+
 	I2CMasterSlaveAddrSet(SOC_I2C_1_REGS, I2C_ACCLERO_SLAVE_ADDR);
 
     /*
@@ -152,7 +152,7 @@ void getAcceleroPos(int* tiltDir, int* tiltDeg)
     int x_axis;
     int y_axis;
     int z_axis;
-	
+
 	I2CMasterSlaveAddrSet(SOC_I2C_1_REGS, I2C_ACCLERO_SLAVE_ADDR);
 
 	 AccelerometerRegRead(OUT_X_L_DATA, &x_low);
@@ -169,7 +169,7 @@ void getAcceleroPos(int* tiltDir, int* tiltDeg)
 	 x_axis = (x_axis >> 4) & 0xfff;
 	 y_axis = (y_axis >> 4) & 0xfff;
 	 z_axis = (z_axis >> 4) & 0xfff;
-	 
+
 	 if(x_axis & 0x800)
 	 {
 		  x_axis = ~x_axis;
@@ -185,19 +185,19 @@ void getAcceleroPos(int* tiltDir, int* tiltDeg)
 		  y_axis =  y_axis & 0xfff;
 		  y_direction = -1;
 	 }
-	
+
 	 if(z_axis & 0x800)
 	 {
 		  z_axis = ~z_axis;
 		  z_axis = z_axis + 1;
 		  z_axis = z_axis & 0xfff;
 		  z_direction = -1;
-	 } 
+	 }
 
-	 z_axis = (z_axis * 100000) / 1024; 
+	 z_axis = (z_axis * 100000) / 1024;
 
 	 Index = binarySearch(z_axis, 90);
-	 
+
 	 if( Index != 0)
 	 {
 
@@ -226,16 +226,16 @@ void getAcceleroPos(int* tiltDir, int* tiltDeg)
 				}
 		  }
 	}
-	 
-	if(((y_direction == 1) && (z_direction == -1)) || 
+
+	if(((y_direction == 1) && (z_direction == -1)) ||
 	  ((y_direction == -1) && (z_direction == -1)))
 	{
 		  Index = 180 - Index;
 	}
-	
+
 	x_direction = 1;
 	y_direction = 1;
-	z_direction = 1; 
+	z_direction = 1;
 
 	*tiltDeg = Index;
 }
@@ -297,15 +297,15 @@ static void AccelerometerRegRead(unsigned char regOffset,
     rCount[I2C_1] = 0;
 
     dataToSlave[I2C_1][0] = regOffset;
-        
+
     SetupAccReception(1);
 
     *data = dataFromSlave[I2C_1][0];
-} 
+}
 
 
 /*
-** Transmits data over I2C bus 
+** Transmits data over I2C bus
 */
 static void SetupAccTransmit(unsigned int dcount)
 {
@@ -333,7 +333,7 @@ static void SetupAccTransmit(unsigned int dcount)
 }
 
 /*
-** Receives data over I2C bus 
+** Receives data over I2C bus
 */
 static void SetupAccReception(unsigned int dcount)
 {

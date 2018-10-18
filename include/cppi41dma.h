@@ -107,7 +107,7 @@ extern "C"
 #define CPDMA_STAR_1_PEND    0x2
 //
 //Link RAM size  = 4* number of Descriptors
-//                                           4000                   
+//                                           4000
 #define LINK_RAM0_SIZE                       1024 //  max value would be (512 + 20) * 4
 #define DESC0_REGION_SIZE                    (1024 * 20) + SOC_CACHELINE_SIZE_MAX //16384 // > (512 + 20)*64 + SOC_CACHELINE_SIZE_MAX
 
@@ -185,8 +185,8 @@ extern "C"
 //DMA registers
 
 #define CPDMA_TD_FD_QUEUE_CONTROL_REG       0x2004
-#define CPDMA_TX_CHANNEL_CONFIG_REG         0x2800 
-#define CPDMA_RX_CHANNEL_CONFIG_REG         0x2808 
+#define CPDMA_TX_CHANNEL_CONFIG_REG         0x2800
+#define CPDMA_RX_CHANNEL_CONFIG_REG         0x2808
 #define CPDMA_RX_CHANNEL_REG_A              0x280C
 #define CPDMA_RX_CHANNEL_REG_B              0x2810
 #define CPDMA_SCHED_CONTROL_REG             0x3000
@@ -199,8 +199,8 @@ extern "C"
 #else
 //DMA registers
 #define CPDMA_TD_FD_QUEUE_CONTROL_REG       0x1004
-#define CPDMA_TX_CHANNEL_CONFIG_REG         0x1800 
-#define CPDMA_RX_CHANNEL_CONFIG_REG         0x1808 
+#define CPDMA_TX_CHANNEL_CONFIG_REG         0x1800
+#define CPDMA_RX_CHANNEL_CONFIG_REG         0x1808
 #define CPDMA_RX_CHANNEL_REG_A              0x180C
 #define CPDMA_RX_CHANNEL_REG_B              0x1810
 #define CPDMA_SCHED_CONTROL_REG             0x2000
@@ -253,9 +253,9 @@ extern "C"
 //Clear Auto set for TX endpoint
 #define CPDMA_TX_CLR_AUTO_SET               0x7FFF
 
-// Set DMAReqEnab 
+// Set DMAReqEnab
 #define CPDMA_TX_SET_REQ_ENABLE             0x1400
-#define CPDMA_TX_SET_DMAMODE                0x0400     
+#define CPDMA_TX_SET_DMAMODE                0x0400
 
 // Clear AUTOCLEAR and DMAReqMode
 #define CPDMA_RX_CLR_AUTO_CLEAR             0x77FF
@@ -268,7 +268,7 @@ extern "C"
 // Clear DMAReqEnab & DMAReqMode
 #define CPDMA_TX_CLR_REQ_ENABLE             0xEBFF
 
-// Clear DMA Request Enable 
+// Clear DMA Request Enable
 #define CPDMA_TX_CLEAR_REQ_ENABLE             0xEFFF
 
 // Bit fields  for Schduler control reg
@@ -462,11 +462,11 @@ typedef struct hostPacketDesc {
     unsigned char devInst;
     void * reqContext;
     unsigned char reserved[18];
-    
+
 } hostPacketDesc ;
 
 // End point info structure for the application
-typedef struct  
+typedef struct
 {
      unsigned int endPoint;
      unsigned short direction;
@@ -510,17 +510,17 @@ typedef struct
 
     //RX Completion queues
     unsigned int rxCompletionq[NUM_RX_COMPQ];
-    //TearDown queue - for Queuing Up 
+    //TearDown queue - for Queuing Up
     unsigned int tearDownq;
     //Pointers for BD Management
     hostPacketDesc *tail_bd ;
-    hostPacketDesc *head_bd;    
+    hostPacketDesc *head_bd;
     //Pointers for TD Management
     cppi41TearDownDesc *tail_tdd ;
     cppi41TearDownDesc *head_tdd;
     unsigned int *region0DescriptorAddress;
     unsigned int *region1DescriptorAddress;
-    
+
     //Array of USB Instances
     usbInstance usbInst[NUMOF_USB_INSTANCE];
 }cppi41DmaInfo;
@@ -532,10 +532,10 @@ void Cppi41DmaInit(unsigned short usbDevInst, endpointInfo *epInfo, unsigned sho
 unsigned int dmaTxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint);
 unsigned int  dmaRxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint);
 
-void doDmaTxTransfer(unsigned short usbDevInst, unsigned char *buff, 
+void doDmaTxTransfer(unsigned short usbDevInst, unsigned char *buff,
                                 unsigned int length, unsigned int endPoint);
 
-void doDmaRxTransfer(unsigned short usbDevInst, unsigned int length, 
+void doDmaRxTransfer(unsigned short usbDevInst, unsigned int length,
                                 unsigned char *buff, unsigned int endPoint);
 
 void enableCoreTxDMA(unsigned short usbDevInst, unsigned int ulEndpoint);
@@ -549,7 +549,7 @@ unsigned int * cppiDmaAllocBuffer();
 void cppiDmaFreeBuffer(unsigned int *dataBuffer);
 unsigned int * cppiDmaAllocnBuffer(unsigned int numOfBlocks);
 void cppiDmaFreenBuffer(unsigned int *dataBuffer);
-void cppiDmaHandleError(unsigned int usbDevInst); 
+void cppiDmaHandleError(unsigned int usbDevInst);
 unsigned int CppiDmaGetINTD0Status(unsigned short usbDevInst);
 
 void print_pend ( );

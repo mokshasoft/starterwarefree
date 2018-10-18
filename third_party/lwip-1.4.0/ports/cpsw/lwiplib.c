@@ -142,7 +142,7 @@ static struct cpswportif cpswPortIf[MAX_CPSW_INST * MAX_SLAVEPORT_PER_INST];
 **                          FUNCTION DEFINITIONS
 ******************************************************************************/
 /**
- * \brief   This function waits for DHCP completion with a timeout 
+ * \brief   This function waits for DHCP completion with a timeout
  *
  * \param   ifNum  The netif number for the interface
  *
@@ -195,7 +195,7 @@ unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK)
     static unsigned int lwipInitFlag = 0;
     unsigned int ifNum;
     unsigned int temp;
-    
+
     /* do lwip library init only once */
     if(0 == lwipInitFlag)
     {
@@ -226,19 +226,19 @@ unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK)
     cpswPortIf[ifNum].port_num = lwipIf->slvPortNum;
 
     /* set MAC hardware address */
-    for(temp = 0; temp < LEN_MAC_ADDRESS; temp++) 
+    for(temp = 0; temp < LEN_MAC_ADDRESS; temp++)
     {
         cpswPortIf[ifNum].eth_addr[temp] =
                          lwipIf->macArray[(LEN_MAC_ADDRESS - 1) - temp];
     }
-    
+
     /*
     ** Create, configure and add the Ethernet controller interface with
     ** default settings.  ip_input should be used to send packets directly to
-    ** the stack. The lwIP will internaly call the cpswif_init function. 
+    ** the stack. The lwIP will internaly call the cpswif_init function.
     */
     if(NULL ==
-       netif_add(&cpswNetIF[ifNum], &ip_addr, &net_mask, &gw_addr, 
+       netif_add(&cpswNetIF[ifNum], &ip_addr, &net_mask, &gw_addr,
                  &cpswPortIf[ifNum], cpswif_init, ip_input,hwOK))
     {
         LWIP_PRINTF("\n\rUnable to add interface for interface %d", ifNum);
@@ -273,7 +273,7 @@ unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK)
        /* Bring the interface up */
        netif_set_up(&cpswNetIF[ifNum]);
     }
-  
+
     ipAddrPtr = (unsigned int*)&(cpswNetIF[ifNum].ip_addr);
 
     return (*ipAddrPtr);
@@ -282,49 +282,49 @@ unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK)
 /*
  * \brief   Checks if the ethernet link is up
  *
- * \param   instNum     The instance number of CPSW module 
+ * \param   instNum     The instance number of CPSW module
  * \param   slvPortNum  The Slave Port Number
  *
  * \return  Interface status.
 */
-unsigned int lwIPNetIfStatusGet(unsigned int instNum, unsigned int slvPortNum) 
+unsigned int lwIPNetIfStatusGet(unsigned int instNum, unsigned int slvPortNum)
 {
     unsigned int ifNum;
 
     ifNum = instNum * MAX_SLAVEPORT_PER_INST + slvPortNum - 1;
-    
+
     return (cpswif_netif_status(&cpswNetIF[ifNum]));
 }
 
 /*
  * \brief   Checks if the ethernet link is up
  *
- * \param   instNum     The instance number of CPSW module 
+ * \param   instNum     The instance number of CPSW module
  * \param   slvPortNum  The Slave Port Number
  *
  * \return  The link status.
 */
-unsigned int lwIPLinkStatusGet(unsigned int instNum, unsigned int slvPortNum) 
+unsigned int lwIPLinkStatusGet(unsigned int instNum, unsigned int slvPortNum)
 {
-    return (cpswif_link_status(instNum, slvPortNum));     
+    return (cpswif_link_status(instNum, slvPortNum));
 }
 
 /**
  * \brief   Interrupt handler for Receive Interrupt. Directly calls the
  *          cpsw interface receive interrupt handler.
  *
- * \param   instNum  The instance number of CPSW module for which receive 
+ * \param   instNum  The instance number of CPSW module for which receive
  *                   interrupt happened
  *
  * \return  None.
 */
-void lwIPRxIntHandler(unsigned int instNum) 
+void lwIPRxIntHandler(unsigned int instNum)
 {
     cpswif_rx_inthandler(instNum, &cpswNetIF[0]);
 }
 
 /**
- * \brief   Interrupt handler for Transmit Interrupt. Directly calls the 
+ * \brief   Interrupt handler for Transmit Interrupt. Directly calls the
  *          cpsw interface transmit interrupt handler.
  *
  * \param   instNum  The instance number of CPSW module for which transmit
@@ -338,9 +338,9 @@ void lwIPTxIntHandler(unsigned int instNum)
 }
 
 /**
- * \brief   Starts DHCP negotiation 
+ * \brief   Starts DHCP negotiation
  *
- * \param   instNum     The instance number of CPSW module 
+ * \param   instNum     The instance number of CPSW module
  * \param   slvPortNum  The Slave Port Number
  *
  * \return  IP address assigned. If IP acquisition failed, zero will be returned.

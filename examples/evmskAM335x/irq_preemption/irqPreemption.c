@@ -71,9 +71,9 @@
 #define PREEMPT_FLAG_RTC_ISR            (1u)
 
 #define UART_INT_NUM                    SYS_INT_UART0INT
-#define RTC_INT_NUM                     SYS_INT_RTCINT 
-#define TIMER_INT_NUM                   SYS_INT_TINT2 
-                   
+#define RTC_INT_NUM                     SYS_INT_RTCINT
+#define TIMER_INT_NUM                   SYS_INT_TINT2
+
 #define UART_INST_BASE                  SOC_UART_0_REGS
 #define RTC_INST_BASE                   SOC_RTC_0_REGS
 #define TIMER_INST_BASE                 SOC_DMTIMER_2_REGS

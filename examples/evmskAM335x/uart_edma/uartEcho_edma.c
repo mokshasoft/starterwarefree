@@ -3,17 +3,17 @@
  *
  * \brief  This application demonstrates UART communication with the Host machine
  *         and using EDMA to transfer data between memory and UART FIFO.
- *         
+ *
  *         Application Configuration:
- *   
+ *
  *             Modules Used:
  *                 UART0
  *                 EDMA
  *                 Interrupt Controller
- *   
+ *
  *             Configurable Parameters:
  *                 None
- *             
+ *
  *             Hard-Coded Configuration of other parameters:
  *                 UART:
  *                 a) FIFO Mode enabled
@@ -27,7 +27,7 @@
  *                 g) TX DMA Threshold level - 5
  *                 h) TX Trigger Space value - 8
  *                 i) RX Threshold level - 8
- *   
+ *
  *         Application Use Cases:
  *             1) Application demonstrates UART Transmit and Receive
  *                operations with EDMA writing data into and reading data out
@@ -36,7 +36,7 @@
  *                Interrupt Handling.
  *             3) Demonstrates EDMA Channel PaRAM Set linking to a Dummy
  *                PaRAM Set.
- *   
+ *
  *         Running the Example:
  *             On executing the example:
  *             1) Three strings will be transmitted by the application and will be
@@ -45,38 +45,38 @@
  *             2) The user is expected to key in 8 characters from the keyboard.
  *                The application echoes these characters at once after all the
  *                8 characters have been received.
- *                
+ *
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 *
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -284,8 +284,8 @@ void MMUConfigAndEnable(void)
 {
     /*
     ** Define DDR memory region of AM335x. DDR can be configured as Normal
-    ** memory with R/W access in user/privileged modes. The cache attributes 
-    ** specified here are, 
+    ** memory with R/W access in user/privileged modes. The cache attributes
+    ** specified here are,
     ** Inner - Write through, No Write Allocate
     ** Outer - Write Back, Write Allocate
     */
@@ -297,7 +297,7 @@ void MMUConfigAndEnable(void)
                         (unsigned int*)pageTable
                        };
     /*
-    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given. 
+    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given.
     */
     REGION regionOcmc = {
                          MMU_PGTYPE_SECTION, START_ADDR_OCMC, NUM_SECTIONS_OCMC,
@@ -785,13 +785,13 @@ static void Edma3CCErrorIsr(void)
 
             Cnt++;
         }
-        
+
         /* Enable error to be evaluated again */
         EDMA3CCErrorEvaluate(SOC_EDMA30CC_0_REGS);
     }
 }
 
-/* 
+/*
 ** Powering up, initializing and registering interrupts for EDMA.
 */
 static void EDMA3Initialize(void)
@@ -799,7 +799,7 @@ static void EDMA3Initialize(void)
     /* Initialization of EDMA3 */
     EDMA3Init(SOC_EDMA30CC_0_REGS, EVT_QUEUE_NUM);
 
-    /* Configuring the AINTC to receive EDMA3 interrupts. */ 
+    /* Configuring the AINTC to receive EDMA3 interrupts. */
     EDMA3INTCConfigure();
 }
 
@@ -829,13 +829,13 @@ static void UARTInitialize(void)
 
     /* Performing Baud Rate settings. */
     UartBaudRateSet();
-    
+
     /* Switching to Configuration Mode B. */
     UARTRegConfigModeEnable(UART_INSTANCE_BASE_ADD, UART_REG_CONFIG_MODE_B);
 
     /* Programming the Line Characteristics. */
     UARTLineCharacConfig(UART_INSTANCE_BASE_ADD,
-                         (UART_FRAME_WORD_LENGTH_8 | UART_FRAME_NUM_STB_1), 
+                         (UART_FRAME_WORD_LENGTH_8 | UART_FRAME_NUM_STB_1),
                          UART_PARITY_NONE);
 
     /* Disabling write access to Divisor Latches. */
@@ -921,7 +921,7 @@ static void EDMA3INTCConfigure(void)
 
     /* Enabling the EDMA3CC0 completion interrupt in AINTC. */
     IntSystemEnable(SYS_INT_EDMACOMPINT);
-    
+
     /* Enabling the EDMA3CC0 Error interrupt in AINTC. */
     IntSystemEnable(SYS_INT_EDMAERRINT);
 }

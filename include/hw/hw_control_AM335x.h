@@ -325,14 +325,14 @@ extern "C" {
 #define CONTROL_DDR_DATA_IOCTRL(n)   (0x1440 + (n * 4))
 
 
-#define CONTROL_CONF_PULLUDDISABLE     0x00000008 
+#define CONTROL_CONF_PULLUDDISABLE     0x00000008
 #define CONTROL_CONF_PULLUPSEL         0x00000010
-#define CONTROL_CONF_RXACTIVE          0x00000020 
+#define CONTROL_CONF_RXACTIVE          0x00000020
 #define CONTROL_CONF_SLOWSLEW          0x00000040
 #define CONTROL_CONF_MUXMODE(n)        (n)
 
 
-/**************************************************************************\ 
+/**************************************************************************\
  * Field Definition Macros
 \**************************************************************************/
 

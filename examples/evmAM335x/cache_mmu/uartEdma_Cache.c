@@ -2,43 +2,43 @@
  * \file   uartEdma_Cache.c
  *
  * \brief  This is a sample application file which invokes some APIs
- *         from the EDMA3 device abstraction layer as well as UART 
- *         device abstraction layer to perform configuration, and 
- *         transfer of data between UART and CPU RAM by the 
+ *         from the EDMA3 device abstraction layer as well as UART
+ *         device abstraction layer to perform configuration, and
+ *         transfer of data between UART and CPU RAM by the
  *         use of EDMA3 with cache and mmu being enabled.
  *
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -132,8 +132,8 @@ void MMUConfigAndEnable(void)
 {
     /*
     ** Define DDR memory region of AM335x. DDR can be configured as Normal
-    ** memory with R/W access in user/privileged modes. The cache attributes 
-    ** specified here are, 
+    ** memory with R/W access in user/privileged modes. The cache attributes
+    ** specified here are,
     ** Inner - Write through, No Write Allocate
     ** Outer - Write Back, Write Allocate
     */
@@ -145,7 +145,7 @@ void MMUConfigAndEnable(void)
                         (unsigned int*)pageTable
                        };
     /*
-    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given. 
+    ** Define OCMC RAM region of AM335x. Same Attributes of DDR region given.
     */
     REGION regionOcmc = {
                          MMU_PGTYPE_SECTION, START_ADDR_OCMC, NUM_SECTIONS_OCMC,
@@ -179,7 +179,7 @@ void MMUConfigAndEnable(void)
     /* Now Safe to enable MMU */
     MMUEnable((unsigned int*)pageTable);
 }
- 
+
 /*
 ** Main function.
 */
@@ -195,9 +195,9 @@ int main(void)
     {
          buffer[index] = i++;
     }
- 
+
     CacheEnable(CACHE_ALL);
- 
+
     UARTPinMuxSetup(0);
     UART0ModuleClkConfig();
 
@@ -210,12 +210,12 @@ int main(void)
     EDMA3Initialize();
 
     /* Request DMA Channel and TCC for UART Transmit*/
-    EDMA3RequestChannel(SOC_EDMA30CC_0_REGS, EDMA3_CHANNEL_TYPE_DMA, 
+    EDMA3RequestChannel(SOC_EDMA30CC_0_REGS, EDMA3_CHANNEL_TYPE_DMA,
                         EDMA3_CHA_UART0_TX, EDMA3_CHA_UART0_TX,
                         EVT_QUEUE_NUM);
 
     /* Registering Callback Function for TX*/
-    cb_Fxn[EDMA3_CHA_UART0_TX] = &callback; 
+    cb_Fxn[EDMA3_CHA_UART0_TX] = &callback;
 
     /* Transmit Data for Enter Message */
     UartTransmitData(EDMA3_CHA_UART0_TX, EDMA3_CHA_UART0_TX,
@@ -224,7 +224,7 @@ int main(void)
     /* Enabling UART in DMA Mode */
     UARTDMAEnable(SOC_UART_0_REGS, UART_DMA_MODE_3_ENABLE);
 
-    /* Wait for return from callback */     
+    /* Wait for return from callback */
     while(0 == flag);
     flag = 0;
 
@@ -240,21 +240,21 @@ int main(void)
     #ifdef CACHE_FLUSH
     CacheDataCleanBuff((unsigned int)buffer, 27);
     #endif
-    
+
     /* Transmit Data for Entered value */
-    UartTransmitData(EDMA3_CHA_UART0_TX, EDMA3_CHA_UART0_TX, 
+    UartTransmitData(EDMA3_CHA_UART0_TX, EDMA3_CHA_UART0_TX,
                      buffer, TX_BUFFER_SIZE);
 
     /* Enabling UART in DMA Mode*/
     UARTDMAEnable(SOC_UART_0_REGS, UART_DMA_MODE_3_ENABLE);
 
-    /* Wait for return from callback */     
-    while(0 == flag); 
+    /* Wait for return from callback */
+    while(0 == flag);
     flag = 0;
 
     /* Free EDMA3 Channels for TX */
     EDMA3FreeChannel(SOC_EDMA30CC_0_REGS, EDMA3_CHANNEL_TYPE_DMA,
-                     EDMA3_CHA_UART0_TX, EDMA3_TRIG_MODE_EVENT, 
+                     EDMA3_CHA_UART0_TX, EDMA3_TRIG_MODE_EVENT,
                      EDMA3_CHA_UART0_TX, EVT_QUEUE_NUM);
 
     while(1);
@@ -281,11 +281,11 @@ static void UartTransmitData(unsigned int tccNum, unsigned int chNum,
 
     /* The dst index should not increment since it is a h/w register. */
     paramSet.destBIdx = 0u;
-  
+
     /* A sync Transfer Mode */
     paramSet.srcCIdx = 0u;
     paramSet.destCIdx = 0u;
-    paramSet.linkAddr = (unsigned short)(EDMA3CC_OPT(DUMMY_CH_NUM)); 
+    paramSet.linkAddr = (unsigned short)(EDMA3CC_OPT(DUMMY_CH_NUM));
     paramSet.bCntReload = 0u;
     paramSet.opt = 0x00000000u;
     paramSet.opt |= ((tccNum << EDMA3CC_OPT_TCC_SHIFT) & EDMA3CC_OPT_TCC);
@@ -304,9 +304,9 @@ static void UartTransmitData(unsigned int tccNum, unsigned int chNum,
 /* Function used to Initialize EDMA3 */
 static void EDMA3Initialize(void)
 {
-    /* Initialization of EDMA3 */    
+    /* Initialization of EDMA3 */
     EDMA3Init(SOC_EDMA30CC_0_REGS, EVT_QUEUE_NUM);
-   
+
     /* Enabling IRQ in CPSR of ARM processor. */
     IntMasterIRQEnable();
 
@@ -323,7 +323,7 @@ static void edma3ComplHandler(unsigned int baseAdd, unsigned int regionNum)
     unsigned int indexl;
     unsigned int Cnt = 0;
     indexl = 1;
-    
+
     isIPR = HWREG(baseAdd + EDMA3CC_S_IPR(regionNum));
     if(isIPR)
     {
@@ -364,15 +364,15 @@ static void edma3CCErrHandler(unsigned int baseAdd)
 {
     volatile unsigned int pendingIrqs = 0;
     unsigned int regionNum = 0;
-    unsigned int evtqueNum = 0;  
+    unsigned int evtqueNum = 0;
     unsigned int index = 1;
     unsigned int Cnt = 0;
-    
+
     if((HWREG(baseAdd + EDMA3CC_EMR) != 0 ) || \
        (HWREG(baseAdd + EDMA3CC_QEMR) != 0) || \
        (HWREG(baseAdd + EDMA3CC_CCERR) != 0))
     {
-        /* Loop for EDMA3CC_ERR_HANDLER_RETRY_COUNT number of time, breaks 
+        /* Loop for EDMA3CC_ERR_HANDLER_RETRY_COUNT number of time, breaks
            when no pending interrupt is found */
         while ((Cnt < EDMA3CC_ERR_HANDLER_RETRY_COUNT) && (index != 0u))
         {
@@ -467,7 +467,7 @@ static void ConfigureAINTCIntEDMA3(void)
 
 
 /*
-** This function is used as a callback from EDMA3 Completion Handler. 
+** This function is used as a callback from EDMA3 Completion Handler.
 ** UART in DMA Mode is Disabled over here.
 */
 static void callback(unsigned int tccNum, unsigned int status)

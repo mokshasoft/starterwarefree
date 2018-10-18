@@ -122,14 +122,14 @@ void RtcInit(void)
 }
 
 /*
-** Sets the Time and Calender in the RTC. This is a blocking call. 
+** Sets the Time and Calender in the RTC. This is a blocking call.
 ** The time and date are entered through UART.
 */
 void RtcTimeCalSet(void)
 {
-    unsigned int time = 0; 
+    unsigned int time = 0;
     unsigned int cal = 0;
-    unsigned int temp = 0; 
+    unsigned int temp = 0;
 
     ConsoleUtilsPrintf("\n\rEnter Hours (0 to 23):");
     ConsoleUtilsScanf("%d", &temp);
@@ -154,7 +154,7 @@ void RtcTimeCalSet(void)
 
     time |= (((temp / 10) << 4) << SHIFT_MIN)
             | ((temp % 10) << SHIFT_MIN);
- 
+
     ConsoleUtilsPrintf("\n\rEnter Seconds (0 to 59):");
     ConsoleUtilsScanf("%d", &temp);
 
@@ -213,7 +213,7 @@ void RtcTimeCalSet(void)
     }
 
     cal |= (((temp / 10) << 4)) | ((temp % 10));
- 
+
     /* Set the calendar registers of RTC with received calendar information.*/
     RTCCalendarSet(SOC_RTC_0_REGS, cal);
 
@@ -222,7 +222,7 @@ void RtcTimeCalSet(void)
 
     /* Run the RTC. The seconds tick from now on.*/
     RTCRun(SOC_RTC_0_REGS);
- 
+
     ConsoleUtilsPrintf("\n\rThe Time and Date are set successfully! \n\n\r");
 
     rtcSetFlag = TRUE;

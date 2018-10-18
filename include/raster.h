@@ -54,7 +54,7 @@ extern "C" {
 *******************************************************************************/
 /*****************************************************************************/
 /*
-** Values that can be passed to RasterModeConfig API as displayType to select 
+** Values that can be passed to RasterModeConfig API as displayType to select
 ** type of display
 */
 
@@ -66,7 +66,7 @@ extern "C" {
 
 /* Configure display type to TFT with 24 bit data packed mode */
 #define RASTER_DISPLAY_MODE_TFT_PACKED    (1 << LCDC_RASTER_CTRL_TFT_STN_SHIFT)|\
-                                          (1 << LCDC_RASTER_CTRL_TFT24_SHIFT) 
+                                          (1 << LCDC_RASTER_CTRL_TFT24_SHIFT)
 
 /* Configure display type to TFT with 24 bit data packed mode */
 #define RASTER_DISPLAY_MODE_TFT_UNPACKED  (1 << LCDC_RASTER_CTRL_TFT_STN_SHIFT)|\
@@ -75,13 +75,13 @@ extern "C" {
 
 /******************************************************************************/
 /*
-** Values that can be passed to RasterModeConfig API as paletteMode to select 
+** Values that can be passed to RasterModeConfig API as paletteMode to select
 ** mode of palette loading.
 */
  /* Both palette and data will be loaded */
 #define RASTER_PALETTE_DATA                0
 
- /* Only palette will be loaded */  
+ /* Only palette will be loaded */
 #define RASTER_PALETTE                    (1 << LCDC_RASTER_CTRL_PLM_SHIFT)
 
  /* Only data will be loaded */
@@ -89,7 +89,7 @@ extern "C" {
 
 /*********************************************************************************/
 /*
-** Values that can be passed to RasterModeConfig API as displayMode to select 
+** Values that can be passed to RasterModeConfig API as displayMode to select
 ** mode of display as either color or monochrome.
 */
 
@@ -105,7 +105,7 @@ extern "C" {
 */
   /* Out put pixel data will be right aligned */
 #define RASTER_RIGHT_ALIGNED                0
- 
+
  /* Out put pixel data will be mapped to 565 format */
 #define RASTER_EXTRAPOLATE                (1 << LCDC_RASTER_CTRL_TFT_ALT_MAP_SHIFT)
 
@@ -114,15 +114,15 @@ extern "C" {
 ** Values that can be passed to RasterModeConfig API as flag to select how many
 ** bits to output each pixel clock when momochrome displayMode is used
 */
-  
- /* Eight bits are output each pClk */  
+
+ /* Eight bits are output each pClk */
 #define RASTER_MONO8B                     (1 << LCDC_RASTER_CTRL_MONO8B_SHIFT)
 
- /* Four bits are output each pClk */  
+ /* Four bits are output each pClk */
 #define RASTER_MONO4B                       0
 /******************************************************************************/
 /*
-** Values that can be passed to RasterDMAConfig API as frmMode to select either 
+** Values that can be passed to RasterDMAConfig API as frmMode to select either
 ** to signle frame buffer or double frmae buffer(ping pong)
 */
 
@@ -134,9 +134,9 @@ extern "C" {
 /*****************************************************************************/
 /*
 ** Values that can be passed to RasterDMAConfig API as endian  to enable or
-** disable bigendian for data reordering 
+** disable bigendian for data reordering
 */
- 
+
  /* Enable bigendian for data reordering */
 #define RASTER_BIG_ENDIAN_ENABLE           (1 << LCDC_LCDDMA_CTRL_BIGENDIAN_SHIFT)
 
@@ -144,23 +144,23 @@ extern "C" {
 #define RASTER_BIG_ENDIAN_DISABLE           0
 /*****************************************************************************/
 /*
-** Values that can be passed to RasterDMAConfig API as bustSz  to select burst 
+** Values that can be passed to RasterDMAConfig API as bustSz  to select burst
 ** size for DMA transfer
 */
 
- /* Select burst size as one */ 
+ /* Select burst size as one */
 #define RASTER_BURST_SIZE_1                 0
 
- /* Select burst size as two */ 
+ /* Select burst size as two */
 #define RASTER_BURST_SIZE_2                 (1 <<  LCDC_LCDDMA_CTRL_BURST_SIZE_SHIFT)
 
- /* Select burst size as four */ 
+ /* Select burst size as four */
 #define RASTER_BURST_SIZE_4                 (2 <<  LCDC_LCDDMA_CTRL_BURST_SIZE_SHIFT)
 
- /* Select burst size as eight*/ 
+ /* Select burst size as eight*/
 #define RASTER_BURST_SIZE_8                 (3 <<  LCDC_LCDDMA_CTRL_BURST_SIZE_SHIFT)
 
- /* Select burst size as sixteen */ 
+ /* Select burst size as sixteen */
 #define RASTER_BURST_SIZE_16                (4 <<  LCDC_LCDDMA_CTRL_BURST_SIZE_SHIFT)
 /*****************************************************************************/
 /*
@@ -175,7 +175,7 @@ extern "C" {
 #define RASTER_FIFO_THRESHOLD_128        (4 << LCDC_LCDDMA_CTRL_TH_FIFO_READY_SHIFT)
 #define RASTER_FIFO_THRESHOLD_256        (5 << LCDC_LCDDMA_CTRL_TH_FIFO_READY_SHIFT)
 #define RASTER_FIFO_THRESHOLD_512        (6 << LCDC_LCDDMA_CTRL_TH_FIFO_READY_SHIFT)
- 
+
 /*********************************************************************************/
 /*
 ** Values that can be passed to RasterTiming2Configure API as flag  to select the
@@ -219,7 +219,7 @@ extern "C" {
 #define RASTER_SYNC_CTRL_INACTIVE           0
 /**************************************************************************/
 /*
-** Values that can be passed to RasterIntEnable or RasterIntDisable API 
+** Values that can be passed to RasterIntEnable or RasterIntDisable API
 ** as flag  to select the interrupt to be enabled or disabled
 */
 

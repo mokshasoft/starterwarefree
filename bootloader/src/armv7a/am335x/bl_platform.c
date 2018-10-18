@@ -325,7 +325,7 @@
                                                        //CL = 2 (CAS latency = 5)
                                                        //ROWSIZE = 5 (14 row bits)
                                                        //PAGESIZE = 2 (10 column bits)
-													   
+
 #endif
 
 /* DDR2 init values */
@@ -449,7 +449,7 @@ unsigned int BootMaxOppGet(void)
 {
     unsigned int oppIdx;
     unsigned int oppSupport = SysConfigOppDataGet();
-	
+
     if(DEVICE_VERSION_1_0 == deviceVersion) 		/*frequency setting related to device version 1.0*/
     {
         oppIdx = EFUSE_OPPTB_720;
@@ -493,8 +493,8 @@ unsigned int BootMaxOppGet(void)
     return oppIdx;
 }
 
-/* \brief This function initializes the CORE PLL 
- * 
+/* \brief This function initializes the CORE PLL
+ *
  * \param none
  *
  * \return none
@@ -523,26 +523,26 @@ void CorePLLInit(void)
          (COREPLL_N << CM_WKUP_CM_CLKSEL_DPLL_CORE_DPLL_DIV_SHIFT));
 
     /* Configure the High speed dividers */
-    /* Set M4 divider */    
+    /* Set M4 divider */
     regVal = HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M4_DPLL_CORE);
     regVal = regVal & ~CM_WKUP_CM_DIV_M4_DPLL_CORE_HSDIVIDER_CLKOUT1_DIV;
-    regVal = regVal | (COREPLL_HSD_M4 << 
+    regVal = regVal | (COREPLL_HSD_M4 <<
                 CM_WKUP_CM_DIV_M4_DPLL_CORE_HSDIVIDER_CLKOUT1_DIV_SHIFT);
     HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M4_DPLL_CORE) = regVal;
-    
-    /* Set M5 divider */    
+
+    /* Set M5 divider */
     regVal = HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M5_DPLL_CORE);
     regVal = regVal & ~CM_WKUP_CM_DIV_M5_DPLL_CORE_HSDIVIDER_CLKOUT2_DIV;
-    regVal = regVal | (COREPLL_HSD_M5 << 
+    regVal = regVal | (COREPLL_HSD_M5 <<
                 CM_WKUP_CM_DIV_M5_DPLL_CORE_HSDIVIDER_CLKOUT2_DIV_SHIFT);
-    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M5_DPLL_CORE) = regVal;        
-        
-    /* Set M6 divider */    
+    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M5_DPLL_CORE) = regVal;
+
+    /* Set M6 divider */
     regVal = HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M6_DPLL_CORE);
     regVal = regVal & ~CM_WKUP_CM_DIV_M6_DPLL_CORE_HSDIVIDER_CLKOUT3_DIV;
-    regVal = regVal | (COREPLL_HSD_M6 << 
+    regVal = regVal | (COREPLL_HSD_M6 <<
                 CM_WKUP_CM_DIV_M6_DPLL_CORE_HSDIVIDER_CLKOUT3_DIV_SHIFT);
-    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M6_DPLL_CORE) = regVal;         
+    HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M6_DPLL_CORE) = regVal;
 
     /* Now LOCK the PLL by enabling it */
     regVal = HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_CORE) &
@@ -557,7 +557,7 @@ void CorePLLInit(void)
 }
 
 /* \brief This function initializes the DISPLAY PLL
- * 
+ *
  * \param none
  *
  * \return none
@@ -607,7 +607,7 @@ void DisplayPLLInit(void)
 }
 
 /* \brief This function initializes the PER PLL
- * 
+ *
  * \param none
  *
  * \return none
@@ -643,7 +643,7 @@ void PerPLLInit(void)
 
     /* Set the CLKOUT2 divider */
     HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_DIV_M2_DPLL_PER) = regVal;
-    
+
     /* Now LOCK the PLL by enabling it */
     regVal = HWREG(SOC_CM_WKUP_REGS + CM_WKUP_CM_CLKMODE_DPLL_PER) &
                 ~CM_WKUP_CM_CLKMODE_DPLL_PER_DPLL_EN;
@@ -658,7 +658,7 @@ void PerPLLInit(void)
 }
 
 /* \brief This function initializes the DDR PLL
- * 
+ *
  * \param none
  *
  * \return none
@@ -760,8 +760,8 @@ void MPUPLLInit(unsigned int freqMult)
                              CM_WKUP_CM_IDLEST_DPLL_MPU_ST_DPLL_CLK));
 }
 
-/* \brief This function initializes the interface clock 
- * 
+/* \brief This function initializes the interface clock
+ *
  * \param none
  *
  * \return none
@@ -809,7 +809,7 @@ void InterfaceClkInit(void)
 }
 
 /* \brief This function initializes the power domain transition.
- * 
+ *
  * \param none
  *
  * \return none
@@ -835,7 +835,7 @@ void PowerDomainTransitionInit(void)
 }
 
 /*
- * \brief This function sets up various PLLs  
+ * \brief This function sets up various PLLs
  *
  * \param  none
  *
@@ -882,7 +882,7 @@ void SetupI2C(void)
 }
 
 /*
- * \brief Clear the status of all interrupts 
+ * \brief Clear the status of all interrupts
  *
  * \param  none.
  *
@@ -895,7 +895,7 @@ void CleanupInterrupts(void)
 }
 
 /*
- * \brief Transmits data over I2C0 bus 
+ * \brief Transmits data over I2C0 bus
  *
  * \param  none
  *
@@ -930,7 +930,7 @@ void SetupI2CTransmit(unsigned int dcount)
 }
 
 /*
- * \brief Receives data over I2C0 bus 
+ * \brief Receives data over I2C0 bus
  *
  * \param  dcount - Number of bytes to receive.
  *
@@ -1094,15 +1094,15 @@ void TPS65217VoltageUpdate(unsigned char dc_cntrl_reg, unsigned char volt_sel)
 #else
 
 /**
- *  \brief                 - Configure vdd2 for various parameters such as 
+ *  \brief                 - Configure vdd2 for various parameters such as
  *                           Multiplier, Maximum Load Current etc .
  *
  * \param  opVolMultiplier - Multiplier.
  *
  * \param  maxLoadCurrent  - Maximum Load Current.
- * 
+ *
  * \param  timeStep        - Time step - voltage change per us(micro sec).
- *  
+ *
  * \param  supplyState     - Supply state (on (high/low power mode), off)
  *
  * \return:               None.
@@ -1189,7 +1189,7 @@ void SetVdd2OpVoltage(unsigned int opVolSelector)
 
     SetupReception(1);
 
-    while((dataFromSlave[0] & PMIC_VDD2_OP_REG_SEL) != 
+    while((dataFromSlave[0] & PMIC_VDD2_OP_REG_SEL) !=
           (opVolSelector << PMIC_VDD2_OP_REG_SEL_SHIFT));
 }
 
@@ -1206,7 +1206,7 @@ void SetVdd2SrVoltage(unsigned int opVolSelector)
     dataToSlave[0] = VDD2_SR_REG;
     dataToSlave[1] = opVolSelector;
     tCount = 0;
-    SetupI2CTransmit(2);	
+    SetupI2CTransmit(2);
 }
 
 /**
@@ -1240,15 +1240,15 @@ void SelectI2CInstance(unsigned int i2cInstance)
 }
 
 /**
- *  \brief                 - Configure vdd1 for various parameters such as 
+ *  \brief                 - Configure vdd1 for various parameters such as
  *                           Multiplier, Maximum Load Current etc .
  *
  * \param  opVolMultiplier - Multiplier.
  *
  * \param  maxLoadCurrent  - Maximum Load Current.
- * 
+ *
  * \param  timeStep        - Time step - voltage change per us(micro sec).
- *  
+ *
  * \param  supplyState     - Supply state (on (high/low power mode), off)
  *
  * \return:               None.
@@ -1342,14 +1342,14 @@ void SetVdd1OpVoltage(unsigned int opVolSelector)
     tCount = 0;
     SetupReception(1);
 
-    while((dataFromSlave[0] & PMIC_VDD1_OP_REG_SEL) != 
+    while((dataFromSlave[0] & PMIC_VDD1_OP_REG_SEL) !=
           (opVolSelector << PMIC_VDD1_OP_REG_SEL_SHIFT));
 
 #endif
 }
 
 /*
- * \brief Configures the VDD OP voltage. 
+ * \brief Configures the VDD OP voltage.
  *
  * \param  none.
  *
@@ -1377,7 +1377,7 @@ void ConfigVddOpVoltage(void)
     {
         TPS65217VoltageUpdate(DEFDCDC1, DCDC_VOLT_SEL_1500MV);
     }
-				   			   
+
     /* Set DCDC2 (MPU) voltage to 1.275V */
     TPS65217VoltageUpdate(DEFDCDC2, DCDC_VOLT_SEL_1275MV);
 
@@ -1519,7 +1519,7 @@ static void DDR3PhyInit(void)
 
 
 /* \brief This function initializes the DDR2
- * 
+ *
  * \param none
  *
  * \return none
@@ -1589,14 +1589,14 @@ void DDR3Init(void)
 #ifdef pocketbeagle
     HWREG(SOC_EMIF_0_REGS + EMIF_SDRAM_CONFIG_2) = 0x00000000;
 #endif
-    /* The CONTROL_SECURE_EMIF_SDRAM_CONFIG register exports SDRAM configuration 
+    /* The CONTROL_SECURE_EMIF_SDRAM_CONFIG register exports SDRAM configuration
        information to the EMIF */
     HWREG(SOC_CONTROL_REGS + CONTROL_SECURE_EMIF_SDRAM_CONFIG) = DDR3_EMIF_SDRAM_CONFIG;
 
 }
 
 /* \brief This function initializes the DDR2
- * 
+ *
  * \param none
  *
  * \return none
@@ -1667,8 +1667,8 @@ void DDR2Init(void)
                                                  DDR2_EMIF_SDRAM_REF_CTRL_SHDW_VAL2;
 
     HWREG(SOC_EMIF_0_REGS + EMIF_SDRAM_CONFIG)   = DDR2_EMIF_SDRAM_CONFIG;
-	
-    /* The CONTROL_SECURE_EMIF_SDRAM_CONFIG register exports SDRAM configuration 
+
+    /* The CONTROL_SECURE_EMIF_SDRAM_CONFIG register exports SDRAM configuration
        information to the EMIF */
     HWREG(SOC_CONTROL_REGS + CONTROL_SECURE_EMIF_SDRAM_CONFIG) = DDR2_EMIF_SDRAM_CONFIG;
 
@@ -1680,7 +1680,7 @@ void DDR2Init(void)
 #endif
 
 /* \brief This function initializes the EMIF
- * 
+ *
  * \param none
  *
  * \return none
@@ -1936,7 +1936,7 @@ void BlPlatformConfig(void)
 #ifdef pocketbeagle
    isBBB=TRUE;
 #else
-#ifdef beaglebone	
+#ifdef beaglebone
     if(!strcmp(boardName,BNL_BOARD_NAME))
     {
         isBBB = TRUE;
@@ -2040,7 +2040,7 @@ static void DDRVTTEnable(void)
     /* Enabling the GPIO module. */
     GPIOModuleEnable(SOC_GPIO_0_REGS);
 
-    /* Setting the GPIO pin as an input pin. */    
+    /* Setting the GPIO pin as an input pin. */
     GPIODirModeSet(SOC_GPIO_0_REGS,
                    GPIO_INSTANCE_PIN_NUMBER,
                    GPIO_DIR_OUTPUT);
@@ -2082,9 +2082,9 @@ unsigned int BlPlatformSPIImageCopy()
     BlSPIReadFlash( IMAGE_OFFSET + 8,
                     header.image_size,
                     (unsigned char *)(header.load_addr) );
-                     
+
     entryPoint = (unsigned int)header.load_addr;
-    
+
     return (TRUE);
 }
 #endif

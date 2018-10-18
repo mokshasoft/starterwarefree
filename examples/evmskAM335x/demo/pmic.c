@@ -67,7 +67,7 @@ extern void SetupReception(unsigned int dcount, unsigned int instNum);
 
 
 /*
-** Configure VDD1 for various parameters such as 
+** Configure VDD1 for various parameters such as
 ** 		-	Multiplier
 ** 		-	Maximum Load Current
 ** 		-	Time step - voltage change per us(micro sec)
@@ -103,7 +103,7 @@ void selectVdd1Source(unsigned int vdd1Source)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	vdd1Source = (dataFromSlave[I2C_0][0] & (~PMIC_VDD1_OP_REG_CMD)) | 
+	vdd1Source = (dataFromSlave[I2C_0][0] & (~PMIC_VDD1_OP_REG_CMD)) |
 							(vdd1Source << PMIC_VDD1_OP_REG_CMD_SHIFT);
 	
 	/*	Write reg value	*/
@@ -129,7 +129,7 @@ void setVdd1OpVoltage(unsigned int opVolSelector)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	opVolSelector = (dataFromSlave[I2C_0][0] & (~PMIC_VDD1_OP_REG_SEL)) | 
+	opVolSelector = (dataFromSlave[I2C_0][0] & (~PMIC_VDD1_OP_REG_SEL)) |
 							(opVolSelector << PMIC_VDD1_OP_REG_SEL_SHIFT);
 	
 	/*	Write reg value	*/
@@ -190,7 +190,7 @@ void setVdd1SrVoltage(unsigned int opVolSelector)
 
 /*#################*/
 /*
-** Configure vdd2 for various parameters such as 
+** Configure vdd2 for various parameters such as
 ** 		-	Multiplier
 ** 		-	Maximum Load Current
 ** 		-	Time step - voltage change per us(micro sec)
@@ -226,7 +226,7 @@ void selectVdd2Source(unsigned int vdd1Source)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	vdd1Source = (dataFromSlave[I2C_0][0] & (~PMIC_VDD2_OP_REG_CMD)) | 
+	vdd1Source = (dataFromSlave[I2C_0][0] & (~PMIC_VDD2_OP_REG_CMD)) |
 							(vdd1Source << PMIC_VDD2_OP_REG_CMD_SHIFT);
 	
 	/*	Write reg value	*/
@@ -252,7 +252,7 @@ void setVdd2OpVoltage(unsigned int opVolSelector)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	opVolSelector = (dataFromSlave[I2C_0][0] & (~PMIC_VDD2_OP_REG_SEL)) | 
+	opVolSelector = (dataFromSlave[I2C_0][0] & (~PMIC_VDD2_OP_REG_SEL)) |
 							(opVolSelector << PMIC_VDD2_OP_REG_SEL_SHIFT);
 	
 	/*	Write reg value	*/
@@ -348,7 +348,7 @@ void enableThermalShutDown(void)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	regVal = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_STATE) | 
+	regVal = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_STATE) |
 							(PMIC_THERM_REG_THERM_STATE_ENABLE << PMIC_THERM_REG_THERM_STATE_SHIFT);
 	
 	/*	Write reg value	*/
@@ -375,7 +375,7 @@ void disableThermalShutDown(void)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	regVal = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_STATE) | 
+	regVal = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_STATE) |
 			(PMIC_THERM_REG_THERM_STATE_DISABLE << PMIC_THERM_REG_THERM_STATE_SHIFT);
 	
 	/*	Write reg value	*/
@@ -399,7 +399,7 @@ void setHotdieDetThreshold(unsigned int thresholdValue)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	thresholdValue = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_HDSEL) | 
+	thresholdValue = (dataFromSlave[I2C_0][0] & PMIC_THERM_REG_THERM_HDSEL) |
 							(thresholdValue << PMIC_THERM_REG_THERM_HDSEL_SHIFT);
 	
 	/*	Write reg value	*/
@@ -436,7 +436,7 @@ void selectI2CInstance(unsigned int i2cInstance)
     SetupReception(1, I2C_0);
 
 	/*	Modify reg value	*/
-	i2cInstance = (dataFromSlave[I2C_0][0] & PMIC_DEVCTRL_REG_SR_CTL_I2C_SEL) | 
+	i2cInstance = (dataFromSlave[I2C_0][0] & PMIC_DEVCTRL_REG_SR_CTL_I2C_SEL) |
 							(i2cInstance << PMIC_DEVCTRL_REG_SR_CTL_I2C_SEL_SHIFT);
 	
 	/*	Write reg value	*/

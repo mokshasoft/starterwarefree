@@ -45,11 +45,11 @@
 
 typedef struct _nandbootheader_
 {
-    unsigned int magicNum;    
-    unsigned int entryPoint;  
+    unsigned int magicNum;
+    unsigned int entryPoint;
     unsigned int numPage;
     unsigned int block;
-    unsigned int page; 
+    unsigned int page;
     unsigned int ldAddress;
 }
 BL_NAND_Header;
@@ -60,7 +60,7 @@ BL_NAND_Header;
 
 
 /******************************************************************************
-**                    External Function Declarations 
+**                    External Function Declarations
 *******************************************************************************/
 extern NandInfo_t *BL_NAND_Configure(void);
 extern void BlNANDReadFlash( NandInfo_t *nandInfo,

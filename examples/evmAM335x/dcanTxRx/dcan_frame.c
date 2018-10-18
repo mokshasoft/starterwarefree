@@ -1,7 +1,7 @@
 /**
  * \file   dcan_frame.c
  *
- * \brief  This file consists of wrapper functions which internally call 
+ * \brief  This file consists of wrapper functions which internally call
  *         DCAN APIs.
  */
 
@@ -32,8 +32,8 @@
 #define DCAN_ID_MASK           (0x0u)
 
 /**
- * \brief   This function will configure a message object in the DCAN message 
- *          RAM. This function will internally call 'CANTxObjectConfig' or 
+ * \brief   This function will configure a message object in the DCAN message
+ *          RAM. This function will internally call 'CANTxObjectConfig' or
  *          'CANRxObjectConfig' functions depending on the flags sent by user.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -59,7 +59,7 @@ void CANMsgObjectConfig(unsigned int baseAdd, can_frame* canPtr)
 }
 
 /**
- * \brief   This function will configure a message object in DCAN message RAM as a 
+ * \brief   This function will configure a message object in DCAN message RAM as a
  *          transmit message object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -72,14 +72,14 @@ void CANTxObjectConfig(unsigned int baseAdd, can_frame* canPtr)
     unsigned int idLen;
 
     idLen = (canPtr->flag & CAN_EXT_FRAME) ? DCAN_29_BIT_ID : DCAN_11_BIT_ID;
-    
+
     /* Set the message valid bit */
     DCANMsgObjValidate(baseAdd, DCAN_IF1_REG);
 
     /* Set the message id of the frame to be transmitted */
     DCANMsgIdSet(baseAdd, canPtr->id, idLen, DCAN_IF1_REG);
 
-    /* Set the message object direction as transmit */    
+    /* Set the message object direction as transmit */
     DCANMsgDirectionSet(baseAdd, DCAN_TX_DIR, DCAN_IF1_REG);
 
     /* Set the data length code */
@@ -92,19 +92,19 @@ void CANTxObjectConfig(unsigned int baseAdd, can_frame* canPtr)
     DCANMsgObjIntEnable(baseAdd, DCAN_TRANSMIT_INT, DCAN_IF1_REG);
 
     /* Enable the DCAN FIFO End of block */
-    DCANFIFOEndOfBlockControl(baseAdd, DCAN_END_OF_BLOCK_ENABLE, DCAN_IF1_REG);   
+    DCANFIFOEndOfBlockControl(baseAdd, DCAN_END_OF_BLOCK_ENABLE, DCAN_IF1_REG);
 
     /* Get the transmit request status */
     msgNum = DCANTxRqstStatGet(baseAdd);
 
     /* Configure the command register */
-    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_MSG_WRITE | DCAN_TXRQST_ACCESS | 
-                                DCAN_DAT_B_ACCESS | DCAN_ACCESS_CTL_BITS | 
-                                DCAN_ACCESS_ARB_BITS), msgNum, DCAN_IF1_REG);    
+    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_MSG_WRITE | DCAN_TXRQST_ACCESS |
+                                DCAN_DAT_B_ACCESS | DCAN_ACCESS_CTL_BITS |
+                                DCAN_ACCESS_ARB_BITS), msgNum, DCAN_IF1_REG);
 }
 
 /**
- * \brief   This function will configure a message object in DCAN message RAM 
+ * \brief   This function will configure a message object in DCAN message RAM
  *          as a receive message object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -129,7 +129,7 @@ void CANRxObjectConfig(unsigned int baseAdd, can_frame* canPtr)
                            DCAN_MSK_EXT_ID_ENABLE, DCAN_IF2_REG);
 
     /* Set the message valid bit */
-    DCANMsgObjValidate(baseAdd, DCAN_IF2_REG);    
+    DCANMsgObjValidate(baseAdd, DCAN_IF2_REG);
 
     /* Set the message id of the frame to be received */
     DCANMsgIdSet(baseAdd, canPtr->id, idLen, DCAN_IF2_REG);
@@ -143,16 +143,16 @@ void CANRxObjectConfig(unsigned int baseAdd, can_frame* canPtr)
     /* Enable the FIFO end of block */
     DCANFIFOEndOfBlockControl(baseAdd, DCAN_END_OF_BLOCK_ENABLE, DCAN_IF2_REG);
 
-    /* Check for the message valid status for receive objects */    
-    while((DCANMsgValidStatusGet(baseAdd, msgIndex)) && 
+    /* Check for the message valid status for receive objects */
+    while((DCANMsgValidStatusGet(baseAdd, msgIndex)) &&
           (msgIndex <= (CAN_NUM_OF_MSG_OBJS - 1)))
     {
-        msgIndex++;    
+        msgIndex++;
     }
 
     /* Configure the command register */
     DCANCommandRegSet(baseAdd, (DCAN_ACCESS_CTL_BITS | DCAN_MSG_WRITE |
-                      DCAN_ACCESS_MSK_BITS | DCAN_ACCESS_ARB_BITS), 
+                      DCAN_ACCESS_MSK_BITS | DCAN_ACCESS_ARB_BITS),
                       msgIndex, DCAN_IF2_REG);
 }
 
@@ -161,19 +161,19 @@ void CANRxObjectConfig(unsigned int baseAdd, can_frame* canPtr)
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
  * \param   msgNum        Message object number.
- * \param   data          Pointer to an unsigned integer. Used to fetch data 
+ * \param   data          Pointer to an unsigned integer. Used to fetch data
  *                        bytes from data registers.
  * \param   ifReg         Interface register set used.
  *
 */
-void CANReadMsgObjData(unsigned int baseAdd, unsigned int msgNum, 
+void CANReadMsgObjData(unsigned int baseAdd, unsigned int msgNum,
                        unsigned int* data, unsigned int ifReg)
 {
     /* Read a message object from CAN message RAM to Interface register */
-    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_DAT_B_ACCESS | 
-                                DCAN_TXRQST_ACCESS | DCAN_CLR_INTPND | 
-                                DCAN_ACCESS_CTL_BITS | DCAN_ACCESS_ARB_BITS | 
-                                DCAN_ACCESS_MSK_BITS | DCAN_MSG_READ), 
+    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_DAT_B_ACCESS |
+                                DCAN_TXRQST_ACCESS | DCAN_CLR_INTPND |
+                                DCAN_ACCESS_CTL_BITS | DCAN_ACCESS_ARB_BITS |
+                                DCAN_ACCESS_MSK_BITS | DCAN_MSG_READ),
                                 msgNum, ifReg);
 
     /* Clear the NewData bit */
@@ -184,7 +184,7 @@ void CANReadMsgObjData(unsigned int baseAdd, unsigned int msgNum,
 }
 
 /**
- * \brief   This function should be used to clear the interrupt pending status 
+ * \brief   This function should be used to clear the interrupt pending status
  *          of receive objects after a new message is received. This will clear
  *          the IntPnd status of the message object represented by msgNum.
  *
@@ -193,7 +193,7 @@ void CANReadMsgObjData(unsigned int baseAdd, unsigned int msgNum,
  * \param   ifReg         Interface register set used.
  *
 **/
-void CANClrIntPndStat(unsigned int baseAdd, unsigned int msgNum, 
+void CANClrIntPndStat(unsigned int baseAdd, unsigned int msgNum,
                       unsigned int ifReg)
 {
     /* Clear the IntPnd bit of DCAN_IFMCTL register */
@@ -212,19 +212,19 @@ void CANClrIntPndStat(unsigned int baseAdd, unsigned int msgNum,
  * \param   ifReg         Interface register set used.
  *
 **/
-void CANValidateMsgObject(unsigned int baseAdd, unsigned int msgNum, 
+void CANValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
                           unsigned int ifReg)
 {
     /* Set the MsgVal bit of DCAN_IFARB register */
     DCANMsgObjValidate(baseAdd, ifReg);
 
     /* Set the Arb bit of DCAN_IFCMD register */
-    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_ARB_BITS | DCAN_MSG_WRITE), 
+    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_ARB_BITS | DCAN_MSG_WRITE),
                       msgNum, ifReg);
-}    
+}
 
 /**
- * \brief   This function can be used by the user to invalidate a message 
+ * \brief   This function can be used by the user to invalidate a message
  *          object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -232,19 +232,19 @@ void CANValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
  * \param   ifReg         Interface register set used.
  *
 **/
-void CANInValidateMsgObject(unsigned int baseAdd, unsigned int msgNum, 
+void CANInValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
                             unsigned int ifReg)
 {
     /* Clear the MsgVal bit of DCAN_IFARB register */
     DCANMsgObjInvalidate(baseAdd, ifReg);
 
     /* Set the Arb bit of DCAN_IFCMD register */
-    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_ARB_BITS | DCAN_MSG_WRITE), 
+    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_ARB_BITS | DCAN_MSG_WRITE),
                       msgNum, ifReg);
 }
 
 /**
- * \brief   This function can be used to disable the transmit interrupt of a 
+ * \brief   This function can be used to disable the transmit interrupt of a
  *          message object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -252,19 +252,19 @@ void CANInValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
  * \param   ifReg         Interface register set used.
  *
 **/
-void CANTxIntDisable(unsigned int baseAdd, unsigned int msgNum, 
+void CANTxIntDisable(unsigned int baseAdd, unsigned int msgNum,
                      unsigned int ifReg)
 {
     /* Disable the message object transmit interrupt */
     DCANMsgObjIntDisable(baseAdd, DCAN_TRANSMIT_INT, ifReg);
 
     /* Set the CTL bit of the command register */
-    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_CTL_BITS | DCAN_MSG_WRITE), 
-                      msgNum, ifReg);    
+    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_CTL_BITS | DCAN_MSG_WRITE),
+                      msgNum, ifReg);
 }
 
 /**
- * \brief   This function can be used to disable the receive interrupt of a 
+ * \brief   This function can be used to disable the receive interrupt of a
  *          message object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
@@ -279,35 +279,35 @@ void CANRxIntDisable(unsigned int baseAdd, unsigned int msgNum,
     DCANMsgObjIntDisable(baseAdd, DCAN_RECEIVE_INT, ifReg);
 
     /* Set the CTL bit of the command register */
-    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_CTL_BITS | DCAN_MSG_WRITE), 
+    DCANCommandRegSet(baseAdd, (DCAN_ACCESS_CTL_BITS | DCAN_MSG_WRITE),
                       msgNum, ifReg);
 }
 
 /**
- * \brief   This function can be used to update the data bytes of a transmit 
+ * \brief   This function can be used to update the data bytes of a transmit
  *          object and set TxRqst for this message object.
  *
  * \param   baseAdd       Base Address of the DCAN Module Registers.
- * \param   dataPtr       Pointer to unsigned integer. Used to write data 
+ * \param   dataPtr       Pointer to unsigned integer. Used to write data
  *                        bytes to data registers.
  * \param   msgNum        Message object number.
  * \param   ifReg         Interface register set used.
  *
 **/
-void CANUpdateDataBytes(unsigned int baseAdd, unsigned int* dataPtr, 
+void CANUpdateDataBytes(unsigned int baseAdd, unsigned int* dataPtr,
                         unsigned int msgNum, unsigned int ifReg)
 {
     /* Populate the data bytes in the data registers */
     DCANDataWrite(baseAdd, dataPtr, ifReg);
 
     /* Set the DataA, DataB, TxRqst and WR of the IF_CMD register */
-    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_DAT_B_ACCESS | 
-                                DCAN_TXRQST_ACCESS | DCAN_MSG_WRITE), 
+    DCANCommandRegSet(baseAdd, (DCAN_DAT_A_ACCESS | DCAN_DAT_B_ACCESS |
+                                DCAN_TXRQST_ACCESS | DCAN_MSG_WRITE),
                                 msgNum, ifReg);
 }
 
 /**
- * \brief   This function takes I/P Clk frequency, required bit-rate on the 
+ * \brief   This function takes I/P Clk frequency, required bit-rate on the
  *          CAN bus and calculates the value to be programmed to BTR register
  *          and sends the BTR value to 'DCANBitTimingConfig' API.
  *
@@ -369,8 +369,8 @@ unsigned int CANSetBitTiming(unsigned int baseAdd, unsigned int clkFreq,
 }
 
 /**
- * \brief   This function will calculate the bit-timing parameters for the 
- *          DCAN controller based on the input frequency and required bit-rate 
+ * \brief   This function will calculate the bit-timing parameters for the
+ *          DCAN controller based on the input frequency and required bit-rate
  *          on the CAN bus.
  *
  * \param   btc                 Pointer to _dcan_hw_params structure \n
@@ -448,7 +448,7 @@ unsigned int CANbitTimeCalculator(struct _dcan_hw_params *btc,
         {
             errVal = BIT_RATE_ERR_MAX;
         }
-        else 
+        else
         {
             errVal = BIT_RATE_ERR_WARN;
         }
@@ -473,7 +473,7 @@ unsigned int CANbitTimeCalculator(struct _dcan_hw_params *btc,
 }
 
 /**
- * \brief   This function will update the sampling point based on time 
+ * \brief   This function will update the sampling point based on time
  *          segment values \n
  *
  * \return  Updated sample point value \n

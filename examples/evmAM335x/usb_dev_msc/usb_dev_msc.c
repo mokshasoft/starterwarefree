@@ -590,10 +590,10 @@ main(void)
     unsigned int i;
     unsigned char *src, *dest;
 
-    /* MMU needs to be turned on to provide HW support unaligned 
+    /* MMU needs to be turned on to provide HW support unaligned
     access to USB structures */
     MMUConfigAndEnable();
-  
+
     /* Enable Cache */
     CacheEnable(CACHE_ALL);
 

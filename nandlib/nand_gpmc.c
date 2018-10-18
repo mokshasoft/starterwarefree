@@ -1,8 +1,8 @@
 /**
  *  \file   nand_gpmc.c
  *
- *  \brief  This file contains the NAND GPMC controller specific functions 
- *          and these are provided as platform specific code 
+ *  \brief  This file contains the NAND GPMC controller specific functions
+ *          and these are provided as platform specific code
  *          to achieve the required functionality.
  *
  */
@@ -76,13 +76,13 @@
 *******************************************************************************/
 
 /**
-*\brief This function does the 1-bit hamming code ECC related initializes 
+*\brief This function does the 1-bit hamming code ECC related initializes
 *       to the NAND controller.\n
 *
 * \param  nandInfo      : Pointer to structure containing controller and
 *                         device information.\n
 *
-* \return 
+* \return
 *        NAND_STATUS_PASSED : On success.\n
 *        NAND_STATUS_FAILED : On failure.\n
 *
@@ -178,7 +178,7 @@ static void GPMCHammingCodeECCCalculate(unsigned int baseAddr, unsigned eccResRe
 * \param   eccRead      : Pointer to the ECC data which is read from the spare
 *                         area.\n
 *
-* \param   data         : Pointer to the data, where if an ecc error need to 
+* \param   data         : Pointer to the data, where if an ecc error need to
 *                         correct.\n
 *
 * \return ECC correction Status.\n
@@ -253,7 +253,7 @@ static NandStatus_t GPMCHammingCodeECCCheckAndCorrect(NandInfo_t *nandInfo,
 }
 
 /**
-*\brief This function does the BCH ECC related initializes to the NAND 
+*\brief This function does the BCH ECC related initializes to the NAND
 *       controller.\n
 *
 * \param  nandInfo      : Pointer to structure containing controller and
@@ -449,7 +449,7 @@ static void GPMCBCHECCCalculate(NandInfo_t *nandInfo, unsigned char *ptrEccData)
 * \param   eccRead      : Pointer to the ECC data which is read from the spare
 *                         area.\n
 *
-* \param   data         : Pointer to the data, where if an ecc error need to 
+* \param   data         : Pointer to the data, where if an ecc error need to
 *                         correct.\n
 *
 * \return ECC correction Status.\n
@@ -584,7 +584,7 @@ static NandStatus_t GPMCBCHECCCheckAndCorrect(NandInfo_t *nandInfo,
 /**
 * \brief  Function to get the wait pin status.\n
 *
-* \param  nandInfo      : Pointer to structure containing controller and 
+* \param  nandInfo      : Pointer to structure containing controller and
 *                       : device information.\n
 *
 * \return Wait pin status.\n
@@ -628,7 +628,7 @@ unsigned int GPMCNANDWriteBufReady(NandInfo_t *nandInfo)
 *
 * \param  nandCtrlInfo  : Pointer to structure containing controller info.\n
 *
-* \return 
+* \return
 *
 *        NAND_STATUS_PASSED          : On success.\n
 *        NAND_STATUS_FAILED          : On failure.\n
@@ -750,13 +750,13 @@ NandStatus_t GPMCNANDInit(NandInfo_t *nandInfo)
 }
 
 /**
-*\brief This function does the ECC related initializes to the NAND controller 
+*\brief This function does the ECC related initializes to the NAND controller
 *       depending on the ecc type.\n
 *
 * \param  nandInfo      : Pointer to structure containing controller and
 *                         device information.\n
 *
-* \return 
+* \return
 *        NAND_STATUS_PASSED : On success.\n
 *        NAND_STATUS_FAILED : On failure.\n
 *
@@ -886,10 +886,10 @@ void GPMCNANDECCCalculate(NandInfo_t *nandInfo, unsigned char *ptrEccData)
 * \param  nandInfo      : Pointer to structure containing controller and
 *                         device information.\n
 *
-* \param   eccRead      : Pointer to the ECC data which is read from the spare 
+* \param   eccRead      : Pointer to the ECC data which is read from the spare
 *                         area.\n
 *
-* \param   data         : Pointer to the data, where if an ecc error need to 
+* \param   data         : Pointer to the data, where if an ecc error need to
 *                         correct.\n
 *
 * \return ECC correction Status.\n
@@ -927,9 +927,9 @@ NandStatus_t GPMCNANDECCCheckAndCorrect(NandInfo_t *nandInfo,
 * \param  nandInfo      : Pointer to structure containing controller and
 *                         device information.\n
 *
-* \param   data         : Pointer to the data.\n 
+* \param   data         : Pointer to the data.\n
 *
-* \param   len          : Transfer length.\n 
+* \param   len          : Transfer length.\n
 *
 * \param   dir          : Direction of transfer.\n
 *                         This can take one of the following values :\n

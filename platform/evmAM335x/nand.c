@@ -50,7 +50,7 @@
 /**
  * \brief   This function selects the GPMC pins for NAND use. The GPMC pins
  *          are multiplexed with pins of other peripherals in the SoC
- *          
+ *
  * \return  TRUE/FALSE
  *
  * \note    This pin multiplexing depends on the profile in which the EVM
@@ -63,7 +63,7 @@ unsigned int NANDPinMuxSetup(void)
     unsigned int profile = 0;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch (profile)
     {

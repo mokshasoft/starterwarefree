@@ -59,14 +59,14 @@
 /**
  * \brief   Initializes the Page Table with fault entries and configures CP15
  *          registers required for MMU. The Page Table passed is the master
- *          page table containing 4096 words, which will be defined by the 
+ *          page table containing 4096 words, which will be defined by the
  *          application.
  *
  * \param   masterPt      Master Page Table Base Address
  *
  * \return  None.
  *
- * \Note    The StarterWare support for MMU needs only master page table 
+ * \Note    The StarterWare support for MMU needs only master page table
  *          configuration. Only a single level paging is supported. Also, only
  *          TTB0 will be used for page table walking.
  **/
@@ -98,13 +98,13 @@ void MMUInit(unsigned int *masterPt)
 
 /**
  * \brief   Maps a specific region for Virtual Address to Physical Address
- *          conversion. This API actually updates the corresponding page table 
+ *          conversion. This API actually updates the corresponding page table
  *          entries. The mapping for any region is such that Virtual Address
  *          = Physical Address. \n
  *          Any region can be mapped as per the attributes given. Regions
- *          can be specified with Memory Type, Inner/Outer Cache settings, 
+ *          can be specified with Memory Type, Inner/Outer Cache settings,
  *          Security settings and Access Permissions.
- *          
+ *
  * \param   region      Memory Region to be mapped. This shall be a structure
  *                      pointer of Type REGION *. The structure is detailed in
  *                      mmu.h file. \n
@@ -113,12 +113,12 @@ void MMUInit(unsigned int *masterPt)
  *              A 512MB RAM memory region starting at address 0x80000000 can be
  *              configured as shown below. The memory is to be cacheable, with
  *              Inner Cache - Write Through Write Allocate and Outer Cache -
- *              Write Back Write Allocate attributes. \n 
+ *              Write Back Write Allocate attributes. \n
  *
  *              REGION regionRam = { MMU_PGTYPE_SECTION, \n
  *                                   0x80000000, \n
  *                                   512,  \n
- *                                   MMU_MEMTYPE_NORMAL_SHAREABLE 
+ *                                   MMU_MEMTYPE_NORMAL_SHAREABLE
  *                                     (MMU_CACHE_WT_NOWA, MMU_CACHE_WB_WA),\n
  *                                   MMU_REGION_NON_SECURE, \n
  *                                   MMU_AP_PRV_RW_USR_RW, \n
@@ -136,11 +136,11 @@ void MMUMemRegionMap(REGION *region)
     int idx;
 
     /* Get the first entry in the page table to set */
-    ptEntryPtr = region->masterPtPtr + 
+    ptEntryPtr = region->masterPtPtr +
                  (region->startAddr >> MMU_PAGEBOUND_SHIFT);
 
     /* Set the pointer to the last entry */
-    ptEntryPtr += (region->numPages - 1); 
+    ptEntryPtr += (region->numPages - 1);
 
     /* Get the start Address MSB 3 nibbles. Ignore extended address */
     ptEntry = (region->startAddr & region->pgType) & MMU_PGADDR_MASK;
@@ -150,7 +150,7 @@ void MMUMemRegionMap(REGION *region)
     ** Access Permissions and Security.
     ** All the regions will be marked as global.
     */
-    ptEntry |= ((MMU_PGTYPE_MASK & region->pgType) 
+    ptEntry |= ((MMU_PGTYPE_MASK & region->pgType)
                 | region->accsCtrl | region->memAttrib
                 | region->secureType);
 

@@ -42,13 +42,13 @@
 **                           CONFIGURATIONS
 *****************************************************************************/
 /*
-** The macro CPSW_DUAL_MAC_MODE shall be defined for using CPSW ports in 
+** The macro CPSW_DUAL_MAC_MODE shall be defined for using CPSW ports in
 ** Dual MAC mode.
 */
-#define CPSW_DUAL_MAC_MODE    
+#define CPSW_DUAL_MAC_MODE
 
 /*
-** If Static IP address to be used, give it here. This value shall be 0 if 
+** If Static IP address to be used, give it here. This value shall be 0 if
 ** dynamic IP address is to be used.
 ** For Example, for IP Address 192.168.247.1, use the corresponding hex
 ** value 0xC0A8F701.
@@ -58,22 +58,22 @@
 #define STATIC_IP_ADDRESS_PORT2         0             /* Port 2 static IP */
 
 #else
-#define STATIC_IP_ADDRESS               0             /* Static IP in 
+#define STATIC_IP_ADDRESS               0             /* Static IP in
                                                          Switch Mode */
 #endif
 
 /*
 ** The below macro should be defined for using lwIP with cache. For cache
 ** enabling, pbuf pool shall be cache line aligned. This is done by using
-** separate pool for each memory. The alignment of pbuf pool to cache line 
-** size is done in /ports/cpsw/include/arch/cc.h. 
+** separate pool for each memory. The alignment of pbuf pool to cache line
+** size is done in /ports/cpsw/include/arch/cc.h.
 */
-#define LWIP_CACHE_ENABLED              
+#define LWIP_CACHE_ENABLED
 
 #define SOC_CACHELINE_SIZE_BYTES        64            /* Number of bytes in
                                                          a cache line */
 /*
-** The timeout for DHCP completion. lwIP library will wait for DHCP 
+** The timeout for DHCP completion. lwIP library will wait for DHCP
 ** completion for (LWIP_DHCP_TIMEOUT / 100) seconds.
 */
 #define LWIP_DHCP_TIMEOUT               500
@@ -87,28 +87,28 @@
 /*****************************************************************************
 **            lwIP SPECIFIC DEFINITIONS - To be used by lwIP stack
 *****************************************************************************/
-#define HOST_TMR_INTERVAL               0         
+#define HOST_TMR_INTERVAL               0
 #define DYNAMIC_HTTP_HEADERS
 
 /*****************************************************************************
-**                    Platform specific locking 
+**                    Platform specific locking
 *****************************************************************************/
-#define SYS_LIGHTWEIGHT_PROT            1          
-#define NO_SYS                          1          
+#define SYS_LIGHTWEIGHT_PROT            1
+#define NO_SYS                          1
 #define NO_SYS_NO_TIMERS                1
 
 /*****************************************************************************
 **                          Memory Options
 *****************************************************************************/
-#define MEM_ALIGNMENT                   4         
+#define MEM_ALIGNMENT                   4
 #define MEM_SIZE                        (128 * 1024) /* 128K */
 
-#define MEMP_NUM_PBUF                   96     
-#define MEMP_NUM_TCP_PCB                32    
-#define PBUF_POOL_SIZE                  210    
+#define MEMP_NUM_PBUF                   96
+#define MEMP_NUM_TCP_PCB                32
+#define PBUF_POOL_SIZE                  210
 
 #ifdef LWIP_CACHE_ENABLED
-#define MEMP_SEPARATE_POOLS             1            /* We want the pbuf 
+#define MEMP_SEPARATE_POOLS             1            /* We want the pbuf
                                                         pool cache line
                                                         aligned*/
 #endif
@@ -116,8 +116,8 @@
 /*****************************************************************************
 **                           IP Options
 *****************************************************************************/
-#define IP_REASSEMBLY                   0          
-#define IP_FRAG                         0          
+#define IP_REASSEMBLY                   0
+#define IP_FRAG                         0
 
 /*****************************************************************************
 **                           DHCP Options
@@ -128,31 +128,31 @@
 /*****************************************************************************
 **                           Auto IP  Options
 *****************************************************************************/
-#define LWIP_AUTOIP                     0            
+#define LWIP_AUTOIP                     0
 #define LWIP_DHCP_AUTOIP_COOP           ((LWIP_DHCP) && (LWIP_AUTOIP))
 
 /*****************************************************************************
 **                           TCP  Options
 *****************************************************************************/
-#define TCP_MSS                         1500           
-#define TCP_WND                         (8 * TCP_MSS)  
+#define TCP_MSS                         1500
+#define TCP_WND                         (8 * TCP_MSS)
 #define TCP_SND_BUF                     (8 * TCP_MSS)
 #define TCP_OVERSIZE                    TCP_MSS
 
 /*****************************************************************************
 **                           PBUF  Options
 *****************************************************************************/
-#define PBUF_LINK_HLEN                  14      
+#define PBUF_LINK_HLEN                  14
 #define PBUF_POOL_BUFSIZE               1520         /* + size of struct pbuf
                                                         shall be cache line
                                                         aligned be enabled */
-#define ETH_PAD_SIZE                    0           
-#define LWIP_NETCONN                    0             
+#define ETH_PAD_SIZE                    0
+#define LWIP_NETCONN                    0
 
 /*****************************************************************************
 **                           Socket  Options
 *****************************************************************************/
-#define LWIP_SOCKET                     0           
+#define LWIP_SOCKET                     0
 
 /*****************************************************************************
 **                          Debugging options

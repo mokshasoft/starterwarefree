@@ -35,8 +35,8 @@
 #include "util.h"
 #include "omap3_spi.h"
 
-/* W25 specific commands. Derived from section 12.2 of 
- * http://www.winbond-usa.com/products/Nexflash/pdfs/datasheets/W25X16_32_64h.pdf 
+/* W25 specific commands. Derived from section 12.2 of
+ * http://www.winbond-usa.com/products/Nexflash/pdfs/datasheets/W25X16_32_64h.pdf
  */
 #define CMD_W25_WREN		0x06	/* Write Enable */
 #define CMD_W25_WRDI		0x04	/* Write Disable */
@@ -58,7 +58,7 @@
 #define WINBOND_SR_WIP		(1 << 0)	/* Write-in-Progress */
 
 /* W25 specific flash parameters. Derived from chapter 1 of
- * http://www.winbond-usa.com/products/Nexflash/pdfs/datasheets/W25X16_32_64h.pdf 
+ * http://www.winbond-usa.com/products/Nexflash/pdfs/datasheets/W25X16_32_64h.pdf
  */
 static const struct winbond_spi_flash_params winbond_spi_flash_table[] = {
 	{
@@ -165,7 +165,7 @@ static int winbond_write(struct spi_flash *flash,
 
 	ret = 0;
 	for (actual = 0; actual < len; actual += chunk_len) {
-		   chunk_len = ((len - actual) < (page_size - byte_addr) ? 
+		   chunk_len = ((len - actual) < (page_size - byte_addr) ?
 		   				(len - actual) : (page_size - byte_addr));
 
 		cmd[0] = CMD_W25_PP;

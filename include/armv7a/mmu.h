@@ -168,7 +168,7 @@ extern "C" {
 
 /*****************************************************************************/
 /*
-** Structure for defining memory regions. 
+** Structure for defining memory regions.
 ** Assumed Virtual Address = Physical Address.
 */
 typedef struct region {

@@ -78,11 +78,11 @@ unsigned int ydata = 0;
 **                     FUNCTION DEFINITIONS
 *******************************************************************************/
 /*
-** Initializes the touch screen 
+** Initializes the touch screen
 */
 void InitTouchScreen(void)
 {
-    unsigned int i;  
+    unsigned int i;
 
     /* TSC clock config */
     TSCADCModuleClkConfig();
@@ -178,7 +178,7 @@ void InitTouchScreen(void)
 
     DMTimerModeConfigure(SOC_DMTIMER_3_REGS, DMTIMER_ONESHOT_CMP_ENABLE);
     DMTimerReloadSet(SOC_DMTIMER_3_REGS, 0xffffffff);
-    DMTimerCompareSet(SOC_DMTIMER_3_REGS, 0xfffff); 
+    DMTimerCompareSet(SOC_DMTIMER_3_REGS, 0xfffff);
 
     DMTimerIntStatusClear(SOC_DMTIMER_3_REGS, DMTIMER_INT_MAT_EN_FLAG);
 
@@ -202,12 +202,12 @@ static void Timer3Isr(void)
 
     DMTimerDisable(SOC_DMTIMER_3_REGS);
     DMTimerCounterSet(SOC_DMTIMER_3_REGS, 0);
-   
+
     touchRelease = 1;
 }
 
 /*
-** This function tells if a touch is detected. 
+** This function tells if a touch is detected.
 */
 unsigned int TouchDetect(void)
 {
@@ -224,7 +224,7 @@ unsigned int TouchDetect(void)
 }
 
 /*
-** This function tells if a touch is detected. 
+** This function tells if a touch is detected.
 */
 unsigned int TouchReleaseDetect(void)
 {
@@ -241,7 +241,7 @@ unsigned int TouchReleaseDetect(void)
 }
 
 /*
-** This function resolves the coordinates of the location on the 
+** This function resolves the coordinates of the location on the
 ** touch screen being touched.
 */
 void TouchCoOrdGet(int *pX, int *pY)
@@ -335,7 +335,7 @@ static void TouchScreenIsr(void)
                 xdata = readx1;
             }
             prevVal_x = readx1;
- 
+
             ready1 = TSCADCFIFOADCDataRead(SOC_ADC_TSC_0_REGS, TSCADC_FIFO_1);
             ready1 &= 0xfff;
 
@@ -380,7 +380,7 @@ static void TouchScreenIsr(void)
 
     IsTSPress = 1;
     touchRelease = 0;
-   
+
     StepEnable();
 }
 

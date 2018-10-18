@@ -56,30 +56,30 @@ extern "C" {
 
 /*
 ** Macros which can be used as 'configVal' parameter to ELMCAutoGatingConfig API
-** 
+**
 */
 #define ELM_AUTOGATING_OCP_FREE                       (0)
 #define ELM_AUTOGATING_OCP_GATING                     (1)
 
 /*
 ** Macros which can be used as 'configVal' parameter to ELMCIdleModeSelect API.
-** 
+**
 */
 #define ELM_IDLEMODE_FORCEIDLE                        (0)
 #define ELM_IDLEMODE_NOIDLE                           (1)
 #define ELM_IDLEMODE_SMARTIDLE                        (2)
 
 /*
-** Macros which can be used as 'configVal' parameter to ELMOCPClkActivityConfig 
+** Macros which can be used as 'configVal' parameter to ELMOCPClkActivityConfig
 ** API.
-** 
+**
 */
 #define ELM_CLOCKACTIVITYOCP_OCP_ON                   (1)
 #define ELM_CLOCKACTIVITYOCP_OCP_OFF                  (0)
 
 /*
 ** Macros which can be used as 'flag' parameter to ELMIntStatusGet API.
-** 
+**
 */
 #define ELM_LOC_VALID_0_STATUS                        (0)
 #define ELM_LOC_VALID_1_STATUS                        (1)
@@ -93,7 +93,7 @@ extern "C" {
 
 /*
 ** Macros which can be used as 'flag' parameter to ELMIntConfig API.
-** 
+**
 */
 #define ELM_INT_ENALBLE                               (1)
 #define ELM_INT_DISALBLE                              (0)
@@ -101,7 +101,7 @@ extern "C" {
 /*
 ** Macros which can be used as 'bchECCLevel' parameter to
 ** ELMErrCorrectionLevelSet API.
-** 
+**
 */
 #define ELM_ECC_BCH_LEVEL_4BITS                       (0)
 #define ELM_ECC_BCH_LEVEL_8BITS                       (1)
@@ -109,14 +109,14 @@ extern "C" {
 
 /*
 ** Macros which can be used as 'mode' parameter to ELMModeSet API.
-** 
+**
 */
 #define ELM_MODE_CONTINUOUS                           (0)
 #define ELM_MODE_PAGE                                 (1)
 
 /*
 ** Macros which can be used as 'sectorNum' parameter to ELMModeSet API.
-** 
+**
 */
 #define ELM_PAGEMODE_SECTOR_0                         (0)
 #define ELM_PAGEMODE_SECTOR_1                         (1)
@@ -129,7 +129,7 @@ extern "C" {
 
 /*
 ** Macros which can be used as 'synFrgmtId' parameter to ELMSyndromeFrgmtSet API
-** 
+**
 */
 #define ELM_SYNDROME_FRGMT_0                          (0)
 #define ELM_SYNDROME_FRGMT_1                          (1)
@@ -141,7 +141,7 @@ extern "C" {
 
 /*
 ** Macros which can be used as 'errNum' parameter to ELMErrLocBitAddrGet API.
-** 
+**
 */
 #define ELM_ERROR_NUM_0                               (0)
 #define ELM_ERROR_NUM_1                               (1)

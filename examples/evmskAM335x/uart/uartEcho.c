@@ -4,25 +4,25 @@
  * \brief  This example application demonstrates the working of UART for serial
  *         communication with another device/host by echoing back the data
  *         entered from serial console.
- *   
+ *
  *         Application Configuration:
- *   
+ *
  *             Modules Used:
  *                 UART0
  *                 Interrupt Controller
- *   
+ *
  *             Configurable Parameters:
  *                 1)Baud Rate - 115200 bps to 926100 bps
  *                 2)Word Length - 5,6,7,8 bits
  *                 3)Parity - None, Odd, Even, Mark, Space
  *                 4)Stop Bits - 1, 1.5, 2 stop bits
- *                 
+ *
  *             Hard-coded configuration of other parameters:
  *                 1) FIFO Threshold Levels:
  *                    a) TX Trigger Space value - 56
  *                    b) TX Threshold Level - 8 (TX FIFO Size - TX Trigger Space)
  *                    c) RX Threshold Level - 1
- *   
+ *
  *         Application Use case:
  *             1) Application demonstrates the Receive/Transmit features
  *                of UART using a FIFO.
@@ -30,7 +30,7 @@
  *                demonstrated for reading/writing to the FIFO.
  *             3) Functionality of UART with different Line characterics
  *                and Baud rates are demonstrated.
- *   
+ *
  *         Running the Example:
  *             On executing the example:
  *             1) The user will be requested to enter 8 bytes of data from the
@@ -39,39 +39,39 @@
  *             2) Then the user will be given options to either re-run the
  *                application using default or non-default Baud Rate and Line
  *                characteristics or quit the application.
- *   
+ *
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -562,9 +562,9 @@ static void UARTIsr(void)
             }
 
         break;
-    
+
         default:
-        break;    
+        break;
     }
 }
 

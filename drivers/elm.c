@@ -51,7 +51,7 @@
 * \brief   This function reads the IP revision code of ELM.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \return  ipRev          IP revision code of ELM.\n
 */
 unsigned int  ELMRevisionGet(unsigned int baseAddr)
@@ -67,13 +67,13 @@ unsigned int  ELMRevisionGet(unsigned int baseAddr)
 * \brief   This function configs the Internal OCP clock gating strategy.\n
 *
 * \param   baseaddr       Base address of ELM.\n
-* 
+*
 * \param   configVal      config value for OCP clk gating.\n
 *                         This can take one of the following values :\n
 *                         ELM_AUTOGATING_OCP_FREE   -- OCP clock is free-running\n
-*                         ELM_AUTOGATING_OCP_GATING -- Automatic internal OCP 
-*                                                      clock gating strategy is 
-*                                                      applied based on the OCP 
+*                         ELM_AUTOGATING_OCP_GATING -- Automatic internal OCP
+*                                                      clock gating strategy is
+*                                                      applied based on the OCP
 *                                                      interface activity.\n
 *
 * \return  none.\n
@@ -90,12 +90,12 @@ void  ELMCAutoGatingConfig(unsigned int baseAddr, unsigned int configVal)
 * \brief   This function sets the idle mode for ELM.\n
 *
 * \param   baseaddr       Base address of ELM.\n
-* 
+*
 * \param   mode           Idle mode.\n
 *                         This can take one of the following values :\n
 *                         ELM_IDLEMODE_FORCEIDLE -- for force-idle. \n
 *                         ELM_IDLEMODE_NOIDLE    -- for no-idle. \n
-*                         ELM_IDLEMODE_SMARTIDLE -- for smart-idle.\n 
+*                         ELM_IDLEMODE_SMARTIDLE -- for smart-idle.\n
 *
 * \return  none.\n
 */
@@ -111,7 +111,7 @@ void  ELMCIdleModeSelect(unsigned int baseAddr, unsigned int mode)
 * \brief   This function Resets the ELM.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \return  None.\n
 */
 
@@ -122,16 +122,16 @@ void  ELMModuleReset(unsigned int baseAddr)
 }
 
 /**
-* \brief   This function sets the OCP Clock activity when module is in IDLE 
+* \brief   This function sets the OCP Clock activity when module is in IDLE
 *          mode.\n
 *
 * \param   baseaddr       Base address of ELM.\n
-* 
+*
 * \param   configVal      Config value.\n
 *                         This can take one of the following values :\n
 *                         ELM_CLOCKACTIVITYOCP_OCP_OFF -- OCP clock is swith off\n
-*                         ELM_CLOCKACTIVITYOCP_OCP_ON  -- OCP Clock is 
-*                                                         maintained during 
+*                         ELM_CLOCKACTIVITYOCP_OCP_ON  -- OCP Clock is
+*                                                         maintained during
 *                                                         wake up period.\n
 *
 * \return  none.\n
@@ -148,7 +148,7 @@ void  ELMOCPClkActivityConfig(unsigned int baseAddr, unsigned int configVal)
 * \brief   This function gets the software resets status of ELM.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \return  status         Reset status : \n
 *                            0 : Module reset is on-going.\n
 *                            1 : Module reset is completed.\n
@@ -167,50 +167,50 @@ unsigned int  ELMModuleResetStatusGet(unsigned int baseAddr)
 * \brief   This function gets Interrupt status.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   flag           Flag for which interrupt status has to get.\n
 *                         This can take one of the following values :\n
-*                         ELM_LOC_VALID_0_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_0_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_1_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_1_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_2_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_2_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_3_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_3_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_4_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_4_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_5_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_5_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_6_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_6_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_LOC_VALID_7_STATUS         : Error-location 
-*                                                          status for syndrome 
+*                         ELM_LOC_VALID_7_STATUS         : Error-location
+*                                                          status for syndrome
 *                                                          polynomial 0.\n
-*                         ELM_PAGE_VALID_STATUS          : Error-location 
+*                         ELM_PAGE_VALID_STATUS          : Error-location
 *                                                          status for a full
 *                                                          page. \n
 *
 * \return  intSts         Interrupt Status. Return value meaning depends on the
 *                         param flag. \n
-*                         if flag is ELM_LOC_VALID_i_STATUS where i = 0 to 7, 
+*                         if flag is ELM_LOC_VALID_i_STATUS where i = 0 to 7,
 *                         then\n
 *                            0 : No syndrome processed or process in progress.\n
 *                            1 : Error-location process completed.\n
 *
 *                         if flag is ELM_PAGE_VALID_STATUS, then\n
-*                            0 : Error locations invalid for all polynomials 
+*                            0 : Error locations invalid for all polynomials
 *                                enabled.\n
 *                            1 : All error locations valid.\n
 *
-*                
+*
 */
 unsigned int  ELMIntStatusGet(unsigned int baseAddr, unsigned int flag)
 {
@@ -275,34 +275,34 @@ unsigned int  ELMIntStatusGet(unsigned int baseAddr, unsigned int flag)
 * \brief   This function clears the interrupt.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   flag           Flag for which interrupt status has to clear.\n
 *                         This can take one of the following values :\n
-*                         ELM_LOC_VALID_0_STATUS        : Error-location 
+*                         ELM_LOC_VALID_0_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_1_STATUS        : Error-location 
+*                         ELM_LOC_VALID_1_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_2_STATUS        : Error-location 
+*                         ELM_LOC_VALID_2_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_3_STATUS        : Error-location 
+*                         ELM_LOC_VALID_3_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_4_STATUS        : Error-location 
+*                         ELM_LOC_VALID_4_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_5_STATUS        : Error-location 
+*                         ELM_LOC_VALID_5_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_6_STATUS        : Error-location 
+*                         ELM_LOC_VALID_6_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_7_STATUS        : Error-location 
+*                         ELM_LOC_VALID_7_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_PAGE_VALID_STATUS         : Error-location 
+*                         ELM_PAGE_VALID_STATUS         : Error-location
 *                                                         interrupt for a full
 *                                                         page.\n
 *
@@ -348,41 +348,41 @@ void  ELMIntStatusClear(unsigned int baseAddr, unsigned int flag)
 * \brief   This function configs i.e enables or disable the interrupts.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   intflag        intFlag for which interrupt has to config.\n
 *                         This can take one of the following values :\n
-*                         ELM_LOC_VALID_0_STATUS        : Error-location 
+*                         ELM_LOC_VALID_0_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_1_STATUS        : Error-location 
+*                         ELM_LOC_VALID_1_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_2_STATUS        : Error-location 
+*                         ELM_LOC_VALID_2_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_3_STATUS        : Error-location 
+*                         ELM_LOC_VALID_3_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_4_STATUS        : Error-location 
+*                         ELM_LOC_VALID_4_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_5_STATUS        : Error-location 
+*                         ELM_LOC_VALID_5_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_6_STATUS        : Error-location 
+*                         ELM_LOC_VALID_6_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_LOC_VALID_7_STATUS        : Error-location 
+*                         ELM_LOC_VALID_7_STATUS        : Error-location
 *                                                         interrupt for syndrome
 *                                                         polynomial 0.\n
-*                         ELM_PAGE_VALID_STATUS         : Error-location 
+*                         ELM_PAGE_VALID_STATUS         : Error-location
 *                                                         interrupt for a full
 *                                                         page. \n
 *
 * \param   configVal     Config Value.\n
 *                        This can take one of the following values :\n
 *                        ELM_INT_ENALBLE                : To enble the interrupt\n
-*                        ELM_INT_DISALBLE               : To disable the 
+*                        ELM_INT_DISALBLE               : To disable the
 *                                                         interrupt.\n
 * \return  None. \n
 *
@@ -506,7 +506,7 @@ void  ELMIntConfig(unsigned int baseAddr, unsigned int intFlag,
 * \brief   This function sets the Error correction level for BCH alogorithm.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   bchECCLevel    BCH error correction level.\n
 *                         This can take one of the following values :\n
 *                         ELM_ECC_BCH_LEVEL_16BITS    : For Upto 16 bits error
@@ -529,11 +529,11 @@ void  ELMErrCorrectionLevelSet(unsigned int baseAddr, unsigned int bchECCLevel)
 }
 
 /**
-* \brief   This function sets the size of the buffers for which 
+* \brief   This function sets the size of the buffers for which
 *          the error-location engine is used.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   eccSize        eccSize in number of nibbles (i.e 4-bits entities).\n
 *
 * \return  None. \n
@@ -553,35 +553,35 @@ void  ELMECCSizeSet(unsigned int baseAddr, unsigned int eccSize)
 *                         This can take one of the following values :\n
 *                         ELM_MODE_PAGE       -- For page mode.\n
 *                         ELM_MODE_CONTINUOUS -- For continuous mode.\n
-* 
-* \param   sectorNum      Sector number or syndrome polynomial number which has 
+*
+* \param   sectorNum      Sector number or syndrome polynomial number which has
 *                         to select as part of the page in page mode.\n
 *                         This can take one of the following values :\n
-*                         ELM_PAGEMODE_SECTOR_0 -- For selecting syndrome 
-*                                                  polynomial 0 as part of the 
+*                         ELM_PAGEMODE_SECTOR_0 -- For selecting syndrome
+*                                                  polynomial 0 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_1 -- For selecting syndrome 
-*                                                  polynomial 1 as part of the 
+*                         ELM_PAGEMODE_SECTOR_1 -- For selecting syndrome
+*                                                  polynomial 1 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_2 -- For selecting syndrome 
-*                                                  polynomial 2 as part of the 
+*                         ELM_PAGEMODE_SECTOR_2 -- For selecting syndrome
+*                                                  polynomial 2 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_3 -- For selecting syndrome 
-*                                                  polynomial 3 as part of the 
+*                         ELM_PAGEMODE_SECTOR_3 -- For selecting syndrome
+*                                                  polynomial 3 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_4 -- For selecting syndrome 
-*                                                  polynomial 4 as part of the 
+*                         ELM_PAGEMODE_SECTOR_4 -- For selecting syndrome
+*                                                  polynomial 4 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_5 -- For selecting syndrome 
-*                                                  polynomial 5 as part of the 
+*                         ELM_PAGEMODE_SECTOR_5 -- For selecting syndrome
+*                                                  polynomial 5 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_6 -- For selecting syndrome 
-*                                                  polynomial 6 as part of the 
+*                         ELM_PAGEMODE_SECTOR_6 -- For selecting syndrome
+*                                                  polynomial 6 as part of the
 *                                                  page in page mode.\n
-*                         ELM_PAGEMODE_SECTOR_7 -- For selecting syndrome 
-*                                                  polynomial 7 as part of the 
+*                         ELM_PAGEMODE_SECTOR_7 -- For selecting syndrome
+*                                                  polynomial 7 as part of the
 *                                                  page in page mode.\n
-                                       
+
 * \return  None. \n
 *
 */
@@ -600,11 +600,11 @@ void  ELMModeSet(unsigned int baseAddr, unsigned int mode,
 
 
 /**
-* \brief   This function sets the fragments of syndrome polynomial for 
+* \brief   This function sets the fragments of syndrome polynomial for
 *          error-location processing.\n
 *
 * \param   baseAddr       Base address of ELM.\n
-* 
+*
 * \param   synFrgmtId     Syndrome fragment ID.\n
 *                         This can take one of the following values :\n
 *                         ELM_SYNDROME_FRGMT_0 - For syndrome fragment 0.\n
@@ -670,12 +670,12 @@ unsigned int ELMErrLocProcessingStatusGet(unsigned int baseAddr)
 }
 
 /**
-* \brief   This function gets the number of errors detected and located 
+* \brief   This function gets the number of errors detected and located
 *          during error-location processing.\n
 *
 * \param   baseAddr       Base address of ELM.\n
 *
-* \return  Number of errors detected and located.\n 
+* \return  Number of errors detected and located.\n
 *
 */
 unsigned int ELMNumOfErrsGet(unsigned int baseAddr)
@@ -689,8 +689,8 @@ unsigned int ELMNumOfErrsGet(unsigned int baseAddr)
 }
 
 /**
-* \brief   This function gets the Error-location bit address for the error 
-*          number passed.\n 
+* \brief   This function gets the Error-location bit address for the error
+*          number passed.\n
 *
 * \param   baseAddr       Base address of ELM.\n
 *
@@ -713,7 +713,7 @@ unsigned int ELMNumOfErrsGet(unsigned int baseAddr)
 *                         ELM_ERROR_NUM_14 - For 14th error.\n
 *                         ELM_ERROR_NUM_15 - For 15th error.\n
 *
-* \return  Bit address for the error number.\n 
+* \return  Bit address for the error number.\n
 *
 */
 unsigned int ELMErrLocBitAddrGet(unsigned int baseAddr, unsigned int errNum)

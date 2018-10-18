@@ -174,7 +174,7 @@ Uint32 nandwriter(AM335X_NAND_InfoHandle hNandhandle)
 			gNandBoot.numPage = numPagesAPP;
 			last = appFileSize / (hNandInfo->dataBytesPerPage * hNandInfo->pagesPerBlock);
 			last++;
-			printf("Erasing Required Blocks [start = %d, count = %d]...", 
+			printf("Erasing Required Blocks [start = %d, count = %d]...",
 					gNandBoot.block, last);
 			fflush(stdout);
 			AM335X_NAND_eraseBlocks(hNandInfo, gNandBoot.block, last);

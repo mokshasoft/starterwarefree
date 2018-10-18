@@ -43,14 +43,14 @@
 #include "bl.h"
 
 /******************************************************************************
-**                    External Variable Declararions 
+**                    External Variable Declararions
 *******************************************************************************/
 
 extern char *deviceType;
 
 
 /******************************************************************************
-**                     Local Function Declararion 
+**                     Local Function Declararion
 *******************************************************************************/
 
 static void (*appEntry)();
@@ -68,11 +68,11 @@ unsigned int DspEntryPoint = 0;
 **                     Global Function Definitions
 *******************************************************************************/
 /*
- * \brief This function initializes the system and copies the image. 
+ * \brief This function initializes the system and copies the image.
  *
  * \param  none
  *
- * \return none 
+ * \return none
 */
 int main(void)
 {

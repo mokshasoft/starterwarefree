@@ -68,7 +68,7 @@ void ECAPPinMuxSetup(unsigned int instanceNum)
                     (0 << CONTROL_CONF_ECAP0_IN_PWM0_OUT_CONF_ECAP0_IN_PWM0_OUT_PUDEN_SHIFT)    |
                     (0 << CONTROL_CONF_ECAP0_IN_PWM0_OUT_CONF_ECAP0_IN_PWM0_OUT_PUTYPESEL_SHIFT)|
                     (1 << CONTROL_CONF_ECAP0_IN_PWM0_OUT_CONF_ECAP0_IN_PWM0_OUT_RXACTIVE_SHIFT) |
-                    (0 << CONTROL_CONF_ECAP0_IN_PWM0_OUT_CONF_ECAP0_IN_PWM0_OUT_SLEWCTRL_SHIFT); 
+                    (0 << CONTROL_CONF_ECAP0_IN_PWM0_OUT_CONF_ECAP0_IN_PWM0_OUT_SLEWCTRL_SHIFT);
     }
     else if(2 == instanceNum)
     {
@@ -84,8 +84,8 @@ void ECAPPinMuxSetup(unsigned int instanceNum)
 void EPWM2PinMuxSetup(void)
 {
                HWREG(SOC_CONTROL_REGS + CONTROL_CONF_GPMC_AD(9)) = CONTROL_CONF_MUXMODE(4);
-} 
-              
+}
+
 
 /**
  * \brief   This function Enables TBCLK(Time Base Clock) for specific
@@ -98,17 +98,17 @@ void PWMSSTBClkEnable(unsigned int instance)
 {
     switch(instance)
     {
-    
+
          case 0:
                HWREG(SOC_CONTROL_REGS + CONTROL_PWMSS_CTRL) |=
                                              CONTROL_PWMSS_CTRL_PWMSS0_TBCLKEN;
                break;
- 
+
          case 1:
                HWREG(SOC_CONTROL_REGS + CONTROL_PWMSS_CTRL) |=
                                              CONTROL_PWMSS_CTRL_PWMMS1_TBCLKEN;
                break;
-  
+
          case 2:
                HWREG(SOC_CONTROL_REGS + CONTROL_PWMSS_CTRL) |=
                                              CONTROL_PWMSS_CTRL_PWMSS2_TBCLKEN;
@@ -116,7 +116,7 @@ void PWMSSTBClkEnable(unsigned int instance)
 
          default:
          break;
-    } 
+    }
 }
 
 /**
@@ -135,49 +135,49 @@ void PWMSSTBClkEnable(unsigned int instance)
  */
 void PWMSSModuleClkConfig(unsigned int instanceNum)
 {
-    HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) |=
                              CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) &
      CM_PER_L3S_CLKSTCTRL_CLKTRCTRL) != CM_PER_L3S_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) |=
                              CM_PER_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) &
      CM_PER_L3_CLKSTCTRL_CLKTRCTRL) != CM_PER_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) |=
                              CM_PER_L3_INSTR_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) & 
-                               CM_PER_L3_INSTR_CLKCTRL_MODULEMODE) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_INSTR_CLKCTRL) &
+                               CM_PER_L3_INSTR_CLKCTRL_MODULEMODE) !=
                                    CM_PER_L3_INSTR_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) |=
                              CM_PER_L3_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKCTRL) &
         CM_PER_L3_CLKCTRL_MODULEMODE) != CM_PER_L3_CLKCTRL_MODULEMODE_ENABLE);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) |=
                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) & 
-                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) &
+                              CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL) !=
                                 CM_PER_OCPWP_L3_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) |=
                              CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_SW_WKUP;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) & 
-                             CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL) != 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) &
+                             CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL) !=
                                CM_PER_L4LS_CLKSTCTRL_CLKTRCTRL_SW_WKUP);
 
-    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) |= 
+    HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) |=
                              CM_PER_L4LS_CLKCTRL_MODULEMODE_ENABLE;
 
-    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) & 
+    while((HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKCTRL) &
       CM_PER_L4LS_CLKCTRL_MODULEMODE) != CM_PER_L4LS_CLKCTRL_MODULEMODE_ENABLE);
 
     if(0 == instanceNum)
@@ -229,17 +229,17 @@ void PWMSSModuleClkConfig(unsigned int instanceNum)
 
     }
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) & 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3S_CLKSTCTRL) &
             CM_PER_L3S_CLKSTCTRL_CLKACTIVITY_L3S_GCLK));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) & 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L3_CLKSTCTRL) &
             CM_PER_L3_CLKSTCTRL_CLKACTIVITY_L3_GCLK));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) & 
-           (CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L3_GCLK | 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_OCPWP_L3_CLKSTCTRL) &
+           (CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L3_GCLK |
             CM_PER_OCPWP_L3_CLKSTCTRL_CLKACTIVITY_OCPWP_L4_GCLK)));
 
-    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) & 
+    while(!(HWREG(SOC_PRCM_REGS + CM_PER_L4LS_CLKSTCTRL) &
            (CM_PER_L4LS_CLKSTCTRL_CLKACTIVITY_L4LS_GCLK )));
-    
+
 }

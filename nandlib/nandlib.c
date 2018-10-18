@@ -1,7 +1,7 @@
 /**
  *  \file   nandlib.c
  *
- *  \brief  This file contains the NAND prtocol abstraction layer 
+ *  \brief  This file contains the NAND prtocol abstraction layer
  *          macro definitions and function definitions.
  *
  */
@@ -147,7 +147,7 @@ static unsigned char NANDDataReadByte(unsigned int dataRegAddr)
 *
 *         This function retrives the status of previous command.\n
 *
-* \param  nandInfo   :  Pointer to structure which contains  
+* \param  nandInfo   :  Pointer to structure which contains
 *                       device information.\n
 *
 * \return NAND status containing below info.\n
@@ -156,7 +156,7 @@ static unsigned char NANDDataReadByte(unsigned int dataRegAddr)
 *         NAND_STATUS_FAILED         : If the previous command is failed.\n
 *         NAND_STATUS_DEVBUSY        : If the device is busy.\n
 *         NAND_STATUS_DEVWRPROTECT   : If the device is write protect.\n
-*         NAND_STATUS_WAITTIMEOUT    : If the RB pin inidcating device 
+*         NAND_STATUS_WAITTIMEOUT    : If the RB pin inidcating device
 *                                      busy status.\n
 *
 */
@@ -188,7 +188,7 @@ static NandStatus_t NANDDeviceStatusGet(NandInfo_t *nandInfo)
 /**
 * \brief  Function to write data to the NAND for specified number of bytes.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  txData        :  Pointer to the array containing the data to write.\n
@@ -202,7 +202,7 @@ static void NANDDataWrite(NandInfo_t *nandInfo, volatile unsigned char *txData,
 {
     unsigned short data;
     unsigned int bufStatus;
-    
+
     if(nandInfo->busWidth == NAND_BUSWIDTH_16BIT)
     {
         unsigned short *ptrData = (unsigned short *)txData;
@@ -236,7 +236,7 @@ static void NANDDataWrite(NandInfo_t *nandInfo, volatile unsigned char *txData,
 /**
 * \brief  Function to read the data from NAND for specified number of bytes.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                          device information.\n
 *
 * \param  rxData        :  Pointer to the array where read data has to place.\n
@@ -281,7 +281,7 @@ static void NANDDataRead(NandInfo_t *nandInfo, volatile unsigned char *rxData,
 *       This function forms the address, based on  the block, page and column.
 *       Then the command for Page write is sent along with the address.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  blkNum        : Blk Number.\n
@@ -323,7 +323,7 @@ static void NANDPageWriteCmdStart(NandInfo_t *nandInfo, unsigned int blkNum,
 *       This function forms the address, based on  the block, page and column.
 *       Then the command for Page write is sent along with the address.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \return Write command status.\n
@@ -332,7 +332,7 @@ static void NANDPageWriteCmdStart(NandInfo_t *nandInfo, unsigned int blkNum,
 *         NAND_STATUS_FAILED        : If the write command is failed.\n
 *         NAND_STATUS_DEVBUSY       : If the device is busy.\n
 *         NAND_STATUS_DEVWRPROTECT  : If the device is write protect.\n
-*         NAND_STATUS_WAITTIMEOUT   : If the RB pin inidcating device 
+*         NAND_STATUS_WAITTIMEOUT   : If the RB pin inidcating device
 *                                     busy status.\n
 *
 */
@@ -409,7 +409,7 @@ static NandStatus_t NANDPageReadCmdSend(NandInfo_t *nandInfo, unsigned int blkNu
 *
 *       This function calls the registered controller init function.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \return
@@ -453,14 +453,14 @@ NandStatus_t NANDOpen(NandInfo_t *nandInfo)
     {
         return retVal;
     }
-    
+
     /*
      * Read the device ID (will update NAND device parameters if current
      * parameters are invalid)
      */
     retVal = NANDReadId(nandInfo);
 
-    return retVal;    
+    return retVal;
 }
 
 
@@ -469,10 +469,10 @@ NandStatus_t NANDOpen(NandInfo_t *nandInfo)
 *
 *         This function Waits untill NAND device enters the  ready stateIt
 *         reads the status of the NAND's ready/busy status by reading the
-*         wait  status from the NANDFSR register. It also implements a   
+*         wait  status from the NANDFSR register. It also implements a
 *         timeout functionality to avoid indefinte lockup.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                          device information.\n
 *
 * \return NAND device status.\n
@@ -494,7 +494,7 @@ NandStatus_t NANDWaitUntilReady(NandInfo_t *nandInfo)
      * pull the R/B line low,it would be safe to introduce a delay  *
      * before checking the ready/busy status.                       */
     NANDDelay(0xFFF);
-    /* Keep checking the status of ready/busy line.Also maintain a  * 
+    /* Keep checking the status of ready/busy line.Also maintain a  *
      * timeout count. If the NAND is not ready during the timeout   *
      * period, stop checking the ready/busy status                  */
     while (timeout > 0u)
@@ -524,7 +524,7 @@ NandStatus_t NANDWaitUntilReady(NandInfo_t *nandInfo)
 *         This function Resets the NAND device by issuing the RESET command
 *         (0xFF) to the NAND device. It then waits until the NAND device is.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                          device information.\n
 *
 * \return NAND device status.\n
@@ -545,7 +545,7 @@ NandStatus_t NANDReset(NandInfo_t *nandInfo)
 *         This function reads the NAND device ID . It issues the
 *         NAND read ID command and reads a 4-byte NAND device ID.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                          device information.\n
 *
 * \return Updates the device id info in the nandDevInfo structure in nandInfo.\n
@@ -569,7 +569,7 @@ NandStatus_t NANDReset(NandInfo_t *nandInfo)
     /* Read the 4-byte device ID */
     nandInfo->manId = NANDDataReadByte(nandInfo->dataRegAddr);
     nandInfo->devId = NANDDataReadByte(nandInfo->dataRegAddr);
-    
+
     if( (nandInfo->devId==0x00) || (nandInfo->devId==0xFF) )
     {
       retVal = NAND_STATUS_NOT_FOUND;
@@ -587,7 +587,7 @@ NandStatus_t NANDReset(NandInfo_t *nandInfo)
         nandInfo->blkSize       = (NandBlockSize_t) ((64 << ((devId >> 4) & 0x3))*1024);
     }
     /* Only try to detect bus width info from 4th ID byte if no valid  */
-    /* values were given at initialization                             */    
+    /* values were given at initialization                             */
     if (nandInfo->busWidth == NAND_BUSWIDTH_INVALID)
     {
         if(devId >> 6 & 0x01)
@@ -599,10 +599,10 @@ NandStatus_t NANDReset(NandInfo_t *nandInfo)
             nandInfo->busWidth = NAND_BUSWIDTH_8BIT;
         }
     }
-    
+
     /* Calculate the pagesPerBlock */
     nandInfo->pagesPerBlk   = (blkSize/pageSize);
-    
+
     return retVal;
 }
 
@@ -611,7 +611,7 @@ NandStatus_t NANDReset(NandInfo_t *nandInfo)
 *
 *         This function erases the block specified as argument.\n
 *
-* \param  nandInfo      :  Pointer to structure which conatins controller and 
+* \param  nandInfo      :  Pointer to structure which conatins controller and
 *                          device information.\n
 *
 * \param  blkNum        :  Blk Number.\n
@@ -656,7 +656,7 @@ NandStatus_t NANDBlockErase(NandInfo_t *nandInfo, unsigned int blkNum)
 /**
 * \brief  Function to write a page to NAND.\n
 *
-* \param  nandInfo        Pointer to structure which conatins controller and 
+* \param  nandInfo        Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  blkNum        :  Blk Number.\n
@@ -684,12 +684,12 @@ NandStatus_t NANDPageWrite(NandInfo_t *nandInfo, unsigned int blkNum,
     unsigned int trnsCnt;
     unsigned int columnAddr;
     unsigned char *eccDataTmp;
-    
+
     columnAddr = 0;
     eccDataTmp = eccData;
     NANDPageWriteCmdStart(nandInfo, blkNum, pageNum, columnAddr);
     retVal = NAND_STATUS_PASSED;
-    
+
     if (NAND_ECC_ALGO_NONE != nandInfo->eccType)
     {
         (nandInfo->hNandEccInfo->ECCDisable)(nandInfo);
@@ -700,7 +700,7 @@ NandStatus_t NANDPageWrite(NandInfo_t *nandInfo, unsigned int blkNum,
         trnsCnt++)
     {
         if (NAND_ECC_ALGO_NONE != nandInfo->eccType)
-        {    
+        {
             (nandInfo->hNandEccInfo->ECCEnable)(nandInfo);
         }
         if(nandInfo->opMode == NAND_XFER_MODE_DMA)
@@ -718,19 +718,19 @@ NandStatus_t NANDPageWrite(NandInfo_t *nandInfo, unsigned int blkNum,
             NANDDataWrite(nandInfo ,txData, NAND_BYTES_PER_TRNFS);
         }
         if (NAND_ECC_ALGO_NONE != nandInfo->eccType)
-        {    
+        {
             (nandInfo->hNandEccInfo->ECCDisable)(nandInfo);
             (nandInfo->hNandEccInfo->ECCCalculate)(nandInfo, eccData);
-            eccData += nandInfo->hNandEccInfo->eccByteCnt;        
+            eccData += nandInfo->hNandEccInfo->eccByteCnt;
         }
         txData += NAND_BYTES_PER_TRNFS;
     }
     if(retVal == NAND_STATUS_PASSED)
     {
-        retVal = NANDPageWriteCmdEnd(nandInfo);    
-        
+        retVal = NANDPageWriteCmdEnd(nandInfo);
+
         if (NAND_ECC_ALGO_NONE != nandInfo->eccType)
-        {    
+        {
             eccData = eccDataTmp;
             if(retVal == NAND_STATUS_PASSED)
             {
@@ -752,7 +752,7 @@ NandStatus_t NANDPageWrite(NandInfo_t *nandInfo, unsigned int blkNum,
 /**
 * \brief  Function to read a page from NAND.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  blkNum        : Blk Number.\n
@@ -763,7 +763,7 @@ NandStatus_t NANDPageWrite(NandInfo_t *nandInfo, unsigned int blkNum,
 *
 * \return Read command status.\n
 *
-*    NAND_STATUS_PASSED                       : Page read is succssfull without any 
+*    NAND_STATUS_PASSED                       : Page read is succssfull without any
 *                                               ECC error.\n
 *    NAND_STATUS_READ_ECC_ERROR_CORRECTED     : Page read is sucssfull with ECC errors
 *                                               and are corrected.\n
@@ -837,12 +837,12 @@ NandStatus_t NANDPageRead(NandInfo_t *nandInfo,unsigned int blkNum,
         {
             NANDDataRead(nandInfo, rxData, NAND_BYTES_PER_TRNFS);
         }
-                
+
         if (NAND_ECC_ALGO_NONE != nandInfo->eccType)
-        {        
+        {
             if( nandInfo->eccType == NAND_ECC_ALGO_BCH_8BIT )
             {
-                /* Read the ECC data, as BCH algo reguires this for syndrome 
+                /* Read the ECC data, as BCH algo reguires this for syndrome
                  *  calculation.
                  */
                 columnAddr = (nandEccInfo->eccOffSet) + (trnsCnt * nandEccInfo->eccByteCnt);
@@ -857,8 +857,8 @@ NandStatus_t NANDPageRead(NandInfo_t *nandInfo,unsigned int blkNum,
                 }
                 /* Read the ECC Data from spare area */
                 NANDDataRead(nandInfo, eccData, (nandEccInfo->eccByteCnt - 1));
-            }        
-            
+            }
+
             /* Check for ECC errors and correct if any errors */
             retVal = (nandInfo->hNandEccInfo->ECCCheckAndCorrect)(nandInfo, eccData,
                                             (unsigned char *)rxData);
@@ -910,7 +910,7 @@ NandStatus_t NANDPageRead(NandInfo_t *nandInfo,unsigned int blkNum,
 /**
 * \brief  This function Check whether Block is bad or Not.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  blkNum        : Blk Number.\n
@@ -925,29 +925,29 @@ NandStatus_t NANDPageRead(NandInfo_t *nandInfo,unsigned int blkNum,
 NandBlockStatus_t NANDBadBlockCheck(NandInfo_t *nandInfo, unsigned int blkNum)
 {
     NandBlockStatus_t retVal = NAND_BLOCK_GOOD;
-    unsigned int pageNum = 0;    
+    unsigned int pageNum = 0;
     unsigned int columnAddr;
 
     columnAddr  = nandInfo->pageSize;
-    
+
     /* Adjust column address for 16-bit devices */
     if( NAND_BUSWIDTH_16BIT == nandInfo->busWidth )
     {
         columnAddr = columnAddr >> 1;
-    }    
+    }
 
    /* Read the spare area of 1st, 2nd and last page of the block    */
     for (pageNum = 0; pageNum < 3u; pageNum++)
     {
         unsigned char badBlkMark[2];
-        
+
         /* Last page number of the block */
         if (pageNum == 2)
         {
             pageNum = (nandInfo->pagesPerBlk - 1u);
         }
-        
-        if( NAND_STATUS_WAITTIMEOUT == 
+
+        if( NAND_STATUS_WAITTIMEOUT ==
             NANDPageReadCmdSend(nandInfo, blkNum, pageNum, columnAddr))
         {
             retVal = NAND_BLOCK_SPARE_AREA_READ_FAILED;
@@ -956,7 +956,7 @@ NandBlockStatus_t NANDBadBlockCheck(NandInfo_t *nandInfo, unsigned int blkNum)
 
         /* Read the ECC Data from spare area */
         NANDDataRead(nandInfo, &badBlkMark[0], 2);
-        
+
         /* Check for bad block marker */
         if(badBlkMark[0] != NAND_BLK_GOOD_MARK)
         {
@@ -971,7 +971,7 @@ NandBlockStatus_t NANDBadBlockCheck(NandInfo_t *nandInfo, unsigned int blkNum)
 * \brief  This function Marks the block as BAD by writing non 0xFF value in to
 *         the spare area.\n
 *
-* \param  nandInfo      : Pointer to structure which conatins controller and 
+* \param  nandInfo      : Pointer to structure which conatins controller and
 *                         device information.\n
 *
 * \param  blkNum        : Blk Number.\n
@@ -983,7 +983,7 @@ NandBlockStatus_t NANDBadBlockCheck(NandInfo_t *nandInfo, unsigned int blkNum)
 *         NAND_STATUS_FAILED        : If the write command is failed.\n
 *         NAND_STATUS_DEVBUSY       : If the device is busy.\n
 *         NAND_STATUS_DEVWRPROTECT  : If the device is write protect.\n
-*         NAND_STATUS_WAITTIMEOUT   : If the RB pin inidcating device 
+*         NAND_STATUS_WAITTIMEOUT   : If the RB pin inidcating device
 *                                     busy status.\n
 *
 **/
@@ -995,7 +995,7 @@ NandStatus_t NANDMarkBlockAsBad(NandInfo_t *nandInfo, unsigned int blkNum)
 
     columnAddr  = nandInfo->pageSize;
 
-    /* Adjust column address for 16-bit devices */    
+    /* Adjust column address for 16-bit devices */
     if(nandInfo->busWidth == NAND_BUSWIDTH_16BIT)
     {
         columnAddr = columnAddr >> 1;
@@ -1009,7 +1009,7 @@ NandStatus_t NANDMarkBlockAsBad(NandInfo_t *nandInfo, unsigned int blkNum)
     for (pageNum = 0; pageNum < 3u; pageNum++)
     {
         unsigned char badBlkMark[2];
-    
+
         /* Last page number of the block */
         if (pageNum == 2)
         {

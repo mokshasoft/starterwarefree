@@ -43,8 +43,8 @@
 #include "systick.h"
 
 void TimerTickConfigure(void (*pfnHandler)(void))
-{    
-    
+{
+
 }
 
 void TimerTickPeriodSet(unsigned int ulTime)

@@ -77,7 +77,7 @@ unsigned int tmrStepVary = FALSE;
 unsigned int tmr2Flag = FALSE;
 volatile  unsigned int tmr4Flag = FALSE;
 
-unsigned int timerCount[10] = 
+unsigned int timerCount[10] =
 						{
 							0xFFF00000u,
 							0xFFE00000u,
@@ -100,7 +100,7 @@ unsigned int timerCount[10] =
 void Timer2IntRegister(void)
 {
     IntRegister(SYS_INT_TINT2, Timer2Isr);
-	  
+
     /* Set the priority */
     IntPrioritySet(SYS_INT_TINT2, 0, AINTC_HOSTINT_ROUTE_IRQ);
 
@@ -121,7 +121,7 @@ void Timer2Config(void)
 
     /* Configure the DMTimer for one shot mode */
     DMTimerModeConfigure(SOC_DMTIMER_2_REGS, DMTIMER_ONESHOT_NOCMP_ENABLE);
-	
+
 	Timer2Stop();
 }
 
@@ -159,16 +159,16 @@ void Timer2Stop(void)
 static void Timer2Isr(void)
 {
 	static unsigned int index = 0;
-	
+
     /* Clear the status of the interrupt flags */
     DMTimerIntStatusClear(SOC_DMTIMER_2_REGS, DMTIMER_INT_OVF_EN_FLAG);
-    
+
     tmr2Flag = TRUE;
-	
+
 	DMTimerCounterSet(SOC_DMTIMER_2_REGS, timerCount[index++%10]);
-	
-	DMTimerEnable(SOC_DMTIMER_2_REGS);	
-	
+
+	DMTimerEnable(SOC_DMTIMER_2_REGS);
+
 }
 
 
@@ -181,7 +181,7 @@ static void Timer2Isr(void)
 void Timer4IntRegister(void)
 {
     IntRegister(SYS_INT_TINT4, Timer4Isr);
-	  
+
     /* Set the priority */
     IntPrioritySet(SYS_INT_TINT4, 0, AINTC_HOSTINT_ROUTE_IRQ);
 
@@ -202,7 +202,7 @@ void Timer4Config(void)
 
     /* Configure the DMTimer for one shot mode */
     DMTimerModeConfigure(SOC_DMTIMER_4_REGS, DMTIMER_AUTORLD_NOCMP_ENABLE);
-	
+
 	Timer4Stop();
 }
 
@@ -240,9 +240,9 @@ static void Timer4Isr(void)
 {
     /* Clear the status of the interrupt flags */
     DMTimerIntStatusClear(SOC_DMTIMER_4_REGS, DMTIMER_INT_OVF_EN_FLAG);
-    
+
     tmr4Flag = TRUE;
-	
+
 }
 
 /*******************************************************************************
@@ -329,25 +329,25 @@ static void Timer6Isr(void)
 void initializeTimer1(void)
 {
 	enableModuleClock(CLK_TIMER1);
-	
+
 	/*	wake up configs	*/
 	HWREG(0x44e31010) = 0x214;
-	
+
 	/*	enable overflow int	*/
 	HWREG(0x44e3101c) = 0x2;
-	
+
 	/*	enable overflow wakeup	*/
 	HWREG(0x44e31020) = 0x2;
-	
+
 }
 
 void setTimerCount(unsigned int count)
 {
 	/*	Set timer counter	*/
 	HWREG(0x44e31028) = count;
-	
+
 	/*	Start timer	*/
-	HWREG(0x44e31024) =  0x23;	
+	HWREG(0x44e31024) =  0x23;
 }
 
 

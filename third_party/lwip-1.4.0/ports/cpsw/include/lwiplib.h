@@ -264,21 +264,21 @@ typedef struct lwipIf
     unsigned int ipAddr; /* IP Address */
     unsigned int netMask; /* Net Mask */
     unsigned int gwAddr; /* Gate Way Address */
-    unsigned int ipMode; /* IP Address mode  
-                            IPADDR_USE_STATIC - force static IP 
+    unsigned int ipMode; /* IP Address mode
+                            IPADDR_USE_STATIC - force static IP
                                                 addressing to be used \n
                             IPADDR_USE_DHCP - force DHCP with fallback
                                               to Link Local \n
-                            IPADDR_USE_AUTOIP */  
+                            IPADDR_USE_AUTOIP */
     unsigned char macArray[LEN_MAC_ADDRESS]; /* MAC Address to be used*/
 }LWIP_IF;
 
 /******************************************************************************
 **                    lwIP Abstraction Layer API
 ******************************************************************************/
-extern unsigned int lwIPLinkStatusGet(unsigned int instNum, 
+extern unsigned int lwIPLinkStatusGet(unsigned int instNum,
                                       unsigned int slvPortNum);
-extern unsigned int lwIPNetIfStatusGet(unsigned int instNum, 
+extern unsigned int lwIPNetIfStatusGet(unsigned int instNum,
                                        unsigned int slvPortNum);
 extern unsigned int lwIPInit(LWIP_IF *lwipIf,char *hwOK);
 extern void lwIPRxIntHandler(unsigned int instNum);

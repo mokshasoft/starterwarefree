@@ -73,7 +73,7 @@ static const char* ControlCGIHandler(int iIndex, int iNumParams, char *pcParam[]
 *******************************************************************************/
 static const tCGI g_psConfigCGIURIs[] =
 {
-    { "/io_control.cgi", ControlCGIHandler }      
+    { "/io_control.cgi", ControlCGIHandler }
 };
 
 unsigned int ipAddr1;
@@ -87,7 +87,7 @@ MDIOCONTEXT mdioContext;
 /*******************************************************************************
 **                          FUNCTION DEFINITIONS
 *******************************************************************************/
-/* 
+/*
 ** Registers ethernet ISRs
 */
 void EnetIntRegister(void)
@@ -104,7 +104,7 @@ void EnetIntRegister(void)
 }
 
 /*
-**  This function checks if the interface is up for Port 1 
+**  This function checks if the interface is up for Port 1
 */
 unsigned int EnetPort1IfIsUp(void)
 {
@@ -112,7 +112,7 @@ unsigned int EnetPort1IfIsUp(void)
 }
 
 /*
-**  This function checks if the interface is up for Port 2 
+**  This function checks if the interface is up for Port 2
 */
 unsigned int EnetPort2IfIsUp(void)
 {
@@ -120,7 +120,7 @@ unsigned int EnetPort2IfIsUp(void)
 }
 
 /*
-**  This function checks if the Link is active for Port 1 
+**  This function checks if the Link is active for Port 1
 */
 unsigned int EnetPort1LinkIsUp(void)
 {
@@ -128,7 +128,7 @@ unsigned int EnetPort1LinkIsUp(void)
 }
 
 /*
-**  This function checks if the Link is active for Port 2 
+**  This function checks if the Link is active for Port 2
 */
 unsigned int EnetPort2LinkIsUp(void)
 {
@@ -193,7 +193,7 @@ void EnetPort1HttpServerInit(void)
 ** initializes the CPSW Port 2
 */
 void EnetPort2HttpServerInit(void)
-{    
+{
     LWIP_IF lwipIfPort2;
 
     EVMMACAddrGet(1, lwipIfPort2.macArray);
@@ -241,12 +241,12 @@ void EnetPort2HttpServerInit(void)
 }
 
 /*
-** This function restarts DHCP 
+** This function restarts DHCP
 */
 void EnetDHCPRestart(void)
 {
     if(enetPort1InitFlag == TRUE)
-    { 
+    {
         if(lwIPLinkStatusGet(0, 1))
         {
             ipAddr1 = lwIPDHCPStart(0, 1);
@@ -256,9 +256,9 @@ void EnetDHCPRestart(void)
                 ConsoleUtilsPrintf("\n\r\n\rPort 1 IP Address Assigned: ");
                 IpAddrDisplay(ipAddr1);
             }
-  
+
             else
-            {         
+            {
                 ConsoleUtilsPrintf("\n\r\n\rPort 1 IP Address Acquisition Failed.");
             }
         }
@@ -280,9 +280,9 @@ void EnetDHCPRestart(void)
                 ConsoleUtilsPrintf("\n\r\n\rPort 2 IP Address Assigned: ");
                 IpAddrDisplay(ipAddr2);
             }
-  
+
             else
-            {         
+            {
                 ConsoleUtilsPrintf("\n\r\n\rPort 2 IP Address Acquisition Failed.");
             }
         }
@@ -295,68 +295,68 @@ void EnetDHCPRestart(void)
 }
 
 /*
-** CGI handler 
+** CGI handler
 */
 static const char* ControlCGIHandler(int iIndex, int iNumParams, char *pcParam[],
                                      char *pcValue[])
 {
     if(!(strcmp(pcValue[0],"INTRO")))
     {
-        clickIdx = CLICK_IDX_INTRO;    
+        clickIdx = CLICK_IDX_INTRO;
     }
     else if(!(strcmp(pcValue[0],"WWW")))
     {
-        clickIdx = CLICK_IDX_CHOICE;    
+        clickIdx = CLICK_IDX_CHOICE;
     }
     else if(!(strcmp(pcValue[0],"MCASP")))
     {
-        clickIdx = CLICK_IDX_MCASP;    
+        clickIdx = CLICK_IDX_MCASP;
     }
     else if(!(strcmp(pcValue[0],"MMCSD")))
     {
-        clickIdx = CLICK_IDX_MMCSD;    
+        clickIdx = CLICK_IDX_MMCSD;
     }
     else if(!(strcmp(pcValue[0],"UART")))
     {
-        clickIdx = CLICK_IDX_UART;    
+        clickIdx = CLICK_IDX_UART;
     }
     else if(!(strcmp(pcValue[0],"RTC")))
     {
-        clickIdx = CLICK_IDX_RTC;    
+        clickIdx = CLICK_IDX_RTC;
     }
     else if(!(strcmp(pcValue[0],"TIMER")))
     {
-        clickIdx = CLICK_IDX_TIMER;    
+        clickIdx = CLICK_IDX_TIMER;
     }
     else if(!(strcmp(pcValue[0],"ETHERNET")))
     {
-        clickIdx = CLICK_IDX_ETHERNET;    
+        clickIdx = CLICK_IDX_ETHERNET;
     }
     else if(!(strcmp(pcValue[0],"ECAP")))
     {
-        clickIdx = CLICK_IDX_ECAP;    
+        clickIdx = CLICK_IDX_ECAP;
     }	
     else if(!(strcmp(pcValue[0],"GPIO")))
     {
-        clickIdx = CLICK_IDX_GPIO;    
+        clickIdx = CLICK_IDX_GPIO;
     }
     else if(!(strcmp(pcValue[0],"I2C")))
     {
-        clickIdx = CLICK_IDX_I2C;    
+        clickIdx = CLICK_IDX_I2C;
     }
     else if(!(strcmp(pcValue[0],"PM")))
     {
-        clickIdx = CLICK_IDX_PM;    
+        clickIdx = CLICK_IDX_PM;
     }
     else if(!(strcmp(pcValue[0],"DVFS")))
     {
-        clickIdx = CLICK_IDX_DVFS;    
+        clickIdx = CLICK_IDX_DVFS;
     }
     else
     {
         clickIdx = 0;
     }
- 
+
     return "/io_cgi.ssi";
 }
 

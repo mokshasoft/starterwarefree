@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #ifndef      __PM_DEMO_H__
 #define      __PM_DEMO_H__
 
@@ -53,7 +53,7 @@ extern "C" {
 #include "cm3wkup_proxy.h"
 
 /*****************************************************************************
-**                   FUNCTION DECLARATIONS                                   
+**                   FUNCTION DECLARATIONS
 *****************************************************************************/
 
 void initializeAINTC(void);

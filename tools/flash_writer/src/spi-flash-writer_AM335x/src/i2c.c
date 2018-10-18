@@ -45,7 +45,7 @@ Uint32 I2C_readw(  Uint32 offset) {
     return *(volatile Uint32 *)( offset );
 }
 #define I2C_IP_CLK                48000000
-#define I2C_INTERNAL_SAMPLING_CLK 12000000 
+#define I2C_INTERNAL_SAMPLING_CLK 12000000
 void i2c_init (int speed, int slaveadd) {
 	int psc, fsscll, fssclh;
 	int hsscll = 0, hssclh = 0;

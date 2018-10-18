@@ -169,7 +169,7 @@
 #include <string.h>
 
 /****************************************************************************
-**                   INTERNAL MACRO DEFINITIONS                                       
+**                   INTERNAL MACRO DEFINITIONS
 ****************************************************************************/
 #define NUM_OF_IMAGES                         (15u)
 
@@ -179,9 +179,9 @@
 #define NUM_SECTIONS_DDR           (512)
 #define NUM_SECTIONS_DEV           (960)
 #define NUM_SECTIONS_OCMC          (1)
- 
+
 /****************************************************************************
-**                   LOCAL FUNCTION PROTOTYPES                                
+**                   LOCAL FUNCTION PROTOTYPES
 ****************************************************************************/
 static void CoOrdAction(int x, int y);
 static void PeripheralsSetUp(void);
@@ -205,7 +205,7 @@ static void ActionMenuRTC(void);
 static void ActionMenuEthernet(void);
 static void ActionMenuTimer(void);
 static void ActionMenuECAP(void);
-static void ActionMenuGPIO(void); 
+static void ActionMenuGPIO(void);
 static void ActionMenuI2C(void);
 static void ActionMenuPM(void);
 static void toggleColors(void);
@@ -247,7 +247,7 @@ extern void etharp_tmr(void);
 extern void romRestoreLocation(void);
 
 /****************************************************************************
-**                  GLOBAL VARIABLES DEFINITIONS                                         
+**                  GLOBAL VARIABLES DEFINITIONS
 ****************************************************************************/
 #ifdef __TMS470__
 #pragma DATA_ALIGN(pageTable, 16384);
@@ -266,67 +266,67 @@ int const xyDefault[4] =  {0, 0, 0, 0};
 
 int const xyNext[4] = {XMIN_NEXT, XMAX_NEXT, YMIN_NEXT, YMAX_NEXT};
 
-int const xyPrev[4] = {XMIN_PREV, XMAX_PREV, YMIN_PREV, YMAX_PREV};    
-         
+int const xyPrev[4] = {XMIN_PREV, XMAX_PREV, YMIN_PREV, YMAX_PREV};
+
 int const xyHome[4] = {XMIN_HOME, XMAX_HOME, YMIN_HOME, YMAX_HOME};
 
 int const xyTimeSet[4] = {XMIN_RTC_STD, XMAX_RTC_STD,
                           YMIN_RTC_STD, YMAX_RTC_STD};
-                          
+
 int const xyIntro[4] =  { XMIN_INTRO, XMAX_INTRO, YMIN_INTRO, YMAX_INTRO};
 
 int const xyWebDemo[4] = { XMIN_WEB_DEMO, XMAX_WEB_DEMO,
                            YMIN_WEB_DEMO, YMAX_WEB_DEMO};
-                           
+
 int const xyMcASP[4] = { XMIN_MCASP, XMAX_MCASP, YMIN_MCASP, YMAX_MCASP};
 
-int const xyUart[4] =  { XMIN_UART, XMAX_UART, YMIN_UART, YMAX_UART}; 
+int const xyUart[4] =  { XMIN_UART, XMAX_UART, YMIN_UART, YMAX_UART};
 
-int const xyRTC[4] = { XMIN_RTC, XMAX_RTC, YMIN_RTC, YMAX_RTC}; 
+int const xyRTC[4] = { XMIN_RTC, XMAX_RTC, YMIN_RTC, YMAX_RTC};
 
 int const xyTimer[4] = { XMIN_TIMER, XMAX_TIMER, YMIN_TIMER, YMAX_TIMER};
 
-int const xyEthernet[4] = { XMIN_ETHERNET, XMAX_ETHERNET, 
-                            YMIN_ETHERNET, YMAX_ETHERNET }; 
+int const xyEthernet[4] = { XMIN_ETHERNET, XMAX_ETHERNET,
+                            YMIN_ETHERNET, YMAX_ETHERNET };
 
-int const xyMMCSD[4] = { XMIN_MMCSD, XMAX_MMCSD, 
-                                   YMIN_MMCSD, YMAX_MMCSD }; 
-								   
+int const xyMMCSD[4] = { XMIN_MMCSD, XMAX_MMCSD,
+                                   YMIN_MMCSD, YMAX_MMCSD };
+
 int const xyEcapDemo[4] = {XMIN_ECAP, XMAX_ECAP,
-                       YMIN_ECAP, YMAX_ECAP};								   
+                       YMIN_ECAP, YMAX_ECAP};
 
 int const xyEcapMenu[4] = {XMIN_ECAP_MENU, XMAX_ECAP_MENU,
-						   YMIN_ECAP_MENU, YMAX_ECAP_MENU};	
-						   
+						   YMIN_ECAP_MENU, YMAX_ECAP_MENU};
+
 int const xyGpioMenu[4] = {XMIN_GPIO_MENU, XMAX_GPIO_MENU,
-						   YMIN_GPIO_MENU, YMAX_GPIO_MENU};	
-						   
+						   YMIN_GPIO_MENU, YMAX_GPIO_MENU};
+
 int const xyI2CMenu[4] = {XMIN_I2C_MENU, XMAX_I2C_MENU,
-						  YMIN_I2C_MENU, YMAX_MOUSE_LEFT};	
+						  YMIN_I2C_MENU, YMAX_MOUSE_LEFT};
 
 int const xyPMMenu[4] = {XMIN_PM_MENU, XMAX_PM_MENU,
-						 YMIN_PM_MENU, YMAX_PM_MENU};	
+						 YMIN_PM_MENU, YMAX_PM_MENU};
 
 int const xyPMstandbyDemo[4] = {XMIN_PM_STANDBY_DEMO, XMAX_PM_STANDBY_DEMO,
                            YMIN_PM_STANDBY_DEMO, YMAX_PM_STANDBY_DEMO};
 
 int const xyPMds0Demo[4] = {XMIN_PM_DS0_DEMO, XMAX_PM_DS0_DEMO,
-                           YMIN_PM_DS0_DEMO, YMAX_PM_DS0_DEMO};								 
+                           YMIN_PM_DS0_DEMO, YMAX_PM_DS0_DEMO};
 
 int const xyPMds1Demo[4] = {XMIN_PM_DS1_DEMO, XMAX_PM_DS1_DEMO,
-                           YMIN_PM_DS1_DEMO, YMAX_PM_DS1_DEMO};							   
+                           YMIN_PM_DS1_DEMO, YMAX_PM_DS1_DEMO};
 
 int const xyPMwksTsc[4] = {XMIN_PM_WAKE_TSC, XMAX_PM_WAKE_TSC,
-                           YMIN_PM_WAKE_TSC, YMAX_PM_WAKE_TSC};							   						   						   
-						   
+                           YMIN_PM_WAKE_TSC, YMAX_PM_WAKE_TSC};
+
 int const xyPMwksTmr[4] = {XMIN_PM_WAKE_TMR, XMAX_PM_WAKE_TMR,
-                           YMIN_PM_WAKE_TMR, YMAX_PM_WAKE_TMR};							   
-						   
+                           YMIN_PM_WAKE_TMR, YMAX_PM_WAKE_TMR};
+
 int const xyPMwksUart[4] = {XMIN_PM_WAKE_UART, XMAX_PM_WAKE_UART,
-                           YMIN_PM_WAKE_UART, YMAX_PM_WAKE_UART};		
+                           YMIN_PM_WAKE_UART, YMAX_PM_WAKE_UART};
 
 int const xyPMwksGpio[4] = {XMIN_PM_WAKE_GPIO, XMAX_PM_WAKE_GPIO,
-                           YMIN_PM_WAKE_GPIO, YMAX_PM_WAKE_GPIO};						   
+                           YMIN_PM_WAKE_GPIO, YMAX_PM_WAKE_GPIO};
 
 int const xyPMwksRTC[4] = {XMIN_PM_WAKE_RTC, XMAX_PM_WAKE_RTC,
                            YMIN_PM_WAKE_RTC, YMAX_PM_WAKE_RTC};
@@ -370,22 +370,22 @@ static TOUCHSPEC const touchSpecMenu[NUM_ICON_MENU] =
                        {xyPMMenu, ActionMenuPM, "PM demo"},
                        {xyDVFSMenu, ActionMenuDVFS, "DVFS demo"},
                     };
-                    
-static TOUCHSPEC const touchSpecIntro[NUM_ICON_INTRO] = 
+
+static TOUCHSPEC const touchSpecIntro[NUM_ICON_INTRO] =
                     {
                        {xyNext, ActionMenuWebDemo, "Next slide"},
                        {xyPrev, ActionMenu, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"}
                     };
 
-static TOUCHSPEC const touchSpecUart[NUM_ICON_UART] = 
+static TOUCHSPEC const touchSpecUart[NUM_ICON_UART] =
                     {
                        {xyNext, ActionMenuRTC, "Next slide"},
                        {xyPrev, ActionMenuMMCSD, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"}
                     };
-					
-static TOUCHSPEC const touchSpecRtc[NUM_ICON_RTC] = 
+
+static TOUCHSPEC const touchSpecRtc[NUM_ICON_RTC] =
                     {
                        {xyNext, ActionMenuTimer, "Next slide"},
                        {xyPrev, ActionMenuUart, "Prev slide"},
@@ -407,13 +407,13 @@ static TOUCHSPEC const touchSpecWeb[NUM_ICON_CHOICE] =
                        {xyHome, ActionMenu, "Home slide"}
                     };
 
-static TOUCHSPEC const touchSpecMcASP[NUM_ICON_MCASP] = 
+static TOUCHSPEC const touchSpecMcASP[NUM_ICON_MCASP] =
                     {
                        {xyNext, ActionMenuMMCSD, "Next slide"},
                        {xyPrev, ActionMenuWebDemo, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"}
                     };
-                    
+
 static TOUCHSPEC const touchSpecTimer[NUM_ICON_TMR] =
                     {
                        {xyNext, ActionMenuEthernet, "Next slide"},
@@ -425,7 +425,7 @@ static TOUCHSPEC const touchSpecEthernet[NUM_ICON_ENET] =
                        {xyNext, ActionMenuECAP, "Next slide"},
                        {xyPrev, ActionMenuTimer, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"}
-                    };      
+                    };
 
 static TOUCHSPEC const touchSpecECAP[NUM_ICON_ECAP] =
                     {
@@ -433,22 +433,22 @@ static TOUCHSPEC const touchSpecECAP[NUM_ICON_ECAP] =
                        {xyPrev, ActionMenuEthernet, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"},
                        {xyEcapDemo, ActionECAPdemo, "Execute demo"},
-                    };  					
-					
+                    };
+
 static TOUCHSPEC const touchSpecGPIO[NUM_ICON_GPIO] =
                     {
                        {xyNext, ActionMenuI2C, "Next slide"},
                        {xyPrev, ActionMenuECAP, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"},
-                    };  	
+                    };
 
 static TOUCHSPEC const touchSpecI2C[NUM_ICON_I2C] =
                     {
                        {xyNext, ActionMenuPM, "Next slide"},
                        {xyPrev, ActionMenuGPIO, "Prev slide"},
                        {xyHome, ActionMenu, "Home slide"},
-                    };  						
-					
+                    };
+
 static TOUCHSPEC const touchSpecPM[NUM_ICON_PM] =
                     {
                        {xyNext, ActionMenuDVFS, "Next slide"},
@@ -462,7 +462,7 @@ static TOUCHSPEC const touchSpecPM[NUM_ICON_PM] =
                        {xyPMwksUart, ActionWakeOnUart, "Uart wake source"},
                        {xyPMwksGpio, ActionWakeOnGpio, "GPIO wake source"},
                        {xyPMwksRTC, ActionWakeOnRTC, "RTC Alarm wake source"},
-                    };  
+                    };
 
 static TOUCHSPEC const touchSpecDVFS[NUM_ICON_DVFS] =
                     {
@@ -475,14 +475,14 @@ static TOUCHSPEC const touchSpecDVFS[NUM_ICON_DVFS] =
                        {xyDVFSSrTurbo, ActionDVFSSrTurbo, "SR TURBO"},
                        {xyDVFSNitro, ActionDVFSNitro, "Nitro"},
                     };
-							
-                    
+
+
 /*
 ** Context information.
 ** Image, number of icons in the image, specification.
 ** The next icon will come as the last specification for each image.
 */
-IMAGECONTEXT contextInfo[NUM_OF_IMAGES] =             
+IMAGECONTEXT contextInfo[NUM_OF_IMAGES] =
                     {
                        {bannerImage, NUM_ICON_BANNER, 	touchSpecBanner},
                        {bannerImage, NUM_ICON_MENU, 	touchSpecMenu},
@@ -492,13 +492,13 @@ IMAGECONTEXT contextInfo[NUM_OF_IMAGES] =
 	               {bannerImage, NUM_ICON_MMCSD, 	touchSpecMmcsd},
                        {bannerImage, NUM_ICON_UART, 	touchSpecUart},
                        {bannerImage, NUM_ICON_RTC, 		touchSpecRtc},
-                       {bannerImage, NUM_ICON_TMR, 		touchSpecTimer},                       
-                       {bannerImage, NUM_ICON_ENET, 	touchSpecEthernet},                       
-                       {bannerImage, NUM_ICON_ECAP, 	touchSpecECAP},                       
-                       {bannerImage, NUM_ICON_GPIO, 	touchSpecGPIO},                       
-                       {bannerImage, NUM_ICON_I2C, 		touchSpecI2C},                       
-                       {bannerImage, NUM_ICON_PM, 		touchSpecPM},                       
-                       {bannerImage, NUM_ICON_DVFS, 		touchSpecDVFS},                       
+                       {bannerImage, NUM_ICON_TMR, 		touchSpecTimer},
+                       {bannerImage, NUM_ICON_ENET, 	touchSpecEthernet},
+                       {bannerImage, NUM_ICON_ECAP, 	touchSpecECAP},
+                       {bannerImage, NUM_ICON_GPIO, 	touchSpecGPIO},
+                       {bannerImage, NUM_ICON_I2C, 		touchSpecI2C},
+                       {bannerImage, NUM_ICON_PM, 		touchSpecPM},
+                       {bannerImage, NUM_ICON_DVFS, 		touchSpecDVFS},
                     };
 
 /*
@@ -532,7 +532,7 @@ unsigned int I2CDemoFlag = FALSE;
 unsigned int deviceVersion = 0;
 
 /****************************************************************************
-**                      FUNCTION DEFINITIONS                                         
+**                      FUNCTION DEFINITIONS
 ****************************************************************************/
 /*
 ** Function to setup MMU. This function Maps three regions ( 1. DDR
@@ -603,7 +603,7 @@ static void PeripheralsSetUp(void)
     /* Timer6 is used for Standby wakeup */
     enableModuleClock(CLK_TIMER6);
 	//enableModuleClock(CLK_TIMER7);
-    enableModuleClock(CLK_I2C0);	
+    enableModuleClock(CLK_I2C0);
 	enableModuleClock(CLK_I2C1);
 	enableModuleClock(CLK_MCASP1);
 	//enableModuleClock(CLK_GPIO1);
@@ -613,14 +613,14 @@ static void PeripheralsSetUp(void)
 	enableModuleClock(CLK_TPTC1);
 	enableModuleClock(CLK_TPTC0);
 	enableModuleClock(CLK_TPCC);
-	
+
 	GPIO1ModuleClkConfig();
 	GPIO0ModuleClkConfig();
-	
-    EDMAModuleClkConfig();	
+
+    EDMAModuleClkConfig();
 
     RTCModuleClkConfig();
-    CPSWClkEnable();	
+    CPSWClkEnable();
 
     LCDPinMuxSetup();
     CPSWPinMuxSetup();
@@ -631,7 +631,7 @@ static void PeripheralsSetUp(void)
     ECAPPinMuxSetup(2);
 
     GPIO_PMUX_OFFADDR_VALUE(0, 30,PAD_FS_RXE_PU_PUPDE(7));
-	
+
     GPIO1Pin4PinMuxSetup();
 }
 
@@ -741,22 +741,22 @@ static void CoOrdAction(int x, int y)
         if((x >= coOrd[0]) && (x <= coOrd[1]) &&
            ((y >= coOrd[2]) && (y <= coOrd[3])))
         {
-            PrevContextClear();            
+            PrevContextClear();
             (touchSpec->action)();
             break;
         }
-    }    
+    }
 }
 
 /*
-** Take the actions on click. 
+** Take the actions on click.
 */
 static void ClickAction(void)
 {
     TOUCHSPEC const *clickSpec;
 
     /*
-    ** Get the spec. Assumed that the last touch spec only will give 
+    ** Get the spec. Assumed that the last touch spec only will give
     ** action for the next image.
     */
     clickSpec = contextInfo[clickIdx - 1].touchSpec;
@@ -772,7 +772,7 @@ static void ClickAction(void)
 int main(void)
 {
     int x;
-    int y;    
+    int y;
     unsigned char rxByte;
     unsigned int value = (unsigned int)E_FAIL;
 
@@ -808,7 +808,7 @@ int main(void)
     /* Initialize the ARM Interrupt Controller */
     IntAINTCInit();
 
-    /* Register the ISRs */  
+    /* Register the ISRs */
     Raster0IntRegister();
     Timer2IntRegister();
     Timer4IntRegister();
@@ -816,8 +816,8 @@ int main(void)
     RtcIntRegister();
     TouchIntRegister();
     CM3IntRegister();
-    IntRegister(127, dummyIsr); 
- 
+    IntRegister(127, dummyIsr);
+
     IntMasterIRQEnable();
 
     /* Enable system interrupts */
@@ -839,11 +839,11 @@ int main(void)
     IntSystemEnable(SYS_INT_M3_TXEV);
     IntSystemEnable(127);
     IntPrioritySet(127, 0, AINTC_HOSTINT_ROUTE_IRQ);
-	
+
 	IntSystemEnable(SYS_INT_UART0INT);
     IntPrioritySet(SYS_INT_UART0INT, 0, AINTC_HOSTINT_ROUTE_IRQ);
 	IntRegister(SYS_INT_UART0INT, uartIsr);
-	
+
 	/*	GPIO interrupts	*/
 	IntSystemEnable(SYS_INT_GPIOINT0A);
     IntPrioritySet(SYS_INT_GPIOINT0A, 0, AINTC_HOSTINT_ROUTE_IRQ);
@@ -858,7 +858,7 @@ int main(void)
 
     CM3EventsClear();
     CM3LoadAndRun();
-    waitForM3Txevent();    
+    waitForM3Txevent();
 
     DelayTimerSetup();
     EcapInit();
@@ -888,19 +888,19 @@ int main(void)
     IntPrioritySet(SYS_INT_I2C0INT, 0, AINTC_HOSTINT_ROUTE_IRQ );
     IntPrioritySet(SYS_INT_I2C1INT, 0, AINTC_HOSTINT_ROUTE_IRQ );
     IntSystemEnable(SYS_INT_I2C0INT);
-    IntSystemEnable(SYS_INT_I2C1INT);		
+    IntSystemEnable(SYS_INT_I2C1INT);
     I2CInit(I2C_0);
     I2CInit(I2C_1);
-	
+
 	IntSystemEnable(SYS_INT_TINT1_1MS);
     IntPrioritySet(SYS_INT_TINT1_1MS, 0, AINTC_HOSTINT_ROUTE_IRQ);
-	IntRegister(SYS_INT_TINT1_1MS,clearTimerInt);	
+	IntRegister(SYS_INT_TINT1_1MS,clearTimerInt);
 
     AudioCodecInit();
     ToneLoopInit();
 
     gpioLedInit();
-	
+
     configVddOpVoltage();
     TouchInit();
 
@@ -925,11 +925,11 @@ int main(void)
 
 
     imageCount = 0;
-	
+
     frameBufIdx = 0;
-	
+
     /* Extract banner image to Frame buffer */
-    ImageArrExtract(bannerImage,  
+    ImageArrExtract(bannerImage,
                     (unsigned int*)(g_pucBuffer[!frameBufIdx]+PALETTE_OFFSET));
 
     CacheDataCleanBuff((unsigned int) &g_pucBuffer[0]+PALETTE_OFFSET,
@@ -944,19 +944,19 @@ int main(void)
     while(FALSE == tmr4Flag);
     tmr4Flag = FALSE;
     Timer4Stop();
-	
+
     /* Extract base image to uncomp buffer */
     ImageArrExtract(baseImage, (unsigned int*)baseUnCompImage);
-  
+
     /* Copy base image to FB */
-    memcpy((void *)((g_pucBuffer[frameBufIdx]+PALETTE_OFFSET)), 
+    memcpy((void *)((g_pucBuffer[frameBufIdx]+PALETTE_OFFSET)),
            (const void *)baseUnCompImage, (LCD_SIZE+PALETTE_SIZE));
 
     CacheDataCleanBuff((unsigned int) &g_pucBuffer[0]+PALETTE_OFFSET,
           GrOffScreen24BPPSize(LCD_WIDTH, LCD_HEIGHT, PIXEL_24_BPP_UNPACKED));
     CacheDataCleanBuff((unsigned int) &g_pucBuffer[1]+PALETTE_OFFSET,
           GrOffScreen24BPPSize(LCD_WIDTH, LCD_HEIGHT, PIXEL_24_BPP_UNPACKED));
-	
+
     /* Start playing the tone */
     AudioTxActivate();
 
@@ -1035,7 +1035,7 @@ int main(void)
              TouchCoOrdGet(&x, &y);
 
              /*
-             ** Validate the coordinates and take action 
+             ** Validate the coordinates and take action
              */
              CoOrdAction(x, y);
          }
@@ -1054,43 +1054,43 @@ int main(void)
 
              clickIdx = 0;
          }
-        
+
          /*
          ** Check if the Timer Expired
-         */ 
+         */
          if(TRUE == tmr2Flag)
          {
              tmr2Flag = FALSE;
              toggleColors();
          }
- 
+
          /*
          ** Check if RTC Time is set
          */
          if(TRUE == rtcSetFlag)
          {
              if(TRUE == rtcSecUpdate)
-             { 
+             {
                  rtcSecUpdate = FALSE;
                  RtcTimeCalDisplay();
                  ConsoleUtilsPrintf(" --- Selected:  ");
              }
-         } 
-		 
+         }
+
          /*
          ** Timer demo
          */
          if(TRUE == tmr4Flag)
 	     {
              tmr4Flag = FALSE;
- 
+
              /* Make sure that interrupts are disabled and no lwIP functions
                 are executed while calling an lwIP exported API */
              IntMasterIRQDisable();
              etharp_tmr();
              IntMasterIRQEnable();
          }
-		 
+
          /*
          ** I2C demo (Temperature Sensor, Accelerometer)
          */
@@ -1108,15 +1108,15 @@ static void ActionEnetInit(void)
 {
     char ipMsg[60] = {"http://"};
     unsigned int i_index, i_msg = 7, ipByte = 0;
-    unsigned int Port1linkFlag = FALSE;	
-    unsigned int Port2linkFlag = FALSE;	
-	
+    unsigned int Port1linkFlag = FALSE;
+    unsigned int Port2linkFlag = FALSE;
+
     GrContextFontSet(&sContext[frameBufIdx], &g_sFontCm18b);
     GrContextForegroundSet(&sContext[frameBufIdx], ClrRed);
     GrStringDrawCentered(&sContext[frameBufIdx], "Checking Ethernet link and acquiring IP address...", -1, 228,
 		        (42 + (4*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
     updatePage(imageCount);
-   
+
     if(!EnetPort1IfIsUp())
     {
         Port1linkFlag = FALSE;
@@ -1133,7 +1133,7 @@ static void ActionEnetInit(void)
         {
             Port1linkFlag = TRUE;
         }
-   
+
         else
         {
             Port1linkFlag = FALSE;
@@ -1163,7 +1163,7 @@ static void ActionEnetInit(void)
     }
 
 
- 
+
     GrContextFontSet(&sContext[frameBufIdx], &g_sFontCm14b);
     GrContextForegroundSet(&sContext[frameBufIdx], ClrRed);
     if((TRUE == Port1linkFlag) && (ipAddr1 != 0))
@@ -1172,7 +1172,7 @@ static void ActionEnetInit(void)
                 IpAddrDisplay(ipAddr1);
          GrStringDrawCentered(&sContext[frameBufIdx], "To control via Port1 of Ethernet, type the address", -1, 222,
 			     (42 + (4*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
-			
+
         for(i_index = 0; i_index < 4; i_index++)
         {
             ipByte = 0x000000FF & (ipAddr1 >> ((i_index)*8) );
@@ -1204,11 +1204,11 @@ static void ActionEnetInit(void)
 
         strcat(ipMsg, "/index.html");
         GrStringDrawCentered(&sContext[frameBufIdx], ipMsg, -1, 135,
-					(42 + (5*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);	
+					(42 + (5*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
 	GrStringDrawCentered(&sContext[frameBufIdx], " in the host web", -1, 280,
 					(42 + (5*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
         GrStringDrawCentered(&sContext[frameBufIdx], "browser to access embedded demo page on the target.", -1, 215,
-					(42 + (6*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);					
+					(42 + (6*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
     }
     else
     {
@@ -1221,7 +1221,7 @@ static void ActionEnetInit(void)
     {
         UARTPuts("\n\rTo control via Port2 of Ethernet, use the IP address ", -1);
         IpAddrDisplay(ipAddr2);
-  
+
         GrStringDrawCentered(&sContext[frameBufIdx], "To control via Port2 of Ethernet, type the address", -1, 222,
 			     (42 + (7*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
 	i_msg = 7;
@@ -1254,7 +1254,7 @@ static void ActionEnetInit(void)
             ipMsg[i_msg++] = '.';
         }
         ipMsg[--i_msg] = '\0';
-   
+
         strcat(ipMsg, "/index.html");
         GrStringDrawCentered(&sContext[frameBufIdx], ipMsg, -1, 135,
 					(42 + (8*(3 + GrStringHeightGet(&sContext[frameBufIdx])))), 0);
@@ -1281,7 +1281,7 @@ static void ActionECAPdemo(void)
 }
 
 /*
-** Action when no touch is detected 
+** Action when no touch is detected
 */
 static void ActionIdle(void)
 {
@@ -1307,14 +1307,14 @@ static void ActionMenuIntro(void)
     imageCount = CLICK_IDX_INTRO;
     updatePage(imageCount);
     UpdateUartConsoleHelp();
-	 
+
 }
 
 /*
 ** Action for menu webdemo icon click
 */
-static void ActionMenuWebDemo(void) 
-{ 
+static void ActionMenuWebDemo(void)
+{
     imageCount = CLICK_IDX_CHOICE;
     ActionEnetInit();
     updatePage(imageCount);
@@ -1324,7 +1324,7 @@ static void ActionMenuWebDemo(void)
 /*
 ** Action for menu McASP icon click
 */
-static void ActionMenuMcASP(void) 
+static void ActionMenuMcASP(void)
 {
     imageCount = CLICK_IDX_MCASP;
     updatePage(imageCount);
@@ -1334,7 +1334,7 @@ static void ActionMenuMcASP(void)
 /*
 ** Action for menu MMCSD icon click
 */
-static void ActionMenuMMCSD(void) 
+static void ActionMenuMMCSD(void)
 {
     imageCount = CLICK_IDX_MMCSD;
     updatePage(imageCount);
@@ -1344,7 +1344,7 @@ static void ActionMenuMMCSD(void)
 /*
 ** Action for menu Uart icon click
 */
-static void ActionMenuUart(void) 
+static void ActionMenuUart(void)
 {
     imageCount = CLICK_IDX_UART;
     updatePage(imageCount);
@@ -1354,7 +1354,7 @@ static void ActionMenuUart(void)
 /*
 ** Action for menu RTC icon click
 */
-static void ActionMenuRTC(void) 
+static void ActionMenuRTC(void)
 {
     imageCount = CLICK_IDX_RTC;
     updatePage(imageCount);
@@ -1364,7 +1364,7 @@ static void ActionMenuRTC(void)
 /*
 ** Action for menu timer icon click
 */
-static void ActionMenuTimer(void) 
+static void ActionMenuTimer(void)
 {
     imageCount = CLICK_IDX_TIMER;
     tmr2Flag  = FALSE;
@@ -1377,7 +1377,7 @@ static void ActionMenuTimer(void)
 /*
 ** Action for menu ethernet icon click
 */
-static void ActionMenuEthernet(void) 
+static void ActionMenuEthernet(void)
 {
     imageCount = CLICK_IDX_ETHERNET;
     updatePage(imageCount);
@@ -1388,7 +1388,7 @@ static void ActionMenuEthernet(void)
 /*
 ** Action for menu ethernet icon click
 */
-static void ActionMenuECAP(void) 
+static void ActionMenuECAP(void)
 {
     imageCount = CLICK_IDX_ECAP;
     updatePage(imageCount);
@@ -1398,7 +1398,7 @@ static void ActionMenuECAP(void)
 /*
 ** Action for menu GPIO icon click
 */
-static void ActionMenuGPIO(void) 
+static void ActionMenuGPIO(void)
 {
     imageCount = CLICK_IDX_GPIO;
     updatePage(imageCount);
@@ -1416,7 +1416,7 @@ static void ActionMenuGPIO(void)
 /*
 ** Action for menu I2C icon click
 */
-static void ActionMenuI2C(void) 
+static void ActionMenuI2C(void)
 {
     imageCount = CLICK_IDX_I2C;
     I2CDemoFlag = TRUE;
@@ -1427,7 +1427,7 @@ static void ActionMenuI2C(void)
 /*
 ** Action for menu PM icon click
 */
-static void ActionMenuPM(void) 
+static void ActionMenuPM(void)
 {
     imageCount = CLICK_IDX_PM;
     updatePage(imageCount);
@@ -1449,7 +1449,7 @@ static void ActionMenuDVFS(void)
 */
 static void ActionTimeSet(void)
 {
-    RtcTimeCalSet(); 
+    RtcTimeCalSet();
     imageCount = CLICK_IDX_RTC;
     updatePage(imageCount);
     UpdateUartConsoleHelp();
@@ -1581,7 +1581,7 @@ static void toggleColors(void)
 	static unsigned int colour[2] = {ClrBlue, ClrRed};
 	static unsigned int index = 0;
     static tRectangle sRect1 = {220,210,248,238};
-	
+
     GrContextForegroundSet(&sContext[!frameBufIdx], colour[index]);
     GrRectFill(&sContext[!frameBufIdx], &sRect1);
 
@@ -1589,9 +1589,9 @@ static void toggleColors(void)
            GrOffScreen24BPPSize(LCD_WIDTH, LCD_HEIGHT, PIXEL_24_BPP_UNPACKED));
     CacheDataCleanBuff((unsigned int) &g_pucBuffer[1],
            GrOffScreen24BPPSize(LCD_WIDTH, LCD_HEIGHT, PIXEL_24_BPP_UNPACKED));
-	
+
 	index = !index;
 }
 
 /****************************** End of file *********************************/
-  
+

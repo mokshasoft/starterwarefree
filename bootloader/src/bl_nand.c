@@ -1,9 +1,9 @@
 /**
  * \file  bl_nand.c
  *
- * \brief NAND Initialization functions.  And a funciton to copy data 
+ * \brief NAND Initialization functions.  And a funciton to copy data
  *        from NAND to the given address.
- *  
+ *
  */
 
 /*
@@ -52,7 +52,7 @@
 #include "bl_nand.h"
 
 /******************************************************************************
-**                     Macro Defination 
+**                     Macro Defination
 *******************************************************************************/
 
 /*****************************************************************************/
@@ -71,7 +71,7 @@
 
 
 /******************************************************************************
-**                    Local  Declaration 
+**                    Local  Declaration
 *******************************************************************************/
 NandInfo_t              nandInfo;
 NandCtrlInfo_t          nandCtrlInfo;
@@ -120,7 +120,7 @@ NandInfo_t *BlNANDConfigure(void)
     if (retVal & NAND_STATUS_FAILED)
     {
         UARTPuts("\r\n*** ERROR : NAND Open Failed... ",-1);
-        while(1);    
+        while(1);
     }
     else if (retVal & NAND_STATUS_WAITTIMEOUT)
     {
@@ -133,7 +133,7 @@ NandInfo_t *BlNANDConfigure(void)
                  "\r\n", -1);
         while(1);
     }
-    
+
     return &nandInfo;
 }
 
@@ -155,21 +155,21 @@ void BlNANDReadFlash (NandInfo_t *hNandInfo, unsigned int flashAddr, unsigned in
     unsigned int memBufferPtr = 0;
     unsigned int bytesLeftInBuff = 0;
     unsigned int bytesToCopy = 0;
-    
+
     NandStatus_t retVal;
 
     /* Convert the flashAddr to block, page numbers */
     unsigned int blkNum = (flashAddr / blockSize);
     unsigned int pageNum = (flashAddr - (blkNum * blockSize)) / pageSize;
-    
-    
+
+
     /* Check to see if we need to buffer a new page */
     if ((blkNum != currBlock) || (pageNum != currPage))
     {
         if(NANDBadBlockCheck(hNandInfo, blkNum) == NAND_BLOCK_GOOD)
         {
             currBlock = blkNum;
-            currPage = pageNum;        
+            currPage = pageNum;
             retVal = NANDPageRead( hNandInfo, currBlock, currPage,
                                    rxData, &eccData[0]);
             if(retVal != NAND_STATUS_PASSED)
@@ -184,49 +184,49 @@ void BlNANDReadFlash (NandInfo_t *hNandInfo, unsigned int flashAddr, unsigned in
             BootAbort();
         }
     }
-    
+
     /* Figure out offset in buffered page */
-    memBufferPtr = flashAddr - (currBlock * blockSize) - (currPage * pageSize);    
-  
-    // Now we do the actual reading of bytes  
+    memBufferPtr = flashAddr - (currBlock * blockSize) - (currPage * pageSize);
+
+    // Now we do the actual reading of bytes
     // If there are bytes in the memory buffer, use them first
     bytesLeftInBuff = NAND_DATA_BUFF_SIZE - memBufferPtr;
     if (bytesLeftInBuff > 0)
     {
         bytesToCopy = (bytesLeftInBuff >= size) ? size : bytesLeftInBuff;
-    
+
         // Copy bytesToCopy bytes from current buffer pointer to the dest
         memcpy((void *)destAddr, (void *)&rxData[memBufferPtr], bytesToCopy);
         destAddr  += bytesToCopy;
         size      -= bytesToCopy;
         flashAddr += bytesToCopy;
-      
+
         bytesLeftInBuff -= bytesToCopy;
     }
-  
+
     // If we have one or more full blocks to copy, copy them directly
     // Any leftover data (partial page) gets copied via the memory buffer
     while (size > 0)
     {
         unsigned char *tempPtr = NULL;
         currPage += 1;
-  
+
         // Check to see if curr page is at end of a block
         if (currPage >= hNandInfo->pagesPerBlk)
         {
             // If so, increment current block until we are in a good block
-            do 
+            do
             {
                 currBlock += 1;
             }
             while (NANDBadBlockCheck(hNandInfo,currBlock)!= NAND_BLOCK_GOOD);
             currPage  = 0;
-        } 
+        }
 
         // Read the new current page in the current block to its destination
         tempPtr = (unsigned char *)(size >= pageSize) ? destAddr : ((unsigned char *)rxData);
         bytesToCopy = (size >= pageSize) ? pageSize : size;
-    
+
         retVal = NANDPageRead( hNandInfo, currBlock, currPage,
                                tempPtr, &eccData[0]);
         if(retVal != NAND_STATUS_PASSED)
@@ -234,14 +234,14 @@ void BlNANDReadFlash (NandInfo_t *hNandInfo, unsigned int flashAddr, unsigned in
             UARTPuts("\r\n Reading Image From NAND ...NAND Read Failed.", -1);
             BootAbort();
         }
-    
+
         if (tempPtr != destAddr)
         {
             // If the last copy was a partial page, copy byteCnt
             // bytes from memory buffer pointer to the dest
             memcpy((void *)destAddr, (void *)rxData, bytesToCopy);
         }
-    
+
         size      -= bytesToCopy;
         destAddr  += bytesToCopy;
         flashAddr += bytesToCopy;

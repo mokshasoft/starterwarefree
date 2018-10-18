@@ -64,10 +64,10 @@ void UARTGetInt(int *val);
  *
  * \return  The value received
  *
- * \note   The numbers that this function can recieve should lie in the 
+ * \note   The numbers that this function can recieve should lie in the
  *          following range:
  *          [-2^(31)] to [2^(31) - 1] i.e.
- *          0x80000000 to  0x7FFFFFFF  
+ *          0x80000000 to  0x7FFFFFFF
  *
  *            This logic is meant only for Little Endian processors only.
  */

@@ -6,20 +6,20 @@
 
 /* Copyright (c) 2006-2010 Texas Instruments Incorporated.  All rights reserved.
  * Software License Agreement
- * 
+ *
  * Texas Instruments (TI) is supplying this software for use solely and
  * exclusively on TI's microcontroller products. The software is owned by
  * TI and/or its suppliers, and is protected under applicable copyright
  * laws. You may not combine this software with "viral" open-source
  * software in order to form a larger program.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
  * NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
  * NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
  * A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
  * CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
  * DAMAGES, FOR ANY REASON WHATSOEVER.
- * 
+ *
  * This is part of revision 6288 of the EK-LM3S2965 Firmware Package.
  * This file is modified to make it work for StarterWare. */
 
@@ -63,7 +63,7 @@ unsigned int tmrFlag = FALSE;
 void Timer2IntRegister(void)
 {
     IntRegister(SYS_INT_TINT2, Timer2Isr);
-	  
+
     /* Set the priority */
     IntPrioritySet(SYS_INT_TINT2, 0, AINTC_HOSTINT_ROUTE_IRQ);
 
@@ -77,7 +77,7 @@ void Timer2IntRegister(void)
 void Timer2Config(void)
 {
 	Timer2IntRegister();
-	
+
     /* Load the counter with the initial count value */
     DMTimerCounterSet(SOC_DMTIMER_2_REGS, TIMER_INITIAL_COUNT);
 
@@ -86,7 +86,7 @@ void Timer2Config(void)
 
     /* Configure the DMTimer for one shot mode */
     DMTimerModeConfigure(SOC_DMTIMER_2_REGS, DMTIMER_TCLR_AR_ONESHOT);
-	
+
 	Timer2Stop();
 }
 
@@ -125,11 +125,11 @@ static void Timer2Isr(void)
 {
     /* Clear the status of the interrupt flags */
     DMTimerIntStatusClear(SOC_DMTIMER_2_REGS, DMTIMER_IRQENABLE_SET_OVF_EN_FLAG_ENABLE);
-    
+
 	DMTimerCounterSet(SOC_DMTIMER_2_REGS, TIMER_INITIAL_COUNT);
-	
-	DMTimerEnable(SOC_DMTIMER_2_REGS);	
-	
+
+	DMTimerEnable(SOC_DMTIMER_2_REGS);
+
 }
 
 /******************************** End of file **********************************/

@@ -57,35 +57,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -111,7 +111,7 @@
 *******************************************************************************/
 
 #define LEN_IP_ADDR                        (4u)
-#define ASCII_NUM_IDX                      (48u) 
+#define ASCII_NUM_IDX                      (48u)
 
 #define START_ADDR_DDR                     (0x80000000)
 #define START_ADDR_DEV                     (0x44000000)
@@ -1113,32 +1113,32 @@ int main(void)
              " embedded web page using http://<ip address assigned>/index.html"
              " via a web browser. \n\r\n\r");
 
-#ifdef CPSW_DUAL_MAC_MODE   
+#ifdef CPSW_DUAL_MAC_MODE
     /* Get the MAC address */
-    EVMMACAddrGet(0, lwipIfPort1.macArray); 
-    EVMMACAddrGet(1, lwipIfPort2.macArray); 
+    EVMMACAddrGet(0, lwipIfPort1.macArray);
+    EVMMACAddrGet(1, lwipIfPort2.macArray);
 
     ConsoleUtilsPrintf("Acquiring IP Address for Port 1... \n\r" );
 
 #if STATIC_IP_ADDRESS_PORT1
 
     lwipIfPort1.instNum = 0;
-    lwipIfPort1.slvPortNum = 1; 
-    lwipIfPort1.ipAddr = STATIC_IP_ADDRESS_PORT1; 
-    lwipIfPort1.netMask = 0; 
-    lwipIfPort1.gwAddr = 0; 
-    lwipIfPort1.ipMode = IPADDR_USE_STATIC; 
+    lwipIfPort1.slvPortNum = 1;
+    lwipIfPort1.ipAddr = STATIC_IP_ADDRESS_PORT1;
+    lwipIfPort1.netMask = 0;
+    lwipIfPort1.gwAddr = 0;
+    lwipIfPort1.ipMode = IPADDR_USE_STATIC;
 
     ipAddr = lwIPInit(&lwipIfPort1);
 
 #else
 
     lwipIfPort1.instNum = 0;
-    lwipIfPort1.slvPortNum = 1; 
-    lwipIfPort1.ipAddr = 0; 
-    lwipIfPort1.netMask = 0; 
-    lwipIfPort1.gwAddr = 0; 
-    lwipIfPort1.ipMode = IPADDR_USE_DHCP; 
+    lwipIfPort1.slvPortNum = 1;
+    lwipIfPort1.ipAddr = 0;
+    lwipIfPort1.netMask = 0;
+    lwipIfPort1.gwAddr = 0;
+    lwipIfPort1.ipMode = IPADDR_USE_DHCP;
 
     ipAddr = lwIPInit(&lwipIfPort1);
 
@@ -1158,22 +1158,22 @@ int main(void)
 #if STATIC_IP_ADDRESS_PORT2
 
     lwipIfPort2.instNum = 0;
-    lwipIfPort2.slvPortNum = 2; 
-    lwipIfPort2.ipAddr = STATIC_IP_ADDRESS_PORT2; 
-    lwipIfPort2.netMask = 0; 
-    lwipIfPort2.gwAddr = 0; 
-    lwipIfPort2.ipMode = IPADDR_USE_STATIC; 
+    lwipIfPort2.slvPortNum = 2;
+    lwipIfPort2.ipAddr = STATIC_IP_ADDRESS_PORT2;
+    lwipIfPort2.netMask = 0;
+    lwipIfPort2.gwAddr = 0;
+    lwipIfPort2.ipMode = IPADDR_USE_STATIC;
 
     ipAddr = lwIPInit(&lwipIfPort2);
 
 #else
 
     lwipIfPort2.instNum = 0;
-    lwipIfPort2.slvPortNum = 2; 
-    lwipIfPort2.ipAddr = 0; 
-    lwipIfPort2.netMask = 0; 
-    lwipIfPort2.gwAddr = 0; 
-    lwipIfPort2.ipMode = IPADDR_USE_DHCP; 
+    lwipIfPort2.slvPortNum = 2;
+    lwipIfPort2.ipAddr = 0;
+    lwipIfPort2.netMask = 0;
+    lwipIfPort2.gwAddr = 0;
+    lwipIfPort2.ipMode = IPADDR_USE_DHCP;
 
     ipAddr = lwIPInit(&lwipIfPort2);
 
@@ -1322,7 +1322,7 @@ static void CPSWCore0TxIsr(void)
 /*
 ** Displays the IP addrss on the Console
 */
-static void IpAddrDisplay(unsigned int ipAddr) 
+static void IpAddrDisplay(unsigned int ipAddr)
 {
     ConsoleUtilsPrintf("%d.%d.%d.%d", (ipAddr & 0xFF), ((ipAddr >> 8) & 0xFF),
                        ((ipAddr >> 16) & 0xFF), ((ipAddr >> 24) & 0xFF));
@@ -1337,13 +1337,13 @@ static void AintcCPSWIntrSetUp(void)
     IntMasterIRQEnable();
 
     IntAINTCInit();
-    
+
     /* Register the Receive ISR for Core 0 */
     IntRegister(SYS_INT_3PGSWRXINT0, CPSWCore0RxIsr);
-  
+
     /* Register the Transmit ISR for Core 0 */
     IntRegister(SYS_INT_3PGSWTXINT0, CPSWCore0TxIsr);
-    
+
     /* Set the priority */
     IntPrioritySet(SYS_INT_3PGSWTXINT0, 0, AINTC_HOSTINT_ROUTE_IRQ);
     IntPrioritySet(SYS_INT_3PGSWRXINT0, 0, AINTC_HOSTINT_ROUTE_IRQ);

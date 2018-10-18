@@ -43,7 +43,7 @@ void PRUSSInit(unsigned int clkFlags)
 
 /**
  * Load text and data binaries into PRU0 or PRU1 buffer and execute it. The code needs to be compiled in a way
- * where start address is located at address 0, to ensure this, a linker command file with following structure has 
+ * where start address is located at address 0, to ensure this, a linker command file with following structure has
  * to be used for compilation of the PRU-code which forces it to always use start address 0x000:
 
 -cr

@@ -45,35 +45,35 @@
 */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 */
-/* 
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+/*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -111,7 +111,7 @@ static void CleanUpInterrupts(void);
 static void SetupI2CReception(int dcount);
 static void RegisterEdma3Interrupts(void);
 static void I2CEdmaReceiveConfig(unsigned int address);
-static void I2CEdmaTransmitConfig(unsigned int address); 
+static void I2CEdmaTransmitConfig(unsigned int address);
 
 /*******************************************************************************
 **                   INTERNAL VARIABLE DEFINITION
@@ -158,7 +158,7 @@ int main(void)
          else
          {
               ConsoleUtilsPrintf("%c", (temp + 0x37));
-         } 
+         }
 
          /* Collecting the Least Significant Nibble of the data byte. */
          temp = (destBuff[i] & 0x0F);
@@ -171,11 +171,11 @@ int main(void)
          {
               ConsoleUtilsPrintf("%c", (temp + 0x37));
          }
-         
+
          ConsoleUtilsPrintf("%c", ',');
     }
 
-    while(1); 
+    while(1);
 }
 
 /* Read from Eprom */
@@ -186,13 +186,13 @@ static void EpromRead(void)
 }
 
 /*
-** Configures Edma to transmit 1 byte from 
+** Configures Edma to transmit 1 byte from
 ** i2c transmit register to destination buffer.
 */
 static void I2CEdmaReceiveConfig(unsigned int address)
 {
     EDMA3CCPaRAMEntry paramSet;
-  
+
     paramSet.destAddr  = address;
     paramSet.srcAddr   = (SOC_I2C_0_REGS + I2C_DATA);
 
@@ -201,7 +201,7 @@ static void I2CEdmaReceiveConfig(unsigned int address)
     ** for only one byte of data in I2CXSR.There is no fifo.Hence per event
     ** one bytes needs to be transfered.Thus EDMA is configured in ASYNC mode
     ** with acount = 1, bcount = total_numbytes, ccount = 1.BSRC index should
-    ** be 1 since memory pointer needs to incremented one after every byte 
+    ** be 1 since memory pointer needs to incremented one after every byte
     ** transfer by EDMA.BDST index should be zero since the destination address
     ** is in constant adrressing mode(hardware register).
     **
@@ -211,7 +211,7 @@ static void I2CEdmaReceiveConfig(unsigned int address)
     paramSet.destBIdx   = 0x01;
     paramSet.destCIdx   = 0x00;
     paramSet.aCnt       = 0x01;
-    paramSet.bCnt       = 0x32;             
+    paramSet.bCnt       = 0x32;
     paramSet.cCnt       = 0x01;
     paramSet.bCntReload = 0x00;
     paramSet.linkAddr   = 0xffff;
@@ -222,8 +222,8 @@ static void I2CEdmaReceiveConfig(unsigned int address)
 
     /* Transmission complition interrupt enable */
     paramSet.opt |= (1 << EDMA3CC_OPT_TCINTEN_SHIFT);
- 
-    /* configure PaRAM Set */ 
+
+    /* configure PaRAM Set */
     EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS,  EDMA3_CHA_I2C0_RX, &paramSet);
 
     /* Enable the transfer */
@@ -248,16 +248,16 @@ static void SetupEdma(void)
     /* Register required edma interrupts */
     RegisterEdma3Interrupts();
 
-    /* Request DMA Channel and TCC */ 
+    /* Request DMA Channel and TCC */
     EDMA3RequestChannel(SOC_EDMA30CC_0_REGS, EDMA3_CHANNEL_TYPE_DMA ,
                         EDMA3_CHA_I2C0_RX , EDMA3_CHA_I2C0_RX , evtQ);
 
-    /* Request DMA Channel and TCC */ 
+    /* Request DMA Channel and TCC */
     EDMA3RequestChannel(SOC_EDMA30CC_0_REGS, EDMA3_CHANNEL_TYPE_DMA ,
                         EDMA3_CHA_I2C0_TX , EDMA3_CHA_I2C0_TX , evtQ);
 }
 
-static void I2CEdmaTransmitConfig(unsigned int address) 
+static void I2CEdmaTransmitConfig(unsigned int address)
 {
     EDMA3CCPaRAMEntry paramSet;
     paramSet.srcAddr    = (unsigned int)address;
@@ -267,7 +267,7 @@ static void I2CEdmaTransmitConfig(unsigned int address)
     paramSet.destBIdx   = 0x00;
     paramSet.destCIdx   = 0x00;
     paramSet.aCnt       = 0x01;
-    paramSet.bCnt       = 0x02;              
+    paramSet.bCnt       = 0x02;
     paramSet.cCnt       = 0x01;
     paramSet.bCntReload = 0x00;
     paramSet.linkAddr   = 0xffff;
@@ -279,7 +279,7 @@ static void I2CEdmaTransmitConfig(unsigned int address)
     /* Transmission complition interrupt enable */
     paramSet.opt |= (1 << EDMA3CC_OPT_TCINTEN_SHIFT);
 
-    /* configure PaRAM Set */ 
+    /* configure PaRAM Set */
     EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, EDMA3_CHA_I2C0_TX , &paramSet);
 
     /* Enable the transfer */
@@ -348,12 +348,12 @@ void I2CEdmaIsr(void)
 
          /* Disable Edma Transfer */
          EDMA3DisableTransfer(SOC_EDMA30CC_0_REGS , EDMA3_CHA_I2C0_TX , EDMA3_TRIG_MODE_EVENT);
-   
+
          flag = 0;
     }
 
     val = (0x01 << (EDMA3_CHA_I2C0_RX - 32));
-    
+
     if((pendingIrqs & val))
     {
          /* clear the pending interrupt */
@@ -364,7 +364,7 @@ void I2CEdmaIsr(void)
 
          /* Disable Edma Transfer */
          EDMA3DisableTransfer(SOC_EDMA30CC_0_REGS , EDMA3_CHA_I2C0_RX , EDMA3_TRIG_MODE_EVENT);
-   
+
          flag = 0;
     }
 }
@@ -383,8 +383,8 @@ void I2CEdmaErrIsr(void)
     if((pendingIrqs & (0x01 << (EDMA3_CHA_I2C0_TX  - 32))))
     {
          /* clear the pending error interrupt */
-         EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS,  EDMA3_CHA_I2C0_TX);  
-    
+         EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS,  EDMA3_CHA_I2C0_TX);
+
          /* Disable the transmit event */
          I2CDMATxEventDisable(SOC_I2C_0_REGS);
 
@@ -399,8 +399,8 @@ void I2CEdmaErrIsr(void)
     else if((pendingIrqs & (0x01 << (EDMA3_CHA_I2C0_RX - 32))))
     {
          /* clear the pending error interrupt */
-         EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS,  EDMA3_CHA_I2C0_RX);  
-    
+         EDMA3ClrMissEvt(SOC_EDMA30CC_0_REGS,  EDMA3_CHA_I2C0_RX);
+
          /* Disable the transmit event */
          I2CDMARxEventDisable(SOC_I2C_0_REGS);
 
@@ -426,7 +426,7 @@ static void SetupI2C(void)
 
     /* Put i2c in reset/disabled state */
     I2CMasterDisable(SOC_I2C_0_REGS);
-   
+
     /* Disables the auto idle functionality */
     I2CAutoIdleDisable(SOC_I2C_0_REGS);
 
@@ -441,7 +441,7 @@ static void SetupI2C(void)
 }
 
 /*
-** Reads data from selected address 
+** Reads data from selected address
 */
 static void SetupI2CReception(int dcount)
 {
@@ -454,7 +454,7 @@ static void SetupI2CReception(int dcount)
     /* Configure I2C controller in Master Transmitter mode */
     I2CMasterControl(SOC_I2C_0_REGS, I2C_CFG_MST_TX);
 
-    /*I2C Transmit Event is enabled */ 
+    /*I2C Transmit Event is enabled */
     I2CDMATxEventEnable(SOC_I2C_0_REGS);
 
     /* Generate Start Condition over I2C bus */
@@ -479,7 +479,7 @@ static void SetupI2CReception(int dcount)
     /* Data Count specifies the number of bytes to be received */
     I2CSetDataCount(SOC_I2C_0_REGS, dcount);
 
-    /* Clear all interrupt status */ 
+    /* Clear all interrupt status */
     CleanUpInterrupts();
 
     /* Configure I2C controller in Master Receiver mode */
@@ -490,7 +490,7 @@ static void SetupI2CReception(int dcount)
 
     /* Generate Start Condition over I2C bus */
     I2CMasterStart(SOC_I2C_0_REGS);
-    
+
     /*
     ** Wait for the START to be reflected on the bus.
     ** This can be checked by waiting for BUS BUSY condition set.

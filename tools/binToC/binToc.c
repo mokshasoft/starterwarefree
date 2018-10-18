@@ -1,6 +1,6 @@
 
 /* \file   binToc.c
-** 
+**
 ** \brief  This tool will convert a binary file to 'C' header file.
 */
 
@@ -39,7 +39,7 @@
 *
 */
 
- 
+
 #include<stdio.h>
 #include<stdlib.h>
 

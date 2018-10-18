@@ -77,7 +77,7 @@ static void I2CCodecSendBlocking(unsigned int baseAddr, unsigned int dataCnt)
 {
     flag[I2C_1] = 1;
 	tCount[I2C_1] = 0;
- 
+
     I2CSetDataCount(baseAddr, dataCnt);
 
     I2CMasterControl(baseAddr, I2C_CFG_MST_TX | I2C_CFG_STOP);
@@ -85,8 +85,8 @@ static void I2CCodecSendBlocking(unsigned int baseAddr, unsigned int dataCnt)
     I2CMasterIntEnableEx(baseAddr, I2C_INT_TRANSMIT_READY | I2C_INT_STOP_CONDITION);
 
     I2CMasterStart(baseAddr);
-   
-    /* Wait till the data is sent */ 
+
+    /* Wait till the data is sent */
     while(flag[I2C_1]);
 }
 
@@ -97,7 +97,7 @@ static void I2CCodecRcvBlocking(unsigned int baseAddr, unsigned int dataCnt)
 {
     flag[I2C_1] = 1;
 	rCount[I2C_1] = 0;
-    
+
     I2CSetDataCount(baseAddr, dataCnt);
 
     I2CMasterControl(baseAddr, I2C_CFG_MST_RX | I2C_CFG_STOP);
@@ -130,7 +130,7 @@ void CodecRegWrite(unsigned int baseAddr, unsigned char regAddr,
 /*
 ** Clears codec register bits specified in the bit mask
 */
-void CodecRegBitClr(unsigned int baseAddr, unsigned char regAddr,    
+void CodecRegBitClr(unsigned int baseAddr, unsigned char regAddr,
                     unsigned char bitMask)
 {
 #ifdef CODEC_INTERFACE_I2C
@@ -144,7 +144,7 @@ void CodecRegBitClr(unsigned int baseAddr, unsigned char regAddr,
 
     dataToSlave[I2C_1][1] =  dataFromSlave[I2C_1][0] & ~bitMask;
     dataToSlave[I2C_1][0] = regAddr;
-   
+
     I2CCodecSendBlocking(baseAddr, 2);
 
 #endif

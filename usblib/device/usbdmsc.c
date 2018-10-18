@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2009-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //*****************************************************************************
@@ -321,13 +321,13 @@ const tConfigHeader * const g_pMSCConfigDescriptors[] =
 //
 //*****************************************************************************
 static void HandleDisconnect(void *pvInstance);
-static void ConfigChangeHandler(void *pvInstance, unsigned int ulValue, 
+static void ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
                                                 unsigned int ulIndex);
-static void HandleEndpoints(void *pvInstance, unsigned int ulStatus, 
+static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                 unsigned int ulIndex);
-static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                                 unsigned int ulIndex);
-static void USBDSCSISendStatus(const tUSBDMSCDevice *psDevice, 
+static void USBDSCSISendStatus(const tUSBDMSCDevice *psDevice,
                                             unsigned int ulIndex);
 unsigned int USBDSCSICommand(const tUSBDMSCDevice *psDevice,
                             tMSCCBW *pSCSICBW, unsigned int ulIndex);
@@ -528,7 +528,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     tMSCInstance *psInst;
     tMSCCBW *pSCSICBW;
     unsigned int pendReg = 0;
-    
+
 #ifdef DMA_MODE
     unsigned int rxBuffer;
     unsigned int txBuffer;
@@ -557,13 +557,13 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     //CppiDmaGetINTD0Status(g_USBInstance[ulIndex].uiUSBInstance);
     // Get the DMA Interrupt status
     pendReg = CppiDmaGetPendStatus(g_USBInstance[ulIndex].uiUSBInstance);
-    
+
 #endif
-    
+
     //
     // Handler for the bulk IN data endpoint.
     //
-    if(ulStatus & (1 << USBEPToIndex(psInst->ucINEndpoint)) 
+    if(ulStatus & (1 << USBEPToIndex(psInst->ucINEndpoint))
         || (pendReg & CPDMA_TX_PENDING))
     {
 
@@ -574,7 +574,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
              dmaStatus = dmaTxCompletion(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
         }
 #endif
-        
+
         switch(psInst->ucSCSIState)
         {
             //
@@ -582,8 +582,8 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
             // command.
             //
             case STATE_SCSI_SEND_BLOCKS:
-            {    
-                
+            {
+
 #ifndef DMA_MODE
                 //
                 // Decrement the number of bytes left to send.
@@ -594,7 +594,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //Add the bytes transfered
                 //
                 g_bytesRead = g_bytesRead + MAX_TRANSFER_SIZE;
-                
+
 #else            //
                 // Check if DMA is completed, Check the remaining bytes
                 //
@@ -606,7 +606,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                         g_bytesRead = g_bytesRead + DMA_TX_MAX_CHUNK_SIZE;
                     }
                     else
-                    {                            
+                    {
                         g_bytesRead = g_bytesRead +psInst->ulBytesToTransfer;
                         psInst->ulBytesToTransfer = 0;
                     }
@@ -618,7 +618,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 if(psInst->ulBytesToTransfer == 0)
                 {
-                                                
+
                     //
                     // Set the status so that it can be sent when this
                     // response has has be successfully sent.
@@ -626,12 +626,12 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     g_sSCSICSW.bCSWStatus = 0;
                     g_sSCSICSW.dCSWDataResidue = 0;
                     g_bytesRead = 0;
-                                      
+
                     //
                     // Send back the status once this transfer is complete.
                     //
                     psInst->ucSCSIState = STATE_SCSI_SEND_STATUS;
-                    
+
 #ifdef DMA_MODE
                     //
                     //Disable the RX and TX DMA before sending the CSW
@@ -640,7 +640,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     disableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
                     disableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
 #endif
-                    
+
                     USBDSCSISendStatus(psDevice, ulIndex);
 
                     if(psDevice->pfnEventCallback)
@@ -655,7 +655,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     break;
                 }
 
-        
+
 #ifndef DMA_MODE
 
                 if(g_bytesRead == DEVICE_BLOCK_SIZE)
@@ -670,11 +670,11 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 // Read the new data and send it out.
                 //
-#ifdef DMA_MODE    
+#ifdef DMA_MODE
                 if(dmaStatus == DMA_TX_COMPLETED)
                 {
                     //
-                    //If current DMA is operation is completed, check how may byets remaining 
+                    //If current DMA is operation is completed, check how may byets remaining
                     //to send
                     //
                     g_bytesRead = 0;
@@ -683,7 +683,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
 
                     if(nBlocks > (DMA_TX_MAX_CHUNK_SIZE / MAX_TRANSFER_SIZE))
                         nBlocks = (DMA_TX_MAX_CHUNK_SIZE / MAX_TRANSFER_SIZE);
-                    
+
                     //Allocate buffer for the remaining data
                     txBuffer = (unsigned int)cppiDmaAllocnBuffer(nBlocks);
 
@@ -695,7 +695,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
 
                         psDevice->sMediaFunctions.BlockRead(psInst->pvMedia,
                             (unsigned char *)txBuffer, psInst->ulCurrentLBA, nBlocks);
-                                                            
+
                         doDmaTxTransfer(g_USBInstance[ulIndex].uiUSBInstance, (unsigned char *)txBuffer,
                              (nBlocks * DEVICE_BLOCK_SIZE), psInst->ucINEndpoint);
                     }
@@ -708,11 +708,11 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     (unsigned char *)psInst->pulBuffer,
                     psInst->ulCurrentLBA, 1);
 
-                USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr,  psInst->ucINEndpoint, 
+                USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr,  psInst->ucINEndpoint,
                     (unsigned char *)psInst->pulBuffer, MAX_TRANSFER_SIZE);
                 USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr,  psInst->ucINEndpoint, USB_TRANS_IN);
 #endif
-                
+
                 break;
             }
 
@@ -720,7 +720,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
             // Handle sending status.
             //
             case STATE_SCSI_SEND_STATUS:
-            {                
+            {
 #ifdef DMA_MODE
                 //
                 //Disable the RX and TX DMA before sending the CSW
@@ -729,7 +729,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 disableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
                 disableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
 #endif
-                
+
                 //
                 // Indicate success and no extra data coming.
                 //
@@ -744,11 +744,11 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
             case STATE_SCSI_SENT_STATUS:
             {
 
-#ifdef DMA_MODE                
+#ifdef DMA_MODE
                 disableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
                 disableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
 #endif
-                
+
                 psInst->ucSCSIState = STATE_SCSI_IDLE;
 #ifdef PROFILE_USB_MSC_READ
 				if(fReadEnabled)
@@ -790,7 +790,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
     if(ulStatus & (0x10000 << USBEPToIndex(psInst->ucOUTEndpoint))
         || (pendReg & CPDMA_RX_PENDING))
     {
-       
+
         switch(psInst->ucSCSIState)
         {
             //
@@ -803,7 +803,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 //Get the data from the FIFO and send Ack
                 //
-                USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint, 
+                USBEndpointDataGet(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                     (unsigned char *)psInst->pulBuffer, &ulMaxsize);
 
                 USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint, false);
@@ -811,12 +811,12 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 //
                 //Write the data to the block media
                 //
-                psDevice->sMediaFunctions.BlockWrite(psInst->pvMedia, 
-                    (unsigned char *)psInst->pulBuffer, 
+                psDevice->sMediaFunctions.BlockWrite(psInst->pvMedia,
+                    (unsigned char *)psInst->pulBuffer,
                         psInst->ulCurrentLBA, 1);
-                
+
 #endif
-                
+
 #ifdef DMA_MODE
                 //
                 //During receive operation, we need to wait in loop till we recive all data
@@ -825,15 +825,15 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 {
 
                     //Decrement the bytes recived
-                    psInst->ulBytesToTransfer -= DMA_RX_MAX_CHUNK_SIZE;    
+                    psInst->ulBytesToTransfer -= DMA_RX_MAX_CHUNK_SIZE;
                     g_bytesWritten = g_bytesWritten + DMA_RX_MAX_CHUNK_SIZE;
-                
+
 #else
-                    psInst->ulBytesToTransfer -= MAX_TRANSFER_SIZE;    
+                    psInst->ulBytesToTransfer -= MAX_TRANSFER_SIZE;
                     g_bytesWritten = g_bytesWritten + MAX_TRANSFER_SIZE;
 #endif
 
-#ifdef DMA_MODE                    
+#ifdef DMA_MODE
                     //
                     //Get the data from the RX completeion queue
                     //
@@ -843,26 +843,26 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     //
                     //Write the data to the block media
                     //
-                    psDevice->sMediaFunctions.BlockWrite(psInst->pvMedia, 
+                    psDevice->sMediaFunctions.BlockWrite(psInst->pvMedia,
                         (unsigned char *)rxBuffer, psInst->ulCurrentLBA, 1);
                     //
                     //Load another BD to the receive queue
                     //
-                    doDmaRxTransfer(g_USBInstance[ulIndex].uiUSBInstance, MAX_TRANSFER_SIZE, 
+                    doDmaRxTransfer(g_USBInstance[ulIndex].uiUSBInstance, MAX_TRANSFER_SIZE,
                         (unsigned char *)rxBuffer, psInst->ucOUTEndpoint);
-                        
+
 #endif
-                    if(g_bytesWritten == DEVICE_BLOCK_SIZE)                    
+                    if(g_bytesWritten == DEVICE_BLOCK_SIZE)
 
                     {
                            g_bytesWritten = 0;
                         psInst->ulCurrentLBA++;
 
                     }
-                    
+
 #ifdef DMA_MODE
                 }
-                    
+
                     cppiDmaHandleError(g_USBInstance[ulIndex].uiUSBInstance);
 #endif
 
@@ -879,7 +879,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                      g_sSCSICSW.dCSWDataResidue = 0;
                     g_bytesWritten = 0;
                     psInst->ucSCSIState = STATE_SCSI_SEND_STATUS;
-                    
+
 #ifdef DMA_MODE
                     //
                     //Disable the RX and TX DMA before sending the CSW
@@ -894,7 +894,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
 
                     USBDSCSISendStatus(psDevice, ulIndex);
 
-                 }              
+                 }
 
                 break;
             }
@@ -909,21 +909,21 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 // Attempt to handle the new command.
                 //
 #ifdef DMA_MODE
-                
+
                 //
                 //Enable the RX DMA as it is disabled during last CSW
                 //
                 enableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
                 while(!(CppiDmaGetPendStatus(g_USBInstance[ulIndex].uiUSBInstance) & CPDMA_RX_PENDING));
-                rxBuffer = dmaRxCompletion(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);                            
-                pSCSICBW = (tMSCCBW *)rxBuffer;                    
-                
+                rxBuffer = dmaRxCompletion(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
+                pSCSICBW = (tMSCCBW *)rxBuffer;
+
                 //
                 //Recceive the command
                 //
-                doDmaRxTransfer(g_USBInstance[ulIndex].uiUSBInstance, MAX_TRANSFER_SIZE, 
-                    (unsigned char *)rxBuffer, psInst->ucOUTEndpoint);    
-                    
+                doDmaRxTransfer(g_USBInstance[ulIndex].uiUSBInstance, MAX_TRANSFER_SIZE,
+                    (unsigned char *)rxBuffer, psInst->ucOUTEndpoint);
+
 #else
                 ulSize = COMMAND_BUFFER_SIZE;
 
@@ -941,7 +941,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                 USBDevEndpointDataAck(psInst->ui32USBBase, psInst->ucOUTEndpoint,
                                         false);
 #endif
-                
+
                 //
                 // If this is a valid CBW then handle it.
                 //
@@ -952,7 +952,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     g_sSCSICSW.dCSWDataResidue = 0;
                     g_sSCSICSW.bCSWStatus = 0;
                     USBDSCSICommand(psDevice, pSCSICBW, ulIndex);
-                     
+
                 }
                 else
                 {
@@ -963,7 +963,7 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
                     // controller.
                     //
                     psInst->ucSCSIState = STATE_SCSI_IDLE;
-                    
+
                 }
 
                 break;
@@ -974,9 +974,9 @@ HandleEndpoints(void *pvInstance, unsigned int ulStatus, unsigned int ulIndex)
             }
         }
 
-        
+
     }
-    
+
 
 }
 
@@ -1097,7 +1097,7 @@ HandleDisconnect(void *pvInstance)
 //
 //*****************************************************************************
 static void
-ConfigChangeHandler(void *pvInstance, unsigned int ulValue, 
+ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
                                     unsigned int ulIndex)
 {
     tMSCInstance *psInst;
@@ -1170,13 +1170,13 @@ void *USBDMSCInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
     ASSERT(psDevice->psPrivateData);
 
     USBDMSCCompositeInit(ulIndex, psDevice);
-    
+
     //
     // All is well so now pass the descriptors to the lower layer and put
     // the bulk device on the bus.
     //
     USBDCDInit(ulIndex, psDevice->psPrivateData->psDevInfo);
-    
+
     //
     // Return the pointer to the instance indicating that everything went well.
     //
@@ -1193,11 +1193,11 @@ void *USBDMSCInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
 //! \param psDevice points to a structure containing parameters customizing
 //! the operation of the mass storage device.
 //!
-//! An application wishing to make use of a composite 
+//! An application wishing to make use of a composite
 //! USB bulk communication channel for MSC class needs to call this function.
-//! This function is used for initializing an instance related information of the 
-//! MSC device. 
-//! 
+//! This function is used for initializing an instance related information of the
+//! MSC device.
+//!
 //! This function returns a void pointer that must be passed in to all other
 //! APIs used by the mass storage class.
 //!
@@ -1258,7 +1258,7 @@ USBDMSCCompositeInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
     //
     psInst->ucInterface = 0;
     psInst->ucOUTEndpoint = DATA_OUT_ENDPOINT;
-    psInst->ucOUTDMA = DATA_OUT_DMA_CHANNEL; 
+    psInst->ucOUTDMA = DATA_OUT_DMA_CHANNEL;
     psInst->ucINEndpoint = DATA_IN_ENDPOINT;
     psInst->ucINDMA = DATA_IN_DMA_CHANNEL;
 
@@ -1317,7 +1317,7 @@ USBDMSCCompositeInit(unsigned int ulIndex, const tUSBDMSCDevice *psDevice)
     // Enable Clocking to the USB controller.
     //
     USBModuleClkEnable(ulIndex, g_USBInstance[ulIndex].uiBaseAddr);
-    
+
 
     //
     // Turn on USB Phy clock.
@@ -1388,7 +1388,7 @@ USBDMSCTerm(void *pvInstance)
 //
 //*****************************************************************************
 static void
-HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                     unsigned int ulIndex)
 {
     //
@@ -1495,16 +1495,16 @@ USBDSCSIInquiry(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
         g_pucCommand[iIdx + 32] = psDevice->pucVersion[iIdx];
     }
 
-  
+
 
 #ifdef DMA_MODE
-    
+
     //
     //Allocate buffer for the command
     //
     cmdBuffer = (unsigned char*)cppiDmaAllocBuffer();
     memcpy(cmdBuffer, g_pucCommand, 36);
-    
+
     //
     //send command response
     //
@@ -1515,7 +1515,7 @@ USBDSCSIInquiry(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
     //
     // Send the SCSI Inquiry Response.
     //
-    USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 36); 
+    USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 36);
 
     //
     // Send the data to the host.
@@ -1523,7 +1523,7 @@ USBDSCSIInquiry(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
     USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN);
 #endif
 
-    
+
 
     //
     // Set the status so that it can be sent when this response has
@@ -1580,7 +1580,7 @@ USBDSCSIReadCapacities(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
         //
         // Current media capacity
         //
-        g_pucCommand[8] = 0x02;  
+        g_pucCommand[8] = 0x02;
 
         //
         // Fill in the block size, which is fixed at DEVICE_BLOCK_SIZE.
@@ -1600,15 +1600,15 @@ USBDSCSIReadCapacities(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
         cmdBuffer = (unsigned char*)cppiDmaAllocBuffer();
         ASSERT(NULL!=(void*)cmdBuffer);
         memcpy(cmdBuffer, g_pucCommand, 12);
-        
+
         //
         //Send the command response
         //
         doDmaTxTransfer(g_USBInstance[ulIndex].uiUSBInstance, cmdBuffer, 12, psInst->ucINEndpoint);
         enableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
-#else        
-        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 12);  
-        USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN); 
+#else
+        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 12);
+        USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN);
 #endif
 
         //
@@ -1686,7 +1686,7 @@ USBDSCSIReadCapacity(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
         g_pucCommand[1] = 0xff & (ulBlocks >> 16);
         g_pucCommand[2] = 0xff & (ulBlocks >> 8);
         g_pucCommand[3] = 0xff & (ulBlocks);
-    
+
         g_pucCommand[4] = 0;
 
         //
@@ -1707,14 +1707,14 @@ USBDSCSIReadCapacity(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
         cmdBuffer = (unsigned char*)cppiDmaAllocBuffer();
         ASSERT(NULL!=(void*)cmdBuffer);
         memcpy(cmdBuffer, g_pucCommand, 8);
-        
+
         //
         //Send the command response
         //
         doDmaTxTransfer(g_USBInstance[ulIndex].uiUSBInstance, cmdBuffer, 8, psInst->ucINEndpoint);
         enableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
 #else
-        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 8); 
+        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, g_pucCommand, 8);
         USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN);
 #endif
 
@@ -1850,10 +1850,10 @@ USBDSCSIRequestSense(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
 //
 //*****************************************************************************
 static void
-USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW, 
+USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
                                             unsigned int ulIndex)
 {
-    tMSCInstance *psInst;    
+    tMSCInstance *psInst;
     unsigned int usNumBlocks;
 
 #ifdef DMA_MODE
@@ -1865,13 +1865,13 @@ USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
     // Default the number of blocks.
     //
     usNumBlocks = 0;
-    
+
     //
     // Get our instance data pointer.
     //
     psInst = psDevice->psPrivateData;
 
-    
+
     if(psInst->pvMedia != 0)
     {
         //
@@ -1882,7 +1882,7 @@ USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
                                (pSCSICBW->CBWCB[3] << 16) |
                                (pSCSICBW->CBWCB[4] << 8) |
                                (pSCSICBW->CBWCB[5] << 0);
-        
+
         //
         // More bytes to read.
         //
@@ -1899,12 +1899,12 @@ USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
             nBlocks = (DMA_TX_MAX_CHUNK_SIZE / MAX_TRANSFER_SIZE);
         else
             nBlocks = usNumBlocks;
-        
+
         //
         //Allocate buffer for TX data
         //
         txBuffer=(unsigned int)cppiDmaAllocnBuffer(nBlocks);
-        
+
         //
         // Read the next logical block from the storage device.
         //
@@ -1924,46 +1924,46 @@ USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
         // Read the next logical block from the storage device.
         //
         if(psDevice->sMediaFunctions.BlockRead(psInst->pvMedia,
-            ((unsigned char *)psInst->pulBuffer),              
-            psInst->ulCurrentLBA, 1) == 0)        
-            {            
-                psInst->pvMedia = 0;            
-                psDevice->sMediaFunctions.Close(0);        
-            }        
+            ((unsigned char *)psInst->pulBuffer),
+            psInst->ulCurrentLBA, 1) == 0)
+            {
+                psInst->pvMedia = 0;
+                psDevice->sMediaFunctions.Close(0);
+            }
 
 
 #endif
     }
-     
-    
+
+
 
     //
     // If there is media present then start transferring the data.
     //
     if(psInst->pvMedia != 0)
     {
-               
+
         //
         // Schedule the remaining bytes to send.
         //
         psInst->ulBytesToTransfer = (DEVICE_BLOCK_SIZE * usNumBlocks);
 
-#ifdef DMA_MODE            
+#ifdef DMA_MODE
 
         //
         //Load the DMA queue with the data buffer
         //
-        doDmaTxTransfer(g_USBInstance[ulIndex].uiUSBInstance, (unsigned char *)txBuffer, 
+        doDmaTxTransfer(g_USBInstance[ulIndex].uiUSBInstance, (unsigned char *)txBuffer,
             (nBlocks *DEVICE_BLOCK_SIZE), psInst->ucINEndpoint);
         //
         //Enable the DMA for TX operation
         //
-        enableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);     
+        enableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
 #else
-        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr,  psInst->ucINEndpoint, 
-            (unsigned char *)psInst->pulBuffer, 
+        USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr,  psInst->ucINEndpoint,
+            (unsigned char *)psInst->pulBuffer,
                 MAX_TRANSFER_SIZE);
-        USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr,    psInst->ucINEndpoint, 
+        USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr,    psInst->ucINEndpoint,
             USB_TRANS_IN);
 #endif
         //
@@ -2008,12 +2008,12 @@ USBDSCSIRead10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
 //
 //*****************************************************************************
 static void
-USBDSCSIWrite10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW, 
+USBDSCSIWrite10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
                                             unsigned int ulIndex)
 {
     unsigned short usNumBlocks;
     tMSCInstance *psInst;
-    
+
     //
     // Get our instance data pointer.
     //
@@ -2052,11 +2052,11 @@ USBDSCSIWrite10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
         // DEVICE_BLOCK_SIZE bytes.
         //
         psInst->ucSCSIState = STATE_SCSI_RECEIVE_BLOCKS;
-        
+
 #ifdef DMA_MODE
         enableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);
 #endif
-        
+
         //
         // Notify the application of the write event.
         //
@@ -2064,8 +2064,8 @@ USBDSCSIWrite10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
         {
             psDevice->pfnEventCallback(0, USBD_MSC_EVENT_WRITING, 0, 0);
         }
-        
-        
+
+
     }
     else
     {
@@ -2099,7 +2099,7 @@ USBDSCSIWrite10(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
 //
 //*****************************************************************************
 static void
-USBDSCSIModeSense6(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW, 
+USBDSCSIModeSense6(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
                                                     unsigned int ulIndex)
 {
     tMSCInstance *psInst;
@@ -2195,11 +2195,11 @@ USBDSCSISendStatus(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
 
     //
     // Respond with the requested status.
-    //    
-    
+    //
+
     USBEndpointDataPut(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint,
                      (unsigned char *)&g_sSCSICSW, 13);
-      USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN);        
+      USBEndpointDataSend(g_USBInstance[ulIndex].uiBaseAddr, psInst->ucINEndpoint, USB_TRANS_IN);
 
     //
     // Move the state to status sent so that the next interrupt will move the
@@ -2214,7 +2214,7 @@ USBDSCSISendStatus(const tUSBDMSCDevice *psDevice, unsigned int ulIndex)
 //
 //*****************************************************************************
 unsigned int
-USBDSCSICommand(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW, 
+USBDSCSICommand(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
                                                 unsigned int ulIndex)
 {
     unsigned int ulRetCode;
@@ -2235,7 +2235,7 @@ USBDSCSICommand(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
     // Save the transfer length because it may be overwritten by some calls.
     //
     ulTransferLength = pSCSICBW->dCBWDataTransferLength;
-    
+
     switch(pSCSICBW->CBWCB[0])
     {
         //
@@ -2345,9 +2345,9 @@ USBDSCSICommand(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
             psInst->ucSCSIState = STATE_SCSI_IDLE;
             g_sSCSICSW.bCSWStatus = 0;
             g_sSCSICSW.dCSWDataResidue = pSCSICBW->dCBWDataTransferLength;
-            break;            
+            break;
         }
-        
+
         default:
         {
             psInst->ucSCSIState = STATE_SCSI_IDLE;
@@ -2401,7 +2401,7 @@ USBDSCSICommand(const tUSBDMSCDevice *psDevice, tMSCCBW *pSCSICBW,
     // If there is no data then send out the current status.
     //
     if(ulTransferLength == 0)
-    {    
+    {
         #ifdef DMA_MODE
             disableCoreTxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucINEndpoint);
             disableCoreRxDMA(g_USBInstance[ulIndex].uiUSBInstance, psInst->ucOUTEndpoint);

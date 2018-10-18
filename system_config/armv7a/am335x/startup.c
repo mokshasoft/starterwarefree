@@ -1,11 +1,11 @@
 /**
  * \file startup.c
  *
- * \brief  Configures the PLL registers to achieve the required Operating 
+ * \brief  Configures the PLL registers to achieve the required Operating
  *         frequency. Power and sleep controller is activated for UART and
  *         Interuppt controller. Interrupt vector is copied to the shared Ram.
- *         After doing all the above, controller is given to the application. 
- *  
+ *         After doing all the above, controller is given to the application.
+ *
  */
 
 /*
@@ -116,20 +116,20 @@ static unsigned int const vecTbl[14]=
  * \param   None.
  *
  * \return  None.
- * 
+ *
  * \note    This function is the first function that needs to be called in a
  *          system. This should be set as the entry point in the linker script
  *          file if the ELF executable is to loaded via a debugger on the
  *          target. This function never returns, but gives control to the
  *          application entry point.
  **/
-unsigned int start_boot(void) 
+unsigned int start_boot(void)
 {
     /*
     ** Copy the vector table to desired location. This is needed if the vector
     ** table is to be relocated to OCMC RAM. The default vector table base is in
     ** OCMC RAM, but we can move it to the end of OCMC RAM, to make some more
-    ** space in OCMC RAM for relocating any other code, if desired. 
+    ** space in OCMC RAM for relocating any other code, if desired.
     ** The vector table can be placed anywhere in the memory map. If the entire
     ** code is intended to be run from DDR, it can be placed in DDR also. In this
     ** case, only vector base address register need to be set with the base
@@ -150,14 +150,14 @@ unsigned int start_boot(void)
  * \param   None.
  *
  * \return  None.
- * 
+ *
  **/
 static void CopyVectorTable(void)
 {
     unsigned int *dest = (unsigned int *)AM335X_VECTOR_BASE;
     unsigned int *src =  (unsigned int *)vecTbl;
     unsigned int count;
-  
+
     CP15VectorBaseAddrSet(AM335X_VECTOR_BASE);
 
     for(count = 0; count < sizeof(vecTbl)/sizeof(vecTbl[0]); count++)

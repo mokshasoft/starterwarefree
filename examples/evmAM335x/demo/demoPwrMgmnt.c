@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #include <string.h>
 #include "hs_mmcsd.h"
 #include "hw_usbOtg_AM335x.h"
@@ -247,10 +247,10 @@ static void PeripheralsResume(void)
     Raster0EOFIntEnable();
     EcapBkLightEnable();
 
-    /* Bring CPSW out of standby and restart DHCP */   
+    /* Bring CPSW out of standby and restart DHCP */
     CPSWWrControlRegReset(CPSW_WR_BASE_ADDR);
     CPSWCPDMACmdIdleDisable(CPSW_CPDMA_BASE_ADDR);
-    EnetDHCPRestart();	
+    EnetDHCPRestart();
 
     /* Set CUST_EFUSE modules to SW_WAKE */
     HWREG(SOC_CM_CEFUSE_REGS + CM_CEFUSE_CLKSTCTRL) = 0x2;
@@ -284,23 +284,23 @@ static void PeripheralsContextSave(unsigned int slpMode, unsigned int wakeSrc)
             ControlRegContextSave(&ctrlContext);
 
             RasterContextSave(LCDC_BASE_ADDR, &rasterContext);
-	
+
             EcapContextSave(ECAP_BASE_ADDR, PWMSS_BASE_ADDR, &ecapContext);
-	
+
             EDMA3ContextSave(EDMA_BASE_ADDR, &edmaContext);
 
             McASPContextSave(MCASP_CTRL_BASE_ADDR, MCASP_FIFO_BASE_ADDR,
                              &mcaspContext, McASP_CONTEXT_TX);
-					  
+
             EnetContextSave();
 
             DMTimerContextSave(DMTIMER2_BASE_ADDR, &dmtimerContext[0]);
             DMTimerContextSave(DMTIMER3_BASE_ADDR, &dmtimerContext[1]);
             DMTimerContextSave(DMTIMER4_BASE_ADDR, &dmtimerContext[2]);
             DMTimerContextSave(DMTIMER7_BASE_ADDR, &dmtimerContext[3]);
-  
+
             I2CContextSave(I2C1_BASE_ADDR, &i2cContext);
-	
+
             gpioContextSave(GPIO0_BASE_ADDR, &gpioContext[0]);
             gpioContextSave(GPIO1_BASE_ADDR, &gpioContext[1]);
 
@@ -338,9 +338,9 @@ static void PeripheralsContextRestore(unsigned int slpMode, unsigned int wakeSrc
             ControlRegContextRestore(&ctrlContext);
 
             RasterContextRestore(LCDC_BASE_ADDR, &rasterContext);
-		
+
             EcapContextRestore(ECAP_BASE_ADDR, PWMSS_BASE_ADDR, &ecapContext);
-	
+
             gpioContextRestore(GPIO0_BASE_ADDR, &gpioContext[0]);
             gpioContextRestore(GPIO1_BASE_ADDR, &gpioContext[1]);
 
@@ -354,11 +354,11 @@ static void PeripheralsContextRestore(unsigned int slpMode, unsigned int wakeSrc
             MDIOContextRestore(CPSW_MDIO_BASE_ADDR, &mdioContext);
 
             CPSWContextRestore(&cpswContext);
-	
+
             EDMA3ContextRestore(EDMA_BASE_ADDR, &edmaContext);
             McASPContextRestore(MCASP_CTRL_BASE_ADDR, MCASP_FIFO_BASE_ADDR,
                                 &mcaspContext, McASP_CONTEXT_TX);
-	
+
             I2CContextRestore(I2C1_BASE_ADDR, &i2cContext);
             break;
 
@@ -670,7 +670,7 @@ void enableWakeSource(unsigned int wakeSource)
             IOPadSel(&ctrlContext, CONTROL_CONF_AIN6, true);
             IOPadSel(&ctrlContext, CONTROL_CONF_AIN7, true);
             break;
-		
+
         case WAKE_SOURCE_UART:
             enableUartWakeup();
 
@@ -680,12 +680,12 @@ void enableWakeSource(unsigned int wakeSource)
             IOPadSel(&ctrlContext, CONTROL_CONF_UART_RXD(0), true);
             IOPadSel(&ctrlContext, CONTROL_CONF_UART_TXD(0), true);
             break;
-		
+
         case WAKE_SOURCE_TMR:
             ConsoleUtilsPrintf("\t...system will wakeup after 20 Sec... ");
             setTimerCount(TIMER_OVRFLW_20_SECOND_16KHZ); /* 20 Sec */
             break;
-		
+
         case WAKE_SOURCE_GPIO:
             configWakeGpio();
             enableGpioWake();
@@ -727,7 +727,7 @@ void disableWakeSource(unsigned int wakeSource)
             IOPadSel(&ctrlContext, CONTROL_CONF_AIN6, false);
             IOPadSel(&ctrlContext, CONTROL_CONF_AIN7, false);
             break;
-		
+
         case WAKE_SOURCE_UART:
             disableUartWakeup();
 
@@ -737,12 +737,12 @@ void disableWakeSource(unsigned int wakeSource)
             IOPadSel(&ctrlContext, CONTROL_CONF_UART_RXD(0), false);
             IOPadSel(&ctrlContext, CONTROL_CONF_UART_TXD(0), false);
             break;
-		
+
         case WAKE_SOURCE_TMR:
             /* Clear timer interrupt */
             clearTimerInt();
             break;
-		
+
         case WAKE_SOURCE_GPIO:
             disableGpioWake();
 
@@ -827,7 +827,7 @@ void RTCOnlyModeEnter(void)
 
     while(1); /* wait for RTC Only to execute */
 }
- 
+
 /*
 ** Enter the desired power save mode
 */
@@ -903,13 +903,13 @@ void PowerSaveModeEnter(deepSleepData dsData, unsigned int slpMode)
         PowerDownConfig();
     }
 
-    /* 
-    **  Save A8 context 
+    /*
+    **  Save A8 context
     **  WFI
     **  Restore A8 context
     */
     saveRestoreContext(slpMode, memType, deviceVersion);
-   
+
     /*
     ** Enable Timer3 clock before enabling Interrupts.
     ** Touch screen ISR is using Timer3 module.
@@ -918,7 +918,7 @@ void PowerSaveModeEnter(deepSleepData dsData, unsigned int slpMode)
 
     /* Enable IRQ */
     IntMasterIRQEnable();
-  
+
     enableModuleClock(CLK_I2C0);
 
     /* Restore OPP configuration */
@@ -971,7 +971,7 @@ void PowerSaveModeEnter(deepSleepData dsData, unsigned int slpMode)
     /* Reset CM3 State Machine */
     configIPCRegs(dsDataM3reset);
     syncCm3();
-	
+
     if(slpMode & SLEEP_MODE_DS1)
     {
         /* delay to reduce the frequency of sleep/wake cycle for DS1 */

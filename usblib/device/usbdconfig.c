@@ -4,13 +4,13 @@
 //
 // Copyright (c) 2008-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -436,7 +436,7 @@ USBDeviceConfig(unsigned int ulIndex, const tConfigHeader *psConfig,
             //
             // Now actually configure the FIFO for this endpoint.
             //
-            USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr, 
+            USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr,
                                 IndexToUSBEP(ui32Loop), ui32Count,
                              ui32MaxPkt, USB_EP_DEV_IN);
             ui32Count += ui32BytesUsed;
@@ -465,7 +465,7 @@ USBDeviceConfig(unsigned int ulIndex, const tConfigHeader *psConfig,
             //
             // Now actually configure the FIFO for this endpoint.
             //
-            USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr, 
+            USBFIFOConfigSet(g_USBInstance[ulIndex].uiBaseAddr,
                                 IndexToUSBEP(ui32Loop), ui32Count,
                              ui32MaxPkt, USB_EP_DEV_OUT);
             ui32Count += ui32BytesUsed;

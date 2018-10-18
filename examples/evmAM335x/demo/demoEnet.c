@@ -73,7 +73,7 @@ static const char* ControlCGIHandler(int iIndex, int iNumParams, char *pcParam[]
 *******************************************************************************/
 static const tCGI g_psConfigCGIURIs[] =
 {
-    { "/io_control.cgi", ControlCGIHandler }      
+    { "/io_control.cgi", ControlCGIHandler }
 };
 
 unsigned int ipAddr;
@@ -85,7 +85,7 @@ MDIOCONTEXT mdioContext;
 /*******************************************************************************
 **                          FUNCTION DEFINITIONS
 *******************************************************************************/
-/* 
+/*
 ** Registers ethernet ISRs
 */
 void EnetIntRegister(void)
@@ -169,7 +169,7 @@ void EnetHttpServerInit(void)
 }
 
 /*
-** This function restarts DHCP 
+** This function restarts DHCP
 */
 void EnetDHCPRestart(void)
 {
@@ -186,14 +186,14 @@ void EnetDHCPRestart(void)
                 ConsoleUtilsPrintf("\n\r EVM IP Address Assigned: ");
                 IpAddrDisplay();
             }
-  
+
             else
-            {         
+            {
                 ConsoleUtilsPrintf("\n\rIP Address not assigned. ");
                 ConsoleUtilsPrintf("Check connection/DHCP.\n\r");
             }
         }
-   
+
         else
         {
             ConsoleUtilsPrintf("\n\rEthernet Link is down. ");
@@ -203,68 +203,68 @@ void EnetDHCPRestart(void)
 }
 
 /*
-** CGI handler 
+** CGI handler
 */
 static const char* ControlCGIHandler(int iIndex, int iNumParams, char *pcParam[],
                                      char *pcValue[])
 {
     if(!(strcmp(pcValue[0],"INTRO")))
     {
-        clickIdx = CLICK_IDX_INTRO;    
+        clickIdx = CLICK_IDX_INTRO;
     }
     else if(!(strcmp(pcValue[0],"WWW")))
     {
-        clickIdx = CLICK_IDX_CHOICE;    
+        clickIdx = CLICK_IDX_CHOICE;
     }
 	else if(!(strcmp(pcValue[0],"MCASP")))
     {
-        clickIdx = CLICK_IDX_MCASP;    
+        clickIdx = CLICK_IDX_MCASP;
     }
 	else if(!(strcmp(pcValue[0],"MMCSD")))
     {
-        clickIdx = CLICK_IDX_MMCSD;    
+        clickIdx = CLICK_IDX_MMCSD;
     }
 	else if(!(strcmp(pcValue[0],"UART")))
     {
-        clickIdx = CLICK_IDX_UART;    
+        clickIdx = CLICK_IDX_UART;
     }
 	else if(!(strcmp(pcValue[0],"RTC")))
     {
-        clickIdx = CLICK_IDX_RTC;    
+        clickIdx = CLICK_IDX_RTC;
     }
 	else if(!(strcmp(pcValue[0],"TIMER")))
     {
-        clickIdx = CLICK_IDX_TIMER;    
+        clickIdx = CLICK_IDX_TIMER;
     }
 	else if(!(strcmp(pcValue[0],"ETHERNET")))
     {
-        clickIdx = CLICK_IDX_ETHERNET;    
+        clickIdx = CLICK_IDX_ETHERNET;
     }
 	else if(!(strcmp(pcValue[0],"ECAP")))
     {
-        clickIdx = CLICK_IDX_ECAP;    
+        clickIdx = CLICK_IDX_ECAP;
     }	
 	else if(!(strcmp(pcValue[0],"GPIO")))
     {
-        clickIdx = CLICK_IDX_GPIO;    
+        clickIdx = CLICK_IDX_GPIO;
     }
 	else if(!(strcmp(pcValue[0],"I2C")))
     {
-        clickIdx = CLICK_IDX_I2C;    
+        clickIdx = CLICK_IDX_I2C;
     }
 	else if(!(strcmp(pcValue[0],"PM")))
     {
-        clickIdx = CLICK_IDX_PM;    
+        clickIdx = CLICK_IDX_PM;
     }
 	else if(!(strcmp(pcValue[0],"DVFS")))
     {
-        clickIdx = CLICK_IDX_DVFS;    
+        clickIdx = CLICK_IDX_DVFS;
     }
     else
     {
         clickIdx = 0;
     }
- 
+
     return "/io_cgi.ssi";
 }
 

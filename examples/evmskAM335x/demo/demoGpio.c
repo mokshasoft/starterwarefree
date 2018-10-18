@@ -107,24 +107,24 @@ void configWakeGpio()
 {
 	/* Enabling the GPIO module. */
 	GPIOModuleEnable(GPIO_WAKE_INSTANCE);
-	
+
 	/* Perform a module reset of the GPIO module. */
     //GPIOModuleReset(GPIO_WAKE_INSTANCE);
-	
+
 	/* Set the specified pin as an Input pin. */
     GPIODirModeSet(GPIO_WAKE_INSTANCE,
                    GPIO_WAKE_PIN_NUM,
                    GPIO_DIR_INPUT);
-				   
+
 	GPIOIntTypeSet(GPIO_WAKE_INSTANCE,
 					GPIO_WAKE_PIN_NUM,
 					GPIO_INT_TYPE_BOTH_EDGE);
-					
+
 	HWREG(GPIO_WAKE_INSTANCE + 0x34) = 0x40000000;
 	HWREG(GPIO_WAKE_INSTANCE + 0x38) = 0x40000000;
-	
+
 	HWREG(GPIO_WAKE_INSTANCE + 0x44) = 0x40000000;
-	
+
 }
 
 void enableGpioWake()
@@ -147,7 +147,7 @@ void disableGpioWake()
 
 void toggleLatGpio()
 {
-	GPIOPinWrite(SOC_GPIO_1_REGS, GPIO_LATENCY_PIN_NUM, 
+	GPIOPinWrite(SOC_GPIO_1_REGS, GPIO_LATENCY_PIN_NUM,
 			((~GPIOPinRead(SOC_GPIO_1_REGS, GPIO_LATENCY_PIN_NUM)) >> GPIO_LATENCY_PIN_NUM) & 0x1);
 }
 

@@ -1,6 +1,6 @@
 /**
  * \file  codecif.h
- * 
+ *
  * \brief Codec Interface APIs
  *
  */
@@ -63,7 +63,7 @@ extern void CodecRegBitSet(unsigned int baseAddr, unsigned char regAddr,
                            unsigned char bitMask);
 extern void CodecRegBitClr(unsigned int baseAddr, unsigned char regAddr,
                            unsigned char bitMask);
-extern unsigned char CodecRegRead(unsigned int baseAddr, 
+extern unsigned char CodecRegRead(unsigned int baseAddr,
                                   unsigned char regAddr);
 
 #endif

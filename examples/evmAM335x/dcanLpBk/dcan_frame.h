@@ -58,7 +58,7 @@ extern "C" {
 /*                        STRUCTURE DECLARATIONS                              */
 /******************************************************************************/
 /*
-** Structure which will hold information related to a CANframe which will be 
+** Structure which will hold information related to a CANframe which will be
 ** stored in a message object.
 */
 typedef struct _can_frame{
@@ -69,7 +69,7 @@ typedef struct _can_frame{
 }can_frame;
 
 /*
-** Structure used by the CAN Bit time calculator. Will hold values related to 
+** Structure used by the CAN Bit time calculator. Will hold values related to
 ** bit-time configuration.
 */
 struct _dcan_bittiming{
@@ -84,7 +84,7 @@ struct _dcan_bittiming{
 };
 
 /*
-** Structure used by the CAN Bit time calculator. Will hold values related to 
+** Structure used by the CAN Bit time calculator. Will hold values related to
 ** bit-time configuration.
 */
 struct _dcan_hw_params{
@@ -106,13 +106,13 @@ extern void CANTxObjectConfig(unsigned int baseAdd, can_frame* canPtr);
 extern void CANRxObjectConfig(unsigned int baseAdd, can_frame* canPtr);
 extern void CANClrIntPndStat(unsigned int baseAdd, unsigned int msgNum,
                              unsigned int ifReg);
-extern void CANValidateMsgObject(unsigned int baseAdd, unsigned int msgNum, 
+extern void CANValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
                                  unsigned int ifReg);
 extern void CANInValidateMsgObject(unsigned int baseAdd, unsigned int msgNum,
                                    unsigned int ifReg);
 extern void CANReadMsgObjData(unsigned int baseAdd, unsigned int msgNum,
                        unsigned int* data, unsigned int ifReg);
-extern void CANTxIntDisable(unsigned int baseAdd, unsigned int msgNum, 
+extern void CANTxIntDisable(unsigned int baseAdd, unsigned int msgNum,
                             unsigned int ifReg);
 extern void CANRxIntDisable(unsigned int baseAdd, unsigned int msgNum,
                             unsigned int ifReg);

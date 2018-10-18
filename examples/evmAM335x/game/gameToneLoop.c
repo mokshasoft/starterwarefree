@@ -1,8 +1,8 @@
 /**
  * \file  gameToneLoop.c
- * 
+ *
  * \brief Functions for looping a tone infinitely. The tone shall be given in
- *        raw data format. 
+ *        raw data format.
  *
 */
 
@@ -62,7 +62,7 @@
 /* Definitions for sample tone */
 #define TONE_START_ADDR               ((unsigned int)toneRaw)
 #define TONE_NUM_BYTES                (sizeof(toneRaw))
-#define TONE_END_ADDR                 (TONE_START_ADDR + TONE_NUM_BYTES - 1) 
+#define TONE_END_ADDR                 (TONE_START_ADDR + TONE_NUM_BYTES - 1)
 #define PARAM1_NUM_SAMPLES_L          ((unsigned int)(TONE_NUM_BYTES  \
                                        / (TONE_WORD_SIZE >> 3)))
 #define PARAM1_BCNT                   (65000)
@@ -151,15 +151,15 @@ static void McASPI2STwoChanConfig(void)
     McASPTxFmtI2SSet(SOC_MCASP_1_CTRL_REGS, TONE_WORD_SIZE, TONE_SLOT_SIZE,
                      MCASP_TX_MODE_DMA);
 
-    McASPTxFrameSyncCfg(SOC_MCASP_1_CTRL_REGS, 2, MCASP_TX_FS_WIDTH_WORD, 
+    McASPTxFrameSyncCfg(SOC_MCASP_1_CTRL_REGS, 2, MCASP_TX_FS_WIDTH_WORD,
                         MCASP_TX_FS_EXT_BEGIN_ON_RIS_EDGE);
 
     /* configure the clock for transmitter */
     McASPTxClkCfg(SOC_MCASP_1_CTRL_REGS, MCASP_TX_CLK_EXTERNAL, 0, 0);
-    McASPTxClkPolaritySet(SOC_MCASP_1_CTRL_REGS, MCASP_TX_CLK_POL_FALL_EDGE); 
+    McASPTxClkPolaritySet(SOC_MCASP_1_CTRL_REGS, MCASP_TX_CLK_POL_FALL_EDGE);
     McASPTxClkCheckConfig(SOC_MCASP_1_CTRL_REGS, MCASP_TX_CLKCHCK_DIV32,
                           0x00, 0xFF);
- 
+
     /* Enable the transmitter/receiver slots. I2S uses 2 slots */
     McASPTxTimeSlotSet(SOC_MCASP_1_CTRL_REGS, I2S_SLOTS_L_R);
 
@@ -167,13 +167,13 @@ static void McASPI2STwoChanConfig(void)
     McASPSerializerTxSet(SOC_MCASP_1_CTRL_REGS, MCASP_XSER_TX);
 
     /*
-    ** Configure the McASP pins 
+    ** Configure the McASP pins
     ** Input - Frame Sync, Clock and Serializer 12
-    ** Output - Serializer 11 is connected to the input of the codec 
+    ** Output - Serializer 11 is connected to the input of the codec
     */
     McASPPinMcASPSet(SOC_MCASP_1_CTRL_REGS, 0xFFFFFFFF);
     McASPPinDirOutputSet(SOC_MCASP_1_CTRL_REGS, MCASP_PIN_AXR(MCASP_XSER_TX));
-    McASPPinDirInputSet(SOC_MCASP_1_CTRL_REGS, MCASP_PIN_AFSX 
+    McASPPinDirInputSet(SOC_MCASP_1_CTRL_REGS, MCASP_PIN_AFSX
                                                | MCASP_PIN_ACLKX);
 }
 
@@ -215,11 +215,11 @@ void ToneLoopInit(void)
     dmaPar[1].bCnt = PARAM2_BCNT;
 
     /* Initialize the DMA parameters */
-    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, EDMA3_CHA_MCASP1_TX, 
+    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, EDMA3_CHA_MCASP1_TX,
                  (struct EDMA3CCPaRAMEntry *)(&(dmaPar[0])));
-    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, 70, 
+    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, 70,
                  (struct EDMA3CCPaRAMEntry *)(&(dmaPar[1])));
-    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, 71, 
+    EDMA3SetPaRAM(SOC_EDMA30CC_0_REGS, 71,
                  (struct EDMA3CCPaRAMEntry *)(&(dmaPar[2])));
 
     /* Configure the McASP for I2S with two channels */
@@ -247,5 +247,5 @@ void AudioCodecInit(void)
     AIC31ADCInit(SOC_I2C_1_REGS);
     AIC31DACInit(SOC_I2C_1_REGS);
 }
- 
+
 /***************************** End Of File ***********************************/

@@ -72,9 +72,9 @@ void UARTConsoleInit(void);
 
 /**
  * \brief   This function initializes the specified UART instance for use.
- *          This does the following:        
+ *          This does the following:
  *          - Enables the FIFO and performs the FIFO settings\n
- *          - Performs the Baud Rate settings\n 
+ *          - Performs the Baud Rate settings\n
  *          - Configures the Line Characteristics to 8-N-1 format\n
  *
  * \param   baudRate     The baud rate to be used for communication

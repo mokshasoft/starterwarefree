@@ -60,14 +60,14 @@
 #include "mdio.h"
 #include "interrupt.h"
 #include "delay.h"
-#include "phy.h" 
+#include "phy.h"
 #include "cache.h"
 
 /* CPPI RAM size in bytes */
 #ifndef SIZE_CPPI_RAM
 #define SIZE_CPPI_RAM                            0x2000
 #endif
- 
+
 #define PORT_1                                   0x0
 #define PORT_2                                   0x1
 #define PORT_0_MASK                              0x1
@@ -128,7 +128,7 @@
 #define ALE_VLAN_ENTRY_TYPE_ID_BIT8_BIT11        7
 #define ALE_VLAN_ENTRY_TYPE_ID_BIT8_BIT11_ALIGN  (0x08)
 #define ALE_VLANUCAST_ENTRY_ID_BIT0_BIT7         6
-#define ALE_VLANUCAST_ENTRY_TYPE_ID_BIT8_BIT11   7     
+#define ALE_VLANUCAST_ENTRY_TYPE_ID_BIT8_BIT11   7
 #define ALE_UCAST_ENTRY_TYPE                     7
 #define ALE_UCAST_TYPE_MASK                      (0xC0)
 #define ALE_UCAST_TYPE_SHIFT                     (6)
@@ -171,7 +171,7 @@ struct cpdma_tx_bd {
   volatile u32_t bufptr;
   volatile u32_t bufoff_len;
   volatile u32_t flags_pktlen;
-  
+
   /* helper to know which pbuf this tx bd corresponds to */
   volatile struct pbuf *pbuf;
 }cpdma_tx_bd;
@@ -188,7 +188,7 @@ struct cpdma_rx_bd {
 }cpdma_rx_bd;
 
 /**
- * Helper struct to hold the data used to operate on the receive 
+ * Helper struct to hold the data used to operate on the receive
  * buffer descriptor ring
  */
 struct rxch {
@@ -206,13 +206,13 @@ struct rxch {
 }rxch;
 
 /**
- * Helper struct to hold the data used to operate on the transmit 
- * buffer descriptor ring 
+ * Helper struct to hold the data used to operate on the transmit
+ * buffer descriptor ring
  */
 struct txch {
   /* The bd which is free to send */
   volatile struct cpdma_tx_bd *free_head;
-  
+
   /* The head of the bd chain, being sent */
   volatile struct cpdma_tx_bd *send_head;
 
@@ -228,17 +228,17 @@ volatile struct cpdma_tx_bd *free_head;
 /**
  * Slave port information
  */
-struct cpswport{ 
+struct cpswport{
   u32_t port_base;
   u32_t sliver_base;
   u32_t phy_addr;
-  
+
   /* The PHY is capable of GitaBit or Not */
   u32_t phy_gbps;
 }cpswport;
 
-/** 
- * CPSW instance information 
+/**
+ * CPSW instance information
  */
 struct cpswinst{
   /* Base addresses */
@@ -250,7 +250,7 @@ struct cpswinst{
   u32_t cppi_ram_base;
   u32_t host_port_base;
 
-  /* Slave port information */ 
+  /* Slave port information */
   struct cpswport port[MAX_SLAVEPORT_PER_INST];
 
   /* The tx/rx channels for the interface */
@@ -260,13 +260,13 @@ struct cpswinst{
 
 /* Defining set of CPSW base addresses for all the instances */
 static struct cpswinst cpsw_inst_data[MAX_CPSW_INST];
- 
+
 /**
 * Function to setup the instance parameters inside the interface
 * @param  cpswif  The interface structure pointer
-* @return None. 
+* @return None.
 */
-static void 
+static void
 cpswif_inst_config(struct cpswportif *cpswif) {
   u32_t inst_num = cpswif->inst_num;
   struct cpswinst *cpswinst = &cpsw_inst_data[inst_num];
@@ -349,8 +349,8 @@ cpswif_port_to_host_vlan_cfg(struct cpswinst *cpswinst, u32_t port_num,
   }
 
   /* Set up the VLAN Entry */
-  *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_MEMBER_LIST) = 
-                                   HOST_PORT_MASK | SLAVE_PORT_MASK(port_num); 
+  *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_MEMBER_LIST) =
+                                   HOST_PORT_MASK | SLAVE_PORT_MASK(port_num);
 
   /**
    * Set the bit fields for entry type and VLAN ID. Set the port
@@ -359,10 +359,10 @@ cpswif_port_to_host_vlan_cfg(struct cpswinst *cpswinst, u32_t port_num,
   *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_ID_BIT0_BIT7) = port_num;
   *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_TYPE_ID_BIT8_BIT11) = ALE_ENTRY_VLAN;
 
-  *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_FRC_UNTAG_EGR) = 
-                                   HOST_PORT_MASK | SLAVE_PORT_MASK(port_num); 
- 
-  /* Set the VLAN entry in the ALE table */ 
+  *(((u8_t *)ale_v_entry) + ALE_VLAN_ENTRY_FRC_UNTAG_EGR) =
+                                   HOST_PORT_MASK | SLAVE_PORT_MASK(port_num);
+
+  /* Set the VLAN entry in the ALE table */
   CPSWALETableEntrySet(cpswinst->ale_base, idx, ale_v_entry);
 
   idx = cpswif_ale_entry_match_free(cpswinst);
@@ -376,7 +376,7 @@ cpswif_port_to_host_vlan_cfg(struct cpswinst *cpswinst, u32_t port_num,
     *(((u8_t *)ale_vu_entry) + cnt) = eth_addr[ETHARP_HWADDR_LEN - cnt -1];
   }
 
-  *(((u8_t *)ale_vu_entry) + ALE_VLANUCAST_ENTRY_TYPE_ID_BIT8_BIT11) = 
+  *(((u8_t *)ale_vu_entry) + ALE_VLANUCAST_ENTRY_TYPE_ID_BIT8_BIT11) =
                                                            ALE_ENTRY_VLANUCAST;
   *(((u8_t *)ale_vu_entry) + ALE_VLANUCAST_ENTRY_ID_BIT0_BIT7) = port_num;
 

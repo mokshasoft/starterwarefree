@@ -1,6 +1,6 @@
 /**
 *  \file client.c
-*    
+*
 *  \brief This is a client program which connects to echoserver to
 *        start communication with echoserver.
 */
@@ -55,7 +55,7 @@
 int main(int argc, char*argv[])
 {
     int sock;
-    unsigned int i;  
+    unsigned int i;
     int snd_err = 0;
     int rcv_err = 0;
     struct sockaddr_in server_addr;
@@ -84,33 +84,33 @@ int main(int argc, char*argv[])
     }
 
     memset(recv_data, 0, MAX_PKT_SIZE);
-  
-    /* create a socket */ 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == -1) 
+
+    /* create a socket */
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
             perror("Socket");
             exit(1);
     }
 
-    server_addr.sin_family = AF_INET;     
-    server_addr.sin_port = htons(2000);   
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(2000);
     server_addr.sin_addr.s_addr = inet_addr(argv[1]);
-    bzero(&(server_addr.sin_zero),8); 
+    bzero(&(server_addr.sin_zero),8);
 
     printf("connecting .......\n");
     /* connect to the server */
     if (connect(sock, (struct sockaddr *)&server_addr,
-                       sizeof(struct sockaddr)) == -1) 
+                       sizeof(struct sockaddr)) == -1)
     {
             perror("Connect");
             exit(1);
     }
-   
+
     for(i = 0; i < MAX_NUM_PKTS ; i++)
     {
         unsigned int j;
 
-        /* send data to server */    
+        /* send data to server */
         printf("\n(%d) sending data..........",i);
 
         snd_err = send(sock, send_data, MAX_PKT_SIZE, 0);
@@ -119,13 +119,13 @@ int main(int argc, char*argv[])
 	    printf("\n send error : %s\n", strerror(snd_err));
 
         printf("\n(%d)receiving data..........\n",i);
-    
+
         /* receive the data from server */
         rcv_err = recv(sock, recv_data, MAX_PKT_SIZE, MSG_WAITALL);
 
 	if (rcv_err < 0)
 	    printf("\n recv error %s\n", strerror(rcv_err));
- 
+
  	printf("number of bytes received = %d\n" , rcv_err);
 
 	for (j = 0; (j < MAX_PKT_SIZE) && (snd_err >= 0 && rcv_err >= 0); j++)

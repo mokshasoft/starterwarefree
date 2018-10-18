@@ -20,7 +20,7 @@ typedef struct _fatDevice
 {
     /* Pointer to underlying device/controller */
     void *dev;
-    
+
     /* File system pointer */
     FATFS *fs;
 
@@ -46,23 +46,23 @@ disk_initialize(
     BYTE bValue)                /* Physical drive number (0) */
 {
 	unsigned int status;
-   
+
     if (DRIVE_NUM_MAX <= bValue)
     {
         return STA_NODISK;
     }
-    
+
     if ((DRIVE_NUM_MMCSD == bValue) && (fat_devices[bValue].initDone != 1))
     {
         mmcsdCardInfo *card = (mmcsdCardInfo *) fat_devices[bValue].dev;
-        
+
         /* SD Card init */
         status = MMCSDCardInit(card->ctrl);
 
         if (status == 0)
         {
             UARTPuts("\r\nCard Init Failed \r\n", -1);
-            
+
             return STA_NOINIT;
         }
         else
@@ -73,12 +73,12 @@ disk_initialize(
                 UARTPuts("\r\nSD Card ", -1);
                 UARTPuts("version : ",-1);
                 UARTPutNum(card->sd_ver);
-    
+
                 if (card->highCap)
                 {
                     UARTPuts(", High Capacity", -1);
                 }
-    
+
                 if (card->tranSpeed == SD_TRANSPEED_50MBPS)
                 {
                     UARTPuts(", High Speed", -1);
@@ -88,20 +88,20 @@ disk_initialize(
             {
                 UARTPuts("\r\nMMC Card ", -1);
             }
-#endif            
+#endif
             /* Set bus width */
             if (card->cardType == MMCSD_CARD_SD)
             {
                 MMCSDBusWidthSet(card->ctrl);
             }
-    
+
             /* Transfer speed */
             MMCSDTranSpeedSet(card->ctrl);
         }
 
 		fat_devices[bValue].initDone = 1;
     }
-        
+
     return 0;
 }
 

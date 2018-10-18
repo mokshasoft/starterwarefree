@@ -48,7 +48,7 @@
 
 /**
  * \brief   This function selects the McASP instance 1 pins
- *          
+ *
  * \param   None
  *
  * \return  TRUE/FALSE.
@@ -60,37 +60,37 @@ unsigned int McASP1PinMuxSetup(void)
     unsigned int profile;
     unsigned int status = FALSE;
 
-    profile = EVMProfileGet(); 
+    profile = EVMProfileGet();
 
     switch (profile)
     {
         case 0:
         case 3:
-            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_MII1_COL) = 
-                          CONTROL_CONF_MII1_RXERR_CONF_MII1_RXERR_RXACTIVE 
-                          | MCASP_SEL_MODE;            
-            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_MII1_CRS) = 
+            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_MII1_COL) =
                           CONTROL_CONF_MII1_RXERR_CONF_MII1_RXERR_RXACTIVE
-                          | MCASP_SEL_MODE;            
+                          | MCASP_SEL_MODE;
+            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_MII1_CRS) =
+                          CONTROL_CONF_MII1_RXERR_CONF_MII1_RXERR_RXACTIVE
+                          | MCASP_SEL_MODE;
             HWREG(SOC_CONTROL_REGS + CONTROL_CONF_MII1_RXERR) =
                           CONTROL_CONF_MII1_RXERR_CONF_MII1_RXERR_RXACTIVE
-                          | MCASP_SEL_MODE;            
-            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_RMII1_REFCLK) = 
-                          CONTROL_CONF_RMII1_REFCLK_CONF_RMII1_REFCLK_RXACTIVE 
-                          | MCASP_SEL_MODE;            
+                          | MCASP_SEL_MODE;
+            HWREG(SOC_CONTROL_REGS + CONTROL_CONF_RMII1_REFCLK) =
+                          CONTROL_CONF_RMII1_REFCLK_CONF_RMII1_REFCLK_RXACTIVE
+                          | MCASP_SEL_MODE;
             status = TRUE;
-        break; 
+        break;
 
         default:
         break;
     }
-    
+
     return status;
 }
 
 /**
  * \brief   This function enables McASP clocks
- *          
+ *
  * \param   None
  *
  * \return  None.

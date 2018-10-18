@@ -38,7 +38,7 @@
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
- 
+
 #include <string.h>
 #include "hs_mmcsd.h"
 #include "hw_usbOtg_AM335x.h"
@@ -250,10 +250,10 @@ static void PeripheralsResume(void)
     /* LCD back light ON */
     EcapBkLightEnable();
 
-    /* Bring CPSW out of standby and restart DHCP */   
+    /* Bring CPSW out of standby and restart DHCP */
     CPSWWrControlRegReset(CPSW_WR_BASE_ADDR);
     CPSWCPDMACmdIdleDisable(CPSW_CPDMA_BASE_ADDR);
-    EnetDHCPRestart();	
+    EnetDHCPRestart();
 
     /* Set CUST_EFUSE modules to SW_WAKE */
     HWREG(SOC_CM_CEFUSE_REGS + CM_CEFUSE_CLKSTCTRL) = 0x2;
@@ -287,23 +287,23 @@ static void PeripheralsContextSave(unsigned int slpMode, unsigned int wakeSrc)
             ControlRegContextSave(&ctrlContext);
 
             RasterContextSave(LCDC_BASE_ADDR, &rasterContext);
-	
+
             EcapContextSave(ECAP_BASE_ADDR, PWMSS_BASE_ADDR, &ecapContext);
-	
+
             EDMA3ContextSave(EDMA_BASE_ADDR, &edmaContext);
 
             McASPContextSave(MCASP_CTRL_BASE_ADDR, MCASP_FIFO_BASE_ADDR,
                              &mcaspContext, McASP_CONTEXT_TX);
-					  
+
             EnetContextSave();
 
             DMTimerContextSave(DMTIMER2_BASE_ADDR, &dmtimerContext[0]);
             DMTimerContextSave(DMTIMER3_BASE_ADDR, &dmtimerContext[1]);
             DMTimerContextSave(DMTIMER4_BASE_ADDR, &dmtimerContext[2]);
             DMTimerContextSave(DMTIMER7_BASE_ADDR, &dmtimerContext[3]);
-  
+
             I2CContextSave(I2C1_BASE_ADDR, &i2cContext);
-	
+
             gpioContextSave(GPIO0_BASE_ADDR, &gpioContext[0]);
             gpioContextSave(GPIO1_BASE_ADDR, &gpioContext[1]);
 
@@ -344,9 +344,9 @@ static void PeripheralsContextRestore(unsigned int slpMode, unsigned int wakeSrc
             ControlRegContextRestore(&ctrlContext);
 
             RasterContextRestore(LCDC_BASE_ADDR, &rasterContext);
-		
+
             EcapContextRestore(ECAP_BASE_ADDR, PWMSS_BASE_ADDR, &ecapContext);
-	
+
             gpioContextRestore(GPIO0_BASE_ADDR, &gpioContext[0]);
             gpioContextRestore(GPIO1_BASE_ADDR, &gpioContext[1]);
 
@@ -360,11 +360,11 @@ static void PeripheralsContextRestore(unsigned int slpMode, unsigned int wakeSrc
             MDIOContextRestore(CPSW_MDIO_BASE_ADDR, &mdioContext);
 
             CPSWContextRestore(&cpswContext);
-	
+
             EDMA3ContextRestore(EDMA_BASE_ADDR, &edmaContext);
             McASPContextRestore(MCASP_CTRL_BASE_ADDR, MCASP_FIFO_BASE_ADDR,
                                 &mcaspContext, McASP_CONTEXT_TX);
-	
+
             I2CContextRestore(I2C1_BASE_ADDR, &i2cContext);
             break;
 
@@ -886,8 +886,8 @@ void PowerSaveModeEnter(deepSleepData dsData, unsigned int slpMode)
         PowerDownConfig();
     }
 
-    /* 
-    **  Save A8 context 
+    /*
+    **  Save A8 context
     **  WFI
     **  Restore A8 context
     */
@@ -895,10 +895,10 @@ void PowerSaveModeEnter(deepSleepData dsData, unsigned int slpMode)
 
     /* Enable Timer3 for DS2 */
     enableModuleClock(CLK_TIMER3);
-              
+
     /* Enable IRQ */
     IntMasterIRQEnable();
-  
+
     enableModuleClock(CLK_I2C0);
 
     /* Restore OPP configuration */

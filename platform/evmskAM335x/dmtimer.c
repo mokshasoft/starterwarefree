@@ -46,7 +46,7 @@
 
 /*
  *
- * Note: No pin-muxing is required for DMTimer instances 0,1,2,3. 
+ * Note: No pin-muxing is required for DMTimer instances 0,1,2,3.
  *       Hence they can be used directly. Hence no pin-muxing function
  *       is used for these instances.
  */
@@ -80,8 +80,8 @@ void DMTimer2ModuleClkConfig(void)
     while((HWREG(SOC_CM_PER_REGS + CM_PER_TIMER2_CLKCTRL) &
     CM_PER_TIMER2_CLKCTRL_MODULEMODE) != CM_PER_TIMER2_CLKCTRL_MODULEMODE_ENABLE);
 
-    /* 
-    ** Waiting for the CLKACTIVITY_TIMER2_GCLK field of CM_PER_L4LS_CLKSTCTRL 
+    /*
+    ** Waiting for the CLKACTIVITY_TIMER2_GCLK field of CM_PER_L4LS_CLKSTCTRL
     ** register to be set.
     */
     while(!(HWREG(SOC_CM_PER_REGS + CM_PER_L4LS_CLKSTCTRL) &

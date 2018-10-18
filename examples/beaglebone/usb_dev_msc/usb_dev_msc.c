@@ -386,8 +386,8 @@ main(void)
 {
 
 
-    /* MMU needs to be turned on to provide HW support unaligned 
-       access to USB structures */    
+    /* MMU needs to be turned on to provide HW support unaligned
+       access to USB structures */
     MMUConfigAndEnable();
 
     /* Enable Data Cache */

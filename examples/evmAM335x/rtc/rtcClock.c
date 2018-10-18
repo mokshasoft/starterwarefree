@@ -1,7 +1,7 @@
 /**
  *  \file   rtcClock.c
  *
- *  \brief  This is a sample application to demonstrate the configuration and 
+ *  \brief  This is a sample application to demonstrate the configuration and
  *          usage of RTC.
  *
  *          Application Configuration:
@@ -36,34 +36,34 @@
  */
 
 /*
-* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
 *
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -75,7 +75,7 @@
 #include "rtc.h"
 
 /*****************************************************************************
-**                LOCAL MACRO DEFINITIONS                                   
+**                LOCAL MACRO DEFINITIONS
 *****************************************************************************/
 
 #define MASK_HOUR            (0xFF000000u)
@@ -98,7 +98,7 @@
 
 
 /******************************************************************************
-**               LOCAL FUNCTION PROTOTYPES                                   
+**               LOCAL FUNCTION PROTOTYPES
 ******************************************************************************/
 
 static void CalendarResolve(unsigned int calendarValue);
@@ -110,7 +110,7 @@ static void RTCAINTCConfigure(void);
 static void RTCIsr(void);
 
 /******************************************************************************
-**               LOCAL FUNCTION DEFINITIONS                                  
+**               LOCAL FUNCTION DEFINITIONS
 ******************************************************************************/
 
 /*
@@ -121,7 +121,7 @@ int main(void)
 {
     unsigned int userCalendar = 0;
     unsigned int userTime = 0;
-    
+
     /* Initialize console for communication with the Host Machine */
     ConsoleUtilsInit();
 
@@ -130,7 +130,7 @@ int main(void)
 
     /* Performing the System Clock configuration for RTC. */
     RTCModuleClkConfig();
-    
+
     /* Disabling Write Protection for RTC registers.*/
     RTCWriteProtectDisable(SOC_RTC_0_REGS);
 
@@ -150,13 +150,13 @@ int main(void)
 
     /* Receing Calendar relatd information from the user. */
     userCalendar = UserCalendarInfoGet();
-    
+
     /* Programming calendar information in the Calendar registers. */
     RTCCalendarSet(SOC_RTC_0_REGS, userCalendar);
 
     /* Programming the time information in the Time registers. */
     RTCTimeSet(SOC_RTC_0_REGS, userTime);
-    
+
     /* Set the 32KHz counter to run. */
     RTCRun(SOC_RTC_0_REGS);
 
@@ -186,7 +186,7 @@ static unsigned int UserTimeInfoGet()
 
     ConsoleUtilsPrintf("\n\nEnter the time in 24 hour format.\r\n");
     ConsoleUtilsPrintf("Example (hh:mm:ss) 20:15:09\r\n");
-    
+
     ConsoleUtilsPrintf("\n\rEnter Hours (0 to 23):");
     ConsoleUtilsScanf("%u", &temp);
 
@@ -210,7 +210,7 @@ static unsigned int UserTimeInfoGet()
 
     time |= (((temp / 10) << 4) << MINUTE_SHIFT)
             | ((temp % 10) << MINUTE_SHIFT);
- 
+
     ConsoleUtilsPrintf("\n\rEnter Seconds (0 to 59):");
     ConsoleUtilsScanf("%u", &temp);
 
@@ -238,7 +238,7 @@ static unsigned int UserCalendarInfoGet()
 
     ConsoleUtilsPrintf("\r\n\r\nEnter the calendar information.\r\n");
     ConsoleUtilsPrintf("Example (DD:MM:YY) 31:03:73\r\n");
-    
+
     ConsoleUtilsPrintf("\n\rEnter the day of the month(1 to 31):");
     ConsoleUtilsScanf("%u", &temp);
 
@@ -286,7 +286,7 @@ static unsigned int UserCalendarInfoGet()
     calender |= (((temp / 10) << 4)) | ((temp % 10));
 
     return calender;
-}  
+}
 
 /*
 ** This function prints the current time read from the RTC registers.
@@ -294,11 +294,11 @@ static unsigned int UserCalendarInfoGet()
 
 static void TimeResolve(unsigned int timeValue)
 {
-    unsigned char timeArray[3] = {0};              
+    unsigned char timeArray[3] = {0};
     unsigned char bytePrint[2] = {0};
     unsigned int count = 0, i = 0;
     unsigned int asciiTime = 0;
-   
+
     timeArray[0] = (unsigned char)((timeValue & MASK_HOUR) >> HOUR_SHIFT);
     timeArray[1] = (unsigned char)((timeValue & MASK_MINUTE) >> MINUTE_SHIFT);
     timeArray[2] = (unsigned char)((timeValue & MASK_SECOND) >> SECOND_SHIFT);
@@ -310,7 +310,7 @@ static void TimeResolve(unsigned int timeValue)
         bytePrint[0] = (unsigned char)((asciiTime & 0x0000FF00) >> 0x08);
         bytePrint[1] = (unsigned char)(asciiTime & 0x000000FF);
         while(i < 2)
-        {    
+        {
             ConsoleUtilsPrintf("%c", (bytePrint[i]));
             i++;
         }
@@ -347,21 +347,21 @@ static void CalendarResolve(unsigned int calendarValue)
 
     switch(dotwValue)
     {
-        case 0x00: 
+        case 0x00:
              dotwString[0] = 'S';
              dotwString[1] = 'u';
              dotwString[2] = 'n';
              dotwString[3] = '\0';
         break;
 
-        case 0x01: 
+        case 0x01:
              dotwString[0] = 'M';
              dotwString[1] = 'o';
              dotwString[2] = 'n';
              dotwString[3] = '\0';
         break;
 
-        case 0x02: 
+        case 0x02:
              dotwString[0] = 'T';
              dotwString[1] = 'u';
              dotwString[2] = 'e';
@@ -369,38 +369,38 @@ static void CalendarResolve(unsigned int calendarValue)
         break;
 
 
-        case 0x03: 
+        case 0x03:
              dotwString[0] = 'W';
              dotwString[1] = 'e';
              dotwString[2] = 'd';
              dotwString[3] = '\0';
         break;
 
-        case 0x04: 
+        case 0x04:
              dotwString[0] = 'T';
              dotwString[1] = 'h';
              dotwString[2] = 'u';
              dotwString[3] = '\0';
         break;
 
-        case 0x05: 
+        case 0x05:
              dotwString[0] = 'F';
              dotwString[1] = 'r';
              dotwString[2] = 'i';
              dotwString[3] = '\0';
         break;
 
-        case 0x06: 
+        case 0x06:
              dotwString[0] = 'S';
              dotwString[1] = 'a';
              dotwString[2] = 't';
              dotwString[3] = '\0';
 
-        default: 
+        default:
         break;
 
     }
-    
+
     while(count < 3)
     {
         j = 0;
@@ -422,7 +422,7 @@ static void CalendarResolve(unsigned int calendarValue)
             ConsoleUtilsPrintf("%c", ' ');
         }
 
-    }  
+    }
     ConsoleUtilsPrintf("%s", (char *)dotwString);
 
 }
@@ -430,7 +430,7 @@ static void CalendarResolve(unsigned int calendarValue)
 
 /*
 ** This function converts a 8 bit number to its ASCII equivalent value.
-** The 8 bit number is passed as a parameter to this function.         
+** The 8 bit number is passed as a parameter to this function.
 */
 
 static unsigned int intToASCII(unsigned char byte)
@@ -462,7 +462,7 @@ static void RTCAINTCConfigure(void)
     IntPrioritySet(SYS_INT_RTCINT, 0, AINTC_HOSTINT_ROUTE_IRQ);
 
     /* Enabling the system interrupt in AINTC. */
-    IntSystemEnable(SYS_INT_RTCINT);    
+    IntSystemEnable(SYS_INT_RTCINT);
 }
 /*
 ** This is the Interrupt Service Routine(ISR) for RTC.
@@ -470,25 +470,25 @@ static void RTCAINTCConfigure(void)
 
 static void RTCIsr(void)
 {
-    unsigned int calendarValue = 0;    
+    unsigned int calendarValue = 0;
     unsigned int timeValue = 0;
-        
-    /* Read the current time from RTC time registers. */ 
+
+    /* Read the current time from RTC time registers. */
     timeValue = RTCTimeGet(SOC_RTC_0_REGS);
 
     /* Decode the time in 'timeValue' and display it on console.*/
     TimeResolve(timeValue);
- 
+
     /* Read the current date from the RTC calendar registers. */
     calendarValue = RTCCalendarGet(SOC_RTC_0_REGS);
-    
+
     ConsoleUtilsPrintf("   ");
 
     /* Decode  the date in 'calendarValue' and display it on console.*/
     CalendarResolve(calendarValue);
 
     ConsoleUtilsPrintf("\r");
- 
+
 }
 
 /****************************** End of file **********************************/

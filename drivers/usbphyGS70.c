@@ -40,7 +40,7 @@
 */
 
 #include "hw_types.h"
-#include "soc_AM335x.h"    
+#include "soc_AM335x.h"
 #include "hw_usbphyGS70.h"
 #include "usblib.h"
 #include "hw_usb.h"
@@ -55,8 +55,8 @@ extern tUSBInstanceObject g_USBInstance[];
 
 
 /**
- * \brief This function will switch on the USB Phy  
- *          
+ * \brief This function will switch on the USB Phy
+ *
  *
  * \param    None
  *
@@ -81,7 +81,7 @@ void UsbPhyOn(unsigned int ulIndex)
 #endif /* defined (am335x_15x15) || ... */
 #endif /* USB_MODE_HS_DISABLE  */
 
-    usbphycfg = HWREG(g_USBInstance[ulIndex].uiPHYConfigRegAddr); 
+    usbphycfg = HWREG(g_USBInstance[ulIndex].uiPHYConfigRegAddr);
     usbphycfg &= ~(USBPHY_CM_PWRDN | USBPHY_OTG_PWRDN);
     usbphycfg |= (USBPHY_OTGVDET_EN | USBPHY_OTGSESSEND_EN);
 
@@ -90,8 +90,8 @@ void UsbPhyOn(unsigned int ulIndex)
 
 
 /**
- * \brief This function will switch off  the USB Phy  
- *          
+ * \brief This function will switch off  the USB Phy
+ *
  *
  * \param    None
  *
@@ -101,8 +101,8 @@ void UsbPhyOn(unsigned int ulIndex)
 void UsbPhyOff(unsigned int ulIndex)
 {
     unsigned int  usbphycfg = 0;
-    
-    usbphycfg = HWREG(g_USBInstance[ulIndex].uiPHYConfigRegAddr); 
+
+    usbphycfg = HWREG(g_USBInstance[ulIndex].uiPHYConfigRegAddr);
     usbphycfg |= (USBPHY_CM_PWRDN | USBPHY_OTG_PWRDN);
     HWREG(g_USBInstance[ulIndex].uiPHYConfigRegAddr) = usbphycfg;
 }

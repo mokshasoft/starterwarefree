@@ -4,20 +4,20 @@
 //
 // Copyright (c) 2010-2017 Texas Instruments Incorporated.  All rights reserved.
 // Software License Agreement
-// 
+//
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
 // TI and/or its suppliers, and is protected under applicable copyright
 // laws. You may not combine this software with "viral" open-source
 // software in order to form a larger program.
-// 
+//
 // THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
 // NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
 // NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 // A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
 // CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 // DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
+//
 // This is part of revision 2.1.4.178 of the Tiva USB Library.
 //
 //****************************************************************************
@@ -111,20 +111,20 @@ static const unsigned char g_pCompConfigDescriptor[] =
 static void HandleDisconnect(void *pvInstance);
 static void InterfaceChange(void *pvInstance, unsigned char ucInterfaceNum,
                             unsigned char ucAlternateSetting);
-static void ConfigChangeHandler(void *pvInstance, unsigned int ulValue, 
+static void ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
                                                     unsigned int ulIndex);
-static void DataSent(void *pvInstance, unsigned int ulInfo, 
+static void DataSent(void *pvInstance, unsigned int ulInfo,
                                     unsigned int ulIndex);
-static void DataReceived(void *pvInstance, unsigned int ulInfo, 
+static void DataReceived(void *pvInstance, unsigned int ulInfo,
                                         unsigned int ulIndex);
 static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                 unsigned int ulIndex);
-static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                                 unsigned int ulIndex);
 static void SuspendHandler(void *pvInstance);
 static void ResumeHandler(void *pvInstance);
 static void ResetHandler(void *pvInstance);
-static void GetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest, 
+static void GetDescriptor(void *pvInstance, tUSBRequest *pUSBRequest,
                                             unsigned int ulIndex);
 
 //****************************************************************************
@@ -479,7 +479,7 @@ DataReceived(void *pvInstance, unsigned int ulInfo, unsigned int ulIndex)
 //
 //****************************************************************************
 static void
-HandleEndpoints(void *pvInstance, unsigned int ulStatus, 
+HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                             unsigned int ulIndex)
 {
     unsigned int ulIdx;
@@ -586,7 +586,7 @@ InterfaceChange(void *pvInstance, unsigned char ucInterfaceNum,
 //
 //****************************************************************************
 static void
-ConfigChangeHandler(void *pvInstance, unsigned int ulValue, 
+ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
                                         unsigned int ulIndex)
 {
     unsigned int ulIdx;
@@ -627,7 +627,7 @@ ConfigChangeHandler(void *pvInstance, unsigned int ulValue,
 //
 //****************************************************************************
 static void
-HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest, 
+HandleRequests(void *pvInstance, tUSBRequest *pUSBRequest,
                                     unsigned int ulIndex)
 {
     unsigned int ulIdx;

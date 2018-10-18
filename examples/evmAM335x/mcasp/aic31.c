@@ -6,34 +6,34 @@
  */
 
 /*
-* Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/ 
+* Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
 *
-*  Redistribution and use in source and binary forms, with or without 
-*  modification, are permitted provided that the following conditions 
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
 *  are met:
 *
-*    Redistributions of source code must retain the above copyright 
+*    Redistributions of source code must retain the above copyright
 *    notice, this list of conditions and the following disclaimer.
 *
 *    Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
@@ -170,10 +170,10 @@
 void AIC31Reset(unsigned int baseAddr)
 {
     /* Select Page 0 */
-    CodecRegWrite(baseAddr, AIC31_P0_REG0, 0);    
+    CodecRegWrite(baseAddr, AIC31_P0_REG0, 0);
 
     /* Reset the codec */
-    CodecRegWrite(baseAddr, AIC31_P0_REG1, AIC31_RESET);    
+    CodecRegWrite(baseAddr, AIC31_P0_REG1, AIC31_RESET);
 }
 
 /**
@@ -193,7 +193,7 @@ void AIC31Reset(unsigned int baseAddr)
  * \return  None.
  *
  **/
-void AIC31DataConfig(unsigned int baseAddr, unsigned char dataType, 
+void AIC31DataConfig(unsigned int baseAddr, unsigned char dataType,
                      unsigned char slotWidth, unsigned char dataOff)
 {
     unsigned char slot;
@@ -224,7 +224,7 @@ void AIC31DataConfig(unsigned int baseAddr, unsigned char dataType,
 
     /* Write the data type and  slot width */
     CodecRegWrite(baseAddr, AIC31_P0_REG9, (dataType | slot));
-  
+
     /* valid data after dataOff number of clock cycles */
     CodecRegWrite(baseAddr, AIC31_P0_REG10, dataOff);
 }
@@ -241,16 +241,16 @@ void AIC31DataConfig(unsigned int baseAddr, unsigned char dataType,
  *                AIC31_MODE_DAC - for selecting DAC \n
  *                AIC31_MODE_BOTH - for both ADC and DAC \n
  *              sampleRate can be \n
- *                 8000, 11025, 16000, 22050, 24000, 32000, 44100, 
+ *                 8000, 11025, 16000, 22050, 24000, 32000, 44100,
  *                 48000 or  96000. \n
- *          The fs is derived from the equation 
- *                fs = (PLL_IN * [pllJval.pllDval] * pllRval) /(2048 * pllPval). 
- *          So the values are set for PLL_IN = 12000 kHz 
+ *          The fs is derived from the equation
+ *                fs = (PLL_IN * [pllJval.pllDval] * pllRval) /(2048 * pllPval).
+ *          So the values are set for PLL_IN = 12000 kHz
  *
  * \return  None.
  *
  **/
-void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode, 
+void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
                            unsigned int sampleRate)
 {
     unsigned char fs;
@@ -258,7 +258,7 @@ void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
     unsigned char temp;
     unsigned char pllPval = 1u;
     unsigned char pllRval = 1u;
-    unsigned char pllJval = 8u; 
+    unsigned char pllJval = 8u;
     unsigned short pllDval = 1920u;
 
     /* Select the configuration for the given sampling rate */
@@ -289,7 +289,7 @@ void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
         case 24000:
             fs = 0x22u;
         break;
-    
+
         case 32000:
             fs = 0x11u;
         break;
@@ -314,12 +314,12 @@ void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
             fs = 0x00u;
         break;
     }
-    
+
     temp = (mode & fs);
-   
+
     /* Set the sample Rate */
     CodecRegWrite(baseAddr, AIC31_P0_REG2, temp);
-  
+
     CodecRegWrite(baseAddr, AIC31_P0_REG3, 0x80 | pllPval);
 
     /* use PLL_CLK_IN as MCLK */
@@ -334,8 +334,8 @@ void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
     CodecRegWrite(baseAddr, AIC31_P0_REG4, pllJval << 2);
 
     /* Configure the PLL divide registers */
-    CodecRegWrite(baseAddr, AIC31_P0_REG5, (pllDval >> 6) & 0xFF); 
-    CodecRegWrite(baseAddr, AIC31_P0_REG6, (pllDval & 0x3F) << 2); 
+    CodecRegWrite(baseAddr, AIC31_P0_REG5, (pllDval >> 6) & 0xFF);
+    CodecRegWrite(baseAddr, AIC31_P0_REG6, (pllDval & 0x3F) << 2);
 
     CodecRegWrite(baseAddr, AIC31_P0_REG11, pllRval);
 
@@ -353,7 +353,7 @@ void AIC31SampleRateConfig(unsigned int baseAddr, unsigned int mode,
  * \return  None.
  *
  **/
-void AIC31ADCInit(unsigned int baseAddr) 
+void AIC31ADCInit(unsigned int baseAddr)
 {
     /* enable the programmable PGA for left and right ADC  */
     CodecRegWrite(baseAddr, AIC31_P0_REG15, 0x00);
@@ -381,7 +381,7 @@ void AIC31ADCInit(unsigned int baseAddr)
  *
  **/
 void AIC31DACInit(unsigned int baseAddr)
-{  
+{
     /* power up the left and right DACs */
     CodecRegWrite(baseAddr, AIC31_P0_REG37, 0xE0);
 

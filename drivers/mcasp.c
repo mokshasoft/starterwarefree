@@ -83,16 +83,16 @@ void McASPRxReset(unsigned int baseAddr)
  *
  * \param   baseAddr      Base Address of the McASP FIFO Registers.
  * \param   numTxSer      Number of Transmit Serializers to be used.
- * \param   minWdPerSer   The minimum number of words per serializer 
+ * \param   minWdPerSer   The minimum number of words per serializer
  *                        to be available in FIFO to issue a DMA event.
  *
  * \return  None.
  *
  **/
-void McASPWriteFifoEnable(unsigned int baseAddr, unsigned int numTxSer, 
+void McASPWriteFifoEnable(unsigned int baseAddr, unsigned int numTxSer,
                           unsigned int minWdPerSer)
 {
-    HWREG(baseAddr + MCASP_FIFO_WFIFOCTL) = numTxSer | 
+    HWREG(baseAddr + MCASP_FIFO_WFIFOCTL) = numTxSer |
                                             ((minWdPerSer * numTxSer)
                                              << AFIFO_WFIFOCTL_WNUMEVT_SHIFT);
 
@@ -107,16 +107,16 @@ void McASPWriteFifoEnable(unsigned int baseAddr, unsigned int numTxSer,
  *
  * \param   baseAddr      Base Address of the McASP FIFO Registers.
  * \param   numRxSer      Number of Receive Serializers to be used.
- * \param   minWdPerSer   The minimum number of words per serializer 
+ * \param   minWdPerSer   The minimum number of words per serializer
  *                        to be available in FIFO to issue a DMA event.
  *
  * \return  None.
  *
  **/
-void McASPReadFifoEnable(unsigned int baseAddr, unsigned int numRxSer, 
+void McASPReadFifoEnable(unsigned int baseAddr, unsigned int numRxSer,
                          unsigned int minWdPerSer)
 {
-    HWREG(baseAddr + MCASP_FIFO_RFIFOCTL) = numRxSer | 
+    HWREG(baseAddr + MCASP_FIFO_RFIFOCTL) = numRxSer |
                                             ((minWdPerSer * numRxSer)
                                              << AFIFO_RFIFOCTL_RNUMEVT_SHIFT);
 
@@ -160,7 +160,7 @@ void McASPRxFmtMaskSet(unsigned int baseAddr, unsigned int mask)
 
 /**
  * \brief   Sets the format for Transmit section of McASP with the format value
- *          input.  
+ *          input.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   formatVal     The format to be written to the transmit section
@@ -178,7 +178,7 @@ void McASPRxFmtMaskSet(unsigned int baseAddr, unsigned int mask)
  *     3. Padding Options, which can take one of the values \n
  *            MCASP_TX_PAD_WITH_0 \n
  *            MCASP_TX_PAD_WITH_1 \n
- *            MCASP_TX_PAD_WITH_PBIT(n) - pad the extra bytes with the 
+ *            MCASP_TX_PAD_WITH_PBIT(n) - pad the extra bytes with the
  *                                        n-th pad bit \n
  *
  *     4. Transmit Slot Size, which can take one of the values \n
@@ -204,8 +204,8 @@ void McASPRxFmtMaskSet(unsigned int baseAddr, unsigned int mask)
  *            MCASP_TX_ROT_RIGHT_24BITS \n
  *            MCASP_TX_ROT_RIGHT_28BITS \n
  *
- *     For example, the reset value is 
- *      (MCASP_TX_SYNC_DELAY_0BIT | MCASP_TX_BITSTREAM_LSB_FIRST | 
+ *     For example, the reset value is
+ *      (MCASP_TX_SYNC_DELAY_0BIT | MCASP_TX_BITSTREAM_LSB_FIRST |
  *       MCASP_TX_PAD_WITH_0 | MCASP_TX_SLOTSIZE_8BITS | MCASP_TX_BUF_DMAPORT |
  *       MCASP_TX_ROT_RIGHT_NONE)
  *
@@ -215,11 +215,11 @@ void McASPRxFmtMaskSet(unsigned int baseAddr, unsigned int mask)
 void McASPTxFmtSet(unsigned int baseAddr, unsigned int formatVal)
 {
     HWREG(baseAddr + MCASP_XFMT) = formatVal;
-} 
+}
 
 /**
  * \brief   Sets the format for Receive section of McASP with the format value
- *          input.  
+ *          input.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   formatVal     The format to be written to the Receive section
@@ -237,7 +237,7 @@ void McASPTxFmtSet(unsigned int baseAddr, unsigned int formatVal)
  *     3. Padding Options, which can take one of the values \n
  *            MCASP_RX_PAD_WITH_0 \n
  *            MCASP_RX_PAD_WITH_1 \n
- *            MCASP_RX_PAD_WITH_RPBIT(n) - pad the extra bytes with the 
+ *            MCASP_RX_PAD_WITH_RPBIT(n) - pad the extra bytes with the
  *                                         n-th pad bit \n
  *
  *     4. Receive Slot Size, which can take one of the values \n
@@ -263,8 +263,8 @@ void McASPTxFmtSet(unsigned int baseAddr, unsigned int formatVal)
  *            MCASP_RX_ROT_RIGHT_24BITS \n
  *            MCASP_RX_ROT_RIGHT_28BITS \n
  *
- *     For example, the reset value is 
- *      (MCASP_RX_SYNC_DELAY_0BIT | MCASP_RX_BITSTREAM_LSB_FIRST | 
+ *     For example, the reset value is
+ *      (MCASP_RX_SYNC_DELAY_0BIT | MCASP_RX_BITSTREAM_LSB_FIRST |
  *       MCASP_RX_PAD_WITH_0 | MCASP_RX_SLOTSIZE_8BITS | MCASP_RX_BUF_DMAPORT |
  *       MCASP_RX_ROT_RIGHT_NONE)
  *
@@ -274,10 +274,10 @@ void McASPTxFmtSet(unsigned int baseAddr, unsigned int formatVal)
 void McASPRxFmtSet(unsigned int baseAddr, unsigned int formatVal)
 {
     HWREG(baseAddr + MCASP_RFMT) = formatVal;
-} 
+}
 
 /**
- * \brief   Sets the I2S format in the Transmit Format unit. 
+ * \brief   Sets the I2S format in the Transmit Format unit.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   wordSize      The word size in bits.
@@ -285,22 +285,22 @@ void McASPRxFmtSet(unsigned int baseAddr, unsigned int formatVal)
  * \param   txMode        The mode of Transmission.
  *             txMode can take one of the values \n
  *                  MCASP_TX_MODE_NON_DMA - transmission without using DMA \n
- *                  MCASP_TX_MODE_DMA - DMA is used for transmission 
+ *                  MCASP_TX_MODE_DMA - DMA is used for transmission
  *
  * \return  None.
- * 
+ *
  *  Note : The Frame Sync shall be separately configured for I2S.
  *         It is assumed that the word size is a multiple of 8.
  *
  **/
-void McASPTxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize, 
+void McASPTxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize,
                       unsigned int slotSize, unsigned int txMode)
-{  
+{
     /* Set the mask assuming integer format */
     McASPTxFmtMaskSet(baseAddr, (1 << wordSize) - 1);
 
     /* Set the transmit format unit for I2S */
-    McASPTxFmtSet(baseAddr, (MCASP_TX_PAD_WITH_0 | MCASP_TX_BITSTREAM_MSB_FIRST 
+    McASPTxFmtSet(baseAddr, (MCASP_TX_PAD_WITH_0 | MCASP_TX_BITSTREAM_MSB_FIRST
                              | MCASP_TX_SYNC_DELAY_1BIT
                              | ((wordSize >> 2) & MCASP_XFMT_XROT)
                              | ((slotSize/2 -1) << MCASP_XFMT_XSSZ_SHIFT)
@@ -308,7 +308,7 @@ void McASPTxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize,
 }
 
 /**
- * \brief   Sets the I2S format in the Receive Format unit. 
+ * \brief   Sets the I2S format in the Receive Format unit.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   wordSize      The word size in bits.
@@ -319,19 +319,19 @@ void McASPTxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize,
  *                  MCASP_RX_MODE_DMA - DMA is used for reception
  *
  * \return  None.
- * 
+ *
  *  Note : The Frame Sync shall be separately configured for I2S.
  *         It is assumed that the word size is a multiple of 8.
  *
  **/
-void McASPRxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize, 
+void McASPRxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize,
                       unsigned int slotSize, unsigned int rxMode)
-{  
+{
     /* Set the mask assuming integer format */
     McASPRxFmtMaskSet(baseAddr, (1 << wordSize) - 1);
 
     /* Set the receive format unit for I2S */
-    McASPRxFmtSet(baseAddr, (MCASP_RX_PAD_WITH_0 | MCASP_RX_BITSTREAM_MSB_FIRST 
+    McASPRxFmtSet(baseAddr, (MCASP_RX_PAD_WITH_0 | MCASP_RX_BITSTREAM_MSB_FIRST
                              | MCASP_RX_SYNC_DELAY_1BIT
                              | (((slotSize - wordSize) >> 2) & MCASP_RFMT_RROT)
                              | ((slotSize/2 -1) << MCASP_RFMT_RSSZ_SHIFT)
@@ -360,14 +360,14 @@ void McASPRxFmtI2SSet(unsigned int baseAddr, unsigned int wordSize,
  *         MCASP_TX_FS_INT_BEGIN_ON_FALL_EDGE - fs source is internal \n
  *         MCASP_TX_FS_EXT_BEGIN_ON_RIS_EDGE - fs source is external \n
  *         MCASP_TX_FS_EXT_BEGIN_ON_FALL_EDGE - fs source is external \n
- *   
+ *
  * \return  None.
  *
  **/
-void McASPTxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode, 
+void McASPTxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode,
                          unsigned int fsWidth, unsigned int fsSetting)
 {
-    HWREG(baseAddr + MCASP_AFSXCTL) = ((fsMode << MCASP_AFSXCTL_XMOD_SHIFT) 
+    HWREG(baseAddr + MCASP_AFSXCTL) = ((fsMode << MCASP_AFSXCTL_XMOD_SHIFT)
                                        | fsWidth | fsSetting);
 }
 
@@ -393,23 +393,23 @@ void McASPTxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode,
  *         MCASP_RX_FS_INT_BEGIN_ON_FALL_EDGE - fs source is internal \n
  *         MCASP_RX_FS_EXT_BEGIN_ON_RIS_EDGE - fs source is external \n
  *         MCASP_RX_FS_EXT_BEGIN_ON_FALL_EDGE - fs source is external \n
- *   
+ *
  * \return  None.
  *
  **/
-void McASPRxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode, 
+void McASPRxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode,
                          unsigned int fsWidth, unsigned int fsSetting)
 {
-    HWREG(baseAddr + MCASP_AFSRCTL) = ((fsMode << MCASP_AFSRCTL_RMOD_SHIFT) 
+    HWREG(baseAddr + MCASP_AFSRCTL) = ((fsMode << MCASP_AFSRCTL_RMOD_SHIFT)
                                        | fsWidth | fsSetting);
 }
 
 /**
  * \brief   Configures the clock for the Transmit Section for outputing bits.
- *          The source and divide values shall be pre-determined. 
+ *          The source and divide values shall be pre-determined.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
- * \param   clkSrc        The source of the clock 
+ * \param   clkSrc        The source of the clock
  * \param   mixClkDiv     Value which divides the mixed clock
  * \param   auxClkDiv     Value which divides the internal high frequency clock
  *
@@ -421,7 +421,7 @@ void McASPRxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode,
  * \return  None.
  *
  * Note: If external clock is selected, the divide values will not be used. \n
- *       If mixed clock is selected, the clock divide mixClkDiv only 
+ *       If mixed clock is selected, the clock divide mixClkDiv only
  *       will be used. \n
  *       If internal clock is selected, both the divide values will be used.
  *
@@ -429,11 +429,11 @@ void McASPRxFrameSyncCfg(unsigned int baseAddr, unsigned int fsMode,
 void McASPTxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
                    unsigned int mixClkDiv, unsigned int auxClkDiv)
 {
-    HWREG(baseAddr + MCASP_ACLKXCTL) &= ~(MCASP_ACLKXCTL_CLKXM 
+    HWREG(baseAddr + MCASP_ACLKXCTL) &= ~(MCASP_ACLKXCTL_CLKXM
                                           | MCASP_ACLKXCTL_CLKXDIV);
     HWREG(baseAddr + MCASP_AHCLKXCTL) &= ~(MCASP_AHCLKXCTL_HCLKXM
                                            | MCASP_AHCLKXCTL_HCLKXDIV);
- 
+
     /* Set the clock source to chose internal/external with clkdiv */
     HWREG(baseAddr + MCASP_ACLKXCTL) |= ((clkSrc & MCASP_ACLKXCTL_CLKXM)
                                           | mixClkDiv);
@@ -443,10 +443,10 @@ void McASPTxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
 
 /**
  * \brief   Configures the clock for the Receive Section for receiving bits.
- *          The source and divide values shall be pre-determined. 
+ *          The source and divide values shall be pre-determined.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
- * \param   clkSrc        The source of the clock 
+ * \param   clkSrc        The source of the clock
  * \param   mixClkDiv     Value which divides the mixed clock
  * \param   auxClkDiv     Value which divides the internal high frequency clock
  *
@@ -458,7 +458,7 @@ void McASPTxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
  * \return  None.
  *
  * Note: If external clock is selected, the divide values will not be used. \n
- *       If mixed clock is selected, the clock divide mixClkDiv only 
+ *       If mixed clock is selected, the clock divide mixClkDiv only
  *       will be used. \n
  *       If internal clock is selected, both the divide values will be used.
  *
@@ -466,11 +466,11 @@ void McASPTxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
 void McASPRxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
                    unsigned int mixClkDiv, unsigned int auxClkDiv)
 {
-    HWREG(baseAddr + MCASP_ACLKRCTL) &= ~(MCASP_ACLKRCTL_CLKRM 
+    HWREG(baseAddr + MCASP_ACLKRCTL) &= ~(MCASP_ACLKRCTL_CLKRM
                                           | MCASP_ACLKRCTL_CLKRDIV);
     HWREG(baseAddr + MCASP_AHCLKRCTL) &= ~(MCASP_AHCLKRCTL_HCLKRM
                                            | MCASP_AHCLKRCTL_HCLKRDIV);
- 
+
     /* Set the clock source to chose internal/external with clkdiv */
     HWREG(baseAddr + MCASP_ACLKRCTL) |= ((clkSrc & MCASP_ACLKRCTL_CLKRM)
                                           | mixClkDiv);
@@ -480,8 +480,8 @@ void McASPRxClkCfg(unsigned int baseAddr, unsigned int clkSrc,
 
 /**
  * \brief   Sets the polarity of the Transmitter Clock. If an external receiver
- *          samples data on the falling edge of the serial clock,  the 
- *          transmitter  must shift data out on the rising edge of the 
+ *          samples data on the falling edge of the serial clock,  the
+ *          transmitter  must shift data out on the rising edge of the
  *          serial clock and vice versa.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
@@ -502,8 +502,8 @@ void McASPTxClkPolaritySet(unsigned int baseAddr, unsigned int polarity)
 
 /**
  * \brief   Sets the polarity of the Rceiver Clock. If an external receiver
- *          shifts data on the falling edge of the serial clock,  the 
- *          receiver  must sample the data on the rising edge of the 
+ *          shifts data on the falling edge of the serial clock,  the
+ *          receiver  must sample the data on the rising edge of the
  *          serial clock and vice versa.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
@@ -532,7 +532,7 @@ void McASPRxClkPolaritySet(unsigned int baseAddr, unsigned int polarity)
  *    polarity can take the values \n
  *         MCASP_TX_HI_FREQ_CLK_INVERT \n
  *         MCASP_TX_HI_FREQ_CLK_NO_INVERT \n
- *     
+ *
  * \return  None.
  *
  **/
@@ -552,7 +552,7 @@ void McASPTxHFClkPolaritySet(unsigned int baseAddr, unsigned int polarity)
  *    polarity can take the values \n
  *         MCASP_RX_HI_FREQ_CLK_INVERT \n
  *         MCASP_RX_HI_FREQ_CLK_NO_INVERT \n
- *     
+ *
  * \return  None.
  *
  **/
@@ -563,7 +563,7 @@ void McASPRxHFClkPolaritySet(unsigned int baseAddr, unsigned int polarity)
 }
 
 /**
- * \brief   Synchronizes the transmitter and receiver Clocks 
+ * \brief   Synchronizes the transmitter and receiver Clocks
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  *
@@ -601,7 +601,7 @@ void McASPSerializerTxSet(unsigned int baseAddr, unsigned int serNum)
 {
     HWREG(baseAddr + MCASP_SRCTL(serNum)) &=  ~MCASP_SRCTL0_SRMOD;
     HWREG(baseAddr + MCASP_SRCTL(serNum)) |=  MCASP_SRCTL_SRMOD_TX;
- 
+
 }
 
 /**
@@ -641,20 +641,20 @@ void McASPSerializerInactivate(unsigned int baseAddr, unsigned int serNum)
  * \param   pinMask       Mask of the pins to be configured as GPIO.
  *            pinMask can be a combination of the below values \n
  *                MCASP_PIN_AFSR  \n
- *                MCASP_PIN_AHCLKR \n                                       
- *                MCASP_PIN_ACLKR \n                                       
- *                MCASP_PIN_AFSX \n                                       
- *                MCASP_PIN_AHCLKX \n                                       
- *                MCASP_PIN_ACLKX \n                                        
- *                MCASP_PIN_AMUTE \n                                       
- *                MCASP_PIN_AXR(n) - For serializer 'n'           
- *    
+ *                MCASP_PIN_AHCLKR \n
+ *                MCASP_PIN_ACLKR \n
+ *                MCASP_PIN_AFSX \n
+ *                MCASP_PIN_AHCLKX \n
+ *                MCASP_PIN_ACLKX \n
+ *                MCASP_PIN_AMUTE \n
+ *                MCASP_PIN_AXR(n) - For serializer 'n'
+ *
  * \return  None.
  *
  **/
 void McASPPinGPIOSet(unsigned int baseAddr, unsigned int pinMask)
 {
-     HWREG(baseAddr + MCASP_PFUNC) |= pinMask; 
+     HWREG(baseAddr + MCASP_PFUNC) |= pinMask;
 }
 
 /**
@@ -664,20 +664,20 @@ void McASPPinGPIOSet(unsigned int baseAddr, unsigned int pinMask)
  * \param   pinMask       Mask of the pins to be configured for McASP.
  *            pinMask can be a combination of the below values \n
  *                MCASP_PIN_AFSR  \n
- *                MCASP_PIN_AHCLKR \n                                       
- *                MCASP_PIN_ACLKR \n                                       
- *                MCASP_PIN_AFSX \n                                       
- *                MCASP_PIN_AHCLKX \n                                       
- *                MCASP_PIN_ACLKX \n                                        
- *                MCASP_PIN_AMUTE \n                                       
- *                MCASP_PIN_AXR(n) - For serializer 'n'           
+ *                MCASP_PIN_AHCLKR \n
+ *                MCASP_PIN_ACLKR \n
+ *                MCASP_PIN_AFSX \n
+ *                MCASP_PIN_AHCLKX \n
+ *                MCASP_PIN_ACLKX \n
+ *                MCASP_PIN_AMUTE \n
+ *                MCASP_PIN_AXR(n) - For serializer 'n'
  *
  * \return  None.
  *
  **/
 void McASPPinMcASPSet(unsigned int baseAddr, unsigned int pinMask)
 {
-     HWREG(baseAddr + MCASP_PFUNC) &= ~pinMask; 
+     HWREG(baseAddr + MCASP_PFUNC) &= ~pinMask;
 }
 
 /**
@@ -687,20 +687,20 @@ void McASPPinMcASPSet(unsigned int baseAddr, unsigned int pinMask)
  * \param   pinMask       Mask of the pins to be configured as output
  *            pinMask can be a combination of the below values \n
  *                MCASP_PIN_AFSR  \n
- *                MCASP_PIN_AHCLKR \n                                       
- *                MCASP_PIN_ACLKR \n                                       
- *                MCASP_PIN_AFSX \n                                       
- *                MCASP_PIN_AHCLKX \n                                       
- *                MCASP_PIN_ACLKX \n                                        
- *                MCASP_PIN_AMUTE \n                                       
- *                MCASP_PIN_AXR(n) - For serializer 'n'           
+ *                MCASP_PIN_AHCLKR \n
+ *                MCASP_PIN_ACLKR \n
+ *                MCASP_PIN_AFSX \n
+ *                MCASP_PIN_AHCLKX \n
+ *                MCASP_PIN_ACLKX \n
+ *                MCASP_PIN_AMUTE \n
+ *                MCASP_PIN_AXR(n) - For serializer 'n'
  *
  * \return  None.
  *
  **/
 void McASPPinDirOutputSet(unsigned int baseAddr, unsigned int pinMask)
 {
-     HWREG(baseAddr + MCASP_PDIR) |= pinMask; 
+     HWREG(baseAddr + MCASP_PDIR) |= pinMask;
 }
 
 /**
@@ -710,52 +710,52 @@ void McASPPinDirOutputSet(unsigned int baseAddr, unsigned int pinMask)
  * \param   pinMask       Mask of the pins to be configured as input
  *            pinMask can be a combination of the below values \n
  *                MCASP_PIN_AFSR  \n
- *                MCASP_PIN_AHCLKR \n                                       
- *                MCASP_PIN_ACLKR \n                                       
- *                MCASP_PIN_AFSX \n                                       
- *                MCASP_PIN_AHCLKX \n                                       
- *                MCASP_PIN_ACLKX \n                                        
- *                MCASP_PIN_AMUTE \n                                       
- *                MCASP_PIN_AXR(n) - For serializer 'n'           
+ *                MCASP_PIN_AHCLKR \n
+ *                MCASP_PIN_ACLKR \n
+ *                MCASP_PIN_AFSX \n
+ *                MCASP_PIN_AHCLKX \n
+ *                MCASP_PIN_ACLKX \n
+ *                MCASP_PIN_AMUTE \n
+ *                MCASP_PIN_AXR(n) - For serializer 'n'
  *
  * \return  None.
  *
  **/
 void McASPPinDirInputSet(unsigned int baseAddr, unsigned int pinMask)
 {
-     HWREG(baseAddr + MCASP_PDIR) &= ~pinMask; 
+     HWREG(baseAddr + MCASP_PDIR) &= ~pinMask;
 }
 
 /**
  * \brief   Sets the active time slot for the Transmitter section. The
  *          bit which is set in the mask will indicate that data will be
- *          transmitted during that time slot. 
+ *          transmitted during that time slot.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
- * \param   slotMask      The time slot mask. 
+ * \param   slotMask      The time slot mask.
  *
  * \return  None.
  *
  **/
 void McASPTxTimeSlotSet(unsigned int baseAddr, unsigned int slotMask)
 {
-     HWREG(baseAddr + MCASP_XTDM) = slotMask; 
+     HWREG(baseAddr + MCASP_XTDM) = slotMask;
 }
 
 /**
  * \brief   Sets the active time slot for the receiver section. The
  *          bit which is set in the mask will indicate that data will be
- *          shifted in during that time slot. 
+ *          shifted in during that time slot.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
- * \param   slotMask      The time slot mask. 
+ * \param   slotMask      The time slot mask.
  *
  * \return  None.
  *
  **/
 void McASPRxTimeSlotSet(unsigned int baseAddr, unsigned int slotMask)
 {
-     HWREG(baseAddr + MCASP_RTDM) = slotMask; 
+     HWREG(baseAddr + MCASP_RTDM) = slotMask;
 }
 
 
@@ -776,7 +776,7 @@ void McASPRxTimeSlotSet(unsigned int baseAddr, unsigned int slotMask)
  *                MCASP_AMUTE_RX_OVERRUN \n
  *            pinState can take one of the values \n
  *                MCASP_AMUTE_PIN_HIGH \n
- *                MCASP_AMUTE_PIN_LOW 
+ *                MCASP_AMUTE_PIN_LOW
  *
  * \return  None.
  *
@@ -784,7 +784,7 @@ void McASPRxTimeSlotSet(unsigned int baseAddr, unsigned int slotMask)
 void McASPAMuteEnable(unsigned int baseAddr, unsigned int errFlags,
                         unsigned int pinState)
 {
-    HWREG(baseAddr + MCASP_AMUTE) = errFlags | (MCASP_AMUTE_MUTEN & pinState); 
+    HWREG(baseAddr + MCASP_AMUTE) = errFlags | (MCASP_AMUTE_MUTEN & pinState);
 }
 
 /**
@@ -810,15 +810,15 @@ void McASPAMuteDisable(unsigned int baseAddr)
  * \param   boundMin      Transmit clock minimum boundary
  * \param   boundMax      Transmit clock maximum boundary
  *            clkDiv can take one of the following values \n
- *               MCASP_TX_CLKCHCK_DIV1 \n  
- *               MCASP_TX_CLKCHCK_DIV2 \n  
- *               MCASP_TX_CLKCHCK_DIV4 \n  
- *               MCASP_TX_CLKCHCK_DIV8 \n  
- *               MCASP_TX_CLKCHCK_DIV16 \n  
- *               MCASP_TX_CLKCHCK_DIV32 \n  
- *               MCASP_TX_CLKCHCK_DIV64 \n  
- *               MCASP_TX_CLKCHCK_DIV128 \n  
- *               MCASP_TX_CLKCHCK_DIV256  
+ *               MCASP_TX_CLKCHCK_DIV1 \n
+ *               MCASP_TX_CLKCHCK_DIV2 \n
+ *               MCASP_TX_CLKCHCK_DIV4 \n
+ *               MCASP_TX_CLKCHCK_DIV8 \n
+ *               MCASP_TX_CLKCHCK_DIV16 \n
+ *               MCASP_TX_CLKCHCK_DIV32 \n
+ *               MCASP_TX_CLKCHCK_DIV64 \n
+ *               MCASP_TX_CLKCHCK_DIV128 \n
+ *               MCASP_TX_CLKCHCK_DIV256
  *
  * \return  None.
  *
@@ -827,7 +827,7 @@ void McASPTxClkCheckConfig(unsigned int baseAddr, unsigned int clkDiv,
                            unsigned char boundMin, unsigned char boundMax)
 {
     HWREG(baseAddr + MCASP_XCLKCHK) = clkDiv
-                                      | boundMin << MCASP_XCLKCHK_XMIN_SHIFT 
+                                      | boundMin << MCASP_XCLKCHK_XMIN_SHIFT
                                       | boundMax << MCASP_XCLKCHK_XMAX_SHIFT ;
 }
 
@@ -841,15 +841,15 @@ void McASPTxClkCheckConfig(unsigned int baseAddr, unsigned int clkDiv,
  * \param   boundMin      Receive clock minimum boundary
  * \param   boundMax      Receive clock maximum boundary
  *            clkDiv can take one of the following values \n
- *               MCASP_RX_CLKCHCK_DIV1 \n  
- *               MCASP_RX_CLKCHCK_DIV2 \n  
- *               MCASP_RX_CLKCHCK_DIV4 \n  
- *               MCASP_RX_CLKCHCK_DIV8 \n  
- *               MCASP_RX_CLKCHCK_DIV16 \n  
- *               MCASP_RX_CLKCHCK_DIV32 \n  
- *               MCASP_RX_CLKCHCK_DIV64 \n  
- *               MCASP_RX_CLKCHCK_DIV128 \n  
- *               MCASP_RX_CLKCHCK_DIV256  
+ *               MCASP_RX_CLKCHCK_DIV1 \n
+ *               MCASP_RX_CLKCHCK_DIV2 \n
+ *               MCASP_RX_CLKCHCK_DIV4 \n
+ *               MCASP_RX_CLKCHCK_DIV8 \n
+ *               MCASP_RX_CLKCHCK_DIV16 \n
+ *               MCASP_RX_CLKCHCK_DIV32 \n
+ *               MCASP_RX_CLKCHCK_DIV64 \n
+ *               MCASP_RX_CLKCHCK_DIV128 \n
+ *               MCASP_RX_CLKCHCK_DIV256
  *
  * \return  None.
  *
@@ -858,7 +858,7 @@ void McASPRxClkCheckConfig(unsigned int baseAddr, unsigned int clkDiv,
                            unsigned char boundMin, unsigned char boundMax)
 {
     HWREG(baseAddr + MCASP_RCLKCHK) = clkDiv
-                                      | boundMin << MCASP_RCLKCHK_RMIN_SHIFT 
+                                      | boundMin << MCASP_RCLKCHK_RMIN_SHIFT
                                       | boundMax << MCASP_RCLKCHK_RMAX_SHIFT ;
 }
 
@@ -866,12 +866,12 @@ void McASPRxClkCheckConfig(unsigned int baseAddr, unsigned int clkDiv,
  * \brief   Activates the AMUTEIN pin and drives the AMUTE active.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
- * \param   polarity      polarity of AMUTEIN which shall drive the 
- *                        AMUTE active. 
+ * \param   polarity      polarity of AMUTEIN which shall drive the
+ *                        AMUTE active.
  *            polarity can take one of the following values. \n
  *                MCASP_AMUTEIN_POL_HIGH - high on AMUTEIN pin  \n
- *                MCASP_AMUTEIN_POL_LOW - low on AMUTEIN pin 
- *             
+ *                MCASP_AMUTEIN_POL_LOW - low on AMUTEIN pin
+ *
  * \return  None.
  *
  **/
@@ -880,14 +880,14 @@ void McASPAMUTEINActivate(unsigned int baseAddr, unsigned int polarity)
     HWREG(baseAddr + MCASP_AMUTE) &= ~MCASP_AMUTE_INPOL;
 
     HWREG(baseAddr + MCASP_AMUTE) |= (MCASP_AMUTE_INSTAT | MCASP_AMUTE_INEN
-                                      |(polarity & MCASP_AMUTE_INPOL)); 
+                                      |(polarity & MCASP_AMUTE_INPOL));
 }
 
 /**
  * \brief   Enables the specified Transmitter interrupts.
  *
  * \param   baseAddr     Base Address of the McASP Module Registers.
- * \param   intMask      The transmitter interrupts to be enabled 
+ * \param   intMask      The transmitter interrupts to be enabled
  *            intMask can be a logical OR combination of the values \n
  *                 MCASP_TX_STARTOFFRAME \n
  *                 MCASP_TX_DATAREADY \n
@@ -902,14 +902,14 @@ void McASPAMUTEINActivate(unsigned int baseAddr, unsigned int polarity)
  **/
 void McASPTxIntEnable(unsigned int baseAddr, unsigned int intMask)
 {
-    HWREG(baseAddr + MCASP_XINTCTL) |= intMask; 
+    HWREG(baseAddr + MCASP_XINTCTL) |= intMask;
 }
 
 /**
  * \brief   Enables the specified Receiver interrupts.
  *
  * \param   baseAddr     Base Address of the McASP Module Registers.
- * \param   intMask      The receive interrupts to be enabled 
+ * \param   intMask      The receive interrupts to be enabled
  *            intMask can be a logical OR combination of the values \n
  *                 MCASP_RX_STARTOFFRAME \n
  *                 MCASP_RX_DATAREADY \n
@@ -924,14 +924,14 @@ void McASPTxIntEnable(unsigned int baseAddr, unsigned int intMask)
  **/
 void McASPRxIntEnable(unsigned int baseAddr, unsigned int intMask)
 {
-    HWREG(baseAddr + MCASP_RINTCTL) |= intMask; 
+    HWREG(baseAddr + MCASP_RINTCTL) |= intMask;
 }
 
 /**
  * \brief   Disables the specified Transmitter interrupts.
  *
  * \param   baseAddr     Base Address of the McASP Module Registers.
- * \param   intMask      The transmitter interrupts to be disabled 
+ * \param   intMask      The transmitter interrupts to be disabled
  *            intMask can be a logical OR combination of the values \n
  *                 MCASP_TX_STARTOFFRAME \n
  *                 MCASP_TX_DATAREADY \n
@@ -946,14 +946,14 @@ void McASPRxIntEnable(unsigned int baseAddr, unsigned int intMask)
  **/
 void McASPTxIntDisable(unsigned int baseAddr, unsigned int intMask)
 {
-    HWREG(baseAddr + MCASP_XINTCTL) &= ~intMask; 
+    HWREG(baseAddr + MCASP_XINTCTL) &= ~intMask;
 }
 
 /**
  * \brief   Disables the specified Receiver interrupts.
  *
  * \param   baseAddr     Base Address of the McASP Module Registers.
- * \param   intMask      The receive interrupts to be disabled 
+ * \param   intMask      The receive interrupts to be disabled
  *            intMask can be a logical OR combination of the values \n
  *                 MCASP_RX_STARTOFFRAME \n
  *                 MCASP_RX_DATAREADY \n
@@ -968,7 +968,7 @@ void McASPTxIntDisable(unsigned int baseAddr, unsigned int intMask)
  **/
 void McASPRxIntDisable(unsigned int baseAddr, unsigned int intMask)
 {
-    HWREG(baseAddr + MCASP_RINTCTL) &= ~intMask; 
+    HWREG(baseAddr + MCASP_RINTCTL) &= ~intMask;
 }
 
 /**
@@ -984,8 +984,8 @@ void McASPTxSerActivate(unsigned int baseAddr)
     HWREG(baseAddr + MCASP_XSTAT) = 0xFFFF;
 
     /* Release transmit serializers from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XSRCLR; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XSRCLR) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XSRCLR;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XSRCLR)
           != MCASP_GBLCTL_XSRCLR) ;
 }
 
@@ -1002,13 +1002,13 @@ void McASPRxSerActivate(unsigned int baseAddr)
     HWREG(baseAddr + MCASP_RSTAT) = 0xFFFF;
 
     /* Release transmit serializers from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RSRCLR; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RSRCLR) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RSRCLR;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RSRCLR)
           != MCASP_GBLCTL_RSRCLR) ;
 }
 
 /**
- * \brief   Starts the McASP Transmitter Clock. 
+ * \brief   Starts the McASP Transmitter Clock.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   clkSrc        The transmitter clock source.
@@ -1024,21 +1024,21 @@ void McASPRxSerActivate(unsigned int baseAddr)
 void McASPTxClkStart(unsigned int baseAddr, unsigned int clkSrc)
 {
     /* Release the high frequency clock from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XHCLKRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XHCLKRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XHCLKRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XHCLKRST)
           != MCASP_GBLCTL_XHCLKRST) ;
-     
+
     if(clkSrc != MCASP_TX_CLK_EXTERNAL)
     {
        /* Release the clock from reset*/
-        HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XCLKRST; 
-        while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XCLKRST) 
+        HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XCLKRST;
+        while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XCLKRST)
               != MCASP_GBLCTL_XCLKRST) ;
     }
 }
 
 /**
- * \brief   Starts the McASP Receiver Clock. 
+ * \brief   Starts the McASP Receiver Clock.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   clkSrc        The receiver clock source.
@@ -1054,22 +1054,22 @@ void McASPTxClkStart(unsigned int baseAddr, unsigned int clkSrc)
 void McASPRxClkStart(unsigned int baseAddr, unsigned int clkSrc)
 {
     /* Release the high frequency clock from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RHCLKRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RHCLKRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RHCLKRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RHCLKRST)
           != MCASP_GBLCTL_RHCLKRST) ;
-     
+
     if(clkSrc != MCASP_RX_CLK_EXTERNAL)
     {
         /* Release the clock from reset*/
-        HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RCLKRST; 
+        HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RCLKRST;
         while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RCLKRST)
               != MCASP_GBLCTL_RCLKRST) ;
     }
 }
 
 /**
- * \brief   Enables the McASP Transmission. When this API is called, 
- *          The transmit state machine and the frame sync generators are 
+ * \brief   Enables the McASP Transmission. When this API is called,
+ *          The transmit state machine and the frame sync generators are
  *          released from reset. The McASP starts transmission on the
  *          first frame sync after this.
  *
@@ -1081,19 +1081,19 @@ void McASPRxClkStart(unsigned int baseAddr, unsigned int clkSrc)
 void McASPTxEnable(unsigned int baseAddr)
 {
     /* Release the Transmit State machine from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XSMRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XSMRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XSMRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XSMRST)
           != MCASP_GBLCTL_XSMRST) ;
-     
+
     /* Release the frame sync generator from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XFRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XFRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_XFRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_XFRST)
           != MCASP_GBLCTL_XFRST) ;
 }
 
 /**
- * \brief   Enables the McASP Reception. When this API is called, 
- *          The receive state machine and the frame sync generators are 
+ * \brief   Enables the McASP Reception. When this API is called,
+ *          The receive state machine and the frame sync generators are
  *          released from reset. The McASP starts reception on the
  *          first frame sync after this.
  *
@@ -1105,18 +1105,18 @@ void McASPTxEnable(unsigned int baseAddr)
 void McASPRxEnable(unsigned int baseAddr)
 {
     /* Release the Receive State machine from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RSMRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RSMRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RSMRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RSMRST)
           != MCASP_GBLCTL_RSMRST) ;
-     
+
     /* Release the frame sync generator from reset*/
-    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RFRST; 
-    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RFRST) 
+    HWREG(baseAddr + MCASP_GBLCTL) |= MCASP_GBLCTL_RFRST;
+    while((HWREG(baseAddr + MCASP_GBLCTL) & MCASP_GBLCTL_RFRST)
           != MCASP_GBLCTL_RFRST) ;
 }
 
 /**
- * \brief   Reads a receive buffer through peripheral configuration port. 
+ * \brief   Reads a receive buffer through peripheral configuration port.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   serNum        Serializer number
@@ -1130,7 +1130,7 @@ unsigned int McASPRxBufRead(unsigned int baseAddr, unsigned int serNum)
 }
 
 /**
- * \brief   Writes to a transmit buffer through peripheral configuration port. 
+ * \brief   Writes to a transmit buffer through peripheral configuration port.
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  * \param   serNum        Serializer number
@@ -1139,7 +1139,7 @@ unsigned int McASPRxBufRead(unsigned int baseAddr, unsigned int serNum)
  * \return  None.
  *
  **/
-void McASPTxBufWrite(unsigned int baseAddr, unsigned int serNum, 
+void McASPTxBufWrite(unsigned int baseAddr, unsigned int serNum,
                      unsigned int data)
 {
     HWREG(baseAddr + MCASP_XBUF(serNum)) = data;
@@ -1150,19 +1150,19 @@ void McASPTxBufWrite(unsigned int baseAddr, unsigned int serNum,
  *
  * \param   baseAddr      Base Address of the McASP Module Registers.
  *
- * \return  Status of McASP Transmission. This is the contents of the 
+ * \return  Status of McASP Transmission. This is the contents of the
  *          register XSTAT. \n
  *          The below tokens can be used for each status bits returned. \n
- *              MCASP_TX_STAT_ERR  \n                    
- *              MCASP_TX_STAT_DMAERR \n                  
- *              MCASP_TX_STAT_STARTOFFRAME \n             
- *              MCASP_TX_STAT_DATAREADY \n            
- *              MCASP_TX_STAT_LASTSLOT \n                
- *              MCASP_TX_STAT_CURRSLOT_EVEN \n           
- *              MCASP_TX_STAT_CURRSLOT_ODD \n             
- *              MCASP_TX_STAT_CLKFAIL \n                 
- *              MCASP_TX_STAT_SYNCERR \n                
- *              MCASP_TX_STAT_UNDERRUN               
+ *              MCASP_TX_STAT_ERR  \n
+ *              MCASP_TX_STAT_DMAERR \n
+ *              MCASP_TX_STAT_STARTOFFRAME \n
+ *              MCASP_TX_STAT_DATAREADY \n
+ *              MCASP_TX_STAT_LASTSLOT \n
+ *              MCASP_TX_STAT_CURRSLOT_EVEN \n
+ *              MCASP_TX_STAT_CURRSLOT_ODD \n
+ *              MCASP_TX_STAT_CLKFAIL \n
+ *              MCASP_TX_STAT_SYNCERR \n
+ *              MCASP_TX_STAT_UNDERRUN
  *
  **/
 unsigned int McASPTxStatusGet(unsigned int baseAddr)
@@ -1219,7 +1219,7 @@ void McASPContextSave(unsigned int baseAddrCtrl, unsigned int baseAddrFifo,
     /* Check if Transmit section context needs to be saved */
     if(McASP_CONTEXT_TX & sectFlag)
     {
-        contextPtr->fifoWfifoCtl = HWREG(baseAddrFifo + MCASP_FIFO_WFIFOCTL); 
+        contextPtr->fifoWfifoCtl = HWREG(baseAddrFifo + MCASP_FIFO_WFIFOCTL);
         contextPtr->xmask = HWREG(baseAddrCtrl + MCASP_XMASK);
         contextPtr->xfmt = HWREG(baseAddrCtrl + MCASP_XFMT);
         contextPtr->afsxctl = HWREG(baseAddrCtrl + MCASP_AFSXCTL);
@@ -1232,7 +1232,7 @@ void McASPContextSave(unsigned int baseAddrCtrl, unsigned int baseAddrFifo,
     /* Check if receive section context needs to be saved */
     if(McASP_CONTEXT_RX & sectFlag)
     {
-        contextPtr->fifoRfifoCtl = HWREG(baseAddrFifo + MCASP_FIFO_RFIFOCTL); 
+        contextPtr->fifoRfifoCtl = HWREG(baseAddrFifo + MCASP_FIFO_RFIFOCTL);
         contextPtr->rmask = HWREG(baseAddrCtrl + MCASP_RMASK);
         contextPtr->rfmt = HWREG(baseAddrCtrl + MCASP_RFMT);
         contextPtr->afsrctl = HWREG(baseAddrCtrl + MCASP_AFSRCTL);
@@ -1255,8 +1255,8 @@ void McASPContextSave(unsigned int baseAddrCtrl, unsigned int baseAddrFifo,
 /**
 * \brief  This function restores the context of McASP registers.
 *         This is useful in power management, where the power supply to McASP
-*         controller will be cut off. Note that this API does not enable McASP 
-*         clocks. Also McASP state machine shall be brought out of reset 
+*         controller will be cut off. Note that this API does not enable McASP
+*         clocks. Also McASP state machine shall be brought out of reset
 *         separately.
 *
 * \param  baseAddrCtrl     Base Address of the McASP Module Control Registers.

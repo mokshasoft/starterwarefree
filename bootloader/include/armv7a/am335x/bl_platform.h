@@ -3,7 +3,7 @@
  *
  * \brief This file exports the APIs used for configuring devices
  *        required during boot
- *  
+ *
  */
 
 /*
@@ -37,7 +37,7 @@
 *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
- 
+
 
 #ifndef _BL_PLATFORM_H__
 #define _BL_PLATFORM_H__
@@ -50,7 +50,7 @@
     #include "beaglebone.h"
 #elif  (defined evmskAM335x)
     #include "evmskAM335x.h"
-#endif    
+#endif
 
 #if defined(SPI)
 #elif defined(MMCSD)
@@ -60,7 +60,7 @@
 
 
 /******************************************************************************
-**                        Macro Definitions 
+**                        Macro Definitions
 *******************************************************************************/
 
 /* Set of config parameters for AM335x */
@@ -143,7 +143,7 @@
 
 /* Set of config parameters */
 
-/* 
+/*
 **Setting the CORE PLL values at OPP100:
 ** OSCIN = 24MHz, Fdpll = 2GHz
 ** HSDM4 = 200MHz, HSDM5 = 250MHz
@@ -172,7 +172,7 @@
 #define DISPLL_N                           3
 #define DISPLL_M2                          1
 
-/* 
+/*
 **Setting the DDR2 frequency to 266MHz
 */
 #define DDRPLL_M_DDR2                     (266)
@@ -195,7 +195,7 @@
 #define     PMIC_VOLT_SEL_1200MV      DCDC_VOLT_SEL_1200MV
 #define     PMIC_VOLT_SEL_1260MV      DCDC_VOLT_SEL_1275MV
 #define     PMIC_VOLT_SEL_1325MV      (0x11u)
-#define     DCDC_VOLT_SEL_1500MV      (0x18u) 		/*DDR3 voltage requirement*/ 
+#define     DCDC_VOLT_SEL_1500MV      (0x18u) 		/*DDR3 voltage requirement*/
 
 #elif defined (evmAM335x) || defined (evmskAM335x)
 
@@ -221,7 +221,7 @@ typedef struct oppConfig
 } tOPPConfig;
 
 /******************************************************************************
-**                    External Function Declararions 
+**                    External Function Declararions
 *******************************************************************************/
 
 extern void BlPlatformConfigPostBoot( void );

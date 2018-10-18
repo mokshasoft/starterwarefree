@@ -1,7 +1,7 @@
 /**
  * \file  bl_rprc.h
  *
- * \brief This file exports functions required during boot 
+ * \brief This file exports functions required during boot
  *
  */
 
@@ -59,6 +59,6 @@ typedef struct rprcSectionHeader {
 } rprcSectionHeader;
 
 /******************************************************************************
-**                    External Function Declarations 
+**                    External Function Declarations
 *******************************************************************************/
 #endif

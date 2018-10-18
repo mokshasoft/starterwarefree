@@ -1,37 +1,37 @@
 /*
- * AM335X ECC.C 
+ * AM335X ECC.C
  */
 
 /*
- * Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/ 
+ * Copyright (C) 2010 Texas Instruments Incorporated - http://www.ti.com/
  */
-/* 
- *  Redistribution and use in source and binary forms, with or without 
- *  modification, are permitted provided that the following conditions 
+/*
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
  *  are met:
  *
- *    Redistributions of source code must retain the above copyright 
+ *    Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
  *
  *    Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the 
-*    documentation and/or other materials provided with the   
+ *    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
 *    distribution.
 *
 *    Neither the name of Texas Instruments Incorporated nor the names of
 *    its contributors may be used to endorse or promote products derived
 *    from this software without specific prior written permission.
 *
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 */
@@ -146,7 +146,7 @@ static void ECC_enable(AM335X_NAND_InfoHandle hNandInfo) {
 
 	ptr = (Uint32 *) GPMC_ECC_CONTROL;
 	*ptr = (*ptr | 0x00000100u); // Clear the ECC outputs.
-	*ptr &= ~0xF; 
+	*ptr &= ~0xF;
 	*ptr |= 0x1;
 	ptr = (Uint32 *) GPMC_ECC_CONFIG;
 	*ptr = (*ptr | 0x1); // Enable the ECC (ECCENABLE = 1)
@@ -207,7 +207,7 @@ Uint32 AM335X_Device_setECC(Uint32 busWidth, Uint32 eccType) {
 			NAND_ECC_Info_Handle->fxnWriteset = &(DEVICE_NAND_ECC_BCH_writeset);
 			printf("\n  Set the BCH 8 bit ECC scheme  ");
 			break;
-			
+
 			// Cofigure ECC for HAM scheme
 		case 2:
 			// Configure the ECC register
@@ -227,7 +227,7 @@ Uint32 AM335X_Device_setECC(Uint32 busWidth, Uint32 eccType) {
 			NAND_ECC_Info_Handle->fxnWriteset = &(DEVICE_NAND_ECC_HAM_writeset);
 			printf("\n  Set the HAM ECC scheme  ");
 			break;
-			
+
 		default:
 			printf("Wrong ECC scheme selected \n");
 			return E_FAIL;
@@ -239,7 +239,7 @@ static void DEVICE_NAND_ECC_BCH_calculate(AM335X_NAND_InfoHandle hNandInfo, Uint
 	Uint32 *ptr = (Uint32*)GPMC_BCH_RESULT_3;
 
 	syndrome[0] = *ptr & 0xFF;
-   
+
 	ptr--;
 
 	syndrome[1] = (*ptr >> 24) & 0xFF;
@@ -288,7 +288,7 @@ static void DEVICE_NAND_ECC_BCH_calculate_BE(AM335X_NAND_InfoHandle hNandInfo, U
 	syndrome[10] = (*ptr >> 16) & 0xFF;
 	syndrome[11] = (*ptr >> 24) & 0xFF;
 
-	ptr++;	 
+	ptr++;
 	syndrome[12] = *ptr & 0xFF;
 
 	// Only first 14 bytes are useful for ECC data
@@ -331,7 +331,7 @@ static Uint32 DEVICE_NAND_ECC_BCH_correct(AM335X_NAND_InfoHandle hNandInfo,
 	// Read the spare bytes of the given operation
 
 	AM335X_NAND_readBCHSpare(hNandInfo, pageLoc, spareBytes, opNum, 1);
-	
+
 	//Stop the ECC engine.
 	ECC_disable(hNandInfo);
 
@@ -362,7 +362,7 @@ static Uint32 ELM_CheckErrors(Uint32 *numError, Uint32 *errorloc, Uint8 * syndro
 
 	ptr = (Uint32 *) (ELM_SYNDROME_FRAGMENT_1 + polyoffset);
 	*ptr = syndrome[4] | (syndrome[5] << 8) | (syndrome[6] << 16) | (syndrome[7] << 24);
-	
+
 	ptr = (Uint32 *) (ELM_SYNDROME_FRAGMENT_2 + polyoffset);
 	*ptr = syndrome[8] | (syndrome[9] << 8) | (syndrome[10] << 16) | (syndrome[11] << 24);
 

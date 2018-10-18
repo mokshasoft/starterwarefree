@@ -2,7 +2,7 @@
  * SPI flash internal definitions
  *
  * Copyright (C) 2008 Atmel Corporation
- * 
+ *
  * This file uses source obtained from uboot which was licensed under
  * GPL v2 at the time this source was obtained, using the following
  * commit id:
