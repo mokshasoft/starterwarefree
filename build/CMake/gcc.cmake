@@ -6,10 +6,9 @@
 # See "LICENSE_BSD2.txt" for details.
 #
 
-set(COMPILER "gcc")
-message(STATUS "Using the ${COMPILER} compiler")
+set(CMAKE_SYSTEM_NAME Generic)
 
-if(${BUILD_TYPE} STREQUAL release)
+if("${BUILD_TYPE}" STREQUAL "release")
     set(Release_FLAG "-g -O2")
     message(STATUS "Building release configuration")
 else()
@@ -25,15 +24,12 @@ if(EVM)
     set(EVM_D "-D${EVM}")
 endif()
 
-if(NOT CROSS_COMPILER_PREFIX)
-    set(CROSS_COMPILER_PREFIX "arm-none-eabi-")
+if("${CROSS_COMPILER_PREFIX}" STREQUAL "")
+    set(CROSS_COMPILER_PREFIX "arm-none-eabi-" CACHE INTERNAL "")
     message(STATUS "Using default value for CROSS_COMPILER_PREFIX (${CROSS_COMPILER_PREFIX})")
 endif()
 
-set(CC "${CROSS_COMPILER_PREFIX}gcc")
-set(LD "${CROSS_COMPILER_PREFIX}ld")
-set(AR "${CROSS_COMPILER_PREFIX}ar")
-set(BIN "${CROSS_COMPILER_PREFIX}objcopy")
+set(CMAKE_C_COMPILER ${CROSS_COMPILER_PREFIX}gcc)
 
 set(CFLAGS "-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a")
 set(CFLAGS "${CFLAGS}
@@ -45,3 +41,13 @@ set(CFLAGS "${CFLAGS}
 set(ARFLAGS "-c -r")
 set(LDFLAGS "-e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections")
 set(BINFLAGS "-O binary")
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+mark_as_advanced(FORCE CMAKE_TOOLCHAIN_FILE)
+

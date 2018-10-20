@@ -41,8 +41,6 @@ if(NOT BUILD_TYPE)
     message(STATUS "  Available BUILD_TYPE values: release, debug")
 endif()
 
-include(build/CMake/gcc.cmake)
-
 # Setup build variables
 
 set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
