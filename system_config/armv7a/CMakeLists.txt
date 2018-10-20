@@ -17,5 +17,5 @@ file(GLOB static
 
 add_library(system_config EXCLUDE_FROM_ALL ${static})
 target_include_directories(system_config PUBLIC
-    ../../include/armv7a
+    ${ROOT_PATH}/include/armv7a
 )

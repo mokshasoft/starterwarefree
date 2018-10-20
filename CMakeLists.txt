@@ -43,6 +43,10 @@ endif()
 
 include(build/CMake/gcc.cmake)
 
+# Setup build variables
+
+set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Add library components
 
 add_subdirectory(drivers)
