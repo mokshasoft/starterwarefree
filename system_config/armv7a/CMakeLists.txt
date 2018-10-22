@@ -23,4 +23,6 @@ set(CFLAGS "${CFLAGS} -mfpu=neon -mfloat-abi=softfp")
 add_library(system_config EXCLUDE_FROM_ALL ${static})
 target_include_directories(system_config PUBLIC
     ${ROOT_PATH}/include/armv7a
+    ${ROOT_PATH}/include/armv7a/am335x
+    ${ROOT_PATH}/include/hw
 )
