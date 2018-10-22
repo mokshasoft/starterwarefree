@@ -12,8 +12,13 @@ project(system_config C)
 
 file(GLOB static
     *.c
-    gcc/*.c
+    ${COMPILER}/*.c
+    ${COMPILER}/*.S
+    ${DEVICE}/*.c
+    ${DEVICE}/${COMPILER}/*.S
 )
+
+set(CFLAGS "${CFLAGS} -mfpu=neon -mfloat-abi=softfp")
 
 add_library(system_config EXCLUDE_FROM_ALL ${static})
 target_include_directories(system_config PUBLIC
