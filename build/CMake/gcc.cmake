@@ -8,22 +8,6 @@
 
 set(CMAKE_SYSTEM_NAME Generic)
 
-if("${BUILD_TYPE}" STREQUAL "release")
-    set(Release_FLAG "-g -O2")
-    message(STATUS "Building release configuration")
-else()
-    set(Debug_FLAG "-g")
-    message(STATUS "Building debug configuration")
-endif()
-
-if(DEVICE)
-    set(DEVICE_D "-D${DEVICE}")
-endif()
-
-if(EVM)
-    set(EVM_D "-D${EVM}")
-endif()
-
 if("${CROSS_COMPILER_PREFIX}" STREQUAL "")
     set(CROSS_COMPILER_PREFIX "arm-none-eabi-" CACHE INTERNAL "")
     message(STATUS "Using default value for CROSS_COMPILER_PREFIX (${CROSS_COMPILER_PREFIX})")
@@ -33,10 +17,10 @@ set(CMAKE_C_COMPILER ${CROSS_COMPILER_PREFIX}gcc)
 
 set(CMAKE_C_FLAGS "-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
-    -c ${${TARGET_MODE}_FLAG} \
+    -c \
     -mlong-calls -fdata-sections -funsigned-char \
-    -ffunction-sections -Wall ${IPATH} -Dgcc ${DEVICE_D} ${EVM_D} \
-    -D SUPPORT_UNALIGNED -D ${BOOT} -D${CONSOLE}"
+    -ffunction-sections -Wall -Dgcc \
+    -D SUPPORT_UNALIGNED"
 )
 set(ARFLAGS "-c -r")
 set(LDFLAGS "-e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections")
