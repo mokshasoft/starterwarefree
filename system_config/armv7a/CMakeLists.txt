@@ -18,7 +18,7 @@ file(GLOB static
     ${DEVICE}/${COMPILER}/*.S
 )
 
-set(CFLAGS "${CFLAGS} -mfpu=neon -mfloat-abi=softfp")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -mfloat-abi=softfp")
 
 add_library(system_config EXCLUDE_FROM_ALL ${static})
 target_include_directories(system_config PUBLIC

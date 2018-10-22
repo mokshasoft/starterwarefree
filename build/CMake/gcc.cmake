@@ -31,8 +31,8 @@ endif()
 
 set(CMAKE_C_COMPILER ${CROSS_COMPILER_PREFIX}gcc)
 
-set(CFLAGS "-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a")
-set(CFLAGS "${CFLAGS}
+set(CMAKE_C_FLAGS "-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
     -c ${${TARGET_MODE}_FLAG} \
     -mlong-calls -fdata-sections -funsigned-char \
     -ffunction-sections -Wall ${IPATH} -Dgcc ${DEVICE_D} ${EVM_D} \
