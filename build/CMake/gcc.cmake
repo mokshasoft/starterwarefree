@@ -23,7 +23,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
     -D SUPPORT_UNALIGNED"
 )
 set(ARFLAGS "-c -r")
-set(LDFLAGS "-e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections")
+set(CMAKE_EXE_LINKER_FLAGS "-e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections")
 set(BINFLAGS "-O binary")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
