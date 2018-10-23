@@ -14,10 +14,6 @@ file(GLOB static
     *.c
 )
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
-    -T ${CMAKE_CURRENT_SOURCE_DIR}/gpioLedBlink.lds"
-)
-
 add_executable(gpioLedBlink EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     gpioLedBlink
@@ -25,4 +21,5 @@ target_link_libraries(
     utils
     platform
     system_config
+    -T ${CMAKE_CURRENT_SOURCE_DIR}/gpioLedBlink.lds
 )

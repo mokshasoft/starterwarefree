@@ -14,16 +14,26 @@ if("${CROSS_COMPILER_PREFIX}" STREQUAL "")
 endif()
 
 set(CMAKE_C_COMPILER ${CROSS_COMPILER_PREFIX}gcc)
+set(CMAKE_LD ${CROSS_COMPILER_PREFIX}ld)
 
-set(CMAKE_C_FLAGS "-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
+set(CMAKE_C_FLAGS "\
+    -mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a \
     -c \
     -mlong-calls -fdata-sections -funsigned-char \
     -ffunction-sections -Wall -Dgcc \
     -D SUPPORT_UNALIGNED"
 )
+
+set(CMAKE_C_LINK_EXECUTABLE
+    "${CMAKE_LD} \
+    -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections \
+    <OBJECTS> \
+    -Map <TARGET>.map \
+    -o <TARGET> \
+    <LINK_LIBRARIES>"
+)
+
 set(ARFLAGS "-c -r")
-set(CMAKE_EXE_LINKER_FLAGS "-e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections")
 set(BINFLAGS "-O binary")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
