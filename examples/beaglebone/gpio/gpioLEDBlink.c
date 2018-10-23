@@ -73,6 +73,8 @@
 *****************************************************************************/
 static void Delay(unsigned int count);
 
+#define ONOFFTIME 50000000
+
 /*****************************************************************************
 **                INTERNAL FUNCTION DEFINITIONS
 *****************************************************************************/
@@ -104,14 +106,14 @@ int main()
                      GPIO_INSTANCE_PIN_NUMBER,
                      GPIO_PIN_HIGH);
 
-        Delay(0x3FFFF);
+        Delay(ONOFFTIME);
 
         /* Driving a logic LOW on the GPIO pin. */
         GPIOPinWrite(GPIO_INSTANCE_ADDRESS,
                      GPIO_INSTANCE_PIN_NUMBER,
                      GPIO_PIN_LOW);
 
-        Delay(0x3FFFF);
+        Delay(ONOFFTIME);
     }
 
 }
