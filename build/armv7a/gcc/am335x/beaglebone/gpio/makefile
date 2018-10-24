@@ -115,7 +115,7 @@ bin:
 	@mv *.o* $(TARGET_MODE)/
 	$(LD) ${LDFLAGS} ${LPATH} -o $(TARGET_MODE)/$(APPNAME).out \
           -Map $(TARGET_MODE)/$(APPNAME).map $(TARGET_MODE)/*.o* \
-          $(APP_LIB) $(APP_LIB) -T $(APPNAME).lds
+          $(APP_LIB) -T $(APPNAME).lds
 	@mkdir -p $(APP_BIN)/$(TARGET_MODE)
 	@cp $(TARGET_MODE)/$(APPNAME).out $(APP_BIN)/$(TARGET_MODE)/$(APPNAME).out
 	$(BIN) $(BINFLAGS) $(APP_BIN)/$(TARGET_MODE)/$(APPNAME).out \
