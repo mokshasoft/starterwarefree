@@ -11,12 +11,22 @@ cmake_minimum_required(VERSION 3.7.2)
 project(system_config C)
 
 file(GLOB static
-    *.c
-    ${COMPILER}/*.c
-    ${COMPILER}/*.S
-    ${DEVICE}/*.c
-    ${DEVICE}/${COMPILER}/*.S
+    mmu.c
+    cache.c
+    ${COMPILER}/cpu.c
+    ${COMPILER}/cp15.S
+    ${COMPILER}/init.S
+    ${DEVICE}/interrupt.c
+    ${DEVICE}/startup.c
+    ${DEVICE}/clock.c
+    ${DEVICE}/device.c
+    ${DEVICE}/${COMPILER}/exceptionhandler.S
 )
+
+# Tell CMake to treat these files as C-files
+set_property(SOURCE ${COMPILER}/cp15.S PROPERTY LANGUAGE C)
+set_property(SOURCE ${COMPILER}/init.S PROPERTY LANGUAGE C)
+set_property(SOURCE ${DEVICE}/${COMPILER}/exceptionhandler.S PROPERTY LANGUAGE C)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -mfloat-abi=softfp")
 
