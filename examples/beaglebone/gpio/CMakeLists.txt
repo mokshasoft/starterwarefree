@@ -23,3 +23,4 @@ target_link_libraries(
     system_config
     -T ${CMAKE_CURRENT_SOURCE_DIR}/gpioLedBlink.lds
 )
+gen_bin(gpioLedBlink)
