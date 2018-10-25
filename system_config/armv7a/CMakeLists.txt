@@ -10,6 +10,9 @@ cmake_minimum_required(VERSION 3.7.2)
 
 project(system_config C)
 
+assert(COMPILER "Variable COMPILER has to be set to build system_config")
+assert(DEVICE "Variable DEVICE has to be set to build system_config")
+
 file(GLOB static
     mmu.c
     cache.c

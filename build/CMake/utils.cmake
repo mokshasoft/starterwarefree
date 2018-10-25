@@ -17,3 +17,9 @@ function(gen_bin target)
         COMMAND ${CMAKE_OBJCOPY} -O binary ${target} ${target}.bin
     )
 endfunction()
+
+function(assert value msg)
+    if(NOT ${value})
+        message(FATAL_ERROR "Assertion failure: " ${msg})
+    endif()
+endfunction()
