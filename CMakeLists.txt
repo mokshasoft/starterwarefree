@@ -56,4 +56,4 @@ add_subdirectory(utils)
 
 # Add example apps
 
-add_subdirectory(examples/${EVM}/gpio)
+add_subdirectory(examples/${EVM})
