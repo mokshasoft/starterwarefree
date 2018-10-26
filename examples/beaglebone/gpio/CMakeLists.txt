@@ -21,6 +21,6 @@ target_link_libraries(
     utils
     platform
     system_config
-    -T ${CMAKE_CURRENT_SOURCE_DIR}/gpioLedBlink.lds
+    -T ${ROOT_PATH}/build/beaglebone.lds
 )
 gen_bin(gpioLedBlink)
