@@ -55,6 +55,7 @@ add_subdirectory(drivers)
 add_subdirectory(platform/${EVM})
 add_subdirectory(system_config/${TARGET})
 add_subdirectory(utils)
+add_subdirectory(usblib)
 
 # Add example apps
 
