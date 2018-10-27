@@ -300,7 +300,7 @@ typedef struct
     //! language descriptor.
     //!
     //
-    unsigned char * const *ppStringDescriptors;
+    const unsigned char * const *ppStringDescriptors;
 
     //
     //! The number of descriptors provided in the ppStringDescriptors
