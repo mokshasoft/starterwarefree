@@ -15,6 +15,10 @@ file(GLOB static
 )
 
 add_library(platform EXCLUDE_FROM_ALL ${static})
+target_link_libraries(
+    platform
+    drivers
+)
 target_include_directories(platform PUBLIC
     ${ROOT_PATH}/include
     ${ROOT_PATH}/include/hw
