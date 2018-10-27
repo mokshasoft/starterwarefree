@@ -22,6 +22,7 @@ target_link_libraries(
     utils
     platform
     system_config
+    mmcsd
     -T ${ROOT_PATH}/build/beaglebone.lds
 )
 gen_bin(${APP})

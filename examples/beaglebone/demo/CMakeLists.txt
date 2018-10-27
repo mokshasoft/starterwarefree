@@ -15,6 +15,8 @@ file(GLOB static
     *.c
 )
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -mfloat-abi=softfp")
+
 add_executable(${APP} EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     ${APP}
@@ -22,6 +24,7 @@ target_link_libraries(
     utils
     platform
     system_config
+    mmcsd
     -T ${ROOT_PATH}/build/beaglebone.lds
 )
 gen_bin(${APP})
