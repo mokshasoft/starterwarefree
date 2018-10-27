@@ -8,7 +8,16 @@
 
 cmake_minimum_required(VERSION 3.7.2)
 
-# Add apps
+# List all BeagleBone example apps
+set(APPS
+    gpio
+    uart
+)
 
-add_subdirectory(gpio)
-add_subdirectory(uart)
+# Add each app subdirectory
+foreach(APP ${APPS})
+    add_subdirectory(${APP})
+endforeach()
+
+# Add a target to build all apps
+add_custom_target(beaglebone DEPENDS ${APPS})

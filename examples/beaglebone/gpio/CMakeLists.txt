@@ -8,19 +8,19 @@
 
 cmake_minimum_required(VERSION 3.7.2)
 
-project(gpioLedBlink C)
+project(gpio C)
 
 file(GLOB static
     *.c
 )
 
-add_executable(gpioLedBlink EXCLUDE_FROM_ALL ${static})
+add_executable(gpio EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
-    gpioLedBlink
+    gpio
     drivers
     utils
     platform
     system_config
     -T ${ROOT_PATH}/build/beaglebone.lds
 )
-gen_bin(gpioLedBlink)
+gen_bin(gpio)
