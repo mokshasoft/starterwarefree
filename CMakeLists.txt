@@ -46,6 +46,8 @@ endif()
 # Setup build variables
 
 set(ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${DEVICE}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${EVM}")
 
 # Add library components
 
