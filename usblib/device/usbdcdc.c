@@ -709,7 +709,7 @@ static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                         unsigned int ulIndex);
 static void HandleSuspend(void *pvInstance);
 static void HandleResume(void *pvInstance);
-static void HandleDevice(void *pvInstance, unsigned int ulRequest,
+static void HandleDevice(void *pvInstance, uint32_t ulRequest,
                          void *pvRequestData);
 
 //*****************************************************************************

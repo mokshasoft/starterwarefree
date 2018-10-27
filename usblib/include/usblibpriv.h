@@ -86,11 +86,11 @@ typedef void(* tUSBTickHandler)(void *pvInstance, unsigned int ulTicksmS,
 //
 //*****************************************************************************
 extern void InternalUSBTickInit(void);
-extern void InternalUSBRegisterTickHandler(unsigned int ulHandler,
+extern void InternalUSBRegisterTickHandler(uint32_t ulHandler,
                                            tUSBTickHandler pfHandler,
                                            void *pvInstance);
-extern void InternalUSBStartOfFrameTick(unsigned int ulTicksmS,
-                                        unsigned int ulIndex);
+extern void InternalUSBStartOfFrameTick(uint32_t ulTicksmS,
+                                        uint32_t ulIndex);
 extern void InternalUSBHCDSendEvent(unsigned int ulIndex, unsigned int ulEvent);
 
 //*****************************************************************************
@@ -101,7 +101,7 @@ extern void InternalUSBHCDSendEvent(unsigned int ulIndex, unsigned int ulEvent);
 // milliseconds.
 //
 //*****************************************************************************
-extern unsigned int g_ui32CurrentUSBTick;
+extern uint32_t g_ui32CurrentUSBTick;
 
 //*****************************************************************************
 //
@@ -109,7 +109,7 @@ extern unsigned int g_ui32CurrentUSBTick;
 // incremented by the low level device- or host-mode interrupt handlers.
 //
 //*****************************************************************************
-extern unsigned int g_ui32USBSOFCount;
+extern uint32_t g_ui32USBSOFCount;
 
 //*****************************************************************************
 //

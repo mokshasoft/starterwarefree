@@ -953,7 +953,7 @@ typedef void (* tUSBEPIntHandler)(void *pvInstance,
 //
 //*****************************************************************************
 typedef void (* tUSBDeviceHandler)(void *pvInstance,
-                                   unsigned int ulRequest,
+                                   uint32_t ulRequest,
                                    void *pvRequestData);
 
 //*****************************************************************************
