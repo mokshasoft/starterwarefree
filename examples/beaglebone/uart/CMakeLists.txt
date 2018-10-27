@@ -8,19 +8,20 @@
 
 cmake_minimum_required(VERSION 3.7.2)
 
-project(uart C)
+set(APP uart)
+project(${APP} C)
 
 file(GLOB static
     *.c
 )
 
-add_executable(uart EXCLUDE_FROM_ALL ${static})
+add_executable(${APP} EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
-    uart
+    ${APP}
     drivers
     utils
     platform
     system_config
     -T ${ROOT_PATH}/build/beaglebone.lds
 )
-gen_bin(uart)
+gen_bin(${APP})
