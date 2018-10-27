@@ -12,31 +12,7 @@ project(drivers C)
 
 # All drivers does currently not build
 file(GLOB static
-    cppi41dma.c
-    cpsw.c
-    dcan.c
-    dmtimer.c
-    ecap.c
-    edma.c
-    ehrpwm.c
-    elm.c
-    gpio_v2.c
-    gpmc.c
-    hsi2c.c
-    hs_mmcsd.c
-    mailbox.c
-    mcasp.c
-    mcspi.c
-    mdio.c
-    phy.c
-    pruss.c
-    raster.c
-    rtc.c
-    tsc_adc.c
-    uart_irda_cir.c
-    usb.c
-    usbphyGS70.c
-    watchdog.c
+    *.c
 )
 
 add_library(drivers EXCLUDE_FROM_ALL ${static})
