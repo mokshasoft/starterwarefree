@@ -10,7 +10,6 @@ cmake_minimum_required(VERSION 3.7.2)
 
 # List all BeagleBone example apps
 set(APPS
-    bootloader
     cache_mmu
     demo
     dmtimer
@@ -22,9 +21,7 @@ set(APPS
     hsi2c_eeprom_edma
     hs_mmcsd
     irq_preemption
-    makefile
     neonVFPBenchmark
-    platform
     rtc
     uart
     uart_edma
