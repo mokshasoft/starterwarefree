@@ -12,20 +12,20 @@ project(drivers C)
 
 # All drivers does currently not build
 file(GLOB static
-    #cppi41dma.c
+    cppi41dma.c
     cpsw.c
     dcan.c
     dmtimer.c
     ecap.c
-    #edma.c
-    #ehrpwm.c
+    edma.c
+    ehrpwm.c
     elm.c
     gpio_v2.c
     gpmc.c
     hsi2c.c
     hs_mmcsd.c
     mailbox.c
-    #mcasp.c
+    mcasp.c
     mcspi.c
     mdio.c
     phy.c
@@ -34,8 +34,8 @@ file(GLOB static
     rtc.c
     tsc_adc.c
     uart_irda_cir.c
-    #usb.c
-    #usbphyGS70.c
+    usb.c
+    usbphyGS70.c
     watchdog.c
 )
 
@@ -43,4 +43,7 @@ add_library(drivers EXCLUDE_FROM_ALL ${static})
 target_include_directories(drivers PUBLIC
     ${ROOT_PATH}/include
     ${ROOT_PATH}/include/hw
+    ${ROOT_PATH}/include/${TARGET}
+    ${ROOT_PATH}/include/${TARGET}/${DEVICE}
+    ${ROOT_PATH}/usblib/include
 )
