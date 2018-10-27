@@ -29,6 +29,8 @@ set(CMAKE_C_FLAGS "\
 set(CMAKE_C_LINK_EXECUTABLE
     "${CMAKE_LD} \
     -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections \
+    -lc -lgcc -L \
+    /usr/lib/gcc/arm-none-eabi/7.1.0 -L /usr/arm-none-eabi/lib/ \
     <OBJECTS> \
     -Map <TARGET>.map \
     -o <TARGET> \
