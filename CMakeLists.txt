@@ -58,6 +58,10 @@ add_subdirectory(utils)
 add_subdirectory(grlib)
 add_subdirectory(usblib)
 
+# Add third party libs
+
+add_subdirectory(third_party/fatfs)
+
 # Add example apps
 
 add_subdirectory(examples/${EVM})
