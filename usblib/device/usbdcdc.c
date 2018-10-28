@@ -23,6 +23,7 @@
 //*****************************************************************************
 
 #include <stdint.h>
+#include <wchar.h>
 
 #include "hw_usb.h"
 #include "hw_types.h"
@@ -57,23 +58,23 @@ OSProperties
 	const uint32_t dwSize;
 	const uint32_t dwPropertyDataType;
 	const uint16_t wPropertyNameLength;
-	const uint16_t bPropertyName[20];
+	const wchar_t bPropertyName[20];
 	const uint32_t dwPropertyDataLength;
-	const uint16_t bPropertyData[39];
+	const wchar_t bPropertyData[39];
 
 	const uint32_t dwSize2;
 	const uint32_t dwPropertyDataType2;
 	const uint16_t wPropertyNameLength2;
-	const uint16_t bPropertyName2[7];
+	const wchar_t bPropertyName2[7];
 	const uint32_t dwPropertyDataLength2;
-	const uint16_t bPropertyData2[21];
+	const wchar_t bPropertyData2[21];
 
 	const uint32_t dwSize3;
 	const uint32_t dwPropertyDataType3;
 	const uint16_t wPropertyNameLength3;
-	const uint16_t bPropertyName3[6];
+	const wchar_t bPropertyName3[6];
 	const uint32_t dwPropertyDataLength3;
-	const uint16_t bPropertyData3[39];
+	const wchar_t bPropertyData3[39];
 };
 
 
