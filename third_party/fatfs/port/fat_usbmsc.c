@@ -68,7 +68,7 @@ DRESULT disk_read (
     BYTE drv,               /* Physical drive number (0) */
     BYTE* buff,             /* Pointer to the data buffer to store read data */
     DWORD sector,           /* Physical drive nmuber (0) */
-    INT count)             /* Sector count (1..255) */
+    BYTE count)             /* Sector count (1..255) */
 {
 	unsigned int ulMSCInstance;
 
@@ -97,7 +97,7 @@ DRESULT disk_write (
     BYTE ucDrive,           /* Physical drive number (0) */
     const BYTE* buff,       /* Pointer to the data to be written */
     DWORD sector,           /* Start sector number (LBA) */
-    UINT count)             /* Sector count (1..255) */
+    BYTE count)             /* Sector count (1..255) */
 {
 	unsigned int ulMSCInstance;
 
