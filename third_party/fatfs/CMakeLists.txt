@@ -19,6 +19,7 @@ add_library(fatfs EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     fatfs
     usblib
+    mmcsdlib
 )
 target_include_directories(fatfs PUBLIC
     src
