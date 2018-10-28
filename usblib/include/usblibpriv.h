@@ -86,11 +86,11 @@ typedef void(* tUSBTickHandler)(void *pvInstance, unsigned int ulTicksmS,
 //
 //*****************************************************************************
 extern void InternalUSBTickInit(void);
-extern void InternalUSBRegisterTickHandler(uint32_t ulHandler,
+extern void InternalUSBRegisterTickHandler(unsigned int ulHandler,
                                            tUSBTickHandler pfHandler,
                                            void *pvInstance);
-extern void InternalUSBStartOfFrameTick(uint32_t ulTicksmS,
-                                        uint32_t ulIndex);
+extern void InternalUSBStartOfFrameTick(unsigned int ulTicksmS,
+                                        unsigned int ulIndex);
 extern void InternalUSBHCDSendEvent(unsigned int ulIndex, unsigned int ulEvent);
 
 //*****************************************************************************
@@ -101,7 +101,7 @@ extern void InternalUSBHCDSendEvent(unsigned int ulIndex, unsigned int ulEvent);
 // milliseconds.
 //
 //*****************************************************************************
-extern uint32_t g_ui32CurrentUSBTick;
+extern unsigned int g_ui32CurrentUSBTick;
 
 //*****************************************************************************
 //
@@ -109,7 +109,7 @@ extern uint32_t g_ui32CurrentUSBTick;
 // incremented by the low level device- or host-mode interrupt handlers.
 //
 //*****************************************************************************
-extern uint32_t g_ui32USBSOFCount;
+extern unsigned int g_ui32USBSOFCount;
 
 //*****************************************************************************
 //
@@ -167,27 +167,27 @@ extern uint32_t g_ui32USBSOFCount;
 //*****************************************************************************
 struct tUSBDMAInstance
 {
-    uint32_t ui32Base;
+    unsigned int ui32Base;
 
-    uint32_t ui32IntNum;
+    unsigned int ui32IntNum;
 
-    uint32_t pui32Config[USB_MAX_DMA_CHANNELS];
+    unsigned int pui32Config[USB_MAX_DMA_CHANNELS];
 
-    uint32_t pui32MaxPacketSize[USB_MAX_DMA_CHANNELS];
+    unsigned int pui32MaxPacketSize[USB_MAX_DMA_CHANNELS];
 
-    uint32_t *ppui32Data[USB_MAX_DMA_CHANNELS];
+    unsigned int *ppui32Data[USB_MAX_DMA_CHANNELS];
 
-    uint32_t pui32Count[USB_MAX_DMA_CHANNELS];
+    unsigned int pui32Count[USB_MAX_DMA_CHANNELS];
 
     uint8_t pui8Endpoint[USB_MAX_DMA_CHANNELS];
 
-    uint32_t pui32EPDMAMode0[USB_MAX_DMA_CHANNELS];
+    unsigned int pui32EPDMAMode0[USB_MAX_DMA_CHANNELS];
 
-    uint32_t pui32EPDMAMode1[USB_MAX_DMA_CHANNELS];
+    unsigned int pui32EPDMAMode1[USB_MAX_DMA_CHANNELS];
 
-    uint32_t ui32Pending;
+    unsigned int ui32Pending;
 
-    uint32_t ui32Complete;
+    unsigned int ui32Complete;
 
 };
 

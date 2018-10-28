@@ -953,7 +953,7 @@ typedef void (* tUSBEPIntHandler)(void *pvInstance,
 //
 //*****************************************************************************
 typedef void (* tUSBDeviceHandler)(void *pvInstance,
-                                   uint32_t ulRequest,
+                                   unsigned int ulRequest,
                                    void *pvRequestData);
 
 //*****************************************************************************
@@ -1795,8 +1795,8 @@ typedef unsigned int (* tUSBCallback)(void *pvCBData, unsigned int ulEvent,
 //*****************************************************************************
 typedef struct
 {
-    uint32_t ui32HIRD;
-    uint32_t ui32Features;
+    unsigned int ui32HIRD;
+    unsigned int ui32Features;
 }
 tLPMFeature;
 

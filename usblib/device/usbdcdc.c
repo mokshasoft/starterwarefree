@@ -50,30 +50,30 @@ __attribute__((__packed__))
 #endif
 OSProperties
 {
-	const uint32_t dwLength;
+	const unsigned int dwLength;
 	const uint16_t bcdVersion;
 	const uint16_t wIndex;
 	const uint16_t wCount;
 
-	const uint32_t dwSize;
-	const uint32_t dwPropertyDataType;
+	const unsigned int dwSize;
+	const unsigned int dwPropertyDataType;
 	const uint16_t wPropertyNameLength;
 	const wchar_t bPropertyName[20];
-	const uint32_t dwPropertyDataLength;
+	const unsigned int dwPropertyDataLength;
 	const wchar_t bPropertyData[39];
 
-	const uint32_t dwSize2;
-	const uint32_t dwPropertyDataType2;
+	const unsigned int dwSize2;
+	const unsigned int dwPropertyDataType2;
 	const uint16_t wPropertyNameLength2;
 	const wchar_t bPropertyName2[7];
-	const uint32_t dwPropertyDataLength2;
+	const unsigned int dwPropertyDataLength2;
 	const wchar_t bPropertyData2[21];
 
-	const uint32_t dwSize3;
-	const uint32_t dwPropertyDataType3;
+	const unsigned int dwSize3;
+	const unsigned int dwPropertyDataType3;
 	const uint16_t wPropertyNameLength3;
 	const wchar_t bPropertyName3[6];
-	const uint32_t dwPropertyDataLength3;
+	const unsigned int dwPropertyDataLength3;
 	const wchar_t bPropertyData3[39];
 };
 
@@ -710,7 +710,7 @@ static void HandleEndpoints(void *pvInstance, unsigned int ulStatus,
                                                         unsigned int ulIndex);
 static void HandleSuspend(void *pvInstance);
 static void HandleResume(void *pvInstance);
-static void HandleDevice(void *pvInstance, uint32_t ulRequest,
+static void HandleDevice(void *pvInstance, unsigned int ulRequest,
                          void *pvRequestData);
 
 //*****************************************************************************
@@ -1468,7 +1468,7 @@ ProcessDataToHost(const tUSBDCDCDevice *psDevice, unsigned int ulStatus,
         //
         // Notify the client that the last transmission completed.
         //
-        ui32Size = (uint32_t)psInst->ui16LastTxSize;
+        ui32Size = (unsigned int)psInst->ui16LastTxSize;
         psInst->ui16LastTxSize = 0;
         psDevice->pfnTxCallback(psDevice->pvTxCBData, USB_EVENT_TX_COMPLETE,
                                 ui32Size, (void *)0);
@@ -1713,7 +1713,7 @@ HandleEP0Data(void *pvInstance, unsigned int ulDataSize, unsigned int ulIndex)
 //
 //*****************************************************************************
 static void
-HandleDevice(void *pvCDCDevice, uint32_t ui32Request, void *pvRequestData)
+HandleDevice(void *pvCDCDevice, unsigned int ui32Request, void *pvRequestData)
 {
     tCDCSerInstance *psInst;
     uint8_t *pui8Data;

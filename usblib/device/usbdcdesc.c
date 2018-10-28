@@ -68,7 +68,7 @@
 //
 //*****************************************************************************
 static tDescriptorHeader *
-NextConfigDescGet(const tConfigHeader *psConfig, uint32_t *pui32Sec,
+NextConfigDescGet(const tConfigHeader *psConfig, unsigned int *pui32Sec,
                   tDescriptorHeader *psDesc)
 {
     //
@@ -140,11 +140,11 @@ NextConfigDescGet(const tConfigHeader *psConfig, uint32_t *pui32Sec,
 //*****************************************************************************
 static tInterfaceDescriptor *
 ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
-                            uint8_t ui8InterfaceNumber, uint32_t ui32Index,
-                            uint32_t *pui32Section)
+                            uint8_t ui8InterfaceNumber, unsigned int ui32Index,
+                            unsigned int *pui32Section)
 {
     tDescriptorHeader *psDescCheck;
-    uint32_t ui32Count, ui32Sec;
+    unsigned int ui32Count, ui32Sec;
 
     //
     // Set up for our descriptor counting loop.
@@ -215,10 +215,10 @@ ConfigAlternateInterfaceGet(const tConfigHeader *psConfig,
 //! result from concatenating the required sections.
 //
 //*****************************************************************************
-uint32_t
+unsigned int
 USBDCDConfigDescGetSize(const tConfigHeader *psConfig)
 {
-    uint32_t ui32Loop, ui32Len;
+    unsigned int ui32Loop, ui32Len;
 
     ui32Len = 0;
 
@@ -262,10 +262,10 @@ USBDCDConfigDescGetSize(const tConfigHeader *psConfig)
 //! data.
 //
 //*****************************************************************************
-uint32_t
-USBDCDConfigDescGetNum(const tConfigHeader *psConfig, uint32_t ui32Type)
+unsigned int
+USBDCDConfigDescGetNum(const tConfigHeader *psConfig, unsigned int ui32Type)
 {
-    uint32_t ui32Section, ui32NumDescs;
+    unsigned int ui32Section, ui32NumDescs;
 
     //
     // Initialize our counts.
@@ -277,7 +277,7 @@ USBDCDConfigDescGetNum(const tConfigHeader *psConfig, uint32_t ui32Type)
     // sections comprising the configuration descriptor.  Note that this
     // assumes each section contains only whole descriptors!
     //
-    for(ui32Section = 0; ui32Section < (uint32_t)psConfig->ui8NumSections;
+    for(ui32Section = 0; ui32Section < (unsigned int)psConfig->ui8NumSections;
         ui32Section++)
     {
         ui32NumDescs += USBDescGetNum(
@@ -319,10 +319,10 @@ USBDCDConfigDescGetNum(const tConfigHeader *psConfig, uint32_t ui32Type)
 //
 //*****************************************************************************
 tDescriptorHeader *
-USBDCDConfigDescGet(const tConfigHeader *psConfig, uint32_t ui32Type,
-                    uint32_t ui32Index, uint32_t *pui32Section)
+USBDCDConfigDescGet(const tConfigHeader *psConfig, unsigned int ui32Type,
+                    unsigned int ui32Index, unsigned int *pui32Section)
 {
-    uint32_t ui32Section, ui32TotalDescs, ui32NumDescs;
+    unsigned int ui32Section, ui32TotalDescs, ui32NumDescs;
 
     //
     // Initialize our counts.
@@ -334,7 +334,7 @@ USBDCDConfigDescGet(const tConfigHeader *psConfig, uint32_t ui32Type,
     // sections comprising the configuration descriptor.  This allows us to
     // determine which section contains the descriptor we are being asked for.
     //
-    for(ui32Section = 0; ui32Section < (uint32_t)psConfig->ui8NumSections;
+    for(ui32Section = 0; ui32Section < (unsigned int)psConfig->ui8NumSections;
         ui32Section++)
     {
         //
@@ -405,12 +405,12 @@ USBDCDConfigDescGet(const tConfigHeader *psConfig, uint32_t ui32Type,
 //! descriptor.
 //
 //*****************************************************************************
-uint32_t
+unsigned int
 USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
                                       uint8_t ui8InterfaceNumber)
 {
     tDescriptorHeader *psDescCheck;
-    uint32_t ui32Count, ui32Sec;
+    unsigned int ui32Count, ui32Sec;
 
     //
     // Set up for our descriptor counting loop.
@@ -491,8 +491,8 @@ USBDCDConfigGetNumAlternateInterfaces(const tConfigHeader *psConfig,
 //
 //*****************************************************************************
 tInterfaceDescriptor *
-USBDCDConfigGetInterface(const tConfigHeader *psConfig, uint32_t ui32Index,
-                         uint32_t ui32Alt, uint32_t *pui32Section)
+USBDCDConfigGetInterface(const tConfigHeader *psConfig, unsigned int ui32Index,
+                         unsigned int ui32Alt, unsigned int *pui32Section)
 {
     //
     // If we are being told to ignore the alternate configuration, this boils
@@ -556,12 +556,12 @@ USBDCDConfigGetInterface(const tConfigHeader *psConfig, uint32_t ui32Index,
 //*****************************************************************************
 tEndpointDescriptor *
 USBDCDConfigGetInterfaceEndpoint(const tConfigHeader *psConfig,
-                                 uint32_t ui32InterfaceNumber,
-                                 uint32_t ui32AltCfg, uint32_t ui32Index)
+                                 unsigned int ui32InterfaceNumber,
+                                 unsigned int ui32AltCfg, unsigned int ui32Index)
 {
     tInterfaceDescriptor *psInterface;
     tDescriptorHeader *psEndpoint;
-    uint32_t ui32Section, ui32Count;
+    unsigned int ui32Section, ui32Count;
 
     //
     // Find the requested interface descriptor.

@@ -74,10 +74,10 @@ tUSBEndpointInfo;
 // of bytes of FIFO space occupied.
 //
 //*****************************************************************************
-static uint32_t
-GetEndpointFIFOSize(uint32_t ui32MaxPktSize, uint32_t *pupBytesUsed)
+static unsigned int
+GetEndpointFIFOSize(unsigned int ui32MaxPktSize, unsigned int *pupBytesUsed)
 {
-    uint32_t ui32Loop, ui32FIFOSize;
+    unsigned int ui32Loop, ui32FIFOSize;
 
     //
     // Now we need to find the nearest supported size that accommodates the
@@ -121,8 +121,8 @@ GetEndpointFIFOSize(uint32_t ui32MaxPktSize, uint32_t *pupBytesUsed)
 //
 //*****************************************************************************
 static void
-GetEPDescriptorType(tEndpointDescriptor *psEndpoint, uint32_t *pui32EPIndex,
-                    uint32_t *pui32MaxPktSize, uint32_t *pui32Flags)
+GetEPDescriptorType(tEndpointDescriptor *psEndpoint, unsigned int *pui32EPIndex,
+                    unsigned int *pui32MaxPktSize, unsigned int *pui32Flags)
 {
     //
     // Get the endpoint index.
@@ -279,7 +279,7 @@ USBDeviceConfig(unsigned int ulIndex, const tConfigHeader *psConfig,
         // Extract the endpoint number and whether it is an IN or OUT
         // endpoint.
         //
-        ui32EpIndex = (uint32_t)
+        ui32EpIndex = (unsigned int)
                         psEndpoint->bEndpointAddress & USB_EP_DESC_NUM_M;
         ui32EpType =  (psEndpoint->bEndpointAddress & USB_EP_DESC_IN) ?
                      EP_INFO_IN : EP_INFO_OUT;
@@ -332,7 +332,7 @@ USBDeviceConfig(unsigned int ulIndex, const tConfigHeader *psConfig,
             // This is an interface we are interested in so gather the
             // information on its endpoints.
             //
-            ui32NumEndpoints = (uint32_t)psInterface->bNumEndpoints;
+            ui32NumEndpoints = (unsigned int)psInterface->bNumEndpoints;
 
             //
             // Walk through each endpoint in this interface and configure
@@ -561,7 +561,7 @@ USBDeviceConfigAlternate(unsigned int ulIndex, const tConfigHeader *psConfig,
             //
             // How many endpoints does this interface have?
             //
-            ui32NumEndpoints = (uint32_t)psInterface->bNumEndpoints;
+            ui32NumEndpoints = (unsigned int)psInterface->bNumEndpoints;
 
             //
             // Walk through each endpoint in turn.

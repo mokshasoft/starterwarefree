@@ -58,7 +58,7 @@ tBoolean g_bUSBTimerInitialized = false;
 // instances of USB controllers and for all timer tick handlers.
 //
 //*****************************************************************************
-uint32_t g_ui32CurrentUSBTick = 0;
+unsigned int g_ui32CurrentUSBTick = 0;
 
 //*****************************************************************************
 //
@@ -67,7 +67,7 @@ uint32_t g_ui32CurrentUSBTick = 0;
 // handler functions.
 //
 //*****************************************************************************
-uint32_t g_ui32USBSOFCount = 0;
+unsigned int g_ui32USBSOFCount = 0;
 
 //*****************************************************************************
 //
@@ -84,7 +84,7 @@ uint32_t g_ui32USBSOFCount = 0;
 void
 InternalUSBTickInit(void)
 {
-    uint32_t ulLoop;
+    unsigned int ulLoop;
 
     if(!g_bUSBTimerInitialized)
     {
@@ -117,7 +117,7 @@ InternalUSBTickInit(void)
 //
 //*****************************************************************************
 void
-InternalUSBRegisterTickHandler(uint32_t ulHandler,
+InternalUSBRegisterTickHandler(unsigned int ulHandler,
                                tUSBTickHandler pfHandler,
                                void *pvInstance)
 {
@@ -153,8 +153,8 @@ InternalUSBRegisterTickHandler(uint32_t ulHandler,
 //! \return None.
 //
 //*****************************************************************************
-void InternalUSBStartOfFrameTick(uint32_t ulTicksmS,
-                                    uint32_t ulIndex)
+void InternalUSBStartOfFrameTick(unsigned int ulTicksmS,
+                                    unsigned int ulIndex)
 {
     int iIdx;
 

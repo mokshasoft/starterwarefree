@@ -109,9 +109,9 @@ extern tEndpointDescriptor *
                                         unsigned int ulIndex);
 extern void USBDCDPowerStatusSet(unsigned int ulIndex, unsigned char ucPower);
 extern tBoolean USBDCDRemoteWakeupRequest(unsigned int ulIndex);
-extern tBoolean USBDCDFeatureSet(uint32_t ui32Index, uint32_t ui32Feature,
+extern tBoolean USBDCDFeatureSet(unsigned int ui32Index, unsigned int ui32Feature,
                              void *pvFeature);
-extern tBoolean USBDCDFeatureGet(uint32_t ui32Index, uint32_t ui32Feature,
+extern tBoolean USBDCDFeatureGet(unsigned int ui32Index, unsigned int ui32Feature,
                              void *pvFeature);
 
 //*****************************************************************************
