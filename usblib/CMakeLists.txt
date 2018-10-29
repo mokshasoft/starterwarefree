@@ -19,9 +19,10 @@ file(GLOB static
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDMA_MODE")
 
 add_library(usblib EXCLUDE_FROM_ALL ${static})
+target_link_libraries(
+    usblib
+    platform
+)
 target_include_directories(usblib PUBLIC
     include
-    ${ROOT_PATH}/include
-    ${ROOT_PATH}/include/hw
-    ${ROOT_PATH}/include/${TARGET}/${DEVICE}
 )
