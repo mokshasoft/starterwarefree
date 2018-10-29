@@ -29,7 +29,7 @@ set(APPS
     usb_dev_comp_ser_ser
     #usb_device_host_msc
     #usb_dev_msc
-    #usb_dev_serial
+    usb_dev_serial
     #usb_host_msc
     watchdogTimer
 )
@@ -47,7 +47,6 @@ add_subdirectory(hs_mmcsd)
 add_subdirectory(neonVFPBenchmark)
 add_subdirectory(usb_device_host_msc)
 add_subdirectory(usb_dev_msc)
-add_subdirectory(usb_dev_serial)
 add_subdirectory(usb_host_msc)
 
 # Add a target to build all apps

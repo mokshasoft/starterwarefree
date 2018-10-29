@@ -374,7 +374,7 @@ static void UartBaudRateSet(void)
 static int
 ReadUARTData(void)
 {
-     int lChar, lErrors;
+    unsigned char lChar, lErrors;
     unsigned char ucChar;
     unsigned int ulSpace;
 
@@ -392,14 +392,8 @@ ReadUARTData(void)
     // Read data from the UART FIFO until there is none left or we run
     // out of space in our receive buffer.
     //
-    while(ulSpace && UARTCharsAvail(USB_UART_BASE))
+    while(ulSpace && (1 == UARTCharGetNonBlocking(USB_UART_BASE, &lChar)))
     {
-        //
-        // Read a character from the UART FIFO into the ring buffer if no
-        // errors are reported.
-        //
-        lChar = UARTCharGetNonBlocking(USB_UART_BASE);
-
         //
         // If the character did not contain any error notifications,
         // copy it to the output buffer.
@@ -518,7 +512,9 @@ void UARTHandleError(void)
     while((UARTRxErrorGet(USB_UART_BASE)))
     {
         /* Read a byte from the RBR if RBR has data.*/
-       UARTCharGetNonBlocking(USB_UART_BASE);
+       signed char dummyRetVal;
+       unsigned char value;
+       dummyRetVal = UARTCharGetNonBlocking(USB_UART_BASE, &value);
     }
 
 }
