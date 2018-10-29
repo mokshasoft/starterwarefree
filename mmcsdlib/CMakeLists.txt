@@ -15,9 +15,10 @@ file(GLOB static
 )
 
 add_library(mmcsdlib EXCLUDE_FROM_ALL ${static})
+target_link_libraries(
+    mmcsdlib
+    drivers
+)
 target_include_directories(mmcsdlib PUBLIC
     include
-    ${ROOT_PATH}/include
-    ${ROOT_PATH}/include/hw
-    ${ROOT_PATH}/include/${TARGET}
 )
