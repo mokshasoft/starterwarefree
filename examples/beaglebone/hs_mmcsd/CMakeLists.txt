@@ -23,6 +23,7 @@ target_link_libraries(
     platform
     system_config
     mmcsd
+    fatfs
     -T ${ROOT_PATH}/build/beaglebone.lds
 )
 gen_bin(${APP})
