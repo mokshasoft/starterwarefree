@@ -39,5 +39,16 @@ foreach(APP ${APPS})
     add_subdirectory(${APP})
 endforeach()
 
+# Apps that currently don't build
+add_subdirectory(demo)
+add_subdirectory(enet_echo)
+add_subdirectory(enet_lwip)
+add_subdirectory(hs_mmcsd)
+add_subdirectory(neonVFPBenchmark)
+add_subdirectory(usb_device_host_msc)
+add_subdirectory(usb_dev_msc)
+add_subdirectory(usb_dev_serial)
+add_subdirectory(usb_host_msc)
+
 # Add a target to build all apps
 add_custom_target(beaglebone DEPENDS ${APPS})
