@@ -15,6 +15,8 @@ file(GLOB static
     *.c
 )
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDMA_MODE")
+
 add_executable(${APP} EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     ${APP}
