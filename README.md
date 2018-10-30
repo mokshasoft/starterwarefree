@@ -11,6 +11,7 @@ makefile (3.4 s), CMake with Ninja generator (0.72 s)
 ```
 git diff a2422cf:build/armv7a/gcc/am335x/beaglebone/gpio/makefile 4a75983:examples/beaglebone/gpio/CMakeLists.txt
 ```
+- No need to setup tool paths to arm-none-eabi
 
 ## Building
 
