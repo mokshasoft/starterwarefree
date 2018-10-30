@@ -23,6 +23,4 @@ target_link_libraries(
 )
 target_include_directories(fatfs PUBLIC
     src
-    ${ROOT_PATH}/include
-    ${ROOT_PATH}/include/hw
 )
