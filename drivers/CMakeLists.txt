@@ -10,16 +10,13 @@ cmake_minimum_required(VERSION 3.7.2)
 
 project(drivers C)
 
-# All drivers does currently not build
 file(GLOB static
     *.c
 )
 
 add_library(drivers EXCLUDE_FROM_ALL ${static})
-target_include_directories(drivers PUBLIC
-    ${ROOT_PATH}/include
-    ${ROOT_PATH}/include/hw
-    ${ROOT_PATH}/include/${TARGET}
-    ${ROOT_PATH}/include/${TARGET}/${DEVICE}
-    ${ROOT_PATH}/usblib/include
+target_link_libraries(
+    drivers
+    usblib
+    system_config
 )
