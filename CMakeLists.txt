@@ -51,6 +51,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${EVM}")
 
 # Add library components
 
+add_subdirectory(bootloader)
 add_subdirectory(drivers)
 add_subdirectory(platform/${EVM})
 add_subdirectory(system_config/${TARGET})
