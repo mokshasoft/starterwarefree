@@ -2,7 +2,7 @@
 Unofficial repo of TI StarterWare
 
 Improvements over official repo:
-- More than 30x faster rebuild. For instance, rebuilding the BeagleBone gpio app;
+- More than 340x faster rebuild. For instance, rebuilding the BeagleBone gpio app;
 makefile (3.4 s), CMake with Ninja generator (0.01 s)
 - 5x times faster clean builds. BeagleBone gpio app;
 makefile (3.4 s), CMake with Ninja generator (0.72 s)
