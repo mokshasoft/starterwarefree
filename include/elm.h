@@ -41,7 +41,7 @@
 */
 
 
-#ifndef _ELM_H_
+#ifndef _ELM_H__
 #define _ELM_H__
 
 #include "hw_elm.h"
