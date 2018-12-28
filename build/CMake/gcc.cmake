@@ -26,24 +26,9 @@ set(CMAKE_C_FLAGS "\
     -Dgcc -D SUPPORT_UNALIGNED -D MMCSD -DUARTCONSOLE -g -O2"
 )
 
-# Find the path to libc.a and libgcc.a
-execute_process(
-    COMMAND ${CMAKE_C_COMPILER} -print-file-name=libc.a
-    OUTPUT_VARIABLE LIB_C_FILE
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-execute_process(
-    COMMAND ${CMAKE_C_COMPILER} -print-file-name=libgcc.a
-    OUTPUT_VARIABLE LIB_GCC_FILE
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-get_filename_component(LIB_C_PATH ${LIB_C_FILE} DIRECTORY)
-get_filename_component(LIB_GCC_PATH ${LIB_GCC_FILE} DIRECTORY)
-
 set(CMAKE_C_LINK_EXECUTABLE
     "${CMAKE_LD} \
     -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections \
-    -lc -lgcc -L ${LIB_GCC_PATH} -L ${LIB_C_PATH} \
     <OBJECTS> \
     -Map <TARGET>.map \
     -o <TARGET> \
