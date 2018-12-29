@@ -28,7 +28,7 @@ set(CMAKE_C_FLAGS "\
 
 set(CMAKE_C_LINK_EXECUTABLE
     "${CMAKE_LD} \
-    -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv -Wl,--gc-sections \
+    -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv -u __aeabi_uidivmod -Wl,--gc-sections \
     <OBJECTS> \
     -Wl,-Map,<TARGET>.map \
     -o <TARGET> \
