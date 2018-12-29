@@ -17,7 +17,7 @@ if("${CROSS_COMPILER_PREFIX}" STREQUAL "")
 endif()
 
 set(CMAKE_C_COMPILER ${CROSS_COMPILER_PREFIX}gcc)
-set(CMAKE_LD ${CROSS_COMPILER_PREFIX}ld)
+set(CMAKE_LD ${CROSS_COMPILER_PREFIX}gcc)
 
 set(CMAKE_C_FLAGS "\
     -mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a \
@@ -28,9 +28,9 @@ set(CMAKE_C_FLAGS "\
 
 set(CMAKE_C_LINK_EXECUTABLE
     "${CMAKE_LD} \
-    -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv --gc-sections \
+    -e Entry -u Entry -u __aeabi_uidiv -u __aeabi_idiv -Wl,--gc-sections \
     <OBJECTS> \
-    -Map <TARGET>.map \
+    -Wl,-Map,<TARGET>.map \
     -o <TARGET> \
     <LINK_LIBRARIES>"
 )
