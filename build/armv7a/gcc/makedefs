@@ -40,7 +40,7 @@
 # Toolchain/library path. LIB_PATH is an exported environmental variable which
 # shall point to the installation of toolchain
 #
-LIB_GCC=${LIB_PATH}/lib/gcc/arm-none-eabi/4.7.3/
+LIB_GCC=${LIB_PATH}/lib/gcc/arm-none-eabi/7.1.0/
 LIB_C=${LIB_PATH}/arm-none-eabi/lib/
 
 #
