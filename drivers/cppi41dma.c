@@ -506,7 +506,7 @@ void enableCoreRxDMA(unsigned short usbDevInst, unsigned int ulEndpoint)
     ulRegister = USB_O_RXCSRL1 + EP_OFFSET(ulEndpoint);
 
     /*Find out the index to usb intance end point array */
-    ulEndpoint = USB_EP_TO_INDEX(ulEndpoint);
+    ulEndpoint = USBEPToIndex(ulEndpoint);
 
     /*Enable the scheduler with number entries */
     Cppi41DmaControlScheduler(usbDevInst, ENABLE_CPPIDMA, NUM_OF_SCHEDULER_ENTRIES);
@@ -835,7 +835,7 @@ void doDmaTxTransfer(unsigned short usbDevInst, unsigned char *buff,
 
     usbInstance = &(cppiInfo.usbInst[usbDevInst]);
 
-    endPoint = USB_EP_TO_INDEX(endPoint);
+    endPoint = USBEPToIndex(endPoint);
 
     /*This code segment will take care of the transparent mode transaction */
     if(CPDMA_MODE_SET_TRANSPARENT == usbInstance->txEndPoint[endPoint].mode)
@@ -958,7 +958,7 @@ void doDmaTxTransfer(unsigned short usbDevInst, unsigned char *buff,
 
     usbInstance = &(cppiInfo.usbInst[usbDevInst]);
 
-    endPoint = USB_EP_TO_INDEX(endPoint);
+    endPoint = USBEPToIndex(endPoint);
 
     /*This code segment will take care of the transparent mode transaction */
     if(CPDMA_MODE_SET_TRANSPARENT == usbInstance->txEndPoint[endPoint].mode)
@@ -1100,7 +1100,7 @@ void doDmaRxTransfer(unsigned short usbDevInst, unsigned int length,
     usbInstance = &(cppiInfo.usbInst[usbDevInst]);
 
     current_bd = getFreeBd();
-    endPoint = USB_EP_TO_INDEX(endPoint);
+    endPoint = USBEPToIndex(endPoint);
 
     /* Process the BD */
     Cppi41DmaProcessBD(usbDevInst, current_bd, CPDMA_DIR_RX, buff, length, endPoint);
@@ -1126,7 +1126,7 @@ void doDmaRxTransfer(unsigned short usbDevInst, unsigned int length,
     current_bd = getFreeBd();
     ASSERT(current_bd != NULL);
 
-    endPoint = USB_EP_TO_INDEX(endPoint);
+    endPoint = USBEPToIndex(endPoint);
 
     /* Process the BD */
     Cppi41DmaProcessBD(usbDevInst, current_bd, CPDMA_DIR_RX, buff, length, endPoint);
@@ -1167,7 +1167,7 @@ unsigned int dmaTxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint 
 
     ulRegister = USB_O_TXCSRL1 + EP_OFFSET( ulEndpoint);
 
-    ulEndpoint = USB_EP_TO_INDEX(ulEndpoint);
+    ulEndpoint = USBEPToIndex(ulEndpoint);
 
 
     /*read the compltetion queue */
@@ -1212,7 +1212,7 @@ unsigned int dmaTxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint 
 
     ulRegister = USB_O_TXCSRL1 + EP_OFFSET( ulEndpoint);
 
-    ulEndpoint = USB_EP_TO_INDEX(ulEndpoint);
+    ulEndpoint = USBEPToIndex(ulEndpoint);
 
 
     /*read the compltetion queue */
@@ -1268,7 +1268,7 @@ unsigned int dmaRxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint 
 
     usbInstance = &(cppiInfo.usbInst[usbDevInst]);
 
-    ulEndpoint = USB_EP_TO_INDEX(ulEndpoint);
+    ulEndpoint = USBEPToIndex(ulEndpoint);
 
     /*read the compltetion queue */
     rx_bd = (hostPacketDesc *)Cppi41DmaReadCompletionQueue(usbDevInst, usbInstance
@@ -1297,7 +1297,7 @@ unsigned int dmaRxCompletion(unsigned short usbDevInst, unsigned int ulEndpoint 
 
     usbInstance = &(cppiInfo.usbInst[usbDevInst]);
 
-    ulEndpoint = USB_EP_TO_INDEX(ulEndpoint);
+    ulEndpoint = USBEPToIndex(ulEndpoint);
 
     /*read the compltetion queue */
     rx_bd = (hostPacketDesc *)Cppi41DmaReadCompletionQueue(usbDevInst, usbInstance
@@ -1646,7 +1646,7 @@ int Cppi41DmaRxChTeardown(unsigned short usbDevInst, unsigned int ulEndpoint )
     signed int TeardownStatus = 0x0;
     usbInstance *usbInstance = &(cppiInfo.usbInst[usbDevInst]);
     volatile int TimeOut = 0xffff;
-    unsigned int ulEndPointIndex = USB_EP_TO_INDEX(ulEndpoint);
+    unsigned int ulEndPointIndex = USBEPToIndex(ulEndpoint);
     unsigned short ulRxChan = usbInstance->rxEndPoint[ulEndPointIndex].channel;
     hostPacketDesc* completed_bd = NULL;
     hPDWord0* DescHeaderPtr = NULL;
@@ -1749,7 +1749,7 @@ int Cppi41DmaTxChTeardown(unsigned short usbDevInst, unsigned int ulEndpoint )
     signed int TeardownStatus = 0xFFFFFFFF;
     usbInstance *usbInstance = &(cppiInfo.usbInst[usbDevInst]);
     volatile int TimeOut = 0xffff;
-    unsigned int ulEndPointIndex = USB_EP_TO_INDEX(ulEndpoint);
+    unsigned int ulEndPointIndex = USBEPToIndex(ulEndpoint);
     unsigned short ulTxChan = usbInstance->txEndPoint[ulEndPointIndex].channel;
 
     int GlobalConfigReg =

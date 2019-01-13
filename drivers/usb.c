@@ -2772,7 +2772,7 @@ USBRxChAbort(unsigned int ulBase, unsigned int ulEndpoint)
     }	
 	/* Initiate CPPI RX FIFO teardown in USBnTDOWN - module register */
     HWREG(ulBase + USB_0_TEARDOWN) =
-				USB_RX_TDOWN_MASK(USB_EP_TO_INDEX(ulEndpoint));
+				USB_RX_TDOWN_MASK(USBEPToIndex(ulEndpoint));
 	/* CPPI 4.1 tear down actions  - CPPI registers*/
 	
 }
@@ -2864,7 +2864,7 @@ USBDmaTxChTeardown(unsigned int ulBase, unsigned int ulEndpoint)
 	
 	/* Initiate CPPI Tx FIFO teardown in USBnTDOWN - module register */
     HWREG(ulBase + USB_0_TEARDOWN) =
-				USB_TX_TDOWN_MASK( USB_EP_TO_INDEX(ulEndpoint));
+				USB_TX_TDOWN_MASK( USBEPToIndex(ulEndpoint));
 }
 
 /**
@@ -2902,12 +2902,12 @@ USBHostTxFifoFlush(unsigned int ulBase, unsigned int ulEndpoint)
 	if (ulBase == USB0_BASE)
     {
         HWREG(USB_0_OTGBASE + USB_0_TEARDOWN) |=
-				USB_TX_TDOWN_MASK(USB_EP_TO_INDEX(ulEndpoint));
+				USB_TX_TDOWN_MASK(USBEPToIndex(ulEndpoint));
     }
     else
     {
         HWREG(USB_1_OTGBASE + USB_0_TEARDOWN) |=
-				USB_TX_TDOWN_MASK(USB_EP_TO_INDEX(ulEndpoint));
+				USB_TX_TDOWN_MASK(USBEPToIndex(ulEndpoint));
     }
 				
 	/* Disable DMAEN in TxCSR */
@@ -3485,7 +3485,7 @@ USBEndpointDMAChannel(unsigned int ulBase, unsigned int ulEndpoint,
 
     /* The input select is now shifted into the correct position based on the
      * channel. */
-    ulMask |= (USB_EP_TO_INDEX(ulEndpoint)) << (ulChannel * 4);
+    ulMask |= (USBEPToIndex(ulEndpoint)) << (ulChannel * 4);
 
     /* Write the value out to the register. */
     HWREG(ulBase + USB_O_DMASEL) = ulMask;

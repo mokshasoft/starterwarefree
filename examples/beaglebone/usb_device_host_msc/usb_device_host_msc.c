@@ -335,25 +335,25 @@ tUSBMode g_eCurrentUSBMode;
 endpointInfo epInfoHost[]=
 {
     {
-        USB_EP_TO_INDEX(USB_EP_1),
+        USBEPToIndex(USB_EP_1),
         CPDMA_DIR_RX,
         CPDMA_MODE_SET_TRANSPARENT,
     },
 
     {
-        USB_EP_TO_INDEX(USB_EP_1),
+        USBEPToIndex(USB_EP_1),
         CPDMA_DIR_TX,
         CPDMA_MODE_SET_TRANSPARENT,
     },
 
     {
-        USB_EP_TO_INDEX(USB_EP_2),
+        USBEPToIndex(USB_EP_2),
         CPDMA_DIR_RX,
         CPDMA_MODE_SET_TRANSPARENT,
     },
 
     {
-        USB_EP_TO_INDEX(USB_EP_2),
+        USBEPToIndex(USB_EP_2),
         CPDMA_DIR_TX,
         CPDMA_MODE_SET_TRANSPARENT,
     }
