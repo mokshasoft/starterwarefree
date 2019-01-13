@@ -512,9 +512,8 @@ void UARTHandleError(void)
     while((UARTRxErrorGet(USB_UART_BASE)))
     {
         /* Read a byte from the RBR if RBR has data.*/
-       signed char dummyRetVal;
        unsigned char value;
-       dummyRetVal = UARTCharGetNonBlocking(USB_UART_BASE, &value);
+       UARTCharGetNonBlocking(USB_UART_BASE, &value);
     }
 
 }
