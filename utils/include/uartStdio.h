@@ -2,7 +2,7 @@
  * \file   uartStdio.h
  *
  * \brief  This file contains the prototypes of the functions present in
- *         utils/src/uartStdio.c
+ *         utils/uartStdio.c
  */
 
 /*

@@ -2,7 +2,7 @@
  * \file   systick.h
  *
  * \brief  This file contains the prototypes of the functions present in
- *         utils/src/systick.c
+ *         utils/systick.c
  */
 
 /*
