@@ -21,7 +21,6 @@ target_link_libraries(
     utils
 )
 target_include_directories(platform PUBLIC
-    ${ROOT_PATH}/include
     ${ROOT_PATH}/include/hw
     ${ROOT_PATH}/include/${TARGET}/${DEVICE}
 )

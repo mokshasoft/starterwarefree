@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "pruss.h"
-#include "hw/hw_types.h"
+#include "hw_types.h"
 #include "soc_AM335x.h"
 
 /*
