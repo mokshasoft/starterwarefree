@@ -21,3 +21,6 @@ target_link_libraries(
     system_config
     utils
 )
+target_include_directories(drivers PUBLIC
+    include
+)

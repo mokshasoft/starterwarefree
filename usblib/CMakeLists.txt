@@ -21,6 +21,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDMA_MODE")
 add_library(usblib EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     usblib
+    drivers
     platform
     utils
 )
