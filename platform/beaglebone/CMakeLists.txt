@@ -18,6 +18,7 @@ add_library(platform EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     platform
     drivers
+    utils
 )
 target_include_directories(platform PUBLIC
     ${ROOT_PATH}/include

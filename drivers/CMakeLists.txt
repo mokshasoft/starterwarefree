@@ -19,4 +19,5 @@ target_link_libraries(
     drivers
     usblib
     system_config
+    utils
 )

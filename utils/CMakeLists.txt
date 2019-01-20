@@ -16,5 +16,6 @@ file(GLOB static
 
 add_library(utils EXCLUDE_FROM_ALL ${static})
 target_include_directories(utils PUBLIC
+    include
     ${ROOT_PATH}/include
 )

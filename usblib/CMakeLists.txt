@@ -22,6 +22,7 @@ add_library(usblib EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     usblib
     platform
+    utils
 )
 target_include_directories(usblib PUBLIC
     include

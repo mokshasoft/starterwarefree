@@ -18,6 +18,7 @@ file(GLOB static
 add_library(fatfs EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     fatfs
+    utils
     usblib
     mmcsdlib
 )

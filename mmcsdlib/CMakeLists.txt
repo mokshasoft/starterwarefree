@@ -18,6 +18,7 @@ add_library(mmcsdlib EXCLUDE_FROM_ALL ${static})
 target_link_libraries(
     mmcsdlib
     drivers
+    utils
 )
 target_include_directories(mmcsdlib PUBLIC
     include
